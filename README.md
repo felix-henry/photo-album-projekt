@@ -5,6 +5,7 @@
 <p>Software Engineering II.1 · DHBW Heilbronn · WiSe 2026/27</p>
 <p>
   <a href="https://github.com/felix-henry/photo-album-projekt">Repository</a>
+  · <a href="https://photoalbum-kanban.vercel.app/">Kanban-Board</a>
   · <a href="ROADMAP.md">Roadmap</a>
   · <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung</a>
 </p>
