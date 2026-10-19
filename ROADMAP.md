@@ -23,7 +23,7 @@ Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vor
 - [ ] Über die Nutzung eines Aufgabenboards entscheiden.
 - [ ] Gemeinsames Repository, Zugriffsrechte und Schutz von `main` prüfen bzw. einrichten: Alanur und Alex einladen; für den Branch-Schutz Repo öffentlich oder GitHub Pro.
 - [ ] Jede Person: `git config` mit der im GitHub-Konto verifizierten E-Mail, `./mvnw verify` ausführen.
-- [ ] Zwischenstände für Block 1–3 gemeinsam prüfen (Konsolidierungs-PR) und anschließend `block-1` bis `block-3` taggen. Vorher:
+- [ ] Zwischenstände für Block 1–3 gemeinsam prüfen (PR #8) und anschließend `block-1` bis `block-3` taggen. Vorher:
   - AI_USAGE Fall 1 („Grill me“) durch das Team
   - Annahmen und NFA-Werte bestätigen
   - ADRs bestätigen, Swing als ADR festhalten
