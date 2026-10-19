@@ -57,21 +57,7 @@ Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos 
 
 ### Vorgehensentscheidung
 
-> **Vorschlag, vom Team zu bestätigen.**
-
-Wir arbeiten **iterativ-inkrementell im Kanban-Fluss**: ein Board mit begrenzter paralleler Arbeit, keine festen Sprints. Die Tags `block-1` … `final` sind Lieferstände, keine Iterationsgrenzen. Begründung: Die Anforderungen stehen zu Beginn bewusst nicht fest, die Auftraggeberin gibt nach den Abgaben Feedback und bringt in Block 6 einen Change Request ein (PB §1, §4, §11). Ein change-driven Vorgehen nimmt das laufend auf (B1 F7, F41).
-
-| Element | Festlegung |
-| --- | --- |
-| Board | To do → In Arbeit → Review → Fertig; höchstens ein Paket je Person in Arbeit (B1 F31) |
-| Backlog | GitHub-Issues |
-| Rollen | Felix: Git-Maintainer und Product Owner; alle entwickeln |
-| Prototyp | Wegwerf-Prototyp der Oberfläche zur Klärung der Anforderungen ([docs/prototyp](docs/prototyp/index.html)) |
-
-**Verworfen:**
-- **Wasserfall:** Die Anforderungen sind nicht stabil, und Feedback sowie Change Request träfen abgeschlossene Phasen (B1 F18–F19).
-- **Scrum mit festen Sprints:** Die Blöcke geben Lieferstände vor, aber keinen festen Arbeitstakt im Team (B1 F34–F35).
-- **Scrum of Scrums / SAFe:** Das sind Methoden für mehrere Teams (B1 F37–F40).
+**Vorschlag, vom Team zu bestätigen:** Wir arbeiten iterativ-inkrementell im **Kanban-Fluss**. Es gibt ein Board mit GitHub-Issues, aber keine festen Sprints; die Tags `block-1` … `final` markieren Lieferstände. Der Grund: Die Anforderungen ändern sich im Lauf des Projekts durch Feedback und den Change Request (PB §1, §4, §11). Wasserfall und Scrum mit festen Sprints haben wir verworfen (B1 F18–F19, F34–F35).
 
 ### Ablauf je Änderung
 
@@ -87,7 +73,7 @@ Meilensteine, geplante Releases, nächste Schritte und die Entwicklungsbereiche 
 
 ## Dokumentation und Repository-Struktur
 
-Quellenkürzel (gelten für alle Dokumente im Repository): **B1 Fn** = Folie n aus Block 1 (PDF-Seite, die Folien haben keine Nummer); **B2 Fn / B3 Fn** = Folie aus Block 2/3 mit der gedruckten Foliennummer in der Fußzeile; **PB §n** = Abschnitt der Projektbeschreibung Photo Album v3.
+Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn** = Folie n aus Block 1–3.
 
 - [Projektbeschreibung als Markdown](docs/task_description/Projektbeschreibung_Photo_Album.md)
 - [Original-PDF der Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.pdf)
