@@ -1,0 +1,49 @@
+@startuml sequenz-foto-hinzufuegen
+' Sequenzdiagramm "Foto hinzufügen" (UC-01) inkl. Fehlerpfad Duplikat als alt-Fragment
+' (PB §8; B3 F47 Auftrag 3). Konsistent mit klassendiagramm.puml: jede Nachricht = eine Operation dort.
+' Reihenfolge (B3 F10, F24 Entwurf B): alle Prüfungen vor dem Speichern; das gespeicherte Album ändert sich erst mit save.
+' Bei einem Fehler wird das geladene Album verworfen.
+
+actor Nutzerin
+participant UI
+participant ":AddPhotoUseCase" as UC
+participant ":ImageHasher" as H
+participant ":AlbumRepository" as R
+participant ":Album" as A
+participant ":PhotoStorage" as S
+
+Nutzerin -> UI : Datei wählen (UC-01 Schritte 1–3)
+UI -> UC ++ : execute(albumId, file)
+UC -> H ++ : validate(file)
+H --> UC -- : (void / InvalidImageException)
+UC -> H ++ : hash(file)
+H --> UC -- : hash
+UC -> R ++ : findById(albumId)
+R --> UC -- : Optional<Album>
+UC -> UC : photo = new Photo(PhotoId.newId(), hash, key)
+note right of UC : key: eindeutiger Speicherschlüssel je Foto,
+nicht der Hash (V-02)
+UC -> A ++ : addPhoto(photo)
+
+alt kein Fehler
+  A --> UC -- : void
+  UC -> S ++ : store(file, key)
+  S --> UC -- : void
+  UC -> R ++ : save(album)
+  R --> UC -- : void
+  UC --> UI : Result.ok
+  UI --> Nutzerin : Foto in der Albumansicht (Schritt 6)
+else Duplikat (UC-01 5b, FA-05)
+  A --> UC : DuplicatePhotoException
+  note right of UC : store und save entfallen;\nAlbum unverändert (FA-10)
+  UC --> UI : Result.error("Foto ist bereits im Album")
+  UI --> Nutzerin : fachliche Fehlermeldung
+end
+deactivate UC
+
+note over UC, S
+  Nicht gezeichnet, gleiches Muster: 4a Datei ungültig (validate),
+  Album nicht gefunden (Optional leer), 5a Album voll (AlbumFullException),
+  5c Speichern scheitert (bei save: Kopie mit delete(key) entfernen, NFA-02).
+end note
+@enduml
