@@ -60,7 +60,7 @@
   - An die Dozentin fragen: Ist eine Teamgröße von 5 in Ordnung? Was gilt bei F-01 bis F-03?
 
 **B – Pflichtfunktionalität (Block 4)**
-- **B1:** CI mit GitHub Actions (`./mvnw verify`, JaCoCo) und AGENTS.md.
+- **B1:** CI mit GitHub Actions (`./mvnw verify`, JaCoCo). AGENTS.md bleibt laut `.gitignore` vorerst lokal und kommt zum Abschluss gemeinsam ins Repo (PB §9).
 - **B2:** Ports, Fakes und Domänen-API (Bereich 1). Danach laufen die Bereiche parallel.
 - **B3:** Datei-Adapter (Bereich 4) und Use Cases aller Bereiche, ohne Oberfläche, über Tests abgesichert.
 - **B4:** Swing-Oberfläche, sobald alle Use Cases stehen: schnell mit KI gebaut, Label `ai-assisted`, als Fall in AI_USAGE.md. Sie ruft nur die Use Cases auf und enthält keine Regeln.
@@ -84,7 +84,7 @@
   - 10 Minuten, höchstens 8 Folien.
   - Sie beantwortet die sechs Fragen aus PB §16.2. Jede Person übernimmt eine Frage.
   - Alle können jeden Bereich erklären.
-- README final, Checkliste aus PB §18 abhaken, Tag `final` nach der Präsentation.
+- AGENTS.md gemeinsam abstimmen und aufnehmen, README final, Checkliste aus PB §18 abhaken, Tag `final` nach der Präsentation.
 
 Tag-Folge: `block-1` → `block-2` → `block-3` → `block-4` = `v0.1.0` → `v1.0.0` → `block-5` → `v1.1.0` → `block-6` → `final`
 
@@ -101,7 +101,6 @@ Wer welchen Bereich bekommt, ergibt sich aus der Rangfolge im Abstimmungs-Issue.
 | 5 Alben & Oberfläche | Album erstellen/anzeigen/umbenennen, Main/Verdrahtung; am Ende die Swing-Oberfläche (B4) | Usability-Test, Performance |
 
 Dazu übernimmt jede Person eine Zusatzaufgabe:
-- AGENTS.md
 - TESTING.md zusammenführen
 - Evaluation Set
 - Impact Analysis und Refactoring
