@@ -1,71 +1,43 @@
-# AI_USAGE – Photo Album
+# AI_USAGE – Einsatz von KI-Werkzeugen
 
-Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **PB** = Projektbeschreibung v3, **B1/B2/B3 F** = Folie Block 1/2/3.
+Substanzielle KI-Einsätze nach PB §13. Prompts liegen unter `ai_usage/prompts/`.
 
-## Regeln (PB §13; B2 F36, F43)
-
-- Je Fall fünf Felder: **Aufgabe/Ziel** (was, in welchem Block) · **Werkzeug/Modell** (Produkt und Modellkennung; Prompt oder Skill versioniert im Repository unter `ai_usage/prompts/`) · **Ergebnis** (Kurzfassung oder Link) · **Kritische Bewertung** (was richtig, falsch, erfunden – woran erkannt?) · **Entscheidung** (übernommen / angepasst / verworfen – mit Begründung).
-- Mindestens 3 substanzielle Fälle, davon mindestens 1 begründet verworfener Vorschlag (PB §13).
-- KI darf fragen, nicht entscheiden; keine Zahl der KI ohne Quelle übernehmen (B2 F36). Die Verantwortung für das Ergebnis bleibt beim Team; bewertet wird die transparente, kritische Bewertung, nicht die Menge der KI-Nutzung (PB §13).
-
-## Übersicht
-
-| Fall | Block | Aufgabe | Werkzeug/Modell | Prompt/Skill | Entscheidung | Status |
-|---|---|---|---|---|---|---|
-| 1 | 2 | „Grill me“ zu REQUIREMENTS.md | vom Team einzutragen | [prompts/grill-me.md](prompts/grill-me.md) v1 | offen; mind. ein Vorschlag ist begründet zu verwerfen (B2 F44) | ausstehend: Durchlauf durch das Team |
-| 2 | 2 | Nacharbeit der Artefakte aus Block 2 (Tabelle in Fall 2) | Claude Code, claude-opus-5-5 | Arbeitsaufträge im Chat, nicht versioniert | offen | ausstehend: Bewertung durch das Team |
-
----
-
-## Fall 1 – „Grill me“ zu REQUIREMENTS.md (Hausaufgabe B2 F44)
-
-> Das Team führt den Durchlauf selbst durch. Die KI stellt nur Fragen; die Antworten kommen vom Team oder vom Auftraggeber, nicht von der KI (B2 F36). Mindestens ein Vorschlag wird begründet verworfen (B2 F44).
-
-**Durchführung:** Platzhalter in `ai_usage/prompts/grill-me.md` durch den aktuellen Text von REQUIREMENTS.md und der Projektbeschreibung ersetzen → 8 Fragen der KI beantworten → Ergebnistabelle der KI unten eintragen → jeden Vorschlag mit dem Projektauftrag abgleichen (B2 F36).
+## Fall 1 – Kritisches Review der Anforderungen („Grill me“), Block 2
 
 | Feld | Inhalt |
 |---|---|
-| Aufgabe/Ziel | Block 2: REQUIREMENTS.md v1 auf Lücken, Widersprüche, fehlende Grenzfälle und unklare Begriffe prüfen lassen (B2 F36). Durchgeführt am _[Datum]_ von _[Namen]_. |
-| Werkzeug/Modell | _[Produkt, Modellkennung]_ · Prompt: [prompts/grill-me.md](prompts/grill-me.md) v1 (B2 F36) · Kontext: REQUIREMENTS.md Stand _[Datum/Commit]_, Projektbeschreibung v3 |
-| Ergebnis | _[Kurzfassung der 8 Fragen und Antworten oder Link auf das Protokoll]_; Tabelle der KI siehe unten |
-| Kritische Bewertung | _[Was war richtig, was falsch, was erfunden? Woran erkannt? Prüfen: erfundene Stakeholder oder Features, Zahlen ohne Quelle (B2 F36)]_ |
-| Entscheidung | _[je Vorschlag: übernommen / angepasst / verworfen – mit Begründung; Änderung in REQUIREMENTS.md mit Anforderungs-ID]_ |
+| **Aufgabe/Ziel** | REQUIREMENTS.md v1 vor der Abgabe auf Lücken, Widersprüche, fehlende Grenzfälle und unklare Begriffe prüfen lassen. |
+| **Werkzeug/Modell** | _<Produkt und Modell eintragen>_; zweiter KI-Chat zur Formulierung der Antworten: _<Produkt und Modell eintragen>_ · Prompt: [`prompts/grill-me.md`](prompts/grill-me.md) (B2 F36) · Eingaben: REQUIREMENTS.md v1 und Projektbeschreibung |
+| **Ergebnis** | 8 Fragen nacheinander, danach eine Tabelle der 5 wichtigsten offenen Punkte. Antworten formuliert mit Hilfe eines zweiten KI-Chats; entschieden hat das Team. |
+| **Kritische Bewertung** | Die meisten Hinweise trafen echte Schwächen (Messaufbau, unklare Begriffe, Widerspruch 1.1/6.4, nicht widerlegbare Bedingung bei NFA-03) und deckten einen beim Überarbeiten entstandenen Fehler auf (Verweis in A-08). Zwei Vorschläge (#6, #14) gingen über den Projektrahmen hinaus. |
+| **Entscheidung** | 8 übernommen, 5 angepasst, 2 verworfen; umgesetzt in v1.1. |
 
-**Ergebnistabelle der KI (Regel 4 des Prompts) mit Entscheidung des Teams**
+| # | Hinweis der KI | Entscheidung | Begründung / Umsetzung |
+|---|---|---|---|
+| 1 | NFA-04: Messaufbau fehlt; Testperson kennt den Dateipfad nicht. | übernommen | Messaufbau ergänzt; Pfad steht auf der Aufgabenkarte. |
+| 2 | Startsignal „Karte gelesen“ ist nicht beobachtbar. | übernommen | Start: Testperson legt die Karte hin. |
+| 3 | NFA-05: „Geschäftsregel“ undefiniert; darf die Oberfläche Eingaben vorab begrenzen? | angepasst | Definition ergänzt, nach Hinweis der KI auf Regeln über Annahme/Ablehnung eingeschränkt; Sortierung ist Darstellungsregel. |
+| 4 | Speichern scheitert nach dem Kopieren der Bilddatei. | übernommen | UC-01 5a und AK-06.7: Kopie wird zurückgenommen. |
+| 5 | Widerspruch: nicht entfernbare Bildkopien beim Löschen vs. 1.1 und 6.4. | angepasst | Pfadhinweis in FA-05/FA-09, AK-05.3, AK-09.3. |
+| 6 | Verwaiste Dateien beim nächsten Start automatisch bereinigen. | **verworfen** | Zusätzliche Funktion außerhalb des Auftrags. Unser zweites Argument (Löschen ohne Bestätigung) nannte die KI zu Recht schwach. |
+| 7 | „Sehr selten“ als Begründung ohne Beleg. | übernommen | Gestrichen; konkrete Ursachen genannt. |
+| 8 | „Zeichen“ undefiniert (Emojis, Akzente). | angepasst | A-13: Codepoints nach NFC; Zählung nach sichtbaren Zeichen wegen Aufwand nicht gewählt. |
+| 9 | Vergleich von Albumnamen undefiniert („Café“, „Straße“/„STRASSE“). | angepasst | A-14 fachlich mit Beispielen; Java-Aufruf ist Umsetzungsdetail. |
+| 10 | NFA-03: Referenzgerät erst nach der Messung; Testdaten unklar; Herkunft von 2 s. | übernommen | Gerät und Testdatensatz vorab festgelegt; Dateigröße ohne Einfluss; Quelle A-15. |
+| 11 | NFA-02: Garantie nur bei „Beenden“; Startverhalten bei unlesbaren Daten offen; Absturz nicht testbar. | übernommen | Garantie für jede bestätigte Aktion, geprüft durch hartes Beenden; Stromausfall nicht getestet; AK-N02.1 bis N02.3. |
+| 12 | Startfehler ist eine Sackgasse für die Nutzerin. | übernommen | Meldung mit Handlungsanweisung. |
+| 13 | Reihenfolge der Prüfungen bei mehreren Fehlern offen. | übernommen | Reihenfolge in UC-01 und FA-07; AK-07.6. |
+| 14 | Grenzwerte (50, 500 Zeichen, 20 MB, JPEG/PNG, SHA-256) beim Auftraggeber erfragen. | **verworfen** | Die Auftraggeber-Sprechstunde (B2 F42) hat für unser Team nicht stattgefunden, in Moodle liegen keine Antworten vor; PB §4 sieht dafür dokumentierte Annahmen vor. Bestätigte Werte wandern nach 7.1. |
+| 15 | NFA-04 und Stakeholder-Anliegen messen Verschiedenes; Herkunft von 60 s und 4/5 fehlt. | angepasst | Anliegen angeglichen; Herkunft A-16. |
 
-| Anforderung-ID | Problem | Vorschlag | Entscheidung offen bei | Entscheidung Team | Begründung |
-|---|---|---|---|---|---|
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
+**Erkenntnis:** Stark bei Messbarkeit und Begriffsklärung (SOPHIST-Regeln), aber mit Hang zu immer mehr Absicherung. Wo der Projektumfang endet, mussten wir selbst entscheiden.
 
-**Begründet verworfener Vorschlag (Pflicht, B2 F44; PB §13):** _[Vorschlag · Grund des Verwerfens · Quelle, z. B. Widerspruch zu PB oder Zahl ohne Quelle]_
-
----
-
-## Fall 2 – Nacharbeit mit Claude Code (Modell claude-opus-5-5)
+## Fall 2 – Überarbeitung zur Abgabefassung, Block 2
 
 | Feld | Inhalt |
 |---|---|
-| Aufgabe/Ziel | Block 2: Nacharbeit der Artefakte aus Block 2 (09.10.2026, überarbeitet 19.10.2026). Vorgaben an die KI: nur Folieninhalt und Projektbeschreibung; konkrete Werte nur mit Quelle; Folienbeispiele als Beispiel/Annahme kennzeichnen; Teamentscheidungen als Vorschlag; SOPHIST-Satzschablonen (B2 F23). |
-| Werkzeug/Modell | Claude Code (Anthropic), Modell claude-opus-5-5. Prompt: Arbeitsaufträge im Chat, je Dokument an einen Subagenten delegiert; nicht im Repository versioniert (Abweichung von PB §13). Eingaben: Folientexte B1–B3, Projektbeschreibung v3, vorläufiges Klassendiagramm des Teams (Foto). |
-| Ergebnis | Mit Claude Code erstellt bzw. nachgearbeitet (Tabelle unten). |
-| Kritische Bewertung | _[vom Team auszufüllen]_ |
-| Entscheidung | _[vom Team auszufüllen]_ |
-
-| Artefakt | Ort | Bezug |
-|---|---|---|
-| Anforderungen v1 | `REQUIREMENTS.md` | PB §7; B2 |
-| AI_USAGE.md (Struktur, Fall 1 als Vorlage), „Grill me“-Prompt | `ai_usage/AI_USAGE.md`, `ai_usage/prompts/grill-me.md` | PB §13; B2 F36, F43 |
-
-### Prüfhinweise zu REQUIREMENTS.md
-
-Stellen, an denen Claude Code Werte ohne Auftraggeberquelle gesetzt oder Teamentscheidungen vorweggenommen hat.
-
-1. **A-01 Albumname 1–50 Zeichen** (FA-01, AK-01.3, AK-01.4): 50 ist ein Folienbeispiel (B3 F7, Codebeispiel B3 F13), kein Auftraggeberwert; PB §5.2 verlangt einen definierten Wert vom Auftraggeber. Offen als F-02.
-2. **A-02 Beschreibung höchstens 100 Zeichen, getrennt vom Titel** (FA-07, AK-07.4, AK-07.5): B2 F31 nennt 100 nur für den Titel. Der Wert für die Beschreibung ist übertragen (Titel; KI-Beispiel B2 F37); getrennte Felder stützen sich auf B3 F20 und das nur vorläufige Team-Klassendiagramm. Offen als F-02.
-3. **A-03/A-04 JPEG/PNG, höchstens 20 MB** (FA-04, UC-01 Schritt 4, AK-04.x, NFA-01): Folienbeispiele (B2 F14, F21, F23), keine Auftraggeberwerte; PB §5.2 verlangt die Dateitypen vom Auftraggeber. „1 MB = 1 048 576 Byte“ hat keine Quelle. Offen als F-03.
-4. **NFA-01 bis NFA-05**: Alle Zahlen (≤ 2 s, 8 von 10 in < 60 s, ≤ 24 h, Unit-Tests < 30 s) sind Beispielwerte aus B2 F17 (T-05); das Referenzgerät (A-08) ist nicht festgelegt. NFA-02 erweitert das Folienbeispiel („Abbruch beim Upload“) auf „Album löschen“ und „nach einem Neustart“.
-5. **A-06 / T-04 Foto gehört zu genau einem Album, Kopie der Datei, Nachfrage beim Entfernen** (FA-08, FA-09, NFA-04, AK-08.x, AK-09.1, UC-02): aus dem vorläufigen Team-Klassendiagramm abgeleitet und bewusst abweichend vom Folienbeispiel B2 F26. Bei Änderung des Klassendiagramms erneut prüfen.
+| **Aufgabe/Ziel** | REQUIREMENTS.md v1.2 aus v1.1 erstellen (Konsistenz, Prüfbarkeit, Kürzung). |
+| **Werkzeug/Modell** | Claude Code (Anthropic), claude-opus-5-5; mehrere KI-Reviewrollen und ein abschließender Prüfer. Prompt: Arbeitsaufträge im Chat, nicht versioniert (Abweichung von PB §13). |
+| **Ergebnis** | REQUIREMENTS.md v1.2 (siehe Änderungshistorie dort). |
+| **Kritische Bewertung** | Zutreffend: fehlende AK für NFA und SR-01, FA-06/FA-10 ohne Ablehnung, falsche Quelle in 6.1, Zählfehler in Fall 1. Mehrere Vorschläge hätten Teamentscheidungen still geändert oder den Umfang erweitert. |
+| **Entscheidung** | Übernommen bzw. angepasst wie in v1.2. Verworfen: Liste offener Auftraggeberfragen (widerspricht Fall 1 #14), Dateiauswahl statt Pfadeingabe (Teamentscheidung UC-01), Speicherfehler-Fall für alle Aktionen (Umfang, Meldungen ohne Quelle). |
