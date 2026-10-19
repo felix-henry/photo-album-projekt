@@ -9,7 +9,7 @@ Alle Entscheidungen sind Vorschläge, bis das Team sie bestätigt. Regelwerte si
 |---|---|---|---|
 | Oberfläche | `ui` | zeigt an, nimmt Eingaben entgegen, fragt vor dem Löschen nach; kennt nur Use Cases | Swing, kommt am Ende, wenn Kern und Use Cases stehen |
 | Anwendung | `application` | ein Use Case je Nutzerziel, koordiniert, definiert Ports, übersetzt Fehler in `Result` | `AddPhotoUseCase`, `DeleteAlbumUseCase`, `Result`; Ports `AlbumRepository`, `PhotoStorage`, `ImageHasher` |
-| Domäne | `domain` | Fachmodell und alle Geschäftsregeln; kennt weder UI noch Datei noch KI | `Album`, `Photo`, `AlbumId`, `PhotoId`, fachliche Exceptions |
+| Domäne | `domain` | Fachmodell und die Geschäftsregeln aus FA-01, FA-05 bis FA-07; kennt weder UI noch Datei noch KI | `Album`, `Photo`, `AlbumId`, `PhotoId`, fachliche Exceptions |
 | Infrastruktur | `infrastructure` | implementiert die Ports; austauschbar, in Tests ersetzbar | `FileAlbumRepository`, `FileSystemPhotoStorage`, `Sha256ImageHasher` |
 
 ```text
@@ -20,7 +20,7 @@ infrastructure (implementiert Ports)
 
 **Regel:** Abhängigkeiten zeigen nach innen; die Domäne zeigt nirgendwohin (B3 F7, F20). Verdrahtet wird nur in Main (Composition Root, B3 F9).
 
-**Begründung:** NFA-03 verlangt alle Geschäftsregeln in genau einem Modul und Tests ohne UI und Dateisystem; das leistet nur eine Domäne ohne Abhängigkeiten (B3 F5, F10). Eine zweite Oberfläche übernimmt die Regeln ohne Kopie (B3 F5, F24).
+**Begründung:** NFA-03 verlangt die Regeln aus FA-01, FA-05 bis FA-07 in genau einem Modul und Tests ohne UI und Dateisystem; das leistet nur eine Domäne ohne Abhängigkeiten (B3 F5, F10). Eine zweite Oberfläche übernimmt die Regeln ohne Kopie (B3 F5, F24).
 
 **Weitere Use Cases** der Pflichtfunktionalität (PB §5.1) folgen demselben Muster und werden in Block 4 ergänzt: Album erstellen, anzeigen, umbenennen; Foto anzeigen, entfernen, beschreiben.
 

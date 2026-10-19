@@ -50,7 +50,7 @@ flowchart LR
 | Schnittstelle | Dateisystem / Speicher | Datei nicht lesbar, Speicher nicht beschreibbar | FA-04, FA-10, NFA-02, NFA-04 | B2 F8; PB §6 |
 | Schnittstelle | KI-Dienst (optional) | Dienst antwortet nicht, Prompt Injection | KI-00 bis KI-03 | B2 F8, F37, F39 |
 | Außerhalb (Mensch) | Nutzer:in, Datenschutzbeauftragte:r | – | Abschnitt 1.1 | B2 F8 |
-| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (UI ist Swing, PB §6) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
+| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (UI: Swing, Teamentscheidung) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
 
 ---
 
@@ -178,7 +178,7 @@ Werte sind Folienbeispiele (B2 F17, F25) und als Startwerte vorgeschlagen (T-05)
 
 | ID | Merkmal | Anforderung | Messgröße | Bedingung | Konsequenz Architektur / Test |
 |---|---|---|---|---|---|
-| NFA-01 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System die Albumansicht innerhalb von 2 s nach dem Öffnen vollständig anzeigen. | Zeit Öffnen → vollständige Anzeige ≤ 2 s | 100 Fotos bis je 20 MB; Referenzgerät (A-08) | Vorschaubilder statt Originaldateien laden (B3 F10) / Performance-Messung (PB §10) |
+| NFA-01 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System die Albumansicht innerhalb von 2 s nach dem Öffnen vollständig anzeigen. | Zeit Öffnen → vollständige Anzeige ≤ 2 s | 100 Fotos bis je 20 MB; Referenzgerät (A-08) | Vorschaubilder als mögliche Optimierung offen (B3 F10; ARCHITECTURE §2) / Performance-Messung (PB §10) |
 | NFA-02 | Zuverlässigkeit | Wenn das Hinzufügen eines Fotos oder das Löschen eines Albums abbricht, muss das System das Album nach einem Neustart im Zustand vor oder vollständig nach der Aktion laden. | Teilzustände in Abbruchtests = 0 | Lese-/Schreibfehler oder Beenden der Anwendung während des Speicherns | erst prüfen, dann speichern, dann Album ändern (B3 F10) / Fehlerfall-Tests prüfen unveränderten Zustand (PB §10) |
 | NFA-03 | Wartbarkeit (Testbarkeit) | Das System muss die Geschäftsregeln aus FA-01, FA-05, FA-06 und FA-07 in genau einem Modul prüfen; die Unit-Tests dieser Regeln müssen ohne UI und Dateisystem in weniger als 30 s durchlaufen. | Module mit Regelprüfung = 1; Laufzeit der Unit-Tests < 30 s | Tests ohne UI und Dateisystem; Referenzgerät | Regeln in der Domäne (B3 F7) / Unit-Tests ohne Infrastruktur (PB §10) |
 | NFA-04 | Sicherheit / Datenschutz | Wenn die Nutzerin ein Foto entfernt oder ein Album löscht, muss das System die gespeicherten Bilddateien innerhalb von 24 h aus dem Dateisystem entfernen und je entfernter Datei einen Protokolleintrag schreiben. | Zeit bis Entfernen ≤ 24 h; ein Protokolleintrag je Löschung | auch wenn das erste Löschen einer Datei fehlschlägt (UC-02 4b) | Dateizugriff hinter Port PhotoStorage mit delete (B3 F25; Team-KD) / Integrationstest prüft Datei und Protokoll |
@@ -295,7 +295,7 @@ Eine Nutzerin fügt ein Foto aus einem Gruppenchat hinzu. Im Metadatenfeld steht
 | KI-02 | Tool-Nutzung | Das System muss der Beschreibungsfunktion ausschließlich das lesende Tool listPhotos bereitstellen (Allow-List ohne shareAlbum, setDescription, deleteAlbum). | muss, sobald die KI-Funktion gebaut wird; bis dahin wird | Least Privilege / Allow-List |
 | KI-03 | Freigabe | Das System muss einen Beschreibungsvorschlag erst nach Bestätigung durch die Nutzerin am Foto speichern. | wie KI-02 | Human Approval |
 
-listPhotos(albumId) liefert IDs und Titel, nie Dateipfade (B2 F40). Abgleich mit den übrigen Schutzebenen (B2 F39): **Isolation** – Bilddaten und Metadaten gehen nur als Daten an das Modell, nie als Anweisung; **Output-Validierung** – ein bestätigter Vorschlag muss FA-07 erfüllen (≤ 100 Zeichen); **Audit** – Protokollierung jedes Tool-Aufrufs bei Umsetzung ergänzen. Löschen bleibt ohne KI-Zugriff (KI-02) und fragt immer nach (FA-08, FA-09).
+listPhotos(albumId) liefert IDs und Titel, nie Dateipfade (B2 F40). Abgleich mit den übrigen Schutzebenen (B2 F39): **Isolation** – Bilddaten und Metadaten gehen nur als Daten an das Modell, nie als Anweisung; **Output-Validierung** – ein bestätigter Vorschlag muss FA-07 erfüllen (≤ 100 Zeichen); **Audit** – Protokollierung jedes Tool-Aufrufs bei Umsetzung ergänzen. Die Beschreibungsfunktion hat keinen Löschzugriff (KI-02); Löschen fragt immer nach (FA-08, FA-09).
 
 ---
 

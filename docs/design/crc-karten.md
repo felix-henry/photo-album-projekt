@@ -1,6 +1,6 @@
 # CRC-Karten – Photo Album
 
-Stand 09.10.2026 · Übung B3 F19 · Grundlage: UC-01, UC-02, FA, Auftraggeber-Entscheidungen (AE) und Annahmen (A) aus [REQUIREMENTS.md](../../REQUIREMENTS.md), vorläufiges Klassendiagramm des Teams (**Team-KD**), Sequenzdiagramm „Album löschen“ (B3 F25).
+Stand 19.10.2026 · Übung B3 F19 · Grundlage: UC-01, UC-02, FA, Auftraggeber-Entscheidungen (AE) und Annahmen (A) aus [REQUIREMENTS.md](../../REQUIREMENTS.md), vorläufiges Klassendiagramm des Teams (**Team-KD**), Sequenzdiagramm „Album löschen“ (B3 F25).
 Quellenkürzel wie in REQUIREMENTS.md. Digitale Fassung der Papierkarten; Foto der Karten aus der Übung hier ergänzen (B3 F19). Das Ergebnis ist eine Hypothese, die das Sequenzdiagramm prüft (B3 F17).
 
 ---

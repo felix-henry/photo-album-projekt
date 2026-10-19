@@ -14,7 +14,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 |---|---|---|---|---|---|---|
 | 1 | 2 | „Grill me“ zu REQUIREMENTS.md | vom Team einzutragen | [prompts/grill-me.md](prompts/grill-me.md) v1 | offen; mind. ein Vorschlag ist begründet zu verwerfen (B2 F44) | ausstehend: Durchlauf durch das Team |
 | 2 | 3 | KI-Review des Klassendiagramms (Hausaufgabe B3 F50) | Claude Code, Subagent (claude-sonnet-5-5) | [prompts/klassendiagramm-review.md](prompts/klassendiagramm-review.md) v1 | 1 übernommen, 1 angepasst, 1 verworfen, 2 offen (Vorschlag, vom Team zu bestätigen) | durchgeführt 19.10.2026 |
-| 3 | 1–3 | Nacharbeit README, REQUIREMENTS.md, Prototyp, CRC-Karten, Sequenzdiagramm „Album löschen“ | Claude Code, claude-opus-5-5 | Arbeitsaufträge im Chat, nicht versioniert | offen | ausstehend: Bewertung durch das Team |
+| 3 | 1–3 | Nacharbeit der Artefakte aus Block 1–3 (Tabelle in Fall 3) | Claude Code, claude-opus-5-5 | Arbeitsaufträge im Chat, nicht versioniert | offen | ausstehend: Bewertung durch das Team |
 
 ---
 
@@ -72,7 +72,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 
 | Feld | Inhalt |
 |---|---|
-| Aufgabe/Ziel | Blöcke 1–3: Nacharbeit der Artefakte aus Block 1 und 2 und der Übungen aus Block 3 bis F30 (09.10.2026); Block-3-Artefakte aus B3 F45–F50 (19.10.2026). Vorgaben an die KI: nur Folieninhalt bis B3 F30 und Projektbeschreibung; konkrete Werte nur mit Quelle; Folienbeispiele als Beispiel/Annahme kennzeichnen; Teamentscheidungen als Vorschlag; SOPHIST-Satzschablonen (B2 F23). |
+| Aufgabe/Ziel | Blöcke 1–3: Nacharbeit der Artefakte aus Block 1 und 2 und der Übungen aus Block 3 bis F30 (09.10.2026); Block-3-Artefakte aus B3 F45–F50 (19.10.2026). Vorgaben an die KI: nur Folieninhalt bis zum jeweiligen Stand (B3 F30 am 09.10., B3 F50 am 19.10.) und Projektbeschreibung; konkrete Werte nur mit Quelle; Folienbeispiele als Beispiel/Annahme kennzeichnen; Teamentscheidungen als Vorschlag; SOPHIST-Satzschablonen (B2 F23). |
 | Werkzeug/Modell | Claude Code (Anthropic), Modell claude-opus-5-5. Prompt: Arbeitsaufträge im Chat, je Dokument an einen Subagenten delegiert; nicht im Repository versioniert (Abweichung von PB §13). Eingaben: Folientexte B1–B3, Projektbeschreibung v3, vorläufiges Klassendiagramm des Teams (Foto). |
 | Ergebnis | Mit Claude Code erstellt bzw. nachgearbeitet (Tabelle unten). |
 | Kritische Bewertung | _[vom Team auszufüllen]_ |
@@ -91,7 +91,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 
 ### Prüfhinweise zu REQUIREMENTS.md
 
-Stellen, an denen Claude Code Werte ohne Auftraggeberquelle gesetzt oder Teamentscheidungen vorweggenommen hat. Wo REQUIREMENTS.md „Teamanalyse“ oder „Einschätzung des Teams“ schreibt (Abschnitte 1.1, 2.1), stammt der Entwurf aus diesem Fall; die Bezeichnung trifft erst nach Prüfung durch das Team zu.
+Stellen, an denen Claude Code Werte ohne Auftraggeberquelle gesetzt oder Teamentscheidungen vorweggenommen hat.
 
 1. **A-01 Albumname 1–50 Zeichen** (FA-01, AK-01.3, AK-01.4): 50 ist ein Folienbeispiel (B3 F7, Codebeispiel B3 F13), kein Auftraggeberwert; PB §5.2 verlangt einen definierten Wert vom Auftraggeber. Offen als F-02.
 2. **A-02 Beschreibung höchstens 100 Zeichen, getrennt vom Titel** (FA-07, AK-07.4, AK-07.5): B2 F31 nennt 100 nur für den Titel. Der Wert für die Beschreibung ist übertragen (Titel; KI-Beispiel B2 F37); getrennte Felder stützen sich auf B3 F20 und das nur vorläufige Team-Klassendiagramm. Offen als F-02.

@@ -12,11 +12,12 @@
 | 6 | Change Request und Refactoring | Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md), Coverage-Interpretation, [REFACTORING.md](docs/REFACTORING.md) und Umsetzung des Change Requests; Release `v1.1.0` | `block-6` | ☐ |
 | 7 | Risiken und Präsentation | [RISK_ANALYSIS.md](RISK_ANALYSIS.md), begründete Release-Entscheidung und Abschlusspräsentation | `final` nach Block 7 | ☐ |
 
-Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vorgesehen. Releases werden nach Semantic Versioning getaggt und in [CHANGELOG.md](CHANGELOG.md) dokumentiert.
+Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vorgesehen. Releases werden nach Semantic Versioning getaggt und in [CHANGELOG.md](CHANGELOG.md) dokumentiert. Bewertet wird der Stand an jedem Block-Tag; verbindliche Abgabe ist `final` (PB §3).
 
 ## Nächste gemeinsame Schritte
 
 - [x] Teammitglieder und Teamnamen „Commitment Issues“ festhalten.
+- [x] Für Block 2 Stakeholder, Systemgrenze, Anforderungen und offene Fragen an die Auftraggeberin in [REQUIREMENTS.md](REQUIREMENTS.md) sammeln.
 - [ ] Weitere Aufgabenverteilung gemeinsam festlegen: Rangfolge der [Entwicklungsbereiche](#entwicklungsbereiche-zum-aussuchen); Felix übernimmt Git-Maintenance.
 - [ ] Vorgehensvorschlag besprechen und Entscheidung mit Begründung festhalten (Vorschlag in der [README](README.md#vorgehensentscheidung): Kanban-Fluss).
 - [ ] Über die Nutzung eines Aufgabenboards entscheiden.
@@ -31,7 +32,7 @@ Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vor
 ## Leitlinien
 
 - Grundlage ist allein die [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md). Jedes Paket erfüllt eine Vorgabe oder bringt Punkte (PB §16, §18). Extras lassen wir weg (PB §2).
-- Die Arbeit ist unabhängig von der Vorlesung. Es gibt keine Termine, nur eine Reihenfolge: so schnell wie möglich, Pausen gehen jederzeit.
+- Wir richten uns nach der Projektbeschreibung, nicht nach dem Vorlesungsfortschritt. Im Plan stehen keine Termine, nur eine Reihenfolge: so schnell wie möglich, Pausen gehen jederzeit.
 - Erst der Kern, dann die Oberfläche: Domäne, Use Cases und Speicherung entstehen komplett mit Tests. Danach bauen wir eine Swing-Oberfläche mit KI.
 - Alle stehen in der Git-Historie (PB §3): Jede Person entwickelt einen eigenen Bereich und reviewt die PRs der anderen.
 
@@ -52,11 +53,11 @@ Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vor
   - Sobald der Change Request bekannt ist, zuerst die Impact Analysis schreiben.
   - Refactoring nur mit grünen Tests.
   - Change Request umsetzen; eine ehrlich dokumentierte Teilumsetzung ist in Ordnung (PB §11).
-  - Danach `v1.1.0`.
+  - Rückblick in CHANGE_REQUEST.md (geschätzter vs. tatsächlicher Aufwand, Überraschungen), danach `v1.1.0`.
 - **Block 7:**
   - Risikoanalyse und Release-Entscheidung.
   - Präsentation: 10 Minuten, höchstens 8 Folien, PDF in `docs/presentation/`. Sie beantwortet die sechs Fragen aus PB §16.2, jede Person übernimmt eine davon und kann jeden Bereich erklären.
-  - AGENTS.md gemeinsam abstimmen und aufnehmen (bis dahin lokal laut `.gitignore`).
+  - AGENTS.md und CLAUDE.md gemeinsam abstimmen und aufnehmen (bis dahin lokal laut `.gitignore`).
   - README fertigstellen, Checkliste PB §18 abarbeiten, dann `final`.
 
 ## Entwicklungsbereiche zum Aussuchen
@@ -69,7 +70,7 @@ Jede Person gibt im Abstimmungs-Issue eine Rangfolge ab. Bei Gleichstand einigen
 | 2 Foto hinzufügen | UC-01, Hash-Adapter | Grenzwertanalyse, Security-Tests |
 | 3 Löschen & Entfernen | UC-02, Foto entfernen | Entscheidungstabelle, Integrationstest Löschen |
 | 4 Speicherung & Beschreiben | Datei-Adapter mit Speicherformat, Foto beschreiben | Integrationstest Speicherfehler, Regression beim Change Request |
-| 5 Alben & Oberfläche | Album erstellen/anzeigen/umbenennen, Main; am Ende die Swing-Oberfläche | Usability-Test, Performance |
+| 5 Alben & Oberfläche | Album erstellen/anzeigen/umbenennen, Foto anzeigen, Main; am Ende die Swing-Oberfläche | Usability-Test, Performance |
 
 **Zusätzlich übernimmt jede Person eine dieser Aufgaben:**
 - TESTING.md zusammenführen
@@ -78,16 +79,18 @@ Jede Person gibt im Abstimmungs-Issue eine Rangfolge ab. Bei Gleichstand einigen
 - Risikoanalyse und Release-Entscheidung
 - Präsentations-PDF
 
-**Felix** ist Git-Maintainer, Product Owner und Kontakt zur Dozentin. Jedes Release setzt eine andere Person.
+**Felix** ist Git-Maintainer; Product Owner und Kontakt zur Dozentin sind ein Vorschlag. Jedes Release setzt eine andere Person.
 
 ## Arbeitsweise
 
-- **Ablauf (PB §9):** Issue → Branch → Pull Request → Review → CI → Merge. Commits sind konventionell und nennen eine Anforderungs- oder Issue-ID. Jede Person macht mindestens ein Code Review.
+> **Vorschlag, vom Team zu bestätigen.** Ablauf je Änderung und Label siehe [README](README.md#ablauf-je-änderung).
+
+- Jede Person macht mindestens ein Code Review (PB §9).
 - **Fertig heißt:**
   - Die Akzeptanzkriterien sind im selben PR als Tests umgesetzt: Normal-, Fehler- und Grenzfall. Der Fehlerfall prüft, dass der Zustand unverändert bleibt. Die AK-ID steht im Testnamen.
   - Diagramme und ARCHITECTURE.md sind nachgezogen.
   - Die CI ist grün.
-- **KI (PB §13):** KI-unterstützte PRs bekommen das Label `ai-assisted`. Jeder größere KI-Einsatz wird ein Fall in AI_USAGE.md: mindestens 3 Fälle, davon mindestens einer begründet verworfen. Prompts liegen im Repo.
+- **KI (PB §13):** Jeder größere KI-Einsatz wird ein Fall in [AI_USAGE.md](ai_usage/AI_USAGE.md) nach den Regeln dort.
 - **Regeln:**
   - Freigeben darf nur, wer im PR nichts committet hat. Gemergt wird per Merge-Commit.
   - Wer pausiert, schreibt eine Notiz ins Issue und schiebt das Paket zurück nach To do.

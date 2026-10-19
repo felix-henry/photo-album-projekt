@@ -24,7 +24,7 @@ Vorgehen nach Folie 28: Veränderungsdruck → konkretes Problem → Lösung ohn
 | `AlbumRepository`: `save`, `findById`, `findAll`, `delete` | `FileAlbumRepository` | Dateisystem (`java.nio.file`) + Speicherformat (Folienbeispiel JSON, B3 F8; festgelegt in Block 4) | Album ↔ Datei im dokumentierten Format (PB §6); `IOException` → fachlicher Speicherfehler | `InMemoryAlbumRepository` (F8, F9) |
 | `PhotoStorage`: `store(file, key)`, `read(key)`, `delete(key)` | `FileSystemPhotoStorage` | Dateisystem | Bildkopie unter einem Schlüssel ablegen und löschen; der Zielpfad kommt aus dem Schlüssel, nie aus dem Dateinamen der Nutzerin | In-Memory-Fake |
 | `ImageHasher`: `validate(file)`, `hash(file)` | `Sha256ImageHasher` | `java.security.MessageDigest` | Dateiinhalt → Hash-String; Dateityp und Größe ermitteln (CRC F18) | Fake mit festen Hashes |
-| `DescriptionSuggester` (nur falls KI-Funktion) | z. B. `OpenAiSuggester` | HTTP-Client/SDK | Guardrails: Metadaten entfernen, Timeout, Ausgabe prüfen (F10, F32) | `FakeSuggester` (F32) |
+| `DescriptionSuggester` (nur Entwurf, ADR-005) | z. B. `ClaudeDescriptionSuggester` | HTTP-Client/SDK | Guardrails: Metadaten entfernen, Timeout, Ausgabe prüfen (F10, F32) | `FakeSuggester` (F32) |
 
 **Regeln:**
 - Der Port hat Fachnamen (`save`, `store`) statt Technik.

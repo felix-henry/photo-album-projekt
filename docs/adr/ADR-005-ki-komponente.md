@@ -22,4 +22,4 @@
 ## Konsequenzen
 
 - \+ kein externer Dienst, keine Fotos verlassen den Rechner (KI-01)
-- − das Evaluation Set (PB §10, Pflicht auch für eine nur entworfene KI-Funktion) lässt sich nur gegen den `FakeSuggester` bzw. manuell prüfen
+- − das Evaluation Set (PB §10, Pflicht auch für eine nur entworfene KI-Funktion) lässt sich in v1 nur manuell prüfen

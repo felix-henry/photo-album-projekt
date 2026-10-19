@@ -125,6 +125,9 @@ Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn
 
 ## Build, Tests und Start
 
+> [!NOTE]
+> Projektgerüst und Build sind eingerichtet; CI und eine veröffentlichte Version gibt es noch nicht.
+
 Voraussetzung ist Java 21. Maven wird über den Wrapper geladen, eine eigene Installation ist nicht nötig.
 
 ```bash
