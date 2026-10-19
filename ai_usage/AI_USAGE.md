@@ -5,7 +5,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 ## Regeln (PB §13; B2 F36, F43)
 
 - Je Fall fünf Felder: **Aufgabe/Ziel** (was, in welchem Block) · **Werkzeug/Modell** (Produkt und Modellkennung; Prompt oder Skill versioniert im Repository unter `ai_usage/prompts/`) · **Ergebnis** (Kurzfassung oder Link) · **Kritische Bewertung** (was richtig, falsch, erfunden – woran erkannt?) · **Entscheidung** (übernommen / angepasst / verworfen – mit Begründung).
-- Mindestens 3 substanzielle Fälle (empfohlen 5, einer je Block 2–6), davon mindestens 1 begründet verworfener Vorschlag.
+- Mindestens 3 substanzielle Fälle, davon mindestens 1 begründet verworfener Vorschlag (PB §13).
 - KI darf fragen, nicht entscheiden; keine Zahl der KI ohne Quelle übernehmen (B2 F36). Die Verantwortung für das Ergebnis bleibt beim Team; bewertet wird die transparente, kritische Bewertung, nicht die Menge der KI-Nutzung (PB §13).
 
 ## Übersicht
@@ -13,8 +13,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 | Fall | Block | Aufgabe | Werkzeug/Modell | Prompt/Skill | Entscheidung | Status |
 |---|---|---|---|---|---|---|
 | 1 | 2 | „Grill me“ zu REQUIREMENTS.md | vom Team einzutragen | [prompts/grill-me.md](prompts/grill-me.md) v1 | offen; mind. ein Vorschlag ist begründet zu verwerfen (B2 F44) | ausstehend: Durchlauf durch das Team |
-| 2 | 3 | KI-Review des Klassendiagramms (Hausaufgabe B3 F50) | Claude Code, Subagent (claude-sonnet-5-5) | [prompts/klassendiagramm-review.md](prompts/klassendiagramm-review.md) v1 | 1 übernommen, 1 angepasst, 1 verworfen, 2 offen (Vorschlag, vom Team zu bestätigen) | durchgeführt 19.10.2026 |
-| 3 | 1–3 | Nacharbeit der Artefakte aus Block 1–3 (Tabelle in Fall 3) | Claude Code, claude-opus-5-5 | Arbeitsaufträge im Chat, nicht versioniert | offen | ausstehend: Bewertung durch das Team |
+| 2 | 2 | Nacharbeit der Artefakte aus Block 2 (Tabelle in Fall 2) | Claude Code, claude-opus-5-5 | Arbeitsaufträge im Chat, nicht versioniert | offen | ausstehend: Bewertung durch das Team |
 
 ---
 
@@ -46,33 +45,11 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 
 ---
 
-## Fall 2 – KI-Review des Klassendiagramms (Hausaufgabe B3 F50)
+## Fall 2 – Nacharbeit mit Claude Code (Modell claude-opus-5-5)
 
 | Feld | Inhalt |
 |---|---|
-| Aufgabe/Ziel | Block 3: Klassendiagramm v1 nach den drei Review-Checks aus B3 F48 prüfen lassen (Regel-, Konsistenz-, Kopplungs-Check); einen Vorschlag übernehmen, einen verwerfen (B3 F50). Durchgeführt am 19.10.2026. |
-| Werkzeug/Modell | Claude Code, Subagent mit Modell claude-sonnet-5-5 · Prompt: [prompts/klassendiagramm-review.md](prompts/klassendiagramm-review.md) v1 · Kontext: `docs/design/klassendiagramm.puml`, `docs/design/sequenz-foto-hinzufuegen.puml`, REQUIREMENTS.md §3, §6, §7 (Stand 19.10.2026) |
-| Ergebnis | Regel-Check: FA-01, FA-05, FA-06 in `Album`, FA-07 in `Photo`, FA-04 in `ImageHasher.validate`; keine Regel in der UI. Konsistenz-Check: jede Nachricht hat eine Operation, aber die geworfenen Exceptions fehlen im Klassendiagramm. Kopplungs-Check: `AddPhotoUseCase` hat 6 Abhängigkeiten, begründet als Koordinator; keine Abhängigkeit zeigt nach außen. Fünf Vorschläge (Tabelle unten). |
-| Kritische Bewertung | Die Checks sind sachlich richtig und bleiben im gegebenen Kontext; nichts erfunden. Vorschlag 2 begründet die Teilung mit der Kopplung von `AddPhotoUseCase` – das ist falsch: Ein zusätzlicher Port erhöht dessen Abhängigkeiten von 6 auf 7. Vorschlag 4 verkennt, dass das Diagramm laut B3 F47 nur „entscheidungsrelevante Methoden“ zeigen soll; die übrigen Use Cases stehen in ARCHITECTURE.md §1. |
-| Entscheidung | siehe Tabelle |
-
-| Nr | Vorschlag der KI | Entscheidung | Begründung |
-|---|---|---|---|
-| 1 | FA-04-Grenzwerte sichtbar machen oder in die Domäne ziehen | offen (Team) | Die Folie gibt die Prüfung bewusst `ImageHasher` (B3 F18); ob die Grenzwerte in die Domäne wandern, entscheidet das Team. Als offener Punkt in ADR-002 notiert. |
-| 2 | `ImageHasher` in zwei Ports teilen | **verworfen** | Die CRC-Karte auf B3 F18 gibt `ImageHasher` bewusst beide Aufgaben (Hash berechnen, Typ und Größe prüfen); beide betreffen dieselbe gewählte Datei (Kohäsion, B3 F11). Teilen erhöht die Kopplung von `AddPhotoUseCase` statt sie zu senken und erzeugt einen Port ohne benanntes Änderungsszenario (B3 F34). |
-| 3 | Exceptions ins Klassendiagramm aufnehmen | **übernommen** | Sequenzdiagramm nutzt `InvalidImageException`, `DuplicatePhotoException`, `AlbumFullException`; Konsistenz-Check B3 F48. Ergänzt in `klassendiagramm.puml` (mit `<<throw>>`-Abhängigkeiten). |
-| 4 | Use Cases für FA-01, FA-02, FA-07, FA-08 zeigen | angepasst | nicht ins Diagramm (B3 F47: nur entscheidungsrelevante Methoden); in ARCHITECTURE.md §1 als „gleiches Muster, Block 4“ genannt. |
-| 5 | Port/Operation für Löschprotokoll (NFA-04) | offen (Team) | deckt sich mit offenem Punkt S-2 in ARCHITECTURE.md §8. |
-
-**Begründet verworfener Vorschlag:** Nr. 2 (siehe Tabelle).
-
----
-
-## Fall 3 – Nacharbeit mit Claude Code (Modell claude-opus-5-5)
-
-| Feld | Inhalt |
-|---|---|
-| Aufgabe/Ziel | Blöcke 1–3: Nacharbeit der Artefakte aus Block 1 und 2 und der Übungen aus Block 3 bis F30 (09.10.2026); Block-3-Artefakte aus B3 F45–F50 (19.10.2026). Vorgaben an die KI: nur Folieninhalt bis zum jeweiligen Stand (B3 F30 am 09.10., B3 F50 am 19.10.) und Projektbeschreibung; konkrete Werte nur mit Quelle; Folienbeispiele als Beispiel/Annahme kennzeichnen; Teamentscheidungen als Vorschlag; SOPHIST-Satzschablonen (B2 F23). |
+| Aufgabe/Ziel | Block 2: Nacharbeit der Artefakte aus Block 2 (09.10.2026, überarbeitet 19.10.2026). Vorgaben an die KI: nur Folieninhalt und Projektbeschreibung; konkrete Werte nur mit Quelle; Folienbeispiele als Beispiel/Annahme kennzeichnen; Teamentscheidungen als Vorschlag; SOPHIST-Satzschablonen (B2 F23). |
 | Werkzeug/Modell | Claude Code (Anthropic), Modell claude-opus-5-5. Prompt: Arbeitsaufträge im Chat, je Dokument an einen Subagenten delegiert; nicht im Repository versioniert (Abweichung von PB §13). Eingaben: Folientexte B1–B3, Projektbeschreibung v3, vorläufiges Klassendiagramm des Teams (Foto). |
 | Ergebnis | Mit Claude Code erstellt bzw. nachgearbeitet (Tabelle unten). |
 | Kritische Bewertung | _[vom Team auszufüllen]_ |
@@ -80,14 +57,9 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 
 | Artefakt | Ort | Bezug |
 |---|---|---|
-| README mit Vorgehensvorschlag | `README.md` | B1; PB §3 |
 | Anforderungen v1 | `REQUIREMENTS.md` | PB §7; B2 |
 | UI-Prototyp der zwei Use Cases | `docs/prototyp/` | B2 F44 |
-| CRC-Karten | `docs/design/` | B3 F19 |
-| Pattern-Bewertung | `docs/design/pattern-bewertung.md` | B3 F27–F34 |
-| Sequenzdiagramm „Album löschen“ | `docs/design/` | B3 F25 |
 | AI_USAGE.md (Struktur, Fall 1 als Vorlage), „Grill me“-Prompt | `ai_usage/AI_USAGE.md`, `ai_usage/prompts/grill-me.md` | PB §13; B2 F36, F43 |
-| ARCHITECTURE.md, Klassendiagramm, Sequenzdiagramm „Foto hinzufügen“, ADR-001 bis ADR-005, Projektgerüst (19.10.2026) | `ARCHITECTURE.md`, `docs/design/`, `docs/adr/`, `pom.xml`, `src/` | PB §8; B3 F45–F50 |
 
 ### Prüfhinweise zu REQUIREMENTS.md
 

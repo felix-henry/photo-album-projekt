@@ -7,7 +7,7 @@ Verbindlichkeit nach B2 F24: **muss** = Abnahmekriterium, **sollte** = gewünsch
 
 ## 1 Stakeholder und Systemgrenze (B2 F7–F9)
 
-### 1.1 Stakeholder (Interesse/Einfluss: KI-Entwurf aus AI_USAGE Fall 3, vom Team zu prüfen)
+### 1.1 Stakeholder (Interesse/Einfluss: KI-Entwurf aus AI_USAGE Fall 2, vom Team zu prüfen)
 
 | Stakeholder | Interesse | Einfluss | Anforderung, die nur dieser Stakeholder stellt | Quelle |
 |---|---|---|---|---|
@@ -50,7 +50,7 @@ flowchart LR
 | Schnittstelle | Dateisystem / Speicher | Datei nicht lesbar, Speicher nicht beschreibbar | FA-04, FA-10, NFA-02, NFA-04 | B2 F8; PB §6 |
 | Schnittstelle | KI-Dienst (optional) | Dienst antwortet nicht, Prompt Injection | KI-00 bis KI-03 | B2 F8, F37, F39 |
 | Außerhalb (Mensch) | Nutzer:in, Datenschutzbeauftragte:r | – | Abschnitt 1.1 | B2 F8 |
-| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (UI: Swing, Teamentscheidung) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
+| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (Oberfläche laut PB §6: JavaFX, Swing oder Konsole) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
 
 ---
 
@@ -58,7 +58,7 @@ flowchart LR
 
 ### 2.1 Use-Case-Diagramm, korrigiert (B2 F12, F13)
 
-Befunde = KI-Entwurf (AI_USAGE Fall 3), vom Team zu prüfen; die Auflösung aus dem Plenum liegt nicht vor.
+Befunde = KI-Entwurf (AI_USAGE Fall 2), vom Team zu prüfen; die Auflösung aus dem Plenum liegt nicht vor.
 
 | Befund am Diagramm „Stand nach Block 1“ | Korrektur | Quelle |
 |---|---|---|
@@ -121,7 +121,7 @@ Erweiterungspunkt nach Schritt 5: „Beschreibung per KI vorschlagen“ (KI-00, 
 
 ### 2.3 UC-02 Album löschen (zweiter Use Case, Vorschlag T-01)
 
-Grundlage: Auftraggeber-Entscheidung AE-04 (B3 F25) und das Sequenzdiagramm „Album löschen“ (Übung B3 F25).
+Grundlage: Auftraggeber-Entscheidung AE-04 (B3 F25).
 
 | Feld | Inhalt |
 |---|---|
@@ -176,13 +176,13 @@ Grundlage: Auftraggeber-Entscheidung AE-04 (B3 F25) und das Sequenzdiagramm „A
 
 Werte sind Folienbeispiele (B2 F17, F25) und als Startwerte vorgeschlagen (T-05).
 
-| ID | Merkmal | Anforderung | Messgröße | Bedingung | Konsequenz Architektur / Test |
-|---|---|---|---|---|---|
-| NFA-01 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System die Albumansicht innerhalb von 2 s nach dem Öffnen vollständig anzeigen. | Zeit Öffnen → vollständige Anzeige ≤ 2 s | 100 Fotos bis je 20 MB; Referenzgerät (A-08) | Vorschaubilder als mögliche Optimierung offen (B3 F10; ARCHITECTURE §2) / Performance-Messung (PB §10) |
-| NFA-02 | Zuverlässigkeit | Wenn das Hinzufügen eines Fotos oder das Löschen eines Albums abbricht, muss das System das Album nach einem Neustart im Zustand vor oder vollständig nach der Aktion laden. | Teilzustände in Abbruchtests = 0 | Lese-/Schreibfehler oder Beenden der Anwendung während des Speicherns | erst prüfen, dann speichern, dann Album ändern (B3 F10) / Fehlerfall-Tests prüfen unveränderten Zustand (PB §10) |
-| NFA-03 | Wartbarkeit (Testbarkeit) | Das System muss die Geschäftsregeln aus FA-01, FA-05, FA-06 und FA-07 in genau einem Modul prüfen; die Unit-Tests dieser Regeln müssen ohne UI und Dateisystem in weniger als 30 s durchlaufen. | Module mit Regelprüfung = 1; Laufzeit der Unit-Tests < 30 s | Tests ohne UI und Dateisystem; Referenzgerät | Regeln in der Domäne (B3 F7) / Unit-Tests ohne Infrastruktur (PB §10) |
-| NFA-04 | Sicherheit / Datenschutz | Wenn die Nutzerin ein Foto entfernt oder ein Album löscht, muss das System die gespeicherten Bilddateien innerhalb von 24 h aus dem Dateisystem entfernen und je entfernter Datei einen Protokolleintrag schreiben. | Zeit bis Entfernen ≤ 24 h; ein Protokolleintrag je Löschung | auch wenn das erste Löschen einer Datei fehlschlägt (UC-02 4b) | Dateizugriff hinter Port PhotoStorage mit delete (B3 F25; Team-KD) / Integrationstest prüft Datei und Protokoll |
-| NFA-05 | Benutzbarkeit | Das System muss der Nutzerin die Möglichkeit bieten, ohne Anleitung innerhalb von 60 s ein Album anzulegen. | ≥ 8 von 10 Testpersonen schaffen es | Testpersonen aus der Zielgruppe (PB §1), erster Kontakt mit der Anwendung | Bedienbarkeit der Use Cases (PB §4) / Usability-Test protokolliert (PB §10) |
+| ID | Merkmal | Anforderung | Messgröße | Bedingung |
+|---|---|---|---|---|
+| NFA-01 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System die Albumansicht innerhalb von 2 s nach dem Öffnen vollständig anzeigen. | Zeit Öffnen → vollständige Anzeige ≤ 2 s | 100 Fotos bis je 20 MB; Referenzgerät (A-08) |
+| NFA-02 | Zuverlässigkeit | Wenn das Hinzufügen eines Fotos oder das Löschen eines Albums abbricht, muss das System das Album nach einem Neustart im Zustand vor oder vollständig nach der Aktion laden. | Teilzustände in Abbruchtests = 0 | Lese-/Schreibfehler oder Beenden der Anwendung während des Speicherns |
+| NFA-03 | Wartbarkeit (Testbarkeit) | Das System muss die Geschäftsregeln aus FA-01, FA-05, FA-06 und FA-07 in genau einem Modul prüfen; die Unit-Tests dieser Regeln müssen ohne UI und Dateisystem in weniger als 30 s durchlaufen. | Module mit Regelprüfung = 1; Laufzeit der Unit-Tests < 30 s | Tests ohne UI und Dateisystem; Referenzgerät |
+| NFA-04 | Sicherheit / Datenschutz | Wenn die Nutzerin ein Foto entfernt oder ein Album löscht, muss das System die gespeicherten Bilddateien innerhalb von 24 h aus dem Dateisystem entfernen und je entfernter Datei einen Protokolleintrag schreiben. | Zeit bis Entfernen ≤ 24 h; ein Protokolleintrag je Löschung | auch wenn das erste Löschen einer Datei fehlschlägt (UC-02 4b) |
+| NFA-05 | Benutzbarkeit | Das System muss der Nutzerin die Möglichkeit bieten, ohne Anleitung innerhalb von 60 s ein Album anzulegen. | ≥ 8 von 10 Testpersonen schaffen es | Testpersonen aus der Zielgruppe (PB §1), erster Kontakt mit der Anwendung |
 
 ---
 
@@ -274,11 +274,11 @@ Fall: N = Normalfall, F = Fehlerfall, G = Grenzfall, G/F = Grenzfall, der zuglei
 
 | ID | Vorschlag | Begründung |
 |---|---|---|
-| T-01 | Zweiter Use Case ist „Album löschen“ (UC-02). | Auftraggeber-Entscheidung liegt vor (B3 F25), Sequenzdiagramm ist erarbeitet; irreversible Aktion mit Abbruch- und Fehlerpfad. |
+| T-01 | Zweiter Use Case ist „Album löschen“ (UC-02). | Auftraggeber-Entscheidung liegt vor (B3 F25); irreversible Aktion mit Abbruch- und Fehlerpfad. |
 | T-02 | KI-Funktion „Beschreibung per KI vorschlagen“ = **wird** (nicht in v1). Alternative: **sollte**, dann Spezifikation nach den sechs Aspekten aus B2 F37. | KI-Funktionen sind optional (B2 F37; PB §8); Zusatzfeatures verbessern die Bewertung nicht (PB §2). |
 | T-03 | Keine Komfortfunktionen (Sortierung, Suche) als FA in v1. | Komfort ist höchstens „sollte“, bewertet wird nur „muss“ (B2 F24); PB §2; Obergrenze 10 FA. |
 | T-04 | Auch „Foto entfernen“ fragt nach (FA-08). | Entfernen löscht die gespeicherte Kopie (A-06), ist also irreversibel; analog AE-04; Formulierung nach B2 F26. |
-| T-05 | NFA-Werte = Folienbeispiele (B2 F17, F25) als Startwerte. | Keine Auftraggeber-Werte vorhanden; alle Werte sind in Block 5 messbar (PB §10). |
+| T-05 | NFA-Werte = Folienbeispiele (B2 F17, F25) als Startwerte. | Keine Auftraggeber-Werte vorhanden; alle Werte sind messbar (PB §10). |
 
 ---
 
@@ -332,7 +332,7 @@ listPhotos(albumId) liefert IDs und Titel, nie Dateipfade (B2 F40). Abgleich mit
 | Datenschutz / Betrieb | UC-02 4b; Foto entfernen | NFA-04 | AK-N04.1 |
 | Nutzer:innen | Album erstellen | NFA-05 | AK-N05.1 |
 
-NFA-01 bis NFA-05: Zuordnung zu Stakeholdern in 1.1; Akzeptanzkriterien AK-N01.1 bis AK-N05.1; gemessen in Block 5 (PB §10).
+NFA-01 bis NFA-05: Zuordnung zu Stakeholdern in 1.1; Akzeptanzkriterien AK-N01.1 bis AK-N05.1; gemessen nach PB §10.
 
 ---
 
