@@ -58,7 +58,6 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 | Artefakt | Ort | Bezug |
 |---|---|---|
 | Anforderungen v1 | `REQUIREMENTS.md` | PB §7; B2 |
-| UI-Prototyp der zwei Use Cases | `docs/prototyp/` | B2 F44 |
 | AI_USAGE.md (Struktur, Fall 1 als Vorlage), „Grill me“-Prompt | `ai_usage/AI_USAGE.md`, `ai_usage/prompts/grill-me.md` | PB §13; B2 F36, F43 |
 
 ### Prüfhinweise zu REQUIREMENTS.md
