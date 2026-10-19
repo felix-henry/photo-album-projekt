@@ -1,0 +1,132 @@
+@startuml klassendiagramm
+' Klassendiagramm Photo Album v1 (Block 3, B3 F47 Auftrag 2)
+' Domäne + Anwendung + Ports, nur entscheidungsrelevante Methoden.
+' Grundlage: CRC-Karten (crc-karten.md), Änderungen K-1 bis K-9 gegenüber dem vorläufigen Team-Klassendiagramm.
+' Regelwerte (100, 50, 100 Zeichen) sind vorläufig: AE-01, AE-02, A-01, A-02 in REQUIREMENTS.md.
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "application" {
+  class AddPhotoUseCase {
+    + execute(albumId: AlbumId, file: Path): Result
+  }
+  class DeleteAlbumUseCase {
+    + execute(albumId: AlbumId): Result
+  }
+  class Result {
+    + {static} ok(): Result
+    + {static} error(reason: String): Result
+  }
+  interface DescriptionSuggester <<port>> {
+    + suggest(image: Path): Optional<String>
+  }
+  interface AlbumRepository <<port>> {
+    + save(album: Album)
+    + findById(id: AlbumId): Optional<Album>
+    + findAll(): List<Album>
+    + delete(id: AlbumId)
+  }
+  interface PhotoStorage <<port>> {
+    + store(file: Path, key: String)
+    + read(key: String): InputStream
+    + delete(key: String)
+  }
+  class InvalidImageException <<exception>>
+  interface ImageHasher <<port>> {
+    + validate(file: Path)
+    + hash(file: Path): String
+  }
+}
+
+package "domain" {
+  class Album {
+    + {static} MAX_PHOTOS: int = 100
+    + {static} MAX_NAME_LENGTH: int = 50
+    - id: AlbumId
+    - name: String
+    - photos: List<Photo>
+    + Album(id: AlbumId, name: String)
+    + addPhoto(photo: Photo)
+    + removePhoto(id: PhotoId)
+    + rename(name: String)
+    + photos(): List<Photo>
+    + storageKeys(): List<String>
+  }
+  class Photo {
+    + {static} MAX_TEXT_LENGTH: int = 100
+    - id: PhotoId
+    - hash: String
+    - storageKey: String
+    - title: String
+    - description: String
+    + Photo(id: PhotoId, hash: String, storageKey: String)
+    + describe(title: String, description: String)
+    + hash(): String
+    + storageKey(): String
+  }
+  class AlbumId <<record>> {
+    + {static} newId(): AlbumId
+  }
+  class PhotoId <<record>> {
+    + {static} newId(): PhotoId
+  }
+  class InvalidAlbumNameException <<exception>>
+  class AlbumFullException <<exception>>
+  class DuplicatePhotoException <<exception>>
+  class InvalidTextException <<exception>>
+}
+
+package "infrastructure" {
+  class FileAlbumRepository
+  class FileSystemPhotoStorage
+  class Sha256ImageHasher
+  class ClaudeDescriptionSuggester
+}
+
+Album "1" *-- "0..100" Photo : enthält >
+Album --> AlbumId
+Photo --> PhotoId
+Album ..> InvalidAlbumNameException : <<throw>>
+Album ..> AlbumFullException : <<throw>>
+Album ..> DuplicatePhotoException : <<throw>>
+Photo ..> InvalidTextException : <<throw>>
+ImageHasher ..> InvalidImageException : <<throw>>
+
+AddPhotoUseCase ..> AlbumRepository : <<use>>
+AddPhotoUseCase ..> ImageHasher : <<use>>
+AddPhotoUseCase ..> PhotoStorage : <<use>>
+AddPhotoUseCase ..> Album : <<use>>
+AddPhotoUseCase ..> Photo : <<create>>
+AddPhotoUseCase ..> Result : <<create>>
+
+DeleteAlbumUseCase ..> AlbumRepository : <<use>>
+DeleteAlbumUseCase ..> PhotoStorage : <<use>>
+DeleteAlbumUseCase ..> Album : <<use>>
+DeleteAlbumUseCase ..> Result : <<create>>
+
+AlbumRepository ..> Album
+
+FileAlbumRepository ..|> AlbumRepository
+FileSystemPhotoStorage ..|> PhotoStorage
+Sha256ImageHasher ..|> ImageHasher
+ClaudeDescriptionSuggester ..|> DescriptionSuggester
+
+note right of DescriptionSuggester
+  KI-Komponente nur entworfen (Won't, ADR-005);
+  Guardrails im Adapter, FakeSuggester in Tests.
+end note
+
+note bottom of Album
+  Geschäftsregeln (FA-01, FA-05, FA-06):
+  Name nicht leer, höchstens 50 Zeichen;
+  höchstens 100 Fotos; kein Foto mit gleichem Hash.
+  Verstoß = fachliche Exception (B3 F13).
+end note
+
+note bottom of Photo
+  FA-07: Titel und Beschreibung
+  je höchstens 100 Zeichen, optional.
+end note
+@enduml
