@@ -25,7 +25,7 @@ Wir entwickeln eine kleine Anwendung, mit der Jugendliche und junge Erwachsene F
 | Pit | [GamerO815](https://github.com/GamerO815) |
 | Felix | [felix-henry](https://github.com/felix-henry) |
 
-Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
+Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen und wird nach den erarbeiteten Anforderungen festgelegt. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
 
 **Dozentin und Auftraggeberin:** Ana ([dragoana25](https://github.com/dragoana25)).
 
@@ -55,13 +55,13 @@ Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos 
 
 ## Vorgehen und Zusammenarbeit
 
-Das Vorgehensmodell ist noch offen.
+Wir nutzen **Kanban**, um Aufgaben und ihren Bearbeitungsstand auf unserem [Kanban-Board](https://photoalbum-kanban.vercel.app) sichtbar zu machen. Das passt zu unserer Abstimmung nach Bedarf und ermöglicht es, Prioritäten nach Feedback anzupassen. Die Blockabgaben bleiben unsere festen Meilensteine.
 
 Für Änderungen ist folgender Ablauf vorgegeben:
 
 **Issue → Branch → Pull Request → Review → CI → Merge**
 
-Der Schutz von `main` ist noch zu prüfen. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
+Der technische Schutz von `main` ist für unser privates Repository mit GitHub Free nicht verfügbar. Den PR- und Review-Ablauf halten wir daher als Teamvereinbarung ein. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 ## 🗺️ Projektplanung
 
