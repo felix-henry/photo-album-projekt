@@ -50,7 +50,7 @@ flowchart LR
 | Schnittstelle | Dateisystem / Speicher | Datei nicht lesbar, Speicher nicht beschreibbar | FA-04, FA-10, NFA-02, NFA-04 | B2 F8; PB §6 |
 | Schnittstelle | KI-Dienst (optional) | Dienst antwortet nicht, Prompt Injection | KI-00 bis KI-03 | B2 F8, F37, F39 |
 | Außerhalb (Mensch) | Nutzer:in, Datenschutzbeauftragte:r | – | Abschnitt 1.1 | B2 F8 |
-| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (UI ist JavaFX, Swing oder Konsole) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
+| Bewusst außerhalb | Druck-/Bezahldienst; Anmeldung, Cloud, Chat, Datenbank; mobile App (UI ist Swing, PB §6) | nicht verpflichtend, in v1 nicht vorgesehen (Teamvorschlag) | – | B2 F8; PB §6 |
 
 ---
 

@@ -45,72 +45,33 @@ Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos 
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven oder Gradle mit Wrapper; Auswahl offen |
-| Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
+| Build und Abhängigkeiten | Maven mit Wrapper (Vorschlag, [ADR-004](docs/adr/ADR-004-build-maven.md)) |
+| Oberfläche | Swing; kommt am Ende, wenn Kern und Use Cases stehen |
 | Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
 | Automatisierte Tests | JUnit 5 |
 | Coverage | JaCoCo |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
-| CI | Build und Tests bei jedem Pull Request; Anbieter und Konfiguration offen |
+| CI | Build und Tests bei jedem Pull Request; geplant mit GitHub Actions |
 
 ## Vorgehen und Zusammenarbeit
 
-### Vorgehensentscheidung (Block 1)
+### Vorgehensentscheidung
 
 > **Vorschlag, vom Team zu bestätigen.**
 
-#### Ausgangslage
+Wir arbeiten **iterativ-inkrementell im Kanban-Fluss**: ein Board mit begrenzter paralleler Arbeit, keine festen Sprints. Die Tags `block-1` … `final` sind Lieferstände, keine Iterationsgrenzen. Begründung: Die Anforderungen stehen zu Beginn bewusst nicht fest, die Auftraggeberin gibt nach den Abgaben Feedback und bringt in Block 6 einen Change Request ein (PB §1, §4, §11). Ein change-driven Vorgehen nimmt das laufend auf (B1 F7, F41).
 
-| Merkmal des Projekts | Quelle |
-|---|---|
-| Anforderungen stehen zu Beginn bewusst nicht fest; der Auftraggeber konkretisiert sie in Sprechstunden, nicht jede Frage wird beantwortet | PB §1, §4 |
-| Auftraggeber ändert seine Meinung: Feedback nach Block 2/3, Change Request in Block 6 | PB §1, §4, §11 |
-| Jeder Block liefert ein prüfbares Artefakt; Abgabe als Git-Tag `block-n` am Vorabend des Folgeblocks | B1 F2, PB §3 |
-| Spätere Verbesserungen fließen in die Endbewertung ein (bis „final“) | PB §3 |
-| Anwendung bewusst klein; zusätzliche Features verbessern die Bewertung nicht | PB §2, §6 |
-| Dokumente je Block sind formell vorgegeben (z. B. REQUIREMENTS.md, AI_USAGE.md) | PB §3, §15 |
-| Teamgröße: 5 Personen – abweichend von PB §3 (3–4 Personen); Zulässigkeit mit der Dozentin zu klären | Teamliste; PB §3 |
+| Element | Festlegung |
+| --- | --- |
+| Board | To do → In Arbeit → Review → Fertig; höchstens ein Paket je Person in Arbeit (B1 F31) |
+| Backlog | GitHub-Issues |
+| Rollen | Felix: Git-Maintainer und Product Owner; alle entwickeln |
+| Prototyp | Wegwerf-Prototyp der Oberfläche zur Klärung der Anforderungen ([docs/prototyp](docs/prototyp/index.html)) |
 
-#### Einordnung nach dem Fazit plan- vs. change-driven (B1 F41)
-
-| Aspekt | Lage im Projekt | Tendenz |
-|---|---|---|
-| Anforderungen | entwickeln sich während des Projekts (PB §1, §4) | change-driven |
-| Risikosteuerung | Feedback nach jedem Block und Sprechstunde (B2 F42) = kurze Feedbackschleifen; Peer Review (B2 F33) = Review | beides (B1 F41: Reviews plan-driven, Feedbackschleifen change-driven) |
-| Fokus | Auftraggeber bewertet Bedienbarkeit der Use Cases und Begründung der Entscheidungen (PB §4) | beides |
-| Dokumentation | umfangreich und formell vorgegeben (PB §3) | plan-driven |
-
-Ergebnis: überwiegend change-driven; der Dokumentationsumfang ist durch die Projektbeschreibung festgelegt.
-
-#### Vorschlag: iterativ-inkrementelles, Scrum-orientiertes Vorgehen mit Kanban-Board und Wegwerf-Prototyp
-
-| Element | Festlegung | Quelle |
-|---|---|---|
-| Sprint | ein Block-Zyklus: Vorlesung Block n bis Git-Tag `block-n` am Vorabend von Block n+1. Feste Intervalle wie in Scrum, weil die Abgabetermine fest sind. | B1 F34–F35, PB §3 |
-| Inkrement | das prüfbare Artefakt des Blocks („Stück für Stück“) | B1 F2, B1 F20 |
-| Iteration | vorhandene Artefakte werden nach Feedback überarbeitet („das Gleiche, immer besser“): Review-Issue des Partnerteams, Auftraggeber-Antworten | B1 F20, B2 F33, B2 F43 |
-| Product Backlog | User Stories im Backlog (Folie: „Issues.md“; umgesetzt als GitHub-Issues); jeder gelbe/rote Punkt des Projektcheckpoints wird ein Issue mit Verantwortlichem | B2 F15, B2 F43 |
-| Nicht Fertiges | wandert zurück ins Product Backlog | B1 F29–F30 |
-| Rollen | Product Owner verantwortet das Product Backlog; Scrum Master; Developer = alle. Besetzung legt das Team fest. | B1 F28, B1 F36 |
-| Board | Workflow sichtbar machen, parallele Arbeit begrenzen (WIP); Werkzeug und WIP-Limit legt das Team fest | B1 F31 |
-| Prototyp | Wegwerf-Prototyp (Klick- oder Papierprototyp) für die zwei Use Cases zur Anforderungsklärung und für frühes Feedback | B1 F21, B1 F22, B2 F44 |
-| Auftraggeber-Antworten | offene Fragen gebündelt in die Sprechstunde (max. 3); Antworten als „Auftraggeber-Entscheidungen“, Unbeantwortetes als „Annahmen“ in REQUIREMENTS.md | B2 F32, B2 F42, PB §4 |
-
-Begründung: Die Photo Management Challenge (B1 F8–F11) war so angelegt, dass der Auftraggeber manche Anforderungen nur auf Nachfrage nennt und Prototypen über Feedbackrunden angepasst werden. Dieselbe Lage beschreibt die Projektbeschreibung (PB §1, §4). Ein change-driven Vorgehen integriert Feedback kontinuierlich (B1 F7) und steuert Risiken über kurze Feedbackschleifen (B1 F41).
-
-#### Verworfene Alternativen
-
-| Alternative | Grund für Verwerfen | Quelle |
-|---|---|---|
-| Wasserfall | Anforderungen sind zu Beginn nicht stabil; Feedback nach Block 2/3 und der Change Request in Block 6 träfen abgeschlossene Phasen („Late-Disaster“-Risiko, unflexible Anforderungen, kein Prototyping). Das Projekt ist zwar klein, hat aber keine fixen Anforderungen und ist kein Safety-Critical-System. | B1 F18, B1 F19, PB §1, §4 |
-| Reines Kanban | kontinuierlicher Arbeitsfluss ohne feste Intervalle passt nicht zu festen Blockabgaben. Kanban-Praktiken (Board, WIP-Begrenzung) werden übernommen. | B1 F31, B1 F34–F35, PB §3 |
-| Evolutionäres Prototyping der Oberfläche | ein Klick-/Papierprototyp (Figma, Papier-Foto oder HTML) lässt sich nicht zur Java-Oberfläche (JavaFX, Swing oder Konsole) ausbauen | B1 F22, B2 F44, PB §6 |
-| Scrum of Scrums / SAFe | skalierte Methoden für mehrere Teams; Scrum of Scrums für „viele Menschen (>10 Personen)“ (B1 F37); das Projekt hat ein Team mit 5 Personen | B1 F37–F40 |
-
-#### Grenzen des Vorschlags
-
-- Die Sprintlänge bestimmt der Blockplan, nicht das Team (PB §3).
-- Die Dokumentation ist umfangreicher als „just enough“ (B1 F41), weil die Artefakte je Block vorgegeben sind (PB §3).
+**Verworfen:**
+- **Wasserfall:** Die Anforderungen sind nicht stabil, und Feedback sowie Change Request träfen abgeschlossene Phasen (B1 F18–F19).
+- **Scrum mit festen Sprints:** Die Blöcke geben Lieferstände vor, aber keinen festen Arbeitstakt im Team (B1 F34–F35).
+- **Scrum of Scrums / SAFe:** Das sind Methoden für mehrere Teams (B1 F37–F40).
 
 ### Ablauf je Änderung
 
@@ -122,7 +83,7 @@ Der Schutz von `main` ist noch zu prüfen. Commit-Nachrichten sollen konventione
 
 ## 🗺️ Projektplanung
 
-Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in der [Roadmap](ROADMAP.md).
+Meilensteine, geplante Releases, nächste Schritte und die Entwicklungsbereiche stehen in der [Roadmap](ROADMAP.md).
 
 ## Dokumentation und Repository-Struktur
 
@@ -139,7 +100,7 @@ Quellenkürzel (gelten für alle Dokumente im Repository): **B1 Fn** = Folie n a
 
 <pre>
 .
-├── <a href=".gitignore">.gitignore</a>
+├── <a href=".gitattributes">.gitattributes</a>, <a href=".gitignore">.gitignore</a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
@@ -148,35 +109,40 @@ Quellenkürzel (gelten für alle Dokumente im Repository): **B1 Fn** = Folie n a
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
+├── <a href="pom.xml">pom.xml</a>, <a href="mvnw">mvnw</a>, <a href="mvnw.cmd">mvnw.cmd</a>
 ├── ai_usage/
-│   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
-└── docs/
-    ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── adr/
-    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
-    ├── design/
-    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
-    ├── lecture_slides/
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
-    │   └── assets/
-    │       └── ...
-    ├── presentation/
-    │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
-    └── task_description/
-        ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
-        └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
+│   ├── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
+│   └── <a href="ai_usage/prompts/">prompts/</a>
+├── docs/
+│   ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
+│   ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-005)
+│   ├── <a href="docs/design/">design/</a> (CRC-Karten, Klassen- und Sequenzdiagramme, Pattern-Bewertung)
+│   ├── lecture_slides/
+│   │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
+│   │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
+│   │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
+│   │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
+│   │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
+│   │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
+│   │   └── assets/
+│   │       └── ...
+│   ├── <a href="docs/prototyp/index.html">prototyp/</a>
+│   ├── presentation/
+│   │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
+│   └── task_description/
+│       ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
+│       └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
+└── <a href="src/">src/</a> (Pakete domain, application, infrastructure, ui)
 </pre>
 
 </details>
 
 ## Build, Tests und Start
 
-> [!NOTE]
-> Das Projekt befindet sich in Vorbereitung. Quellcode, Build und CI sind noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
+Voraussetzung ist Java 21. Maven wird über den Wrapper geladen, eine eigene Installation ist nicht nötig.
 
-Build-, Test- und Startbefehle ergänzen wir nach Einrichtung des Projekts.
+```bash
+./mvnw verify
+```
+
+Unter Windows: `mvnw.cmd verify`. Eine startbare Oberfläche gibt es erst mit der Swing-UI (siehe [Roadmap](ROADMAP.md)).

@@ -7,7 +7,7 @@ Alle Entscheidungen sind Vorschläge, bis das Team sie bestätigt. Regelwerte si
 
 | Schicht | Paket | Verantwortung | Klassen (v1) |
 |---|---|---|---|
-| Oberfläche | `ui` | zeigt an, nimmt Eingaben entgegen, fragt vor dem Löschen nach; kennt nur Use Cases | noch offen (UI-Technik: Teamentscheidung) |
+| Oberfläche | `ui` | zeigt an, nimmt Eingaben entgegen, fragt vor dem Löschen nach; kennt nur Use Cases | Swing, kommt am Ende, wenn Kern und Use Cases stehen |
 | Anwendung | `application` | ein Use Case je Nutzerziel, koordiniert, definiert Ports, übersetzt Fehler in `Result` | `AddPhotoUseCase`, `DeleteAlbumUseCase`, `Result`; Ports `AlbumRepository`, `PhotoStorage`, `ImageHasher` |
 | Domäne | `domain` | Fachmodell und alle Geschäftsregeln; kennt weder UI noch Datei noch KI | `Album`, `Photo`, `AlbumId`, `PhotoId`, fachliche Exceptions |
 | Infrastruktur | `infrastructure` | implementiert die Ports; austauschbar, in Tests ersetzbar | `FileAlbumRepository`, `FileSystemPhotoStorage`, `Sha256ImageHasher` |
@@ -91,7 +91,7 @@ Weitere Entscheidungen: [ADR-003 Fehlerbehandlung](docs/adr/ADR-003-fehlerbehand
 
 ## 8 Offene Punkte
 
-- Teamentscheidungen: UI-Technik (JavaFX, Swing oder Konsole, PB §6), Speicherformat, Bestätigung ADR-001 bis ADR-005.
+- Teamentscheidungen: Speicherformat, Bestätigung ADR-001 bis ADR-005; Swing (Teamentscheidung) noch als ADR festhalten.
 - S-2 (crc-karten.md §4.2) / NFA-04: Wer entfernt eine nicht löschbare Bilddatei innerhalb von 24 h und protokolliert die Löschung?
 - Methodenname `PhotoStorage.read` (K-7) bestätigen.
 - Fotos der Papier-CRC-Karten aus der Übung ergänzen (B3 F19).

@@ -1,2 +1,2 @@
-/** Oberfläche: ruft nur Use Cases auf; UI-Technik ist noch Teamentscheidung. Siehe ARCHITECTURE.md. */
+/** Oberfläche: ruft nur Use Cases auf; Swing-Oberfläche, entsteht am Ende. Siehe ARCHITECTURE.md. */
 package de.dhbw.photoalbum.ui;
