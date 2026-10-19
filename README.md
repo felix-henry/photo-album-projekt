@@ -69,7 +69,7 @@ Der Schutz von `main` ist noch zu prüfen. Commit-Nachrichten sollen konventione
 
 ## 🗺️ Projektplanung
 
-Meilensteine, geplante Releases, nächste Schritte und die Entwicklungsbereiche stehen in der [Roadmap](ROADMAP.md).
+Meilensteine, nächste Schritte und die Entwicklungsbereiche zum Aussuchen stehen in der [Roadmap](ROADMAP.md).
 
 ## Dokumentation und Repository-Struktur
 
