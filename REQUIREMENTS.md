@@ -146,7 +146,7 @@ Qualitätsmerkmale nach ISO/IEC 25010 (B2 F17).
 |---|---|---|---|---|---|
 | NFA-01 | Zuverlässigkeit (Fehlertoleranz) | Wenn das System eine Aktion ablehnt (FA-02, FA-06, FA-07, FA-10), eine Bilddatei nicht lesen kann oder das Speichern nach dem Kopieren einer Bilddatei scheitert (UC-01, 5a), muss es alle Alben, Fotos und Dateien im Datenordner unverändert lassen. | Gespeicherter Zustand vor und nach der Aktion ist identisch. | in jedem definierten Fehlerfall | AK-02.1, 02.3, 02.5, 02.6, 04.2, 06.3–06.7, 07.1, 07.2, 07.5, 07.6, 10.3, 10.4 |
 | NFA-02 | Zuverlässigkeit (Wiederherstellbarkeit) | Das System muss das Ergebnis jeder Aktion, deren Erfolg es angezeigt hat, nach einem Neustart in Albumübersicht und Albumansicht anzeigen, auch wenn der Prozess der Anwendung hart beendet wurde. Wird der Prozess während des Speicherns beendet, muss das System nach dem Neustart den zuletzt vollständig gespeicherten Stand anzeigen. Kann das System die gespeicherten Albumdaten beim Start nicht lesen oder verletzen sie eine Geschäftsregel (FA-02, FA-07, FA-10), darf es sie weder verändern noch überschreiben. | 100 % der bestätigten Aktionen; kein Teilzustand nach Abbruch | hartes Beenden des Prozesses unmittelbar nach einer bestätigten Aktion oder während des Speicherns; ein Stromausfall wird nicht getestet | AK-N02.1 bis AK-N02.5 |
-| NFA-03 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System das Album innerhalb von 2 Sekunden nach der Auswahl laden und alle Fotos anzeigen (Dateiname, Titel, Beschreibung nach FA-08; die Bildgröße ist daher ohne Belang). | ≤ 2 s (A-15), gemessen von der Bestätigung der Auswahl bis zur Ausgabe des letzten Fotos | Referenzgerät: Lenovo ThinkPad T490s, Intel Core i5-8365U, 16 GB RAM, Windows 11 Pro, Java 21. Testdatensatz: ein Album mit 100 JPEG-Dateien, jedes Foto mit einem Titel von 100 und einer Beschreibung von 500 Zeichen. | AK-N03.1 |
+| NFA-03 | Performance-Effizienz | Wenn ein Album 100 Fotos enthält, muss das System das Album innerhalb von 2 Sekunden nach der Auswahl laden und alle Fotos anzeigen (Dateiname, Titel, Beschreibung nach FA-08; die Bildgröße ist daher ohne Belang). Zeigt die Albumansicht Vorschaubilder an, ist NFA-03 neu zu bewerten. | ≤ 2 s (A-15), gemessen von der Bestätigung der Auswahl bis zur Ausgabe des letzten Fotos | Referenzgerät: Lenovo ThinkPad T490s, Intel Core i5-8365U, 16 GB RAM, Windows 11 Pro, Java 21. Testdatensatz: ein Album mit 100 JPEG-Dateien, jedes Foto mit einem Titel von 100 und einer Beschreibung von 500 Zeichen. | AK-N03.1 |
 | NFA-04 | Benutzbarkeit (Erlernbarkeit) | Das System muss Personen, die die Anwendung noch nie benutzt haben, die Möglichkeit bieten, ohne Erklärung durch das Team ein Album anzulegen und ihm ein Foto hinzuzufügen. | mindestens 4 von 5 Testpersonen in höchstens 60 s (A-16) | Testpersonen gehören nicht zum Team; Messaufbau in AK-N04.1 | AK-N04.1 |
 | NFA-05 | Wartbarkeit (Änderbarkeit, Testbarkeit) | Jeder Grenzwert der Geschäftsregeln (Namenslänge, Titel- und Beschreibungslänge, maximale Fotoanzahl, Dateigröße) muss an genau einer Stelle im Quellcode definiert sein; die Oberfläche darf keine Geschäftsregeln enthalten; die Unit-Tests aller Geschäftsregeln müssen ohne Oberfläche und ohne Dateisystem in höchstens 30 s durchlaufen. | 1 Codestelle je Grenzwert; Laufzeit aller Unit-Tests ≤ 30 s (A-15) | Referenzgerät aus NFA-03 | AK-N05.1, AK-N05.2 |
 
@@ -289,7 +289,7 @@ SR-01 hat Vorrang: Eine Umsetzung der KI-Funktion setzt voraus, dass der Auftrag
 
 | ID | Entscheidung | Quelle |
 |---|---|---|
-| AE-01 | Ein Album enthält höchstens 100 Fotos. | B2 F31 (Sprechstunde) |
+| AE-01 | Ein Album enthält höchstens 100 Fotos. | B2 F31 (dort als Ergebnis der Sprechstunde vorgegeben; gilt für alle Teams, PB §4) |
 | AE-02 | Ein Titel hat höchstens 100 Zeichen. | B2 F31 |
 | AE-03 | Ein identisches Foto darf nicht mehrfach demselben Album hinzugefügt werden. | PB §5.2; B2 F31 |
 | AE-04 | Beim Löschen eines Albums fragt das System nach und löscht die enthaltenen Fotos mit. | B3 F25 („Auftraggeber-Entscheidung aus Block 2“) |
@@ -300,8 +300,8 @@ Gelten, bis der Auftraggeber anders entscheidet.
 
 | ID | Annahme | Begründung | Betrifft |
 |---|---|---|---|
-| A-01 | „Identisch“ (AE-03) bedeutet: gleicher Inhalts-Hash (SHA-256) der Bilddatei, nicht gleicher Dateiname. | Eine umbenannte Kopie desselben Fotos ist fachlich dasselbe Foto. | FA-07 |
-| A-02 | Ein Albumname ist nach dem Entfernen von Leerzeichen am Anfang und Ende 1 bis 50 Zeichen lang. | PB §5.2 fordert eine definierte Länge, nennt aber keinen Wert. | FA-02 |
+| A-01 | „Identisch“ (AE-03) bedeutet: gleicher Inhalts-Hash (SHA-256) der Bilddatei, nicht gleicher Dateiname. | Eine umbenannte Kopie desselben Fotos ist fachlich dasselbe Foto. Übernommen aus dem Entwurfsbeispiel der Vorlesung (B3 F13, F20). | FA-07 |
+| A-02 | Ein Albumname ist nach dem Entfernen von Leerzeichen am Anfang und Ende 1 bis 50 Zeichen lang. | PB §5.2 fordert eine definierte Länge, nennt aber keinen Wert. Wert übernommen aus dem Entwurfsbeispiel der Vorlesung (B3 F7, F13). | FA-02 |
 | A-03 | Erlaubt sind JPEG- und PNG-Dateien. Der Typ wird am Dateiinhalt erkannt, nicht an der Dateiendung. | Verbreitetste Bildformate; Beispiel aus B2 F14. Umbenannte Dateien werden nicht angenommen. | FA-06 |
 | A-04 | Eine Bilddatei ist höchstens 20 MB groß (20 × 1024 × 1024 Byte). | Deckt Smartphone-Fotos ab; Beispiel aus B2 F23. Exakte Byte-Angabe für Grenzwerttests. | FA-06 |
 | A-05 | Eine Beschreibung hat höchstens 500 Zeichen. | PB §5.2 fordert eine Maximallänge, nennt aber keinen Wert; 500 Zeichen entsprechen einem kurzen Absatz. | FA-10 |
@@ -324,4 +324,4 @@ Gelten, bis der Auftraggeber anders entscheidet.
 | v0 | Block 2 | Erster Entwurf in der Vorlesung. Mündliches Feedback aus dem Peer Review (Partnerteam): einzelne schwache Wörter bzw. unklare Adjektive; zwei NFA ohne messbare Größe. |
 | v1 | 19.10.2026 | Neu aufgebaut (Stakeholder, Kontextdiagramm, zwei Use Cases, FA nach SOPHIST, NFA mit Messgröße und Bedingung, AK für alle muss-FA). Nach Requirement Clinic präzisiert: „identisch“ (FA-07), Löschen der Bildkopien (FA-05, FA-09), Dateityp und Größe (FA-06), NFA-02 bis NFA-04, *Then* in AK-08.1. |
 | v1.1 | 19.10.2026 | Kritisches Review mit KI („Grill me“): 8 Punkte übernommen, 5 angepasst, 2 verworfen; siehe [AI_USAGE.md, Fall 1](ai_usage/AI_USAGE.md). |
-| v1.2 | 19.10.2026 | AK für NFA-03 bis NFA-05 und SR-01, AK-N02.4/N02.5, AK-10.6; Ablehnung in FA-06/FA-10, Pfadhinweis in FA-05/FA-09; gekürzt. Siehe [AI_USAGE.md, Fall 2](ai_usage/AI_USAGE.md). |
+| v1.2 | 19.10.2026 | AK für NFA-03 bis NFA-05 und SR-01, AK-N02.4/N02.5, AK-10.6; Ablehnung in FA-06/FA-10, Pfadhinweis in FA-05/FA-09; Herkunft der Werte in A-01/A-02 und AE-01, Vorbehalt Vorschaubilder bei NFA-03; gekürzt. Siehe [AI_USAGE.md, Fall 2](ai_usage/AI_USAGE.md). |
