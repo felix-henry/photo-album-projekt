@@ -12,7 +12,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 
 | Fall | Block | Aufgabe | Werkzeug/Modell | Prompt/Skill | Entscheidung | Status |
 |---|---|---|---|---|---|---|
-| 1 | 2 | „Grill me“ zu REQUIREMENTS.md | vom Team einzutragen | [prompts/grill-me.md](prompts/grill-me.md) v1 | offen; mind. ein Vorschlag ist begründet zu verwerfen (B2 F44) | ausstehend: Durchlauf durch das Team |
+| 1 | 2 | „Grill me“ zu REQUIREMENTS.md | vom Team einzutragen | [prompts/grill-me.md](../prompts/grill-me.md) v1 | offen; mind. ein Vorschlag ist begründet zu verwerfen (B2 F44) | ausstehend: Durchlauf durch das Team |
 
 ---
 
@@ -25,7 +25,7 @@ Stand 19.10.2026 · Nachweis des KI-Einsatzes nach PB §13 · Quellenkürzel: **
 | Feld | Inhalt |
 |---|---|
 | Aufgabe/Ziel | Block 2: REQUIREMENTS.md v1 auf Lücken, Widersprüche, fehlende Grenzfälle und unklare Begriffe prüfen lassen (B2 F36). Durchgeführt am _[Datum]_ von _[Namen]_. |
-| Werkzeug/Modell | _[Produkt, Modellkennung]_ · Prompt: [prompts/grill-me.md](prompts/grill-me.md) v1 (B2 F36) · Kontext: REQUIREMENTS.md Stand _[Datum/Commit]_, Projektbeschreibung v3 |
+| Werkzeug/Modell | _[Produkt, Modellkennung]_ · Prompt: [prompts/grill-me.md](../prompts/grill-me.md) v1 (B2 F36) · Kontext: REQUIREMENTS.md Stand _[Datum/Commit]_, Projektbeschreibung v3 |
 | Ergebnis | _[Kurzfassung der 8 Fragen und Antworten oder Link auf das Protokoll]_; Tabelle der KI siehe unten |
 | Kritische Bewertung | _[Was war richtig, was falsch, was erfunden? Woran erkannt? Prüfen: erfundene Stakeholder oder Features, Zahlen ohne Quelle (B2 F36)]_ |
 | Entscheidung | _[je Vorschlag: übernommen / angepasst / verworfen – mit Begründung; Änderung in REQUIREMENTS.md mit Anforderungs-ID]_ |
