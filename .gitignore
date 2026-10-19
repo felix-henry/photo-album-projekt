@@ -1,0 +1,15 @@
+# Agentenregeln bleiben während der Entwicklung lokal, damit wir uns nicht
+# gegenseitig unsere Dateien überschreiben. Zum Projektabschluss stimmen wir
+# die Dateien gemeinsam ab und nehmen sie für die finale Einreichung auf.
+AGENTS.md
+CLAUDE.md
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
