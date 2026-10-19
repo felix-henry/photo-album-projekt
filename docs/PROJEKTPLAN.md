@@ -3,6 +3,7 @@
 **Grundsätze**
 - **Grundlage** ist allein die Projektbeschreibung (PB). Jedes Paket erfüllt eine Vorgabe oder bringt Punkte (PB §16, §18). Extras lassen wir weg (PB §2).
 - **Unabhängig von der Vorlesung.** Es gibt keine Termine, nur eine Reihenfolge. Wir arbeiten so schnell wie möglich, Pausen gehen jederzeit.
+- **Erst der Kern, dann die Oberfläche.** Wir bauen zuerst Domäne, Use Cases und Speicherung komplett mit Tests. Wenn das quasi fertig ist, kommt eine Swing-Oberfläche dazu, schnell mit KI gebaut (Teamentscheidung).
 - **Alle in der Git-Historie** (PB §3): Jede Person entwickelt einen eigenen Bereich und reviewt die PRs der anderen.
 
 ## 1 Einstieg (jede Person)
@@ -50,6 +51,7 @@
 - **A5:** PR #3:
   - ADRs bestätigen.
   - Offene Punkte entscheiden: `validate`, S-2 und die KI-Funktion (Vorschlag: nicht bauen, nur entwerfen).
+  - UI-Technik Swing als kurzes ADR festhalten.
   - Den Übungs-Agenten streichen.
   - Danach mergen, Tag `block-3`.
   - Anschließend bewertet das Team AI_USAGE Fall 2 und 3.
@@ -60,14 +62,14 @@
 **B – Pflichtfunktionalität (Block 4)**
 - **B1:** CI mit GitHub Actions (`./mvnw verify`, JaCoCo) und AGENTS.md.
 - **B2:** Ports, Fakes und Domänen-API (Bereich 1). Danach laufen die Bereiche parallel.
-- **B3:** UI-Rahmen (Bereich 5) und Datei-Adapter (Bereich 4).
-- **B4:** Use Cases und Masken aller Bereiche.
+- **B3:** Datei-Adapter (Bereich 4) und Use Cases aller Bereiche, ohne Oberfläche, über Tests abgesichert.
+- **B4:** Swing-Oberfläche, sobald alle Use Cases stehen: schnell mit KI gebaut, Label `ai-assisted`, als Fall in AI_USAGE.md. Sie ruft nur die Use Cases auf und enthält keine Regeln.
 - **B5:** CHANGELOG, Release `v0.1.0`, Tag `block-4`.
 
 **C – Testen (Block 5, PB §10)**
 - TESTING.md mit 2 Blackbox-Verfahren (Grenzwertanalyse, Entscheidungstabelle) und der Zuordnung Akzeptanzkriterium → Verfahren → Test.
 - Mindestens 10 Unit-Tests (entstehen über „Fertig heißt“) und mindestens 2 Integrationstests (AK-10.1, AK-09.1).
-- Usability-Test, Security-Tests für Dateieingaben, Performance-Messung einer NFA, Evaluation Set für die entworfene KI-Funktion.
+- Usability-Test (mit der Swing-Oberfläche), Security-Tests für Dateieingaben, Performance-Messung einer NFA, Evaluation Set für die entworfene KI-Funktion.
 - Release `v1.0.0`, Tag `block-5`.
 
 **D – Change Request (Block 6, PB §10–§12)**
@@ -88,15 +90,15 @@ Tag-Folge: `block-1` → `block-2` → `block-3` → `block-4` = `v0.1.0` → `v
 
 ## 4 Entwicklungsbereiche zum Aussuchen
 
-Wer welchen Bereich bekommt, ergibt sich aus der Rangfolge im Abstimmungs-Issue. Bei Gleichstand einigen sich die Beteiligten, sonst wird gelost. Jeder Bereich umfasst Code, Tests, die eigene Maske und einen eigenen Abschnitt in TESTING.md.
+Wer welchen Bereich bekommt, ergibt sich aus der Rangfolge im Abstimmungs-Issue. Bei Gleichstand einigen sich die Beteiligten, sonst wird gelost. Jeder Bereich umfasst Code, Tests und einen eigenen Abschnitt in TESTING.md. Masken gibt es erst mit der Swing-Oberfläche (B4).
 
 | Bereich | Entwickelt | Testet zusätzlich |
 |---|---|---|
 | 1 Kern & CI | CI, Ports, Fakes, Domänenregeln in `Album`/`Photo` | Domänentests, Coverage |
-| 2 Foto hinzufügen | UC-01, Hash-Adapter, Maske | Grenzwertanalyse, Security-Tests |
-| 3 Löschen & Entfernen | UC-02, Foto entfernen, Masken mit Bestätigung | Entscheidungstabelle, Integrationstest Löschen |
+| 2 Foto hinzufügen | UC-01, Hash-Adapter | Grenzwertanalyse, Security-Tests |
+| 3 Löschen & Entfernen | UC-02, Foto entfernen | Entscheidungstabelle, Integrationstest Löschen |
 | 4 Speicherung & Beschreiben | Datei-Adapter mit Speicherformat, Foto beschreiben | Integrationstest Speicherfehler, Regression beim Change Request |
-| 5 Oberfläche & Alben | UI-Technik (ADR), UI-Rahmen, Album erstellen/anzeigen/umbenennen | Usability-Test, Performance |
+| 5 Alben & Oberfläche | Album erstellen/anzeigen/umbenennen, Main/Verdrahtung; am Ende die Swing-Oberfläche (B4) | Usability-Test, Performance |
 
 Dazu übernimmt jede Person eine Zusatzaufgabe:
 - AGENTS.md
@@ -111,7 +113,6 @@ Felix übernimmt stattdessen Product Owner, Repo-Admin und den Kontakt zur Dozen
 ## 5 Offen
 
 - Repo öffentlich oder GitHub Pro?
-- UI-Technik: JavaFX, Swing oder Konsole?
 - Wer nimmt welchen Bereich?
 - An die Dozentin: Teamgröße 5, F-01 bis F-03
 
