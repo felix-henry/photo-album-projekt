@@ -25,7 +25,7 @@ Wir entwickeln eine kleine Anwendung, mit der Jugendliche und junge Erwachsene F
 | Pit | [GamerO815](https://github.com/GamerO815) |
 | Felix | [felix-henry](https://github.com/felix-henry) |
 
-Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
+Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen und wird nach den erarbeiteten Anforderungen festgelegt. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
 
 **Dozentin und Auftraggeberin:** Ana ([dragoana25](https://github.com/dragoana25)).
 
@@ -45,35 +45,29 @@ Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos 
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven mit Wrapper (Vorschlag, [ADR-004](docs/adr/ADR-004-build-maven.md)) |
-| Oberfläche | Swing; kommt am Ende, wenn Kern und Use Cases stehen |
+| Build und Abhängigkeiten | Maven oder Gradle mit Wrapper; Auswahl offen |
+| Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
 | Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
 | Automatisierte Tests | JUnit 5 |
 | Coverage | JaCoCo |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
-| CI | Build und Tests bei jedem Pull Request; geplant mit GitHub Actions |
+| CI | Build und Tests bei jedem Pull Request; Anbieter und Konfiguration offen |
 
 ## Vorgehen und Zusammenarbeit
 
-### Vorgehensentscheidung
-
-**Vorschlag, vom Team zu bestätigen:** Wir arbeiten iterativ-inkrementell im **Kanban-Fluss**. Es gibt ein Board mit GitHub-Issues, aber keine festen Sprints; die Tags `block-1` … `final` markieren Lieferstände. Der Grund: Die Anforderungen ändern sich im Lauf des Projekts durch Feedback und den Change Request (PB §1, §4, §11). Wasserfall und Scrum mit festen Sprints haben wir verworfen (B1 F18–F19, F34–F35).
-
-### Ablauf je Änderung
+Wir nutzen **Kanban**, um Aufgaben und ihren Bearbeitungsstand auf unserem [Kanban-Board](https://photoalbum-kanban.vercel.app) sichtbar zu machen. Das passt zu unserer Abstimmung nach Bedarf und ermöglicht es, Prioritäten nach Feedback anzupassen. Die Blockabgaben bleiben unsere festen Meilensteine.
 
 Für Änderungen ist folgender Ablauf vorgegeben:
 
 **Issue → Branch → Pull Request → Review → CI → Merge**
 
-Der Schutz von `main` ist noch zu prüfen. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
+Der technische Schutz von `main` ist für unser privates Repository mit GitHub Free nicht verfügbar. Den PR- und Review-Ablauf halten wir daher als Teamvereinbarung ein. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 ## 🗺️ Projektplanung
 
-Meilensteine, nächste Schritte und die Entwicklungsbereiche zum Aussuchen stehen in der [Roadmap](ROADMAP.md).
+Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in der [Roadmap](ROADMAP.md).
 
 ## Dokumentation und Repository-Struktur
-
-Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn** = Folie n aus Block 1–3.
 
 - [Projektbeschreibung als Markdown](docs/task_description/Projektbeschreibung_Photo_Album.md)
 - [Original-PDF der Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.pdf)
@@ -86,7 +80,7 @@ Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn
 
 <pre>
 .
-├── <a href=".gitattributes">.gitattributes</a>, <a href=".gitignore">.gitignore</a>
+├── <a href=".gitignore">.gitignore</a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
@@ -95,30 +89,28 @@ Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
-├── <a href="pom.xml">pom.xml</a>, <a href="mvnw">mvnw</a>, <a href="mvnw.cmd">mvnw.cmd</a>
 ├── ai_usage/
-│   ├── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
-│   └── <a href="ai_usage/prompts/">prompts/</a>
-├── docs/
-│   ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-│   ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-005)
-│   ├── <a href="docs/design/">design/</a> (CRC-Karten, Klassen- und Sequenzdiagramme, Pattern-Bewertung)
-│   ├── lecture_slides/
-│   │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
-│   │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
-│   │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
-│   │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
-│   │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
-│   │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
-│   │   └── assets/
-│   │       └── ...
-│   ├── <a href="docs/prototyp/index.html">prototyp/</a>
-│   ├── presentation/
-│   │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
-│   └── task_description/
-│       ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
-│       └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
-└── <a href="src/">src/</a> (Pakete domain, application, infrastructure, ui)
+│   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
+└── docs/
+    ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
+    ├── adr/
+    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
+    ├── design/
+    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
+    ├── lecture_slides/
+    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
+    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
+    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
+    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
+    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
+    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
+    │   └── assets/
+    │       └── ...
+    ├── presentation/
+    │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
+    └── task_description/
+        ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
+        └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
 </pre>
 
 </details>
@@ -126,12 +118,6 @@ Quellenkürzel in den Dokumenten: **PB §n** = Projektbeschreibung, **B1–B3 Fn
 ## Build, Tests und Start
 
 > [!NOTE]
-> Projektgerüst und Build sind eingerichtet; CI und eine veröffentlichte Version gibt es noch nicht.
+> Das Projekt befindet sich in Vorbereitung. Quellcode, Build und CI sind noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
 
-Voraussetzung ist Java 21. Maven wird über den Wrapper geladen, eine eigene Installation ist nicht nötig.
-
-```bash
-./mvnw verify
-```
-
-Unter Windows: `mvnw.cmd verify`. Eine startbare Oberfläche gibt es erst mit der Swing-UI (siehe [Roadmap](ROADMAP.md)).
+Build-, Test- und Startbefehle ergänzen wir nach Einrichtung des Projekts.
