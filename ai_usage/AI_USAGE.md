@@ -36,8 +36,8 @@ Substanzielle KI-Einsätze nach PB §13. Prompts liegen unter `ai_usage/prompts/
 
 | Feld | Inhalt |
 |---|---|
-| **Aufgabe/Ziel** | REQUIREMENTS.md v1.2 aus v1.1 erstellen (Konsistenz, Prüfbarkeit, Kürzung). |
+| **Aufgabe/Ziel** | REQUIREMENTS.md v1.2 aus v1.1 erstellen (Konsistenz, Prüfbarkeit, Kürzung) und den Klickprototyp für UC-01/UC-02 erstellen. |
 | **Werkzeug/Modell** | Claude Code (Anthropic), claude-opus-5-5; mehrere KI-Reviewrollen und ein abschließender Prüfer. Prompt: Arbeitsaufträge im Chat, nicht versioniert (Abweichung von PB §13). |
-| **Ergebnis** | REQUIREMENTS.md v1.2 (siehe Änderungshistorie dort). |
+| **Ergebnis** | REQUIREMENTS.md v1.2 (siehe Änderungshistorie dort); [docs/prototype/index.html](../docs/prototype/index.html), Meldungstexte und Grenzwerte aus den AK. |
 | **Kritische Bewertung** | Zutreffend: fehlende AK für NFA und SR-01, FA-06/FA-10 ohne Ablehnung, falsche Quelle in 6.1, Zählfehler in Fall 1. Mehrere Vorschläge hätten Teamentscheidungen still geändert oder den Umfang erweitert. |
 | **Entscheidung** | Übernommen bzw. angepasst wie in v1.2. Verworfen: Liste offener Auftraggeberfragen (widerspricht Fall 1 #14), Dateiauswahl statt Pfadeingabe (die Eingabeart hängt von der Oberflächentechnik ab und wird nicht in den Anforderungen festgelegt; v1.2 behält die Pfadeingabe aus UC-01), Speicherfehler-Fall für alle Aktionen (Umfang, Meldungen ohne Quelle). |

@@ -68,7 +68,7 @@ flowchart LR
     N --- UC8
 ```
 
-Die Use Cases entsprechen der Pflichtfunktionalität (PB §5.1). Ausgearbeitet werden UC-01 (meiste Geschäftsregeln: Dateityp, Duplikat, Fotoanzahl) und UC-02 (Regeln zum Albumnamen). Eingaben prüfen ist kein eigener Use Case (vgl. B2 F12), sondern ein Systemschritt in UC-01 und UC-02.
+Die Use Cases entsprechen der Pflichtfunktionalität (PB §5.1). Ausgearbeitet werden UC-01 (meiste Geschäftsregeln: Dateityp, Duplikat, Fotoanzahl) und UC-02 (Regeln zum Albumnamen). Klickbarer Prototyp für beide: [docs/prototype/index.html](docs/prototype/index.html) (im Browser öffnen). Eingaben prüfen ist kein eigener Use Case (vgl. B2 F12), sondern ein Systemschritt in UC-01 und UC-02.
 
 ### 2.2 UC-01 Foto hinzufügen
 
@@ -324,4 +324,4 @@ Gelten, bis der Auftraggeber anders entscheidet.
 | v0 | Block 2 | Erster Entwurf in der Vorlesung. Mündliches Feedback aus dem Peer Review (Partnerteam): einzelne schwache Wörter bzw. unklare Adjektive; zwei NFA ohne messbare Größe. |
 | v1 | 19.10.2026 | Neu aufgebaut (Stakeholder, Kontextdiagramm, zwei Use Cases, FA nach SOPHIST, NFA mit Messgröße und Bedingung, AK für alle muss-FA). Nach Requirement Clinic präzisiert: „identisch“ (FA-07), Löschen der Bildkopien (FA-05, FA-09), Dateityp und Größe (FA-06), NFA-02 bis NFA-04, *Then* in AK-08.1. |
 | v1.1 | 19.10.2026 | Kritisches Review mit KI („Grill me“): 8 Punkte übernommen, 5 angepasst, 2 verworfen; siehe [AI_USAGE.md, Fall 1](ai_usage/AI_USAGE.md). |
-| v1.2 | 19.10.2026 | AK für NFA-03 bis NFA-05 und SR-01, AK-N02.4/N02.5, AK-10.6; Ablehnung in FA-06/FA-10, Pfadhinweis in FA-05/FA-09; Herkunft der Werte in A-01/A-02 und AE-01, Vorbehalt Vorschaubilder bei NFA-03; gekürzt. Siehe [AI_USAGE.md, Fall 2](ai_usage/AI_USAGE.md). |
+| v1.2 | 19.10.2026 | AK für NFA-03 bis NFA-05 und SR-01, AK-N02.4/N02.5, AK-10.6; Ablehnung in FA-06/FA-10, Pfadhinweis in FA-05/FA-09; Herkunft der Werte in A-01/A-02 und AE-01, Vorbehalt Vorschaubilder bei NFA-03; Prototyp verlinkt; gekürzt. Siehe [AI_USAGE.md, Fall 2](ai_usage/AI_USAGE.md). |
