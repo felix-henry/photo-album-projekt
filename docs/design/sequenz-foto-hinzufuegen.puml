@@ -1,0 +1,91 @@
+@startuml sequenz-foto-hinzufuegen
+' Sequenzdiagramm UC-01 „Foto hinzufügen“ mit allen Fehlerpfaden, Duplikat als alt-Fragment (PB §8; B3 F23, F24, F47).
+' Jede Nachricht hat eine Operation in klassendiagramm.puml (B3 F24, F48). Antworten wie in B3 F23: Rückgabewert / Exception.
+' Jede Prüfung ist ein alt-Fragment; der weitere Ablauf steht im Zweig [sonst]. IDs wie in REQUIREMENTS.md v1.2.
+
+hide footbox
+
+participant "UI" as UI
+participant ":AddPhotoUseCase" as UC
+participant ":AlbumRepository" as Repo
+participant ":ImageInspector" as Insp
+participant "album:Album" as A
+participant ":PhotoStorage" as Store
+
+note over UI
+  UC-01 Schritte 1–2: Nutzerin wählt
+  „Foto hinzufügen“ und gibt den Pfad ein.
+end note
+UI -> UC : execute(albumId, sourcePath)
+activate UC
+note over UC, Store : Prüfreihenfolge lesbar → Typ/Größe → Duplikat → Anzahl (UC-01 Schritte 3–4, FA-07)
+
+UC -> Repo ++ : findById(albumId)
+Repo --> UC -- : Optional<Album> (neues Objekt) / StorageException
+
+alt StorageException (Laden scheitert, FA-06)
+  UC --> UI : Result.failure(ErrorMessages.photoNotSaved())
+else sonst
+  note right of UC
+    Leeres Optional: verletzte Vorbedingung von UC-01
+    („Ein Album ist geöffnet.“), kein definierter
+    Fehlerfall, daher keine eigene Meldung.
+  end note
+  note right of UC
+    source = Path.of(sourcePath)
+    fileName = Dateiname aus source
+  end note
+  UC -> Insp ++ : inspect(source)
+  Insp --> UC -- : ImageInfo(type, sizeBytes, hash) / ImageNotReadableException
+
+  alt ImageNotReadableException / ungültiger Pfad (3a)
+    UC --> UI : Result.failure(ErrorMessages.fileNotReadable())
+  else sonst
+    create participant "photo:Photo" as P
+    UC -> P ++ : «create» Photo(PhotoId.newId(), hash, fileName, type, sizeBytes)
+    P --> UC -- : photo / UnsupportedImageException
+
+    alt UnsupportedImageException (3b)
+      UC --> UI : Result.failure(ErrorMessages.unsupportedImage())
+    else sonst
+      UC -> A ++ : addPhoto(photo)
+      A --> UC -- : void / DuplicatePhotoException / AlbumFullException
+
+      alt DuplicatePhotoException (4a)
+        UC --> UI : Result.failure(ErrorMessages.duplicatePhoto())
+      else AlbumFullException (4b)
+        UC --> UI : Result.failure(ErrorMessages.albumFull())
+      else sonst
+        UC -> Store ++ : store(photo, source)
+        Store --> UC -- : void / StorageException
+
+        alt StorageException (FA-06, keine Teilkopie)
+          UC --> UI : Result.failure(ErrorMessages.photoNotSaved())
+        else sonst
+          UC -> Repo ++ : save(album)
+          Repo --> UC -- : void / StorageException
+
+          alt StorageException (5a)
+            UC -> Store ++ : delete(photo)
+            Store --> UC -- : void / StorageException
+            note right of UC
+              Kompensation: Wirft delete selbst eine
+              StorageException, wird sie abgefangen (NFA-01).
+            end note
+            UC --> UI : Result.failure(ErrorMessages.photoNotSaved())
+          else sonst
+            UC --> UI : Result.success(PhotoView)
+            note over UI : zeigt das Foto in der\nAlbumansicht (Schritt 6)
+          end
+        end
+      end
+    end
+  end
+end
+deactivate UC
+
+note over UI, P
+  Texte aus ErrorMessages, wörtlich aus UC-01.
+  Bei Failure wird das geladene Album verworfen; Album und Datenordner bleiben unverändert (NFA-01).
+end note
+@enduml

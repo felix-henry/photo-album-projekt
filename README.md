@@ -94,10 +94,8 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 │   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 └── docs/
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── adr/
-    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
-    ├── design/
-    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
+    ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-007)
+    ├── <a href="docs/design/">design/</a> (Klassen- und Sequenzdiagramm, CRC-Karten)
     ├── lecture_slides/
     │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
     │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>

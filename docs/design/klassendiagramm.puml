@@ -1,0 +1,293 @@
+@startuml klassendiagramm
+' Klassendiagramm Photo Album, Block 3 (PB §8; B3 F20, F47): Domäne, Anwendung, Ports; Adapter nur als Namen.
+' Nur entscheidungsrelevante Operationen. Jede Nachricht in sequenz-foto-hinzufuegen.puml hat hier eine Operation (B3 F24, F48).
+' IDs wie in REQUIREMENTS.md v1.2. Projektgerüst (B3 F50): Code nur für die Domänentypen mit Konstruktoren und Invarianten;
+' alle übrigen Typen und Operationen sind entworfen, Code ab Block 4. KI-Teile «Entwurf, Won't»: kein Code (REQUIREMENTS 6.1).
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+set namespaceSeparator none
+
+package application {
+  class AddPhotoUseCase {
+    + AddPhotoUseCase(AlbumRepository, ImageInspector, PhotoStorage)
+    + execute(albumId: AlbumId, sourcePath: String): Result<PhotoView>
+  }
+  class CreateAlbumUseCase {
+    + CreateAlbumUseCase(AlbumRepository)
+    + execute(name: String): Result<AlbumSummary>
+  }
+  class ListAlbumsUseCase
+  class RenameAlbumUseCase
+  class DeleteAlbumUseCase
+  class ListPhotosUseCase
+  class RemovePhotoUseCase
+  class DescribePhotoUseCase
+  note as UseCaseNote
+    Ein Use Case je Nutzerziel, ohne eigenes Interface (B3 F34):
+    AddPhoto UC-01 (Ablauf im Sequenzdiagramm), CreateAlbum UC-02
+    (new AlbumName, requireUnique mit allen Namen aus findAll(), save),
+    ListAlbums UC-03 (alphabetisch, A-11), RenameAlbum UC-04
+    (requireUnique mit den Namen der anderen Alben, AK-02.6),
+    DeleteAlbum UC-05, ListPhotos UC-06, RemovePhoto UC-07, DescribePhoto UC-08.
+  end note
+
+  interface Result<T> <<sealed>> {
+    + {static} success(value: T): Result<T>
+    + {static} failure(message: String): Result<T>
+  }
+  class Success<T> <<record>> {
+    - value: T
+  }
+  class Failure<T> <<record>> {
+    - message: String
+  }
+  class ErrorMessages {
+    + {static} fileNotReadable(): String
+    + {static} unsupportedImage(): String
+    + {static} duplicatePhoto(): String
+    + {static} albumFull(): String
+    + {static} photoNotSaved(): String
+    + {static} albumNameDuplicate(): String
+    + {static} dataNotReadable(path: Path): String
+    {method} …
+  }
+  note right of ErrorMessages
+    Einzige Stelle für Meldungstexte, wörtlich aus
+    REQUIREMENTS; Zahlen aus den Domänenkonstanten (NFA-05).
+  end note
+  class AlbumSummary <<record>> {
+    - id: AlbumId
+    - name: String
+    - photoCount: int
+  }
+  class PhotoView <<record>> {
+    - id: PhotoId
+    - fileName: String
+    - title: String
+    - description: String
+  }
+
+  class SuggestTitleUseCase <<Entwurf, Won't>> {
+    + SuggestTitleUseCase(AlbumRepository, PhotoStorage, TitleSuggester)
+  }
+}
+
+package "application.port" {
+  interface AlbumRepository {
+    + findAll(): List<Album>
+    + findById(id: AlbumId): Optional<Album>
+    + save(album: Album)
+    + delete(id: AlbumId)
+  }
+  note top of AlbumRepository
+    Jeder Aufruf liefert neue Objekte, ein verworfenes
+    Album ändert nichts (NFA-01). Keine Regeln (B3 F33).
+  end note
+  interface ImageInspector {
+    + inspect(source: Path): ImageInfo
+  }
+  note bottom of ImageInspector
+    Liefert nur Fakten, Photo entscheidet
+    (Abweichung von ImageHasher.validate, B3 F20; NFA-05).
+    Datei nicht lesbar → ImageNotReadableException (FA-06).
+  end note
+  class ImageInfo <<record>> {
+    - type: ImageType
+    - sizeBytes: long
+    - hash: ContentHash
+  }
+  interface PhotoStorage {
+    + store(photo: Photo, source: Path)
+    + delete(photo: Photo)
+    + read(photo: Photo): byte[] «Entwurf, Won't»
+  }
+  note bottom of PhotoStorage
+    Eigene Kopie je Foto, Schlüssel PhotoId (A-08);
+    store hinterlässt bei Fehler keine Teilkopie (FA-06).
+  end note
+  class StorageException <<exception>> {
+    + StorageException(message: String, path: Path)
+  }
+  class ImageNotReadableException <<exception>>
+  interface TitleSuggester <<Entwurf, Won't>> {
+    + suggestTitle(imageContent: byte[]): Optional<String>
+  }
+}
+
+package domain {
+  class Album {
+    + {static} MAX_PHOTOS: int = 100
+    - id: AlbumId
+    - name: AlbumName
+    - photos: List<Photo>
+    + Album(AlbumId, AlbumName)
+    + Album(AlbumId, AlbumName, List<Photo>)
+    + photos(): List<Photo>
+    + photoCount(): int
+    + addPhoto(photo: Photo)
+    + removePhoto(id: PhotoId): Photo
+    + rename(name: AlbumName)
+    + describePhoto(id: PhotoId, title: String, description: String)
+  }
+  note right of Album
+    addPhoto prüft zuerst Duplikat (gleicher ContentHash),
+    dann Anzahl (FA-07, AK-07.6; bewusst umgekehrt zu B3 F13).
+    Der Konstruktor zum Wiederherstellen prüft beides (NFA-02).
+    photos() liefert eine Kopie in Einfügereihenfolge (A-11).
+    removePhoto/describePhoto mit unbekannter PhotoId →
+    PhotoNotFoundException: verletzte Vorbedingung (Foto im
+    geöffneten Album gewählt), keine eigene Meldung; Code ab Block 4.
+  end note
+
+  class Photo <<record>> {
+    + {static} MAX_FILE_SIZE_BYTES: long = 20 * 1024 * 1024
+    + {static} MAX_TITLE_LENGTH: int = 100
+    + {static} MAX_DESCRIPTION_LENGTH: int = 500
+    - id: PhotoId
+    - hash: ContentHash
+    - fileName: String
+    - type: ImageType
+    - sizeBytes: long
+    - title: String
+    - description: String
+    + Photo(id, hash, fileName, type, sizeBytes, title, description)
+    + Photo(id, hash, fileName, type, sizeBytes)
+    + describe(title: String, description: String): Photo
+  }
+  note right of Photo
+    Konstruktor prüft: type == OTHER (am Inhalt erkannt,
+    ImageType.fromHeader, A-03) oder sizeBytes > MAX_FILE_SIZE_BYTES
+    (A-04) → UnsupportedImageException (FA-06); fileName nicht leer;
+    title/description: null wird leer (A-06), NFC, mehr als 100
+    bzw. 500 Codepoints → TextTooLongException (FA-10, AE-02, A-05, A-13).
+  end note
+
+  class AlbumName <<record>> {
+    + {static} MAX_LENGTH: int = 50
+    - value: String
+    + AlbumName(value: String)
+    + isSameAs(other: AlbumName): boolean
+    + {static} requireUnique(candidate: AlbumName, others: Collection<AlbumName>)
+  }
+  note bottom of AlbumName
+    strip(), NFC, Codepoints zählen (A-13): 0 → EMPTY,
+    mehr als MAX_LENGTH → TOO_LONG (FA-02, A-02, A-14).
+    isSameAs: NFC + toLowerCase(Locale.ROOT) (A-14).
+    requireUnique → DUPLICATE (FA-02, A-07, UC-02 4c):
+    einzige Stelle der Eindeutigkeitsregel.
+  end note
+
+  class ContentHash <<record>> {
+    - sha256Hex: String
+  }
+  note bottom of ContentHash
+    64 Zeichen [0-9a-f]. ContentHash entscheidet über
+    Inhaltsgleichheit (Duplikatregel FA-07, A-01);
+    die Identität eines Fotos ist PhotoId.
+  end note
+  class AlbumId <<record>> {
+    - value: UUID
+    + {static} newId(): AlbumId
+    + {static} of(text: String): AlbumId
+  }
+  class PhotoId <<record>> {
+    - value: UUID
+    + {static} newId(): PhotoId
+    + {static} of(text: String): PhotoId
+  }
+  enum ImageType {
+    JPEG
+    PNG
+    OTHER
+    + {static} fromHeader(header: byte[]): ImageType
+  }
+
+  abstract class DomainException <<exception>>
+  class InvalidAlbumNameException <<exception>> {
+    - reason: Reason
+  }
+  enum Reason {
+    EMPTY
+    TOO_LONG
+    DUPLICATE
+  }
+  class TextTooLongException <<exception>> {
+    - field: Field
+  }
+  enum Field {
+    TITLE
+    DESCRIPTION
+  }
+  class DuplicatePhotoException <<exception>>
+  class AlbumFullException <<exception>>
+  class UnsupportedImageException <<exception>>
+  class PhotoNotFoundException <<exception>>
+}
+
+package infrastructure {
+  class FileAlbumRepository
+  class FilePhotoStorage
+  class FileImageInspector
+  class HttpTitleSuggester <<Entwurf, Won't>>
+  note bottom of HttpTitleSuggester
+    Nicht in Main verdrahtet (SR-01).
+    Guardrails vor/nach der Anfrage: ADR-007 (B3 F43).
+  end note
+}
+
+' Domäne
+Album "1" *-- "0..100" Photo : photos
+DomainException <|-- InvalidAlbumNameException
+DomainException <|-- DuplicatePhotoException
+DomainException <|-- AlbumFullException
+DomainException <|-- UnsupportedImageException
+DomainException <|-- TextTooLongException
+DomainException <|-- PhotoNotFoundException
+InvalidAlbumNameException +-- Reason
+TextTooLongException +-- Field
+AlbumName ..> InvalidAlbumNameException : «throw»
+Album ..> DuplicatePhotoException : «throw»
+Album ..> AlbumFullException : «throw»
+Album ..> PhotoNotFoundException : «throw»
+Photo ..> UnsupportedImageException : «throw»
+Photo ..> TextTooLongException : «throw»
+
+' Anwendung
+AddPhotoUseCase --> "1" AlbumRepository
+AddPhotoUseCase --> "1" ImageInspector
+AddPhotoUseCase --> "1" PhotoStorage
+AddPhotoUseCase ..> Album : «use»
+AddPhotoUseCase ..> Photo : «create»
+AddPhotoUseCase ..> ErrorMessages : «use»
+ErrorMessages ..> Album : «use»
+ErrorMessages ..> AlbumName : «use»
+ErrorMessages ..> Photo : «use»
+CreateAlbumUseCase --> "1" AlbumRepository
+CreateAlbumUseCase ..> Album : «create»
+CreateAlbumUseCase ..> AlbumName : «use»
+CreateAlbumUseCase ..> ErrorMessages : «use»
+Result <|.. Success
+Result <|.. Failure
+SuggestTitleUseCase --> "1" AlbumRepository
+SuggestTitleUseCase --> "1" PhotoStorage
+SuggestTitleUseCase --> "1" TitleSuggester
+
+' Ports
+ImageInspector ..> ImageInfo
+ImageInspector ..> ImageNotReadableException : «throw»
+AlbumRepository ..> StorageException : «throw»
+PhotoStorage ..> StorageException : «throw»
+
+' Adapter
+AlbumRepository <|.. FileAlbumRepository
+PhotoStorage <|.. FilePhotoStorage
+ImageInspector <|.. FileImageInspector
+TitleSuggester <|.. HttpTitleSuggester
+
+legend bottom right
+  «throw»: Operation wirft diese Exception; alle Exceptions sind unchecked (RuntimeException, B3 F13).
+  «Entwurf, Won't»: KI-Komponente, nur entworfen (REQUIREMENTS 6.1, ADR-007).
+endlegend
+@enduml
