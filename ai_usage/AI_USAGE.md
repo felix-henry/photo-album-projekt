@@ -41,3 +41,22 @@ Substanzielle KI-Einsätze nach PB §13. Prompts liegen unter `ai_usage/prompts/
 | **Ergebnis** | REQUIREMENTS.md v1.2 (siehe Änderungshistorie dort); [docs/prototype/index.html](../docs/prototype/index.html), Meldungstexte und Grenzwerte aus den AK. |
 | **Kritische Bewertung** | Zutreffend: fehlende AK für NFA und SR-01, FA-06/FA-10 ohne Ablehnung, falsche Quelle in 6.1, Zählfehler in Fall 1. Mehrere Vorschläge hätten Teamentscheidungen still geändert oder den Umfang erweitert. |
 | **Entscheidung** | Übernommen bzw. angepasst wie in v1.2. Verworfen: Liste offener Auftraggeberfragen (widerspricht Fall 1 #14), Dateiauswahl statt Pfadeingabe (die Eingabeart hängt von der Oberflächentechnik ab und wird nicht in den Anforderungen festgelegt; v1.2 behält die Pfadeingabe aus UC-01), Speicherfehler-Fall für alle Aktionen (Umfang, Meldungen ohne Quelle). |
+
+## Fall 3 – KI-Review des Klassendiagramms, Block 3
+
+Die Block-3-Entwürfe (ARCHITECTURE.md, ADRs, Diagramme, CRC-Karten, Projektgerüst) sind mit einem Team aus Claude-Code-Subagents erstellt und gegengeprüft worden; dieser Fall dokumentiert davon das Diagramm-Review.
+
+| Feld | Inhalt |
+|---|---|
+| **Aufgabe/Ziel** | Klassendiagramm und Sequenzdiagramm „Foto hinzufügen“ von einer KI prüfen lassen; einen Vorschlag übernehmen, einen verwerfen (Hausaufgabe B3 F50). |
+| **Werkzeug/Modell** | Claude Code (Anthropic), claude-opus-5-5, als Subagent · Prompt: [`prompts/klassendiagramm-review.md`](prompts/klassendiagramm-review.md) (Prüfschritte B3 F48) · Eingaben: `docs/design/klassendiagramm.puml`, `docs/design/sequenz-foto-hinzufuegen.puml`, REQUIREMENTS.md v1.2 |
+| **Ergebnis** | Regel-Check: Jede Geschäftsregel hat eine prüfende Klasse, keine liegt in der UI. Konsistenz-Check: Jede Nachricht hat eine Operation, eine Antwort ist unvollständig (#2). Kopplungs-Check: `AddPhotoUseCase` hat die meisten Abhängigkeiten (#3). Vier Vorschläge, siehe Tabelle. |
+| **Kritische Bewertung** | Alle Fundstellen stehen so in den `.puml`-Dateien (dort nachgeprüft), erfunden war nichts. #2 und #4 sind echte Lücken: ein fehlender Fehlerpfad und eine nicht gezeichnete Abhängigkeit. #1 und #3 klingen plausibel, verlagern aber eine Regel in den Adapter bzw. fügen eine Klasse hinzu, ohne dass eine Anforderung es verlangt. Einschränkung: Reviewer und Entwürfe stammen vom selben Modell; das ersetzt nicht das Review über Kreuz durch das Partnerteam (B3 F48). |
+| **Entscheidung** | #2 und #4 übernommen (umgesetzt in `sequenz-foto-hinzufuegen.puml` bzw. `klassendiagramm.puml`), #1 und #3 verworfen. Entschieden von Pit; Bestätigung durch das Team im Review. |
+
+| # | Hinweis der KI | Entscheidung | Begründung / Umsetzung |
+|---|---|---|---|
+| 1 | Regel-Check: `ImageInspector.inspect` liest und hasht auch Dateien über 20 MB vollständig, erst `Photo` lehnt sie ab. Größe schon im Adapter prüfen. | **verworfen** | Größenregel (FA-06, A-04) stünde in zwei Klassen; den Zeitgewinn verlangt keine NFA. ADR-003 nennt den Preis. |
+| 2 | Konsistenz-Check: Die Antwort auf `findById` zeigt nur `Optional<Album>`. Laut Klassendiagramm wirft `AlbumRepository` eine `StorageException`; auch ein leeres Optional hat keinen Pfad. | übernommen | Fehlerpfad fehlt (B3 F23). Umsetzung: alt-Zweig `StorageException` → `photoNotSaved()` (FA-06, keine neue Meldung); leeres Optional als verletzte Vorbedingung von UC-01 vermerken. |
+| 3 | Kopplungs-Check: `AddPhotoUseCase` hat sechs Abhängigkeiten (drei Ports, `Album`, `Photo`, `ErrorMessages`), mehr als die Faustregel erlaubt (B3 F18). Einen `PhotoImporter` (prüfen, `Photo` erzeugen, kopieren) abspalten. | **verworfen** | `store` muss zwischen `addPhoto` und `save` laufen und bei 5a zurückgenommen werden; ein Importer brächte eine Indirektion mehr bei kaum weniger Kopplung (B3 F34). |
+| 4 | Kopplungs-Check: `ErrorMessages` nimmt die Zahlen aus den Domänenkonstanten (Notiz), das Diagramm zeigt diese Abhängigkeiten aber nicht. | übernommen | Macht NFA-05 im Diagramm sichtbar (AK-N05.1). Umsetzung: `ErrorMessages ..> Album`, `AlbumName`, `Photo` («use»). |
