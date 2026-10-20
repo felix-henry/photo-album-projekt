@@ -13,3 +13,12 @@ CLAUDE.md
 # Visual Studio Code
 .vscode/
 *.code-workspace
+
+# Build (Maven)
+target/
+*.class
+*.log
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
