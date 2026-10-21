@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Album mit seinen Fotos in der Reihenfolge des Hinzufügens (A-11). Invarianten: kein zweites Foto
  * mit gleichem {@link ContentHash} (FA-07, AE-03, A-01), höchstens {@link #MAX_PHOTOS} Fotos (FA-07, AE-01).
- * Ändernde Operationen ({@code addPhoto}, {@code removePhoto}, {@code rename}) folgen in Block 4.
+ * {@code removePhoto} und {@code rename} folgen in Block 4.
  */
 public class Album {
 
@@ -39,6 +39,18 @@ public class Album {
             throw new AlbumFullException();
         }
         this.photos = new ArrayList<>(given);
+    }
+
+    /** Fügt ein Foto hinzu; prüft zuerst das Duplikat, dann die Anzahl (FA-07, AK-07.6). */
+    public void addPhoto(Photo photo) {
+        Objects.requireNonNull(photo, "photo");
+        if (photos.stream().anyMatch(p -> p.hash().equals(photo.hash()))) {
+            throw new DuplicatePhotoException();
+        }
+        if (photos.size() >= MAX_PHOTOS) {
+            throw new AlbumFullException();
+        }
+        photos.add(photo);
     }
 
     public AlbumId id() {

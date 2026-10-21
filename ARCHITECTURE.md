@@ -99,7 +99,7 @@ Bewusst nicht eingesetzt:
 
 ## Build und Projektgerüst
 
-Maven mit Wrapper (Teamentscheidung; PB §6 lässt Maven oder Gradle zu), `./mvnw verify`. Gerüst (B3 F50): Java 21; `domain` mit Konstruktoren und Invarianten, `application`, `infrastructure` und `ui` nur mit `package-info.java`. Weitere Methoden (z. B. `Album.addPhoto`), Ports, Use Cases, Adapter, `Main` und Tests folgen in Block 4.
+Maven mit Wrapper (Teamentscheidung; PB §6 lässt Maven oder Gradle zu), `./mvnw verify`. Gerüst (B3 F50): Java 21; `domain` mit Konstruktoren und Invarianten, `application`, `infrastructure` und `ui` nur mit `package-info.java`. Weitere Methoden, Ports, Use Cases, Adapter und `Main` folgen in Block 4; `Album.addPhoto` und erste Tests siehe [TESTING.md](TESTING.md).
 
 ## Schwächen und offene Punkte
 
