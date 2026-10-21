@@ -60,3 +60,13 @@ Die Block-3-Entwürfe (ARCHITECTURE.md, ADRs, Diagramme, CRC-Karten, Projektger�
 | 2 | Konsistenz-Check: Die Antwort auf `findById` zeigt nur `Optional<Album>`. Laut Klassendiagramm wirft `AlbumRepository` eine `StorageException`; auch ein leeres Optional hat keinen Pfad. | übernommen | Fehlerpfad fehlt (B3 F23). Umsetzung: alt-Zweig `StorageException` → `photoNotSaved()` (FA-06, keine neue Meldung); leeres Optional als verletzte Vorbedingung von UC-01 vermerken. |
 | 3 | Kopplungs-Check: `AddPhotoUseCase` hat sechs Abhängigkeiten (drei Ports, `Album`, `Photo`, `ErrorMessages`), mehr als die Faustregel erlaubt (B3 F18). Einen `PhotoImporter` (prüfen, `Photo` erzeugen, kopieren) abspalten. | **verworfen** | `store` muss zwischen `addPhoto` und `save` laufen und bei 5a zurückgenommen werden; ein Importer brächte eine Indirektion mehr bei kaum weniger Kopplung (B3 F34). |
 | 4 | Kopplungs-Check: `ErrorMessages` nimmt die Zahlen aus den Domänenkonstanten (Notiz), das Diagramm zeigt diese Abhängigkeiten aber nicht. | übernommen | Macht NFA-05 im Diagramm sichtbar (AK-N05.1). Umsetzung: `ErrorMessages ..> Album`, `AlbumName`, `Photo` («use»). |
+
+## Fall 4 – Tests aus Akzeptanzkriterien erzeugen, Block 5
+
+| Feld | Inhalt |
+|---|---|
+| **Aufgabe/Ziel** | Für FA-02 und UC-01 den Testentwurf (Äquivalenzklassen, Grenzwerte, Entscheidungstabelle) und JUnit-Tests aus den AK erzeugen lassen; prüfen, ob die Assertions das Kriterium wirklich prüfen (B5 F19, F32). |
+| **Werkzeug/Modell** | Claude Code (Anthropic), claude-opus-5-5, mit drei Subagenten als Prüfern · Prompt: Arbeitsauftrag im Chat, nicht versioniert (Abweichung von PB §13) |
+| **Ergebnis** | PR #12: TESTING.md, `AlbumNameTest`, `AddPhotoDecisionTableTest`, `Album.addPhoto`, CI. |
+| **Kritische Bewertung** | Mehrere Tests prüften weniger, als Name oder AK versprachen. R1 prüfte „Album unverändert“, obwohl das Album gar nicht beteiligt war. Die Zählweise (A-13) und „erst trimmen, dann zählen“ (A-02) prüfte kein Test. AK-07.2 hing an einem Test mit 100 statt 1 Foto. Ohne Duplikatprüfung wurde r2 nur zufällig rot. Erkannt haben wir das durch den Abgleich der Subagenten mit REQUIREMENTS und durch die Mutationen aus B5 F20. |
+| **Entscheidung** | angepasst: Assertion in R1 gestrichen, Test für A-13 ergänzt, Grenzwerte mit Leerzeichen am Rand, r2 mit 1 und 100 Fotos. Die Bestätigung durch das Team steht im Review von PR #12 aus. |
