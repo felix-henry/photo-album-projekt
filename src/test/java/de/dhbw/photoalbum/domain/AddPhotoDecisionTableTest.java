@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class AddPhotoDecisionTableTest {
 
@@ -17,13 +19,14 @@ class AddPhotoDecisionTableTest {
                 () -> new Photo(PhotoId.newId(), hash(1), "dokument.pdf", ImageType.OTHER, 1024));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {1, Album.MAX_PHOTOS})
     @Tag("fehler")
-    void r2_rejectsDuplicate_beforeFullAlbum_andLeavesAlbumUnchanged() { // AK-07.6
-        Album album = albumWith(Album.MAX_PHOTOS);
+    void r2_rejectsDuplicate_andLeavesAlbumUnchanged(int count) {       // AK-07.2, AK-07.6
+        Album album = albumWith(count);
         Photo copy = photo(1, "kopie.jpg");
         assertThrows(DuplicatePhotoException.class, () -> album.addPhoto(copy));
-        assertEquals(Album.MAX_PHOTOS, album.photoCount());
+        assertEquals(count, album.photoCount());
     }
 
     @Test

@@ -40,6 +40,6 @@ Bedingungen in der Reihenfolge von UC-01; das Duplikat wird vor der Anzahl gepr√
 | AK-02.3 | Grenzwert 51 | `AlbumNameTest.rejectsLengthAboveMax` |
 | AK-02.4 | √ÑK2 | `AlbumNameTest.stripsSurroundingSpaces` |
 | AK-06.4 | R1 | `AddPhotoDecisionTableTest.r1_rejectsUnsupportedImage` |
-| AK-07.6 | R2 | `AddPhotoDecisionTableTest.r2_rejectsDuplicate_beforeFullAlbum_andLeavesAlbumUnchanged` |
+| AK-07.2, AK-07.6 | R2 | `AddPhotoDecisionTableTest.r2_rejectsDuplicate_andLeavesAlbumUnchanged` |
 | AK-07.5 | R3 | `AddPhotoDecisionTableTest.r3_rejectsPhotoWhenAlbumFull_andLeavesAlbumUnchanged` |
 | AK-07.4 | R4 | `AddPhotoDecisionTableTest.r4_addsPhotoUpToMax` |
