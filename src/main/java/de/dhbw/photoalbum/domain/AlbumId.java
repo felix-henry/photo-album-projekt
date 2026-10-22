@@ -13,13 +13,4 @@ public record AlbumId(UUID value) {
     public static AlbumId newId() {
         return new AlbumId(UUID.randomUUID());
     }
-
-    /** Liest eine UUID in Standardschreibweise; ungültiges Format: {@link IllegalArgumentException}. */
-    public static AlbumId of(String value) {
-        UUID uuid = UUID.fromString(value);
-        if (!uuid.toString().equalsIgnoreCase(value)) {
-            throw new IllegalArgumentException("Not a canonical UUID: " + value);
-        }
-        return new AlbumId(uuid);
-    }
 }

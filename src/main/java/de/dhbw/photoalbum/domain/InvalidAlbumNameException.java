@@ -2,10 +2,10 @@ package de.dhbw.photoalbum.domain;
 
 import java.util.Objects;
 
-/** Albumname abgelehnt (FA-02); der Grund bestimmt die Meldung (UC-02 4a bis 4c). */
+/** Albumname abgelehnt; der Grund bestimmt die Meldung. */
 public class InvalidAlbumNameException extends DomainException {
 
-    public enum Reason { EMPTY, TOO_LONG, DUPLICATE }
+    public enum Reason { EMPTY, TOO_LONG }
 
     private final Reason reason;
 
