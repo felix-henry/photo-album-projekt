@@ -46,7 +46,7 @@ Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Datei
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven oder Gradle mit Wrapper; Auswahl offen |
+| Build und Abhängigkeiten | Maven mit Wrapper |
 | Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
 | Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
 | Automatisierte Tests | JUnit 5 |
@@ -94,10 +94,12 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
+├── <a href="pom.xml">pom.xml</a>
+├── <a href="src/main/java/de/dhbw/photoalbum">src/</a> (Gerüst: domain, application, infrastructure, ui)
 └── docs/
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-007)
-    ├── <a href="docs/design/">design/</a> (Klassen- und Sequenzdiagramm, CRC-Karten)
+    ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-003)
+    ├── <a href="docs/design/">design/</a> (Klassen- und Sequenzdiagramm)
     ├── lecture_slides/
     │   └── ...
     ├── presentation/
@@ -113,6 +115,6 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ## Build, Tests und Start
 
 > [!NOTE]
-> Das Projekt befindet sich in Vorbereitung. Quellcode, Build und CI sind noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
+> Quellcode und Build sind als Gerüst angelegt; CI ist noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
 
-Build-, Test- und Startbefehle ergänzen wir nach Einrichtung des Projekts.
+Build: `./mvnw verify`. Test- und Startbefehle folgen mit der Implementierung.
