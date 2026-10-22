@@ -26,7 +26,7 @@ Wir entwickeln eine kleine Anwendung, mit der Jugendliche und junge Erwachsene F
 | Pit | [GamerO815](https://github.com/GamerO815) |
 | Felix | [felix-henry](https://github.com/felix-henry) |
 
-Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen und wird nach den erarbeiteten Anforderungen festgelegt. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
+Felix übernimmt die Rolle des Git-Maintainers.
 
 **Dozentin und Auftraggeberin:** Ana ([dragoana25](https://github.com/dragoana25)).
 
@@ -56,7 +56,9 @@ Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Datei
 
 ## Vorgehen und Zusammenarbeit
 
-Wir nutzen **Kanban**, um Aufgaben und ihren Bearbeitungsstand auf unserem [Kanban-Board](https://photoalbum-kanban.vercel.app) sichtbar zu machen. Das passt zu unserer Abstimmung nach Bedarf und ermöglicht es, Prioritäten nach Feedback anzupassen. Die Blockabgaben bleiben unsere festen Meilensteine.
+Wir nutzen **Kanban**. Die Aufgabenverteilung ist im [Kanban-Board](https://photoalbum-kanban.vercel.app) festgehalten; unser Fortschritt ist dort und in den [GitHub-Issues](https://github.com/felix-henry/photo-album-projekt/issues) sichtbar. So können wir Aufgaben nach Bedarf priorisieren und auf Feedback reagieren. Die Blockabgaben bleiben unsere festen Meilensteine.
+
+Wir stimmen uns über GitHub-Issues und [Pull Requests](https://github.com/felix-henry/photo-album-projekt/pulls) ab. Für schnelle Absprachen nutzen wir optional WhatsApp.
 
 Für Änderungen ist folgender Ablauf vorgegeben:
 
@@ -66,7 +68,7 @@ Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Reque
 
 ## 🗺️ Projektplanung
 
-Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in der [Roadmap](ROADMAP.md).
+Meilensteine, geplante Releases, Abgaben und Arbeitsschritte je Block stehen in der [Roadmap](ROADMAP.md).
 
 ## Dokumentation und Repository-Struktur
 
@@ -82,6 +84,8 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 <details>
 <summary>Dateibaum anzeigen</summary>
 
+Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind zusammengefasst.
+
 <pre>
 .
 ├── <a href=".gitignore">.gitignore</a>
@@ -89,24 +93,24 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
-├── <strong>README.md</strong>
+├── <a href="README.md"><strong>README.md</strong></a>
 ├── <a href="REQUIREMENTS.md"><strong>REQUIREMENTS.md</strong></a>
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
-└── docs/
+└── <a href="docs/">docs/</a>
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── adr/
+    ├── <a href="docs/adr/">adr/</a>
     │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
-    ├── design/
+    ├── <a href="docs/design/">design/</a>
     │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
-    ├── lecture_slides/
+    ├── <a href="docs/lecture_slides/">lecture_slides/</a>
     │   └── ...
-    ├── presentation/
+    ├── <a href="docs/presentation/">presentation/</a>
     │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
-    ├── prototype/
+    ├── <a href="docs/prototype/">prototype/</a>
     │   └── <a href="docs/prototype/index.html">index.html</a>
-    └── task_description/
+    └── <a href="docs/task_description/">task_description/</a>
         └── ...
 </pre>
 
