@@ -85,6 +85,7 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 <pre>
 .
 ├── <a href=".gitignore">.gitignore</a>
+├── <a href="AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
@@ -93,8 +94,6 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
-├── ai_usage/
-│   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 └── docs/
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
     ├── adr/
