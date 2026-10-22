@@ -9,8 +9,6 @@
     <version>0.1.0-SNAPSHOT</version>
     <name>Photo Album</name>
 
-    <!-- Java 21, Maven mit Wrapper (PB §6). Gerüst ohne Abhängigkeiten:
-         Jackson folgt in Block 4 (ADR-004), JUnit 5 mit den ersten Tests (PB §6). -->
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,11 +16,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
