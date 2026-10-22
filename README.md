@@ -96,7 +96,19 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── ai_usage/
 │   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 └── docs/
-    └── ...
+    ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
+    ├── adr/
+    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
+    ├── design/
+    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
+    ├── lecture_slides/
+    │   └── ...
+    ├── presentation/
+    │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
+    ├── prototype/
+    │   └── <a href="docs/prototype/index.html">index.html</a>
+    └── task_description/
+        └── ...
 </pre>
 
 </details>
