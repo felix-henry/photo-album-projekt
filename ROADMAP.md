@@ -21,7 +21,7 @@ Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vor
 - [x] Kanban als Vorgehen festlegen und in der [README.md](README.md) begründen.
 - [x] [Kanban-Board](https://photoalbum-kanban.vercel.app) als Aufgabenboard festlegen.
 - [x] Zugang zum Repository und Kanban-Board sicherstellen.
-- [x] Schutz von `main` prüfen: Für unser privates Repository mit GitHub Free nicht verfügbar; PRs und Reviews gelten als Teamvereinbarung.
+- [x] Schutz von `main` einrichten: Öffentliches Repository, Pull-Request-Pflicht und Freigaben durch die vier anderen Teammitglieder.
 - [x] README und Kanban-Entscheidung vom Team bestätigen lassen.
 - [x] Abschließende Änderungen per PR und Review in `main` übernehmen; anschließend den Stand als `block-1` taggen und den Tag pushen.
 - [ ] Für Block 2 Stakeholder, Systemgrenze, Anforderungen und offene Fragen an die Auftraggeberin in [REQUIREMENTS.md](REQUIREMENTS.md) sammeln.

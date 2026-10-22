@@ -39,7 +39,7 @@ Geplant sind:
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
-Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit der Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
+Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
 
 ## ⚙️ Technische Rahmenbedingungen
 
@@ -62,7 +62,7 @@ Für Änderungen ist folgender Ablauf vorgegeben:
 
 **Issue → Branch → Pull Request → Review → CI → Merge**
 
-Der technische Schutz von `main` ist für unser privates Repository mit GitHub Free nicht verfügbar. Den PR- und Review-Ablauf halten wir daher als Teamvereinbarung ein. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
+Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Request mit Freigaben (Approvals) durch die vier anderen Teammitglieder. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 ## 🗺️ Projektplanung
 
@@ -75,6 +75,9 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 - [Block 1: Vorgehensmodelle](docs/lecture_slides/Block_1_Vorgehensmodelle.md)
 - [Block 2: Requirements Engineering](docs/lecture_slides/Block_2_Requirements_Engineering.md)
 - [Block 3: Entwurf und Entwurfsmuster](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md)
+- [Block 4: Implementierung und Versionsmanagement](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md)
+- [Block 5: Testen – Blackbox](docs/lecture_slides/Block_5_Testen_Blackbox.md)
+- [Block 6: Whitebox, Wartung und Change Request](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.md)
 
 <details>
 <summary>Dateibaum anzeigen</summary>
@@ -93,25 +96,7 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── ai_usage/
 │   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 └── docs/
-    ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── adr/
-    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
-    ├── design/
-    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
-    ├── lecture_slides/
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
-    │   └── assets/
-    │       └── ...
-    ├── presentation/
-    │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
-    └── task_description/
-        ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
-        └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
+    └── ...
 </pre>
 
 </details>
