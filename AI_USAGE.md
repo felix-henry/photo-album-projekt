@@ -78,7 +78,7 @@ Regeln:
 
 </details>
 
-## Fall 3 – Tests aus Akzeptanzkriterien erzeugen, Block 5
+## Fall 4 – Tests aus Akzeptanzkriterien erzeugen, Block 5
 
 | Feld | Inhalt |
 | --- | --- |
