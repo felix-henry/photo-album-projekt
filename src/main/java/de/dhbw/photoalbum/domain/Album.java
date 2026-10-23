@@ -18,6 +18,18 @@ public class Album {
         this.name = Objects.requireNonNull(name, "name");
     }
 
+    /** Fügt ein Foto hinzu; prüft zuerst das Duplikat, dann die Anzahl (FA-07, AK-07.6). */
+    public void addPhoto(Photo photo) {
+        Objects.requireNonNull(photo, "photo");
+        if (photos.stream().anyMatch(p -> p.hash().equals(photo.hash()))) {
+            throw new DuplicatePhotoException();
+        }
+        if (photos.size() >= MAX_PHOTOS) {
+            throw new AlbumFullException();
+        }
+        photos.add(photo);
+    }
+
     public AlbumId id() {
         return id;
     }
