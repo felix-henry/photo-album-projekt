@@ -16,6 +16,8 @@
   table { border-collapse: collapse; width: 100%; }
   th, td { text-align: left; padding: 6px; border-bottom: 1px solid #ddd; vertical-align: top; overflow-wrap: anywhere; }
   tr.neu td { background: #e6f4e6; font-weight: bold; }
+  .vorschaubild { width: 128px; height: 72px; object-fit: cover; display: block; }
+  .seiten { margin: 10px 0; }
   .meldung { border: 2px solid #b00; background: #fee; padding: 8px; margin: 10px 0; }
   .meldung:empty { display: none; }
   .steuerung { border: 2px dashed #999; background: #f6f6f6; padding: 8px; margin-bottom: 14px; font-size: .9rem; }
@@ -32,21 +34,21 @@
 
 <header>
   <h1>Photo Album</h1><span class="hinweis-kopf">Prototyp (Block 2)</span>
-  <p class="klein">Klickprototyp für UC-01 „Foto hinzufügen“ und UC-02 „Album erstellen“ (REQUIREMENTS.md v1.2).</p>
+  <p class="klein">Klickprototyp für UC-01 „Foto hinzufügen“ und UC-02 „Album erstellen“.</p>
 </header>
 
 <section class="steuerung" aria-label="Simulation">
   <strong>Simulation (nicht Teil der Anwendung)</strong>
+  <p>10.000 Fotos pro Album sind vereinbart. Zum Durchspielen gelten vorläufig: Albumnamen mit 1–50 Zeichen und JPEG/PNG-Dateien bis 20 MiB. Diese Regeln und die Duplikaterkennung nach Dateiinhalt sind noch Vorschläge.</p>
   Beispielpfade für „Foto hinzufügen“ (im Dialog eintippen) und ihre simulierte Eigenschaft:
   <ul id="beispielpfade"></ul>
-  <label><input type="checkbox" id="speicherfehler"> Speichern scheitert (UC-01 5a, AK-06.7)</label><br>
+  <label><input type="checkbox" id="speicherfehler"> Speichern scheitert (beide Use Cases)</label><br>
   <button type="button" id="zuruecksetzen">Beispieldaten zurücksetzen</button>
   <div>Letzter Ablauf: <span id="ablauf">–</span></div>
 </section>
 
 <main id="inhalt"></main>
 
-<!-- UC-02 Schritt 2-4: Albumnamen anfordern und prüfen -->
 <dialog id="dialog-album" aria-labelledby="dialog-album-titel">
   <form id="form-album" novalidate>
     <h2 id="dialog-album-titel">Album erstellen</h2>
@@ -60,7 +62,6 @@
   </form>
 </dialog>
 
-<!-- UC-01 Schritt 2: Pfad der Bilddatei angeben -->
 <dialog id="dialog-foto" aria-labelledby="dialog-foto-titel">
   <form id="form-foto" novalidate>
     <h2 id="dialog-foto-titel">Foto hinzufügen</h2>
@@ -77,37 +78,36 @@
   <summary>Szenarien zum Durchklicken</summary>
   <p class="klein">Vor jedem Szenario „Beispieldaten zurücksetzen“.</p>
   <ol>
-    <li><b>UC-02 Standardablauf (AK-01.1):</b> „Album erstellen“ → „Urlaub 2026“ → „Bestätigen“. Grenzfall genau 50 Zeichen (AK-02.2): <code>abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij</code>. Leerzeichen am Rand werden entfernt (AK-02.4): „&nbsp;&nbsp;Party&nbsp;&nbsp;“ → „Party“.</li>
-    <li><b>UC-02 3a (AK-01.2):</b> Dialog mit „Abbrechen“ schließen.</li>
-    <li><b>UC-02 4a (AK-02.1):</b> nur Leerzeichen eingeben.</li>
-    <li><b>UC-02 4b (AK-02.3):</b> 51 Zeichen: <code>abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijk</code></li>
-    <li><b>UC-02 4c (AK-02.5):</b> „urlaub“ eingeben. Vergleich nach A-14: „Straße“ und danach „STRASSE“ werden beide angelegt.</li>
-    <li><b>UC-01 Standardablauf (AK-06.1, AK-07.3):</b> „Best of“ öffnen → „Foto hinzufügen“ → <code>strand.jpg</code> → „Hinzufügen“; „Urlaub“ bleibt unverändert. Grenzfall <code>genau_20mb.png</code> (AK-06.2).</li>
-    <li><b>UC-01 3a (AK-06.6):</b> in „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
-    <li><b>UC-01 3b:</b> in „Best of“ <code>zu_gross.jpg</code> (AK-06.3), <code>dokument.pdf</code> (AK-06.4) oder <code>bild.jpg</code> (AK-06.5) angeben.</li>
-    <li><b>UC-01 4a:</b> „Urlaub“ öffnen → <code>strand.jpg</code> (AK-07.1) oder <code>kopie.jpg</code> (AK-07.2).</li>
-    <li><b>UC-01 4b:</b> „Klassenfahrt“ (99 Fotos) öffnen → <code>berg.png</code> ergibt 100 Fotos (AK-07.4); danach <code>genau_20mb.png</code> → Album voll (AK-07.5); danach <code>strand.jpg</code> → Duplikat-Meldung, weil das Duplikat zuerst geprüft wird (AK-07.6).</li>
-    <li><b>UC-01 5a (AK-06.7):</b> „Speichern scheitert“ einschalten, dann in „Best of“ <code>strand.jpg</code> hinzufügen.</li>
+    <li><b>Album erstellen (AK-01.1):</b> „Album erstellen“ → „Urlaub 2026“ → „Bestätigen“.</li>
+    <li><b>Abbrechen (AK-01.2):</b> Den Albumdialog mit „Abbrechen“ schließen.</li>
+    <li><b>Namensregeln (AK-02.1 bis AK-02.3):</b> Leere Eingabe, genau 50 Zeichen und 51 Zeichen prüfen. Die Grenze von 50 Zeichen ist ein Vorschlag.</li>
+    <li><b>Foto hinzufügen (AK-06.1):</b> „Best of“ öffnen → „Foto hinzufügen“ → <code>strand.jpg</code> → „Hinzufügen“. Das Bild erscheint im Album.</li>
+    <li><b>Nicht lesbare Datei (AK-06.6):</b> In „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
+    <li><b>Dateiregel verletzt (AK-06.2):</b> In „Best of“ <code>zu_gross.jpg</code>, <code>dokument.pdf</code> oder <code>bild.jpg</code> angeben.</li>
+    <li><b>Duplikat (AK-07.1):</b> In „Urlaub“ <code>strand.jpg</code> oder <code>kopie.jpg</code> hinzufügen.</li>
+    <li><b>Fotoanzahl (AK-07.4, AK-07.5):</b> „Klassenfahrt“ mit 9.999 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 10.000 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
+    <li><b>Speicherfehler:</b> „Speichern scheitert“ einschalten und ein Album erstellen oder ein Foto hinzufügen. Der Fehler wird hier vor einer Datenänderung simuliert; der tatsächliche Umgang mit Dateifehlern bleibt offen.</li>
   </ol>
-  <p class="klein">Nur UC-01 und UC-02; keine Bildvorschau, da die Albumansicht laut FA-08 Dateiname, Titel und Beschreibung zeigt.</p>
+  <p class="klein">Bildplatzhalter und Dateieigenschaften sind simuliert. Es werden keine echten Dateien gelesen oder gespeichert. Die seitenweise Ansicht zeigt den vorgesehenen Umgang mit großen Alben; sie legt keine Speichergrenze für die spätere Anwendung fest.</p>
 </details>
 
 <script>
 "use strict";
 
-const MAX_GROESSE = 20 * 1024 * 1024; // A-04
-const MAX_FOTOS = 100;                // AE-01
-const MAX_NAME = 50;                  // A-02
+const MAX_FOTOS = 10000;              // AE-01, verbindlich
+const MAX_GROESSE = 20 * 1024 * 1024; // A-04, Vorschlag
+const MAX_NAME = 50;                  // A-02, Vorschlag
+const FOTOS_PRO_SEITE = 12;           // Nur Prototypdarstellung, keine RAM-Grenze aus NFA-03
 
 // Simuliertes Dateisystem; typ = am Inhalt erkannter Typ (A-03), inhalt = Ersatz für den Inhalts-Hash (A-01)
 const DATEIEN = [
-  { pfad: "strand.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "JPEG, 2 MB (AK-06.1)" },
-  { pfad: "berg.png", typ: "PNG", groesse: 5 * 1024 * 1024, inhalt: "berg", sim: "PNG, 5 MB" },
-  { pfad: "genau_20mb.png", typ: "PNG", groesse: MAX_GROESSE, inhalt: "g20", sim: "PNG, genau 20 MB = 20 971 520 Byte (AK-06.2)" },
-  { pfad: "zu_gross.jpg", typ: "JPEG", groesse: MAX_GROESSE + 1, inhalt: "z", sim: "JPEG, 20 MB + 1 Byte (AK-06.3)" },
-  { pfad: "dokument.pdf", typ: "PDF", groesse: 100 * 1024, inhalt: "pdf", sim: "PDF (AK-06.4)" },
-  { pfad: "bild.jpg", typ: "Text", groesse: 2 * 1024, inhalt: "txt", sim: "Textdatei, in .jpg umbenannt (AK-06.5)" },
-  { pfad: "kopie.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "inhaltsgleich zu strand.jpg (AK-07.2)" }
+  { pfad: "strand.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "JPEG, 2 MiB (AK-06.1)" },
+  { pfad: "berg.png", typ: "PNG", groesse: 5 * 1024 * 1024, inhalt: "berg", sim: "PNG, 5 MiB" },
+  { pfad: "genau_20mb.png", typ: "PNG", groesse: MAX_GROESSE, inhalt: "g20", sim: "PNG, genau 20 MiB (vorläufige Dateiregel)" },
+  { pfad: "zu_gross.jpg", typ: "JPEG", groesse: MAX_GROESSE + 1, inhalt: "z", sim: "JPEG, 20 MiB + 1 Byte (AK-06.2)" },
+  { pfad: "dokument.pdf", typ: "PDF", groesse: 100 * 1024, inhalt: "pdf", sim: "PDF (AK-06.2)" },
+  { pfad: "bild.jpg", typ: "Text", groesse: 2 * 1024, inhalt: "txt", sim: "Textdatei mit .jpg-Endung (AK-06.2)" },
+  { pfad: "kopie.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "inhaltsgleich zu strand.jpg (AK-07.1)" }
 ];
 const FEHLENDER_PFAD = "fehlt.jpg"; // existiert nicht (AK-06.6)
 
@@ -129,11 +129,11 @@ function foto(datei, inhalt, titel) {
 function beispieldaten() {
   naechsteId = 1;
   const klassenfahrt = [foto("strand.jpg", "strand")];
-  for (let i = 1; i <= 98; i++) klassenfahrt.push(foto("foto_" + String(i).padStart(2, "0") + ".jpg", "k" + i));
+  for (let i = 1; i < MAX_FOTOS - 1; i++) klassenfahrt.push(foto("foto_" + String(i).padStart(4, "0") + ".jpg", "k" + i));
   alben = [
-    { id: naechsteId++, name: "Best of", fotos: [] },                                  // AK-07.3
-    { id: naechsteId++, name: "Klassenfahrt", fotos: klassenfahrt },                   // AK-07.4 bis AK-07.6
-    { id: naechsteId++, name: "Urlaub", fotos: [foto("strand.jpg", "strand", "Am Strand")] } // AK-07.1, AK-07.2
+    { id: naechsteId++, name: "Best of", fotos: [] },
+    { id: naechsteId++, name: "Klassenfahrt", fotos: klassenfahrt },                   // AK-07.4, AK-07.5
+    { id: naechsteId++, name: "Urlaub", fotos: [foto("strand.jpg", "strand", "Am Strand")] } // AK-07.1
   ];
   ansicht = { seite: "uebersicht", albumId: null };
   neuesFotoId = null;
@@ -146,10 +146,8 @@ const ablauf = (text) => { el("ablauf").textContent = text; };
 // ---------- Darstellung ----------
 
 function zeigeUebersicht() {
-  // FA-03: Name und Fotoanzahl, alphabetisch (A-11)
-  const sortiert = alben.slice().sort((a, b) => a.name.localeCompare(b.name, "de"));
   let zeilen = "";
-  for (const a of sortiert) {
+  for (const a of alben) {
     zeilen += "<tr><td>" + esc(a.name) + "</td><td>" + anzahlText(a.fotos.length) +
       '</td><td><button type="button" data-oeffnen="' + a.id + '">Öffnen</button></td></tr>';
   }
@@ -161,11 +159,21 @@ function zeigeUebersicht() {
       : "<table><thead><tr><th>Album</th><th>Fotos</th><th></th></tr></thead><tbody>" + zeilen + "</tbody></table>");
 }
 
+const BILDER = {
+  strand: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><rect width="320" height="180" fill="#8bd3f7"/><circle cx="260" cy="38" r="20" fill="#ffd76b"/><path d="M0 90H320V180H0Z" fill="#318da8"/><path d="M0 130Q130 90 320 150V180H0Z" fill="#ead3a1"/></svg>',
+  berg: '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><rect width="320" height="180" fill="#b9dff1"/><path d="M0 180 120 25 230 180Z" fill="#6c857c"/><path d="M100 180 230 50 320 180Z" fill="#496c62"/><path d="M92 61 120 25 148 64 122 53Z" fill="#fff"/></svg>'
+};
+const BILD_URLS = Object.fromEntries(Object.entries(BILDER).map(([name, svg]) => [name, "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg)]));
+
 function zeigeAlbum(album) {
-  // FA-08: Dateiname, Titel, Beschreibung in Hinzufüge-Reihenfolge (A-11)
+  const seiten = Math.max(1, Math.ceil(album.fotos.length / FOTOS_PRO_SEITE));
+  ansicht.fotoSeite = Math.min(Math.max(ansicht.fotoSeite || 0, 0), seiten - 1);
+  const start = ansicht.fotoSeite * FOTOS_PRO_SEITE;
+  const sichtbareFotos = album.fotos.slice(start, start + FOTOS_PRO_SEITE);
   let zeilen = "";
-  for (const f of album.fotos) {
-    zeilen += "<tr" + (f.id === neuesFotoId ? ' class="neu" id="neues-foto"' : "") + "><td>" + esc(f.datei) + "</td><td>" +
+  for (const f of sichtbareFotos) {
+    const bild = BILD_URLS[f.inhalt === "strand" ? "strand" : "berg"];
+    zeilen += "<tr" + (f.id === neuesFotoId ? ' class="neu" id="neues-foto"' : "") + '><td><img class="vorschaubild" loading="lazy" src="' + bild + '" alt="Bildplatzhalter für ' + esc(f.datei) + '"></td><td>' + esc(f.datei) + "</td><td>" +
       (f.titel ? esc(f.titel) : "(kein Titel)") + "</td><td>" +
       (f.beschreibung ? esc(f.beschreibung) : "(keine Beschreibung)") + "</td></tr>";
   }
@@ -176,7 +184,10 @@ function zeigeAlbum(album) {
     '<div id="meldung" class="meldung" role="alert"></div>' +
     (album.fotos.length === 0
       ? "<p>Dieses Album enthält noch keine Fotos.</p>"
-      : "<table><thead><tr><th>Dateiname</th><th>Titel</th><th>Beschreibung</th></tr></thead><tbody>" + zeilen + "</tbody></table>");
+      : '<nav class="seiten" aria-label="Fotos durchblättern"><button type="button" data-foto-seite="' + (ansicht.fotoSeite - 1) + '"' + (ansicht.fotoSeite === 0 ? ' disabled' : '') + '>Vorherige Fotos</button>' +
+        '<span>Fotos ' + (start + 1) + '–' + (start + sichtbareFotos.length) + ' von ' + album.fotos.length.toLocaleString("de-DE") + '</span> ' +
+        '<button type="button" data-foto-seite="' + (ansicht.fotoSeite + 1) + '"' + (ansicht.fotoSeite === seiten - 1 ? ' disabled' : '') + '>Weitere Fotos</button></nav>' +
+        "<table><thead><tr><th>Bild</th><th>Dateiname</th><th>Titel</th><th>Beschreibung</th></tr></thead><tbody>" + zeilen + "</tbody></table>");
 }
 
 function zeige() {
@@ -187,35 +198,32 @@ function zeige() {
 // ---------- UC-02 Album erstellen ----------
 
 function oeffneAlbumDialog() {
-  // UC-02 Schritt 2: System fordert einen Albumnamen an
   el("albumname").value = "";
   el("album-meldung").textContent = "";
   el("dialog-album").showModal();
 }
 
 function pruefeAlbumname(eingabe) {
-  // UC-02 Schritt 4 (FA-02): trimmen, NFC (A-14), Länge in Codepoints (A-13), Gleichheit nach A-14
-  const name = eingabe.trim().normalize("NFC");
-  if (name.length === 0) return { schritt: "4a", meldung: "Der Albumname darf nicht leer sein." };
-  if ([...name].length > MAX_NAME) return { schritt: "4b", meldung: "Der Albumname darf höchstens 50 Zeichen lang sein." };
-  if (alben.some((a) => a.name.toLowerCase() === name.toLowerCase())) {
-    return { schritt: "4c", meldung: "Ein Album mit diesem Namen existiert bereits." };
-  }
+  const name = eingabe.trim();
+  if (name.length === 0) return { meldung: "Der Albumname darf nicht leer sein." };
+  if ([...name].length > MAX_NAME) return { meldung: "Der Albumname darf höchstens 50 Zeichen lang sein (vorläufige Grenze)." };
   return { name: name };
 }
 
 el("form-album").addEventListener("submit", (e) => {
   e.preventDefault();
-  // UC-02 Schritt 3: Nutzerin bestätigt
   const r = pruefeAlbumname(el("albumname").value);
   if (r.meldung) {
-    // UC-02 4a–4c: weiter mit Schritt 2, Dialog bleibt offen
     el("album-meldung").textContent = r.meldung;
     el("albumname").focus();
-    ablauf("UC-02 Alternativablauf " + r.schritt + ": kein Album angelegt, weiter mit Schritt 2");
+    ablauf("UC-02: Namensprüfung in Schritt 3 abgelehnt; keine Datenänderung");
     return;
   }
-  // UC-02 Schritt 5–6: leeres Album anlegen und in der Übersicht anzeigen
+  if (el("speicherfehler").checked) {
+    el("album-meldung").textContent = "Das Album konnte nicht gespeichert werden.";
+    ablauf("UC-02: Speicherfehler in Schritt 4; keine Datenänderung simuliert");
+    return;
+  }
   alben.push({ id: naechsteId++, name: r.name, fotos: [] });
   el("dialog-album").close();
   zeige();
@@ -223,9 +231,8 @@ el("form-album").addEventListener("submit", (e) => {
 });
 
 function albumAbbrechen() {
-  // UC-02 3a (auch per Esc): kein Album anlegen
   el("dialog-album").close();
-  ablauf("UC-02 Alternativablauf 3a: abgebrochen, kein Album angelegt");
+  ablauf("UC-02: abgebrochen, kein Album erstellt");
 }
 el("album-abbrechen").addEventListener("click", albumAbbrechen);
 el("dialog-album").addEventListener("cancel", (e) => { e.preventDefault(); albumAbbrechen(); });
@@ -233,7 +240,6 @@ el("dialog-album").addEventListener("cancel", (e) => { e.preventDefault(); album
 // ---------- UC-01 Foto hinzufügen ----------
 
 function oeffneFotoDialog() {
-  // UC-01 Schritt 2: Nutzerin gibt den Pfad einer Bilddatei an
   el("pfad").value = "";
   el("dialog-foto").showModal();
 }
@@ -247,19 +253,18 @@ function fehler(text, schritt) {
 function fotoHinzufuegen(album, pfad) {
   neuesFotoId = null;
   const datei = DATEIEN.find((d) => d.pfad === pfad);
-  // Schritt 3: lesen (3a), dann Typ am Inhalt und Größe (3b)
-  if (!datei) return fehler("Die Datei konnte nicht gelesen werden.", "3a");
+  // UC-01 Schritt 4: Datei- und Geschäftsregeln prüfen.
+  if (!datei) return fehler("Die Datei konnte nicht gelesen werden.", "zu Schritt 4");
   if ((datei.typ !== "JPEG" && datei.typ !== "PNG") || datei.groesse > MAX_GROESSE) {
-    return fehler("Erlaubt sind nur JPEG- oder PNG-Dateien bis 20 MB.", "3b");
+    return fehler("Im Prototyp gelten vorläufig JPEG oder PNG bis 20 MiB.", "zu Schritt 4");
   }
-  // Schritt 4: zuerst Duplikat (4a, A-01), dann Fotoanzahl (4b, AE-01)
-  if (album.fotos.some((f) => f.inhalt === datei.inhalt)) return fehler("Dieses Foto ist bereits im Album enthalten.", "4a");
-  if (album.fotos.length >= MAX_FOTOS) return fehler("Das Album ist voll (maximal 100 Fotos).", "4b");
-  // Schritt 5: kopieren und speichern (5a: Speichern scheitert)
-  if (el("speicherfehler").checked) return fehler("Das Foto konnte nicht gespeichert werden.", "5a");
+  if (album.fotos.some((f) => f.inhalt === datei.inhalt)) return fehler("Dieses Foto ist bereits im Album enthalten.", "zu Schritt 4");
+  if (album.fotos.length >= MAX_FOTOS) return fehler("Das Album ist voll (maximal 10.000 Fotos).", "zu Schritt 4");
+  if (el("speicherfehler").checked) return fehler("Das Foto konnte nicht gespeichert werden.", "zu Schritt 5");
   const neu = foto(datei.pfad, datei.inhalt); // ohne Titel und Beschreibung (A-06)
   album.fotos.push(neu);
   neuesFotoId = neu.id;
+  ansicht.fotoSeite = Math.floor((album.fotos.length - 1) / FOTOS_PRO_SEITE);
   // Schritt 6: Foto in der Albumansicht anzeigen (markiert)
   zeige();
   el("neues-foto").scrollIntoView({ block: "nearest" });
@@ -275,7 +280,6 @@ el("form-foto").addEventListener("submit", (e) => {
 });
 
 function fotoAbbrechen() {
-  // „Abbrechen“ schließt nur den Dialog (Bedienhilfe des Prototyps, kein Alternativablauf in UC-01)
   el("dialog-foto").close();
   ablauf("Foto hinzufügen abgebrochen, Album unverändert");
 }
@@ -287,7 +291,10 @@ el("dialog-foto").addEventListener("cancel", (e) => { e.preventDefault(); fotoAb
 el("inhalt").addEventListener("click", (e) => {
   const t = e.target;
   if (!(t instanceof HTMLButtonElement)) return;
-  if (t.dataset.oeffnen) {
+  if (t.dataset.fotoSeite !== undefined) {
+    ansicht.fotoSeite = Number(t.dataset.fotoSeite);
+    zeige();
+  } else if (t.dataset.oeffnen) {
     ansicht = { seite: "album", albumId: Number(t.dataset.oeffnen) };
     neuesFotoId = null;
     zeige();
