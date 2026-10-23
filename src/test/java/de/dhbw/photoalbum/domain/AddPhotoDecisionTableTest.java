@@ -18,6 +18,21 @@ class AddPhotoDecisionTableTest {
                 () -> new Photo(PhotoId.newId(), hash(1), "dokument.pdf", ImageType.OTHER, 1024));
     }
 
+    @Test
+    @Tag("grenzfall")
+    void b1_acceptsFileOfExactlyMaxSize() {                              // AK-06.2
+        Album album = albumWith(0);
+        album.addPhoto(new Photo(PhotoId.newId(), hash(1), "gross.png", ImageType.PNG, Photo.MAX_FILE_SIZE_BYTES));
+        assertEquals(1, album.photos().size());
+    }
+
+    @Test
+    @Tag("grenzfall")
+    void b1_rejectsFileOneByteAboveMaxSize() {                           // AK-06.3
+        assertThrows(UnsupportedImageException.class,
+                () -> new Photo(PhotoId.newId(), hash(1), "zu_gross.jpg", ImageType.JPEG, Photo.MAX_FILE_SIZE_BYTES + 1));
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {1, Album.MAX_PHOTOS})
     @Tag("fehler")

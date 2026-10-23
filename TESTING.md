@@ -31,6 +31,8 @@ Bedingungen in der Reihenfolge von UC-01; das Duplikat wird vor der Anzahl gepr�
 | A4 `AlbumFullException` | | | X | |
 | A5 Album unverändert | X | X | X | |
 
+Grenzwerte für B1: genau 20 MB → gültig; 20 MB + 1 Byte → `UnsupportedImageException`.
+
 ## Zuordnung AK → Verfahren → Test
 
 | AK | Verfahren | Testmethode |
@@ -39,6 +41,8 @@ Bedingungen in der Reihenfolge von UC-01; das Duplikat wird vor der Anzahl gepr�
 | AK-02.2 | Grenzwert 50 | `AlbumNameTest.acceptsLengthUpToMax` |
 | AK-02.3 | Grenzwert 51 | `AlbumNameTest.rejectsLengthAboveMax` |
 | AK-02.4 | ÄK2 | `AlbumNameTest.stripsSurroundingSpaces` |
+| AK-06.2 | Grenzwert 20 MB | `AddPhotoDecisionTableTest.b1_acceptsFileOfExactlyMaxSize` |
+| AK-06.3 | Grenzwert 20 MB + 1 Byte | `AddPhotoDecisionTableTest.b1_rejectsFileOneByteAboveMaxSize` |
 | AK-06.4 | R1 | `AddPhotoDecisionTableTest.r1_rejectsUnsupportedImage` |
 | AK-07.2, AK-07.6 | R2 | `AddPhotoDecisionTableTest.r2_rejectsDuplicate_andLeavesAlbumUnchanged` |
 | AK-07.5 | R3 | `AddPhotoDecisionTableTest.r3_rejectsPhotoWhenAlbumFull_andLeavesAlbumUnchanged` |
