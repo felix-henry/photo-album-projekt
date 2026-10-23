@@ -5,6 +5,7 @@
 <p>Software Engineering II.1 · DHBW Heilbronn · WiSe 2026/27</p>
 <p>
   <a href="https://github.com/felix-henry/photo-album-projekt">Repository</a>
+  · <a href="https://photoalbum-kanban.vercel.app/">Kanban-Board</a>
   · <a href="ROADMAP.md">Roadmap</a>
   · <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung</a>
 </p>
@@ -25,7 +26,7 @@ Wir entwickeln eine kleine Anwendung, mit der Jugendliche und junge Erwachsene F
 | Pit | [GamerO815](https://github.com/GamerO815) |
 | Felix | [felix-henry](https://github.com/felix-henry) |
 
-Felix übernimmt die Rolle des Git-Maintainers. Die weitere Aufgabenverteilung ist noch offen und wird nach den erarbeiteten Anforderungen festgelegt. Wir stimmen uns nach Bedarf über WhatsApp ab, später zusätzlich über PR-Kommentare und Issues.
+Felix übernimmt die Rolle des Git-Maintainers.
 
 **Dozentin und Auftraggeberin:** Ana ([dragoana25](https://github.com/dragoana25)).
 
@@ -38,7 +39,7 @@ Geplant sind:
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
-Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit der Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
+Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
 
 ## ⚙️ Technische Rahmenbedingungen
 
@@ -55,17 +56,19 @@ Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos 
 
 ## Vorgehen und Zusammenarbeit
 
-Wir nutzen **Kanban**, um Aufgaben und ihren Bearbeitungsstand auf unserem [Kanban-Board](https://photoalbum-kanban.vercel.app) sichtbar zu machen. Das passt zu unserer Abstimmung nach Bedarf und ermöglicht es, Prioritäten nach Feedback anzupassen. Die Blockabgaben bleiben unsere festen Meilensteine.
+Wir nutzen **Kanban**. Die Aufgabenverteilung ist im [Kanban-Board](https://photoalbum-kanban.vercel.app) festgehalten; unser Fortschritt ist dort und in den [GitHub-Issues](https://github.com/felix-henry/photo-album-projekt/issues) sichtbar. So können wir Aufgaben nach Bedarf priorisieren und auf Feedback reagieren. Die Blockabgaben bleiben unsere festen Meilensteine.
+
+Wir stimmen uns über GitHub-Issues und [Pull Requests](https://github.com/felix-henry/photo-album-projekt/pulls) ab. Für schnelle Absprachen nutzen wir optional WhatsApp.
 
 Für Änderungen ist folgender Ablauf vorgegeben:
 
 **Issue → Branch → Pull Request → Review → CI → Merge**
 
-Der technische Schutz von `main` ist für unser privates Repository mit GitHub Free nicht verfügbar. Den PR- und Review-Ablauf halten wir daher als Teamvereinbarung ein. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
+Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Request mit Freigaben (Approvals) durch die vier anderen Teammitglieder. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 ## 🗺️ Projektplanung
 
-Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in der [Roadmap](ROADMAP.md).
+Meilensteine, geplante Releases, Abgaben und Arbeitsschritte je Block stehen in der [Roadmap](ROADMAP.md).
 
 ## Dokumentation und Repository-Struktur
 
@@ -74,43 +77,41 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 - [Block 1: Vorgehensmodelle](docs/lecture_slides/Block_1_Vorgehensmodelle.md)
 - [Block 2: Requirements Engineering](docs/lecture_slides/Block_2_Requirements_Engineering.md)
 - [Block 3: Entwurf und Entwurfsmuster](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md)
+- [Block 4: Implementierung und Versionsmanagement](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md)
+- [Block 5: Testen – Blackbox](docs/lecture_slides/Block_5_Testen_Blackbox.md)
+- [Block 6: Whitebox, Wartung und Change Request](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.md)
 
 <details>
 <summary>Dateibaum anzeigen</summary>
 
+Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind zusammengefasst.
+
 <pre>
 .
 ├── <a href=".gitignore">.gitignore</a>
+├── <a href="AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
-├── <strong>README.md</strong>
+├── <a href="README.md"><strong>README.md</strong></a>
 ├── <a href="REQUIREMENTS.md"><strong>REQUIREMENTS.md</strong></a>
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
-├── ai_usage/
-│   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
-└── docs/
+└── <a href="docs/">docs/</a>
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── adr/
+    ├── <a href="docs/adr/">adr/</a>
     │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
-    ├── design/
+    ├── <a href="docs/design/">design/</a>
     │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
-    ├── lecture_slides/
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
-    │   └── assets/
-    │       └── ...
-    ├── presentation/
+    ├── <a href="docs/lecture_slides/">lecture_slides/</a>
+    │   └── ...
+    ├── <a href="docs/presentation/">presentation/</a>
     │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
-    └── task_description/
-        ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
-        └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
+    ├── <a href="docs/prototype/">prototype/</a>
+    │   └── <a href="docs/prototype/index.html">index.html</a>
+    └── <a href="docs/task_description/">task_description/</a>
+        └── ...
 </pre>
 
 </details>
