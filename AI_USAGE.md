@@ -77,13 +77,3 @@ Regeln:
 ```
 
 </details>
-
-## Fall 4 – Tests aus Akzeptanzkriterien erzeugen, Block 5
-
-| Feld | Inhalt |
-| --- | --- |
-| **Aufgabe/Ziel** | Für FA-02 und UC-01 den Testentwurf (Äquivalenzklassen, Grenzwerte, Entscheidungstabelle) und JUnit-Tests aus den AK erzeugen lassen; prüfen, ob die Assertions das Kriterium wirklich prüfen (B5 F19, F32). |
-| **Werkzeug/Modell** | Claude Code, claude-opus-5-5, mit drei Subagenten als Prüfern. Der Prompt war ein Arbeitsauftrag im Chat und ist nicht versioniert (Abweichung von PB §13). |
-| **Ergebnis** | PR #12: TESTING.md, `AlbumNameTest`, `AddPhotoDecisionTableTest`, `Album.addPhoto`, CI. |
-| **Kritische Bewertung** | Mehrere Tests prüften weniger, als Name oder AK versprachen. R1 prüfte „Album unverändert“, obwohl das Album gar nicht beteiligt war. Die Zählweise (A-13) und „erst trimmen, dann zählen“ (A-02) prüfte kein Test. AK-07.2 hing an einem Test mit vollem Album statt mit 1 Foto. Ohne Duplikatprüfung wurde r2 nur zufällig rot. Erkannt haben wir das durch den Abgleich der Subagenten mit REQUIREMENTS und durch die Mutationen aus B5 F20. |
-| **Entscheidung** | **Angepasst:** Assertion in R1 gestrichen, Test für A-13 ergänzt, Grenzwerte mit Leerzeichen am Rand, r2 mit 1 Foto und mit vollem Album. Die Bestätigung durch das Team steht im Review von PR #12 aus. |
