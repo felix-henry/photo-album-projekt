@@ -3,11 +3,7 @@ package de.dhbw.photoalbum.domain;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-/**
- * SHA-256 des Dateiinhalts als 64 Hex-Zeichen in Kleinbuchstaben.
- * ContentHash entscheidet über Inhaltsgleichheit (Duplikatregel FA-07, A-01);
- * die Identität eines Fotos ist {@link PhotoId}.
- */
+/** SHA-256 des Dateiinhalts als 64 Hex-Zeichen in Kleinbuchstaben. */
 public record ContentHash(String sha256Hex) {
 
     private static final Pattern SHA256_HEX = Pattern.compile("[0-9a-f]{64}");

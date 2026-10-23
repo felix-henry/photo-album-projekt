@@ -39,14 +39,14 @@ Geplant sind:
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
-Längenlimits, Fotolimit, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit der Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
+Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
 
 ## ⚙️ Technische Rahmenbedingungen
 
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven oder Gradle mit Wrapper; Auswahl offen |
+| Build und Abhängigkeiten | Maven mit Wrapper |
 | Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
 | Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
 | Automatisierte Tests | JUnit 5 |
@@ -62,7 +62,7 @@ Für Änderungen ist folgender Ablauf vorgegeben:
 
 **Issue → Branch → Pull Request → Review → CI → Merge**
 
-Der technische Schutz von `main` ist für unser privates Repository mit GitHub Free nicht verfügbar. Den PR- und Review-Ablauf halten wir daher als Teamvereinbarung ein. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
+Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Request mit Freigaben (Approvals) durch die vier anderen Teammitglieder. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 ## 🗺️ Projektplanung
 
@@ -75,6 +75,9 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 - [Block 1: Vorgehensmodelle](docs/lecture_slides/Block_1_Vorgehensmodelle.md)
 - [Block 2: Requirements Engineering](docs/lecture_slides/Block_2_Requirements_Engineering.md)
 - [Block 3: Entwurf und Entwurfsmuster](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md)
+- [Block 4: Implementierung und Versionsmanagement](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md)
+- [Block 5: Testen – Blackbox](docs/lecture_slides/Block_5_Testen_Blackbox.md)
+- [Block 6: Whitebox, Wartung und Change Request](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.md)
 
 <details>
 <summary>Dateibaum anzeigen</summary>
@@ -82,6 +85,7 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 <pre>
 .
 ├── <a href=".gitignore">.gitignore</a>
+├── <a href="AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
 ├── <a href="CHANGELOG.md"><strong>CHANGELOG.md</strong></a>
@@ -90,26 +94,20 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
-├── ai_usage/
-│   └── <a href="ai_usage/AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
+├── <a href="pom.xml">pom.xml</a>
+├── <a href="src/main/java/de/dhbw/photoalbum">src/</a> (Gerüst: domain, application, infrastructure, ui)
 └── docs/
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
-    ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-007)
-    ├── <a href="docs/design/">design/</a> (Klassen- und Sequenzdiagramm, CRC-Karten)
+    ├── <a href="docs/adr/">adr/</a> (ADR-001 bis ADR-003)
+    ├── <a href="docs/design/">design/</a> (Klassen- und Sequenzdiagramm)
     ├── lecture_slides/
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehensmodelle.md">Block_1_Vorgehensmodelle.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_1_Vorgehsmodelle.pdf">Block_1_Vorgehsmodelle.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.md">Block_2_Requirements_Engineering.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_2_Requirements_Engineering.pdf">Block_2_Requirements_Engineering.pdf</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.md">Block_3_Entwurf_und_Entwurfsmuster.md</a>
-    │   ├── <a href="docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf">Block_3_Entwurf_und_Entwurfsmuster.pdf</a>
-    │   └── assets/
-    │       └── ...
+    │   └── ...
     ├── presentation/
     │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
+    ├── prototype/
+    │   └── <a href="docs/prototype/index.html">index.html</a>
     └── task_description/
-        ├── <a href="docs/task_description/Projektbeschreibung_Photo_Album.md">Projektbeschreibung_Photo_Album.md</a>
-        └── <a href="docs/task_description/Projektbeschreibung_Photo_Album.pdf">Projektbeschreibung_Photo_Album.pdf</a>
+        └── ...
 </pre>
 
 </details>
@@ -117,6 +115,6 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ## Build, Tests und Start
 
 > [!NOTE]
-> Das Projekt befindet sich in Vorbereitung. Quellcode, Build und CI sind noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
+> Quellcode und Build sind als Gerüst angelegt; CI ist noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
 
-Build-, Test- und Startbefehle ergänzen wir nach Einrichtung des Projekts.
+Build: `./mvnw verify`. Test- und Startbefehle folgen mit der Implementierung.

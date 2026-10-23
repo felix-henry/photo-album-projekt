@@ -24,7 +24,7 @@ Bedingungen in der Reihenfolge von UC-01; das Duplikat wird vor der Anzahl gepr�
 |---|---|---|---|---|
 | B1 JPEG/PNG, höchstens 20 MB (FA-06) | N | J | J | J |
 | B2 Foto schon im Album (Hash) | – | J | N | N |
-| B3 Album hat 100 Fotos | – | – | J | N |
+| B3 Album hat 10.000 Fotos (`Album.MAX_PHOTOS`) | – | – | J | N |
 | A1 Foto hinzugefügt | | | | X |
 | A2 `UnsupportedImageException` | X | | | |
 | A3 `DuplicatePhotoException` | | X | | |

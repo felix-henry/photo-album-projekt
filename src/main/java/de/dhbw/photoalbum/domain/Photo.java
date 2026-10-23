@@ -5,9 +5,8 @@ import java.text.Normalizer;
 import java.util.Objects;
 
 /**
- * Foto in genau einem Album. Der Konstruktor prüft Typ und Größe (FA-06, A-03, A-04) sowie
- * Titel und Beschreibung (FA-10, AE-02, A-05, A-06, A-13). Identität ist {@code id};
- * {@code hash} entscheidet über Inhaltsgleichheit (FA-07, A-01).
+ * Foto mit Bilddaten und optionalem Titel und optionaler Beschreibung begrenzter Länge.
+ * {@code hash} entscheidet über Inhaltsgleichheit, {@code id} über Identität.
  */
 public record Photo(PhotoId id, ContentHash hash, String fileName, ImageType type, long sizeBytes,
                     String title, String description) {
@@ -34,12 +33,12 @@ public record Photo(PhotoId id, ContentHash hash, String fileName, ImageType typ
         description = checkedText(description, MAX_DESCRIPTION_LENGTH, Field.DESCRIPTION);
     }
 
-    /** Neues Foto ohne Titel und Beschreibung (UC-01, A-06). */
+    /** Neues Foto ohne Titel und Beschreibung. */
     public Photo(PhotoId id, ContentHash hash, String fileName, ImageType type, long sizeBytes) {
         this(id, hash, fileName, type, sizeBytes, "", "");
     }
 
-    /** {@code null} wird leer (A-06); gezählt werden Codepoints nach NFC (A-13). */
+    /** {@code null} wird leer; gezählt werden Codepoints nach NFC. */
     private static String checkedText(String text, int maxLength, Field field) {
         String normalized = text == null ? "" : Normalizer.normalize(text, Normalizer.Form.NFC);
         if (normalized.codePointCount(0, normalized.length()) > maxLength) {

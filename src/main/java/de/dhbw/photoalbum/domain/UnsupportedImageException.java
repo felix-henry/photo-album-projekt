@@ -1,6 +1,6 @@
 package de.dhbw.photoalbum.domain;
 
-/** Kein JPEG/PNG oder größer als {@link Photo#MAX_FILE_SIZE_BYTES} (FA-06, A-03, A-04). */
+/** Kein JPEG/PNG oder größer als {@link Photo#MAX_FILE_SIZE_BYTES}. */
 public class UnsupportedImageException extends DomainException {
 
     public UnsupportedImageException() {
