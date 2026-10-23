@@ -52,7 +52,7 @@ Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Datei
 | Automatisierte Tests | JUnit 5 |
 | Coverage | JaCoCo |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
-| CI | Build und Tests bei jedem Pull Request; Anbieter und Konfiguration offen |
+| CI | GitHub Actions: Build und Tests bei jedem Push und Pull Request; JAR und JaCoCo-Bericht als Artefakte |
 
 ## Vorgehen und Zusammenarbeit
 
@@ -115,6 +115,6 @@ Meilensteine, geplante Releases, Abgabetermin und nächste Schritte stehen in de
 ## Build, Tests und Start
 
 > [!NOTE]
-> Quellcode und Build sind als Gerüst angelegt; CI ist noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
+> Quellcode und Build sind als Gerüst angelegt; eine Softwareversion ist noch nicht veröffentlicht.
 
 Build: `./mvnw verify`. Test- und Startbefehle folgen mit der Implementierung.
