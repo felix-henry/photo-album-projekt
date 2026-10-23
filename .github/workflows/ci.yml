@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [main]
+    branches: ['**']
   pull_request:
 jobs:
   build:
@@ -15,6 +15,12 @@ jobs:
           cache: maven
       - name: Build and test
         run: ./mvnw --batch-mode verify
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: photo-album-jar
+          path: target/*.jar
+          if-no-files-found: error
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
