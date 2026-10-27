@@ -80,6 +80,7 @@ Meilensteine, geplante Releases, Abgaben und Arbeitsschritte je Block stehen in 
 - [Block 4: Implementierung und Versionsmanagement](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md)
 - [Block 5: Testen – Blackbox](docs/lecture_slides/Block_5_Testen_Blackbox.md)
 - [Block 6: Whitebox, Wartung und Change Request](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.md)
+- [Block 7: Management und Abschlusspräsentationen](docs/lecture_slides/Block_7_Management_und_Abschlusspraesentationen_final.md)
 
 <details>
 <summary>Dateibaum anzeigen</summary>
