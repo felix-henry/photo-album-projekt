@@ -13,3 +13,6 @@ CLAUDE.md
 # Visual Studio Code
 .vscode/
 *.code-workspace
+
+# Lokale Hilfsdateien
+/.local/
