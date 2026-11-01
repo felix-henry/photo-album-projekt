@@ -351,6 +351,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **Ein bis zwei manuelle Systemtests dokumentieren:** Die gesamte Anwendung über die Benutzeroberfläche prüfen und Ablauf sowie Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 7](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7))
 - [ ] **Usability-Test protokollieren und drei konkrete Issues festhalten:** Durchführung und Ergebnisse in [TESTING.md](TESTING.md) dokumentieren. Drei beobachtete Usability-Probleme als GitHub-Issues festhalten und mit dem Protokoll verknüpfen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
+- [ ] **Mindestens ein Usability-Issue per PR beheben:** Mindestens eines der beobachteten Usability-Probleme beheben und die Änderung per PR mit dem zugehörigen Issue verknüpfen. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 > **Dateien:** Datei-/Security-Testdateien · [TESTING.md](TESTING.md) (Security-Fälle, Messaufbau und Performance-Ergebnisse).
 
@@ -361,6 +362,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Nachweise:** Generierter JaCoCo-Report.
 
 - [ ] **Coverage mit JaCoCo erheben:** Einen Coverage-Report als Grundlage für die Interpretation je Schicht erzeugen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
+- [ ] **Drei Klassen mit der niedrigsten Branch-Coverage notieren:** Im JaCoCo-Report die drei Klassen mit der niedrigsten Branch-Coverage ermitteln und in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### 3. KI-Evaluation und KI-Einsatz
 
@@ -371,7 +373,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Einsatz beim Testen kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten; keine Ergebnisse oder Entscheidungen erfinden. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
+- [ ] **KI-Fall 4 zur Testgenerierung dokumentieren:** Aus einem Akzeptanzkriterium Tests von einer KI generieren lassen und kritisch prüfen, ob die Assertions tatsächlich das Kriterium prüfen. Den Einsatz mit Prompt, Ergebnis, kritischer Bewertung und begründeter Entscheidung in [AI_USAGE.md](AI_USAGE.md) dokumentieren. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### Blockabschluss
 
