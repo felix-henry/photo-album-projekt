@@ -190,10 +190,10 @@ Bei einer Ablehnung nennt das System den Grund. Für den Datenzustand bei Fehler
 | AK-09.1 | Ein Album enthält drei Fotos. Eine bytegleiche Kopie eines dieser Fotos liegt bereits als Eintrag aus einem anderen Album im Papierkorb. | Der Nutzer entfernt das Foto aus seinem Album. | Die anderen zwei Fotos bleiben im Album. Die App-Kopie erscheint ohne Bestätigung als eigener Papierkorbeintrag mit Ursprungsalbum, Löschdatum und Resttagen. Der vorhandene Eintrag bleibt getrennt erhalten. |
 | AK-09.2 | Ein geöffnetes Album enthält drei Fotos. Beim Verschieben eines Fotos in den Papierkorb tritt nach einer Teiländerung ein Speicherfehler auf. | Der Nutzer entfernt das Foto. | Das System meldet den Fehler und nimmt die Teiländerung zurück. Alle drei Fotos bleiben dem Album zugeordnet. Der Papierkorb bleibt unverändert. |
 | AK-10.1 | Ein Foto mit vorhandenem Titel und vorhandener Beschreibung ist ausgewählt. | Der Nutzer ändert beide Angaben und speichert gültige neue Werte. | Beide neuen Werte sind gespeichert und beim erneuten Öffnen des Fotos abrufbar. |
-| AK-10.2 | Ein Foto ohne Titel und Beschreibung ist ausgewählt. | Der Nutzer speichert einen Titel mit genau 50 Zeichen. | Das System speichert den Titel. Die Beschreibung bleibt leer. |
-| AK-10.3 | Ein Foto besitzt einen Titel. | Der Nutzer versucht, einen Titel mit 51 Zeichen zu speichern. | Das System meldet die überschrittene Titellänge. Der vorhandene Titel bleibt erhalten. |
-| AK-10.4 | Ein Foto ohne Titel und Beschreibung ist ausgewählt. | Der Nutzer speichert eine Beschreibung mit genau 250 Zeichen. | Das System speichert die Beschreibung. Der Titel bleibt leer. |
-| AK-10.5 | Ein Foto besitzt eine Beschreibung. | Der Nutzer versucht, eine Beschreibung mit 251 Zeichen zu speichern. | Das System meldet die überschrittene Beschreibungslänge. Die vorhandene Beschreibung bleibt erhalten. |
+| AK-10.2 | Ein Foto ohne Titel und Beschreibung ist ausgewählt. | Der Nutzer speichert einen Titel mit genau 100 Zeichen. | Das System speichert den Titel. Die Beschreibung bleibt leer. |
+| AK-10.3 | Ein Foto besitzt einen Titel. | Der Nutzer versucht, einen Titel mit 101 Zeichen zu speichern. | Das System meldet die überschrittene Titellänge. Der vorhandene Titel bleibt erhalten. |
+| AK-10.4 | Ein Foto ohne Titel und Beschreibung ist ausgewählt. | Der Nutzer speichert eine Beschreibung mit genau 500 Zeichen. | Das System speichert die Beschreibung. Der Titel bleibt leer. |
+| AK-10.5 | Ein Foto besitzt eine Beschreibung. | Der Nutzer versucht, eine Beschreibung mit 501 Zeichen zu speichern. | Das System meldet die überschrittene Beschreibungslänge. Die vorhandene Beschreibung bleibt erhalten. |
 | AK-10.6 | Ein Foto besitzt Titel und Beschreibung. | Der Nutzer leert und speichert eines der Felder. Der Fall wird für beide Felder geprüft. | Das geleerte Feld bleibt leer. Das jeweils andere Feld behält seinen Wert. |
 
 #### Wiederherstellung
@@ -238,7 +238,20 @@ Messaufbauten und Testprotokolle werden in [TESTING.md](TESTING.md) dokumentiert
 
 ### 3.1 Auftraggeber-Entscheidungen
 
-Die Pflichtfunktionen und Geschäftsregeln aus der [Projektbeschreibung, §§ 5.1–5.2](docs/task_description/Projektbeschreibung_Photo_Album.md#5-initialer-projektauftrag) sind die verbindlichen Ausgangsvorgaben. Aus den Diskussionen und Sprechstunden im Unterricht liegen uns bislang keine weiteren verbindlichen Auftraggeber-Entscheidungen vor.
+**Vorgaben aus der Projektbeschreibung**
+
+- Alben erstellen, anzeigen, umbenennen und löschen. Fotos zu Alben hinzufügen, anzeigen und entfernen. Fotos mit einem Titel oder einer Beschreibung versehen. Ungültige Eingaben und definierte Fehlerfälle führen zu einer fachlichen Fehlermeldung bei unverändertem Zustand. ([§ 5.1](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=2))
+- Albumnamen dürfen nicht leer sein und haben eine definierte Länge. Pro Album gilt eine Fotoobergrenze. Für Titel und Beschreibungen gelten Höchstlängen. Dasselbe Foto darf in einem Album nicht mehrfach vorkommen. Die konkreten Grenzen, die Bedeutung von „identisch“ und die erlaubten Dateitypen werden mit der Auftraggeberin geklärt. ([§ 5.2](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=3); das Duplikatverbot steht auch in [Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39))
+- Die Anwendung verwendet Java 21, eine einfache Oberfläche (JavaFX, Swing oder Konsole) und eine lokale Datenhaltung im Dateisystem. Das Speicherformat wird dokumentiert. ([§ 6](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=3))
+
+**Auftraggeberregel aus den Folien**
+
+- Fototitel und Beschreibung sind optional. Der Titel darf höchstens **100 Zeichen**, die Beschreibung höchstens **500 Zeichen** lang sein. ([Block 5, PDF-Seite 14](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=14); Titellänge auch in [Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39))
+
+**Folienregeln mit Klärungsbedarf**
+
+- **Albumgrenze.** Block 2 nennt **100 Fotos pro Album** als Regel aus der Sprechstunde. Block 3 greift sie als Geschäftsregel aus Block 2 auf. Im aktuellen Entwurf stehen **10.000 Fotos** als Teamannahme (A-06). Welche Grenze für das Projekt gilt, ist mit der Auftraggeberin zu klären. ([Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39); [Block 3, PDF-Seite 5](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=5))
+- **Album löschen.** Block 3 nennt als Auftraggeberentscheidung, dass das Löschen eines Albums eine Bestätigung verlangt und seine Fotos umfasst. Im aktuellen Entwurf wandern Album und Fotos ohne Bestätigung gemeinsam in den Papierkorb (A-12, AK-04.1). Eine Bestätigung ist erst beim manuellen endgültigen Löschen vorgesehen (A-15). Zu klären ist, ob das Verschieben in den Papierkorb genügt und zu welchem Zeitpunkt die Bestätigung nötig ist. ([Block 3, PDF-Seite 27](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=27))
 
 ### 3.2 Annahmen und offene Fragen
 
@@ -247,7 +260,7 @@ Die Pflichtfunktionen und Geschäftsregeln aus der [Projektbeschreibung, §§ 5.
 | A-01 | FA-06 | Im selben Album gelten Dateien mit bytegleichem Inhalt unabhängig vom Dateinamen als Duplikat. Ein neuer Export mit verändertem Dateiinhalt gilt als eigenes Foto. | Der Vergleich ist eindeutig prüfbar und erkennt auch umbenannte Kopien. |
 | A-02 | FA-01, FA-03 | Nach dem Entfernen äußerer Leerzeichen sind 1 bis 50 Zeichen erlaubt. Die Namen aktiver Alben müssen beim Anlegen, Umbenennen und Wiederherstellen unabhängig von Groß- und Kleinschreibung eindeutig sein. Die gewählte Schreibweise bleibt erhalten und kann im selben Album geändert werden. | Die Grenze lässt Platz für beschreibende Namen. Eindeutige Namen halten die Übersicht auch nach einer Wiederherstellung verständlich. |
 | A-03 | FA-05 | JPEG (.jpg und .jpeg) und PNG sind bis einschließlich 20 MiB pro Datei zulässig. | Die Auswahl deckt gängige Bildformate ab. Das Größenlimit lässt Platz für hochauflösende Bilder und begrenzt einzelne Importe. |
-| A-04 | FA-01, FA-03, FA-10 | Titel haben höchstens 50 Zeichen, Beschreibungen höchstens 250. Beide Felder sind unabhängig optional und können wieder geleert werden. Für Albumnamen und Fototexte zählt jedes aus Nutzersicht einzelne Zeichen einmal, etwa ein Umlaut, ein Leerzeichen oder ein Emoji. | Kurze Fototexte bleiben übersichtlich. Nutzer können Fotos direkt importieren und Texte bei Bedarf ergänzen. |
+| A-04 | FA-01, FA-03, FA-10 | Titel und Beschreibung lassen sich unabhängig voneinander leeren. Die Höchstlängen stehen in [Abschnitt 3.1](#31-auftraggeber-entscheidungen). Für Albumnamen und Fototexte zählt jedes aus Nutzersicht einzelne Zeichen einmal, etwa ein Umlaut, ein Leerzeichen oder ein Emoji. | Nutzer können Fototexte bei Bedarf ergänzen oder entfernen. Die Zählweise entspricht der sichtbaren Zeichenanzahl. |
 | A-05 | FA-05, SR-01 | Beim Import legt die Anwendung eine eigene Kopie an. Jeder aktive Fotoeintrag gehört genau einem Album. Die ausgewählte Originaldatei bleibt erhalten. | Die App-Kopie bleibt verfügbar, wenn der Nutzer das Original verschiebt. |
 | A-06 | FA-07 | Das Team nimmt eine Obergrenze von 10.000 Fotos pro Album an. | Die Projektbeschreibung verlangt eine Obergrenze. Der Wert definiert den Grenzfall für FA-07 und die Größe des Testalbums für NFA-03. |
 | A-07 | [NFA-02](#22-nichtfunktionale-anforderungen) | Daten nach Neustart erhalten. | Nutzer können ihre Arbeit später fortsetzen. |
