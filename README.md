@@ -39,14 +39,14 @@ Geplant sind:
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
-Pro Album sind höchstens 10.000 Fotos vereinbart. Längenlimits, erlaubte Dateitypen und die Erkennung doppelter Fotos sind noch mit Ana zu klären. Die Anforderungen werden in [REQUIREMENTS.md](REQUIREMENTS.md) festgehalten.
+Das Team geht von höchstens 10.000 Fotos pro Album aus. Die Anforderungen und die Teamannahmen zu Längenlimits, Dateitypen und Duplikaten stehen in [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## ⚙️ Technische Rahmenbedingungen
 
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven oder Gradle mit Wrapper; Auswahl offen |
+| Build und Abhängigkeiten | Maven mit Wrapper |
 | Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
 | Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
 | Automatisierte Tests | JUnit 5 |

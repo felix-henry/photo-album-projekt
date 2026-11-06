@@ -52,4 +52,4 @@ Vor dem Merge sind die vier Freigaben der anderen Teammitglieder erforderlich. N
 
 „Reviewed“ im Issue erst nach der eigenen abschließenden Prüfung abhaken. Den gesamten Block erst gemäß Blockabschluss in der ROADMAP als erledigt markieren.
 
-Grundlagen: [Projektbeschreibung §9](../task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci), [Block 4: Code Review](../lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md#4-code-review-und-continuous-integration) und [Arbeitsverteilung und Blockabschlüsse](../../ROADMAP.md).
+Grundlagen: [Projektbeschreibung §9](../task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4), [Block 4: Code Review](../lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md#4-code-review-und-continuous-integration) und [Arbeitsverteilung und Blockabschlüsse](../../ROADMAP.md).
