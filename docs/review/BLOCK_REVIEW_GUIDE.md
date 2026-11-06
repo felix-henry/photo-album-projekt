@@ -19,15 +19,15 @@ Die Punkte gelten, soweit sie vom PR betroffen sind. Fachliche Fragen zuerst kl�
 | Verantwortlichkeiten und Entwurf | Passt die Änderung zur Architektur und den ADRs? Liegt die Logik in der richtigen Schicht? Sind neue Abhängigkeiten oder Entwurfsmuster begründet? |
 | Tests und Nachweise | Prüfen die Tests das geforderte Verhalten und relevante Risiken? Prüfen Fehlerfälle auch den Zustand? Sind angegebene Ergebnisse tatsächlich belegt? |
 | Fehler und Sicherheit | Werden ungültige Eingaben und Datei-/Speicherfehler sinnvoll behandelt? Sind Datenverlust, unbeabsichtigte Änderungen und veröffentlichte Zugangsdaten ausgeschlossen? |
-| Verständlichkeit und Stil | Können die anderen Teammitglieder Inhalt und Entscheidungen erklären? Gibt es unnötige Funktionen, Dopplungen oder unklare Formulierungen? Stimmen Darstellung und Konventionen? |
+| Verständlichkeit und Stil | Können die anderen Teammitglieder Inhalt und Entscheidungen erklären? Gibt es Dopplungen oder unklare Formulierungen? Stimmen Darstellung und Konventionen? |
 
-Grundlage ist die Projektbeschreibung, ergänzt um die vereinbarten projektbezogenen Folienaufträge. Lehrbeispiele und eigene Vorlieben begründen keine zusätzlichen Pflichtfunktionen.
+Die Projektbeschreibung und die vereinbarten projektbezogenen Folienaufträge bilden die Grundlage. Das Team kann den Umfang um Funktionen ergänzen, die zum Projektziel passen. Im Review wägen wir ihren Nutzen und den Aufwand für Umsetzung und Tests ab. Ein Papierkorb ist zum Beispiel sinnvoll, weil Nutzer versehentlich gelöschte Fotos und Alben wiederherstellen können.
 
 ## 3. Rückmeldungen schreiben
 
 - Befunde möglichst direkt an der betroffenen Zeile kommentieren. Übergreifende Fragen gehören ins PR-Review; eigenständige Folgeaufgaben ins passende Issue.
 - Fundstelle, Anforderung oder Prinzip und die Auswirkung nennen. Als konkrete Frage formulieren und möglichst einen Verbesserungsvorschlag ergänzen.
-- Klar unterscheiden: Muss vor dem Merge korrigiert werden oder ist ein optionaler Vorschlag? Ein bloßes „falsch“ hilft nicht weiter.
+- Rückmeldungen als notwendige Korrektur, offene Frage oder Verbesserungsvorschlag kennzeichnen. Bei einer notwendigen Korrektur erklären, warum sie vor dem Merge nötig ist.
 - Keine künstlichen Befunde suchen. Wenn etwas passt, darf das Review ohne Änderungswunsch enden. KI-Unterstützung ersetzt die eigene Prüfung nicht.
 
 **Beispiel:** „Wird das Hinzufügen auch bei bereits 10.000 Fotos abgelehnt? Das verlangt FA-07. Könnten wir diesen Grenzfall mit einem Test absichern?“
