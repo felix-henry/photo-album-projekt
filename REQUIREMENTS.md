@@ -241,17 +241,17 @@ Messaufbauten und Testprotokolle werden in [TESTING.md](TESTING.md) dokumentiert
 **Vorgaben aus der Projektbeschreibung**
 
 - Alben erstellen, anzeigen, umbenennen und löschen. Fotos zu Alben hinzufügen, anzeigen und entfernen. Fotos mit einem Titel oder einer Beschreibung versehen. Ungültige Eingaben und definierte Fehlerfälle führen zu einer fachlichen Fehlermeldung bei unverändertem Zustand. ([§ 5.1](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=2))
-- Albumnamen dürfen nicht leer sein und haben eine definierte Länge. Pro Album gilt eine Fotoobergrenze. Für Titel und Beschreibungen gelten Höchstlängen. Dasselbe Foto darf in einem Album nicht mehrfach vorkommen. Die konkreten Grenzen, die Bedeutung von „identisch“ und die erlaubten Dateitypen werden mit der Auftraggeberin geklärt. ([§ 5.2](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=3); das Duplikatverbot steht auch in [Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39))
+- Albumnamen dürfen nicht leer sein und haben eine definierte Länge. Pro Album gilt eine Fotoobergrenze. Für Titel und Beschreibungen gelten Höchstlängen. Dasselbe Foto darf in einem Album nicht mehrfach vorkommen. § 5.2 sieht vor, die konkreten Grenzen, die Bedeutung von „identisch“ und die erlaubten Dateitypen in Block 2 zu erfragen. ([§ 5.2](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=3); das Duplikatverbot steht auch in [Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39))
 - Die Anwendung verwendet Java 21, eine einfache Oberfläche (JavaFX, Swing oder Konsole) und eine lokale Datenhaltung im Dateisystem. Das Speicherformat wird dokumentiert. ([§ 6](docs/task_description/Projektbeschreibung_Photo_Album.pdf#page=3))
 
 **Auftraggeberregel aus den Folien**
 
 - Fototitel und Beschreibung sind optional. Der Titel darf höchstens **100 Zeichen**, die Beschreibung höchstens **500 Zeichen** lang sein. ([Block 5, PDF-Seite 14](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=14); Titellänge auch in [Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39))
 
-**Folienregeln mit Klärungsbedarf**
+**Folienregeln und abweichende Teamannahmen**
 
-- **Albumgrenze.** Block 2 nennt **100 Fotos pro Album** als Regel aus der Sprechstunde. Block 3 greift sie als Geschäftsregel aus Block 2 auf. Im aktuellen Entwurf stehen **10.000 Fotos** als Teamannahme (A-06). Welche Grenze für das Projekt gilt, ist mit der Auftraggeberin zu klären. ([Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39); [Block 3, PDF-Seite 5](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=5))
-- **Album löschen.** Block 3 nennt als Auftraggeberentscheidung, dass das Löschen eines Albums eine Bestätigung verlangt und seine Fotos umfasst. Im aktuellen Entwurf wandern Album und Fotos ohne Bestätigung gemeinsam in den Papierkorb (A-12, AK-04.1). Eine Bestätigung ist erst beim manuellen endgültigen Löschen vorgesehen (A-15). Zu klären ist, ob das Verschieben in den Papierkorb genügt und zu welchem Zeitpunkt die Bestätigung nötig ist. ([Block 3, PDF-Seite 27](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=27))
+- **Albumgrenze.** Block 2 nennt **100 Fotos pro Album** als Regel aus der Sprechstunde. Block 3 greift sie als Geschäftsregel aus Block 2 auf. Für unser Projekt setzen wir **10.000 Fotos pro Album** als Teamannahme an (A-06). ([Block 2, PDF-Seite 39](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=39); [Block 3, PDF-Seite 5](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=5))
+- **Album löschen.** Block 3 nennt als Auftraggeberentscheidung, dass das Löschen eines Albums eine Bestätigung verlangt und seine Fotos umfasst. Unsere Teamannahme sieht vor, dass Album und Fotos gemeinsam in den Papierkorb wandern (A-12, AK-04.1). Die Bestätigung erfolgt beim manuellen endgültigen Löschen (A-15). ([Block 3, PDF-Seite 27](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=27))
 
 ### 3.2 Annahmen und offene Fragen
 
