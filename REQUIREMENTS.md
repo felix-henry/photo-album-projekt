@@ -91,7 +91,7 @@ flowchart LR
 | Stelle in UC-01 | Anforderung |
 | --- | --- |
 | Vorbedingung | [FA-05](#21-funktionale-anforderungen) |
-| Alternativablauf zu Schritt 4 | [FA-07](#21-funktionale-anforderungen) |
+| Alternativablauf zu Schritt 4 | [FA-06](#21-funktionale-anforderungen), [FA-07](#21-funktionale-anforderungen) |
 | Systemschritt 6 | [FA-08](#21-funktionale-anforderungen) |
 
 ### 1.5 UC-02 Album erstellen
@@ -126,7 +126,7 @@ flowchart LR
 | FA-02 | Das System muss dem Nutzer die Möglichkeit bieten, die vorhandenen Alben anzuzeigen. | muss | Alben anzeigen |
 | FA-03 | Das System muss dem Nutzer die Möglichkeit bieten, ein bestehendes Album unter Beachtung der Namensregeln umzubenennen (A-02). | muss | Album umbenennen |
 | FA-04 | Das System muss dem Nutzer die Möglichkeit bieten, ein Album samt Fotos als Einheit in den Papierkorb zu verschieben (A-12). | muss | Album löschen |
-| FA-05 | Das System muss dem Nutzer die Möglichkeit bieten, ein Foto nur zu einem geöffneten Album hinzuzufügen. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
+| FA-05 | Das System muss dem Nutzer die Möglichkeit bieten, ein Foto nur zu einem geöffneten Album hinzuzufügen. Ist die Datei unlesbar oder verletzt sie die Dateiregeln aus [A-03](#32-annahmen-und-offene-fragen), muss das System den Import ablehnen und den Grund melden. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-06 | Das System muss das Hinzufügen einer bytegleichen Bilddatei zum selben Album unabhängig vom Dateinamen mit der Meldung „Dieses Bild befindet sich schon in diesem Album“ ablehnen. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-07 | Das System muss das Hinzufügen eines weiteren Fotos mit einer Fehlermeldung ablehnen, wenn das Album bereits 10.000 Fotos enthält. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-08 | Das System muss dem Nutzer die Möglichkeit bieten, die Fotos eines Albums als Bilder anzusehen. | muss | [UC-01](#14-uc-01-foto-hinzufügen); Fotos ansehen |
