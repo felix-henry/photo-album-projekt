@@ -36,9 +36,11 @@ Die Projektbeschreibung und die vereinbarten projektbezogenen Folienaufträge bi
 
 Jeder Reviewer prüft den PR selbst und schreibt ein eigenes Gesamtreview. Die Bewertungen dürfen sich dabei überschneiden.
 
+Zuerst das Gesamtreview formulieren und neue Korrektur- oder Verbesserungspunkte als zugehörige Threads darunter bündeln. Auf GitHub dafür die Zeilenkommentare mit „Start a review“ bzw. „Add review comment“ sammeln und gemeinsam mit dem Gesamtreview über „Review changes“ und „Submit review“ veröffentlichen.
+
 - Wer das erste Review veröffentlicht, legt für jeden eigenständigen Korrektur- oder Verbesserungspunkt einen eigenen Thread an.
 - Wer das zweite Review veröffentlicht, berücksichtigt die offenen und gelösten Threads der ersten Person. Beim dritten Review zählen die Threads der ersten beiden, beim vierten die Threads der ersten drei.
-- Neue Befunde bekommen einen eigenen Thread. Wer zu einem offenen Punkt etwas ergänzen kann, antwortet im vorhandenen Thread. Bei gelösten Punkten die Korrektur prüfen und sich erneut im selben Thread melden, falls das Problem weiter besteht.
+- Neue Befunde bekommen einen eigenen Thread. Wer zu einem offenen Punkt etwas ergänzen kann, antwortet im vorhandenen Thread. Bei gelösten Punkten die Korrektur prüfen und den vorhandenen Thread wieder öffnen und dort kommentieren, falls das Problem weiter besteht.
 
 Der Blockbearbeiter beantwortet die Kommentare, übernimmt nötige Korrekturen oder begründet eine andere Lösung. Die Reviewer prüfen die betroffenen Änderungen erneut; ein geschlossener Thread allein belegt keine Korrektur.
 
