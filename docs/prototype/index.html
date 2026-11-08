@@ -84,7 +84,7 @@
     <li><b>Nicht lesbare Datei (AK-05.4):</b> In „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
     <li><b>Dateiregel verletzt (AK-05.2):</b> In „Best of“ <code>zu_gross.jpg</code>, <code>dokument.pdf</code>, <code>bild.jpg</code>, <code>leer.jpg</code> oder <code>defekt.jpg</code> auswählen.</li>
     <li><b>Duplikat (AK-06.1, AK-06.2):</b> In „Urlaub“ wird <code>kopie.jpg</code> abgelehnt. Der neue Export <code>strand_export.jpeg</code> ist erlaubt.</li>
-    <li><b>Fotoanzahl (AK-07.1, AK-07.2):</b> „Klassenfahrt“ mit 9.999 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 10.000 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
+    <li><b>Fotoanzahl (AK-07.1, AK-07.2):</b> „Klassenfahrt“ mit 99 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 100 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
     <li><b>Speicherfehler (AK-01.6, AK-05.5):</b> „Speichern scheitert“ beim Anlegen eines Albums einschalten. Für den Import zuerst ein Foto erfolgreich hinzufügen, dann beim nächsten Import den Fehler einschalten. Das erste Foto bleibt erhalten.</li>
   </ol>
   <p class="klein">Bilder, Dateiprüfungen und Speicherfehler werden simuliert.</p>
@@ -93,7 +93,7 @@
 <script>
 "use strict";
 
-const MAX_FOTOS = 10000;              // FA-07, Teamannahme aus Abschnitt 3.2
+const MAX_FOTOS = 100;                // FA-07, Auftraggeberentscheidung aus Abschnitt 3.1
 const MAX_GROESSE = 20 * 1024 * 1024; // A-03
 const MAX_NAME = 50;                 // A-02
 const FOTOS_PRO_SEITE = 12;           // Nur Prototypdarstellung, keine RAM-Grenze aus NFA-03
@@ -269,7 +269,7 @@ function fotoHinzufuegen(album, pfad) {
   }
   if (datei.groesse > MAX_GROESSE) return fehler("Die Bilddatei darf höchstens 20 MiB groß sein.", "zu Schritt 4");
   if (album.fotos.some((f) => f.inhalt === datei.inhalt)) return fehler("Dieses Bild befindet sich schon in diesem Album", "zu Schritt 4");
-  if (album.fotos.length >= MAX_FOTOS) return fehler("Das Album ist voll (maximal 10.000 Fotos).", "zu Schritt 4");
+  if (album.fotos.length >= MAX_FOTOS) return fehler("Das Album ist voll (maximal 100 Fotos).", "zu Schritt 4");
   const neu = foto(datei.pfad, datei.inhalt);
   album.fotos.push(neu);
   if (el("speicherfehler").checked) {

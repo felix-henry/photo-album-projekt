@@ -30,7 +30,7 @@ Die Projektbeschreibung und die vereinbarten projektbezogenen Folienaufträge bi
 - Rückmeldungen als notwendige Korrektur, offene Frage oder Verbesserungsvorschlag kennzeichnen. Bei einer notwendigen Korrektur erklären, warum sie vor dem Merge nötig ist.
 - Keine künstlichen Befunde suchen. Wenn etwas passt, darf das Review ohne Änderungswunsch enden. KI-Unterstützung ersetzt die eigene Prüfung nicht.
 
-**Beispiel:** „Wird das Hinzufügen auch bei bereits 10.000 Fotos abgelehnt? Das verlangt FA-07. Könnten wir diesen Grenzfall mit einem Test absichern?“
+**Beispiel:** „Wird das Hinzufügen auch bei bereits 100 Fotos abgelehnt? Das verlangt FA-07. Könnten wir diesen Grenzfall mit einem Test absichern?“
 
 ### Mehrere Reviews
 

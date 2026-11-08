@@ -39,7 +39,7 @@ Geplant sind:
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
-Das Team geht von höchstens 10.000 Fotos pro Album aus. Die Anforderungen und die Teamannahmen zu Längenlimits, Dateitypen und Duplikaten stehen in [REQUIREMENTS.md](REQUIREMENTS.md).
+Die Anforderungen, Auftraggeberentscheidungen und Teamannahmen stehen in [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## ⚙️ Technische Rahmenbedingungen
 
