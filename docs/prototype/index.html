@@ -81,11 +81,11 @@
     <li><b>Abbrechen (AK-01.2):</b> Den Albumdialog mit „Abbrechen“ schließen.</li>
     <li><b>Namensregeln (AK-01.3 bis AK-01.5, AK-01.7):</b> Nur Leerzeichen, 49 Buchstaben plus ein Emoji, 51 Zeichen und <code> urlaub </code> ausprobieren.</li>
     <li><b>Foto hinzufügen (AK-05.1):</b> „Best of“ öffnen → „Foto hinzufügen“. Die Beispiele für JPEG und PNG lassen sich hinzufügen, auch die PNG-Datei mit genau 20 MiB und <code>berg.jpg</code> mit PNG-Inhalt.</li>
-    <li><b>Nicht lesbare Datei (AK-05.6):</b> In „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
+    <li><b>Nicht lesbare Datei (AK-05.4):</b> In „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
     <li><b>Dateiregel verletzt (AK-05.2):</b> In „Best of“ <code>zu_gross.jpg</code>, <code>dokument.pdf</code>, <code>bild.jpg</code>, <code>leer.jpg</code> oder <code>defekt.jpg</code> auswählen.</li>
     <li><b>Duplikat (AK-06.1, AK-06.2):</b> In „Urlaub“ wird <code>kopie.jpg</code> abgelehnt. Der neue Export <code>strand_export.jpeg</code> ist erlaubt.</li>
-    <li><b>Fotoanzahl (AK-07.4, AK-07.5):</b> „Klassenfahrt“ mit 9.999 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 10.000 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
-    <li><b>Speicherfehler (AK-01.6, AK-05.7):</b> „Speichern scheitert“ beim Anlegen eines Albums einschalten. Für den Import zuerst ein Foto erfolgreich hinzufügen, dann beim nächsten Import den Fehler einschalten. Das erste Foto bleibt erhalten.</li>
+    <li><b>Fotoanzahl (AK-07.1, AK-07.2):</b> „Klassenfahrt“ mit 9.999 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 10.000 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
+    <li><b>Speicherfehler (AK-01.6, AK-05.5):</b> „Speichern scheitert“ beim Anlegen eines Albums einschalten. Für den Import zuerst ein Foto erfolgreich hinzufügen, dann beim nächsten Import den Fehler einschalten. Das erste Foto bleibt erhalten.</li>
   </ol>
   <p class="klein">Bilder, Dateiprüfungen und Speicherfehler werden simuliert.</p>
 </details>
@@ -114,7 +114,7 @@ const DATEIEN = [
   { pfad: "defekt.jpg", typ: "Ungültig", groesse: 100 * 1024, inhalt: "defekt", sim: "beschädigtes Bild, nicht dekodierbar" },
   { pfad: "kopie.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "bytegleich zu strand.jpg" }
 ];
-const FEHLENDER_PFAD = "fehlt.jpg"; // existiert nicht (AK-05.6)
+const FEHLENDER_PFAD = "fehlt.jpg"; // existiert nicht (AK-05.4)
 
 let alben = [];
 let naechsteId = 1;
@@ -137,7 +137,7 @@ function beispieldaten() {
   for (let i = 1; i < MAX_FOTOS - 1; i++) klassenfahrt.push(foto("foto_" + String(i).padStart(4, "0") + ".jpg", "k" + i));
   alben = [
     { id: naechsteId++, name: "Best of", fotos: [] },
-    { id: naechsteId++, name: "Klassenfahrt", fotos: klassenfahrt },                   // AK-07.4, AK-07.5
+    { id: naechsteId++, name: "Klassenfahrt", fotos: klassenfahrt },                   // AK-07.1, AK-07.2
     { id: naechsteId++, name: "Urlaub", fotos: [foto("strand.jpg", "strand", "Am Strand")] } // AK-06.1
   ];
   ansicht = { seite: "uebersicht", albumId: null };
