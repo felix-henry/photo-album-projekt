@@ -58,6 +58,20 @@ Ergebnis: [keine offenen Befunde oder konkrete offene Punkte]
 - **Request changes:** Vor dem Merge sind konkrete Korrekturen erforderlich.
 - **Comment:** Rückfragen oder Zwischenfeedback, noch keine abschließende Freigabe.
 
+### Re-review
+
+Wer zum Re-review aufgefordert wird, prüft die Umsetzung seiner bisherigen Review-Punkte im aktuellen PR-Stand und berücksichtigt weitere relevante Änderungen. Sind alle Punkte umgesetzt oder nachvollziehbar geklärt und bestehen keine offenen Befunde, die den Merge verhindern, ein neues Review mit **Approve** abgeben.
+
+Für die Freigabe nach dem Re-review diese Vorlage mit den tatsächlich geprüften Punkten ausfüllen. Vereinbarte Teamentscheidungen und später fällige Arbeiten mit Bezug und Zuständigkeit nennen, soweit relevant.
+
+```text
+Geprüft: Umsetzung meiner [Anzahl] Review-Punkte sowie [Dateien] im aktuellen Stand von [PR-Link].
+
+Prüfung: [Konkret geprüfte Korrekturen, Anforderungen und Kriterien sowie erneut ausgeführte Abläufe oder Tests mit Ergebnis.]
+
+Ergebnis: Alle Punkte aus meinem Review sind umgesetzt oder geklärt. Keine offenen Befunde. [Relevante Teamentscheidung mit Bezug.] [Später fällige Arbeit mit Zuständigkeit und Block.]
+```
+
 Vor dem Merge sind die vier Freigaben der anderen Teammitglieder erforderlich. Nach weiteren Änderungen die betroffenen Punkte erneut prüfen und das Review bei Bedarf aktualisieren. Ab Block 4 müssen zusätzlich die CI-Pflichtprüfungen grün sein. Eine grüne CI ersetzt das inhaltliche Review nicht.
 
 „Reviewed“ im Issue erst nach der eigenen abschließenden Prüfung abhaken. Den gesamten Block erst gemäß Blockabschluss in der ROADMAP als erledigt markieren.
