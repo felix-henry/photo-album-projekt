@@ -149,6 +149,8 @@ Die [Teamfestlegungen in 3.2](#32-annahmen-und-offene-fragen) präzisieren Namen
 
 `AK-xx.n` gehört zu `FA-xx`, `AK-Nxx.n` zu `NFA-xx` und `AK-SR01.n` zu `SR-01`. AK-05.1 deckt auch den Normalfall zu FA-06 und FA-07 ab.
 
+Die Nummerierung enthält bewusst Lücken durch entfernte Kriterien. Bestehende IDs bleiben erhalten, damit Verweise und Review-Kommentare nachvollziehbar bleiben.
+
 Bei einer Ablehnung nennt das System den Grund. Für den Datenzustand bei Fehlern gilt NFA-01 mit A-16.
 
 #### Alben
