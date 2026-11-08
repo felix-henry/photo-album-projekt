@@ -80,9 +80,9 @@
     <li><b>Album erstellen (AK-01.1):</b> „Album erstellen“ → <code> Urlaub 2026 </code> → „Bestätigen“. Die äußeren Leerzeichen entfallen.</li>
     <li><b>Abbrechen (AK-01.2):</b> Den Albumdialog mit „Abbrechen“ schließen.</li>
     <li><b>Namensregeln (AK-01.3 bis AK-01.5, AK-01.7):</b> Nur Leerzeichen, 49 Buchstaben plus ein Emoji, 51 Zeichen und <code> urlaub </code> ausprobieren.</li>
-    <li><b>Foto hinzufügen (AK-05.1):</b> „Best of“ öffnen → „Foto hinzufügen“. Die Beispiele für JPEG und PNG lassen sich hinzufügen, auch die PNG-Datei mit genau 20 MiB.</li>
+    <li><b>Foto hinzufügen (AK-05.1):</b> „Best of“ öffnen → „Foto hinzufügen“. Die Beispiele für JPEG und PNG lassen sich hinzufügen, auch die PNG-Datei mit genau 20 MiB und <code>berg.jpg</code> mit PNG-Inhalt.</li>
     <li><b>Nicht lesbare Datei (AK-05.6):</b> In „Best of“ den Pfad <code>fehlt.jpg</code> angeben.</li>
-    <li><b>Dateiregel verletzt (AK-05.2):</b> In „Best of“ <code>zu_gross.jpg</code>, <code>dokument.pdf</code> oder <code>bild.jpg</code> angeben.</li>
+    <li><b>Dateiregel verletzt (AK-05.2):</b> In „Best of“ <code>zu_gross.jpg</code>, <code>dokument.pdf</code>, <code>bild.jpg</code>, <code>leer.jpg</code> oder <code>defekt.jpg</code> auswählen.</li>
     <li><b>Duplikat (AK-06.1, AK-06.2):</b> In „Urlaub“ wird <code>kopie.jpg</code> abgelehnt. Der neue Export <code>strand_export.jpeg</code> ist erlaubt.</li>
     <li><b>Fotoanzahl (AK-07.4, AK-07.5):</b> „Klassenfahrt“ mit 9.999 Fotos öffnen. <code>berg.png</code> hinzufügen ergibt 10.000 Fotos. Das weitere Foto <code>genau_20mb.png</code> wird abgelehnt.</li>
     <li><b>Speicherfehler (AK-01.6, AK-05.7):</b> „Speichern scheitert“ beim Anlegen eines Albums einschalten. Für den Import zuerst ein Foto erfolgreich hinzufügen, dann beim nächsten Import den Fehler einschalten. Das erste Foto bleibt erhalten.</li>
@@ -100,15 +100,18 @@ const FOTOS_PRO_SEITE = 12;           // Nur Prototypdarstellung, keine RAM-Gren
 const BILDFORMATE = ["JPEG", "PNG"];
 const ZEICHEN = new Intl.Segmenter("de", { granularity: "grapheme" });
 
-// Im simulierten Dateisystem steht derselbe Wert für bytegleichen Inhalt (A-01).
+// typ simuliert das dekodierte Bildformat. Derselbe Inhaltswert steht für bytegleiche Daten.
 const DATEIEN = [
   { pfad: "strand.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "JPEG, 2 MiB" },
   { pfad: "strand_export.jpeg", typ: "JPEG", groesse: 3 * 1024 * 1024, inhalt: "strand-export", sim: "neuer Export, 3 MiB" },
   { pfad: "berg.png", typ: "PNG", groesse: 5 * 1024 * 1024, inhalt: "berg", sim: "PNG, 5 MiB" },
+  { pfad: "berg.jpg", typ: "PNG", groesse: 5 * 1024 * 1024, inhalt: "berg", sim: "PNG-Inhalt mit .jpg-Endung, 5 MiB" },
   { pfad: "genau_20mb.png", typ: "PNG", groesse: MAX_GROESSE, inhalt: "g20", sim: "PNG, genau 20 MiB" },
   { pfad: "zu_gross.jpg", typ: "JPEG", groesse: MAX_GROESSE + 1, inhalt: "z", sim: "JPEG, 20 MiB + 1 Byte" },
   { pfad: "dokument.pdf", typ: "PDF", groesse: 100 * 1024, inhalt: "pdf", sim: "PDF" },
   { pfad: "bild.jpg", typ: "Text", groesse: 2 * 1024, inhalt: "txt", sim: "Textdatei mit .jpg-Endung" },
+  { pfad: "leer.jpg", typ: "Ungültig", groesse: 0, inhalt: "", sim: "leere Datei, 0 Byte" },
+  { pfad: "defekt.jpg", typ: "Ungültig", groesse: 100 * 1024, inhalt: "defekt", sim: "beschädigtes Bild, nicht dekodierbar" },
   { pfad: "kopie.jpg", typ: "JPEG", groesse: 2 * 1024 * 1024, inhalt: "strand", sim: "bytegleich zu strand.jpg" }
 ];
 const FEHLENDER_PFAD = "fehlt.jpg"; // existiert nicht (AK-05.6)
@@ -260,8 +263,9 @@ function fotoHinzufuegen(album, pfad) {
   const datei = DATEIEN.find((d) => d.pfad === pfad);
   // UC-01 Schritt 4: Datei- und Geschäftsregeln prüfen.
   if (!datei) return fehler("Die Datei konnte nicht gelesen werden.", "zu Schritt 4");
+  if (datei.groesse === 0) return fehler("Die Bilddatei ist leer.", "zu Schritt 4");
   if (!BILDFORMATE.includes(datei.typ)) {
-    return fehler("Die Datei muss ein JPEG- oder PNG-Bild sein.", "zu Schritt 4");
+    return fehler("Die Datei enthält kein gültiges JPEG- oder PNG-Bild.", "zu Schritt 4");
   }
   if (datei.groesse > MAX_GROESSE) return fehler("Die Bilddatei darf höchstens 20 MiB groß sein.", "zu Schritt 4");
   if (album.fotos.some((f) => f.inhalt === datei.inhalt)) return fehler("Dieses Bild befindet sich schon in diesem Album", "zu Schritt 4");
