@@ -161,7 +161,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [ARCHITECTURE.md](ARCHITECTURE.md)
 
-- [ ] **Grundlegende Architektur mit Schichten und Abhängigkeitsrichtung darstellen und begründen:** Die vier Schichten UI, Anwendung, Domäne und Infrastruktur mit ihren Klassen und der Abhängigkeitsrichtung in [ARCHITECTURE.md](ARCHITECTURE.md) darstellen und begründen; eine Skizze reicht. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=49))
+- [x] **Grundlegende Architektur mit Schichten und Abhängigkeitsrichtung darstellen und begründen:** Die vier Schichten UI, Anwendung, Domäne und Infrastruktur mit ihren Klassen und der Abhängigkeitsrichtung in [ARCHITECTURE.md](ARCHITECTURE.md) darstellen und begründen; eine Skizze reicht. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=49))
 - [ ] **Komponenten, Verantwortlichkeiten und Schnittstellen (Ports) festlegen:** Komponenten mit ihren Verantwortlichkeiten und Schnittstellen im Architekturentwurf beschreiben. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3))
 
 > **Dateien:** [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/design/](docs/design/)
