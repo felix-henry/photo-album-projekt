@@ -277,10 +277,10 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [ ] **Dokumentierte Code Reviews nachweisen:** Für jedes Teammitglied mindestens einen tatsächlichen Code-Review-Beitrag dokumentieren. Mindestens ein PR enthält ein dokumentiertes Review zu fachlicher Korrektheit, Verantwortlichkeiten und Tests (Ebenen 1–3) sowie Antworten auf die Review-Kommentare. Befunde beantworten oder einarbeiten. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 18](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=18); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
 - [ ] **Review-Kommentare als begründete Fragen formulieren:** Frage statt Befehl, Bezug auf eine Anforderung oder ein Prinzip und einen Vorschlag beilegen. „Warum …?“ ist erlaubt, ein bloßes „falsch“ nicht. ([Block 4, S. 18](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=18))
 
-> **Dateien:** Gemeinsame [AGENTS.md](AGENTS.md) · `agents/<Name>-AGENTS.md` · tatsächlich verwendete Prompt-, Skill- und Modellkonfigurationsdateien.
+> **Dateien:** Gemeinsame `AGENTS.md` · `agents/<Name>-AGENTS.md` · tatsächlich verwendete Prompt-, Skill- und Modellkonfigurationsdateien.
 
-- [ ] **[AGENTS.md](AGENTS.md) sowie Prompts, Skills und Modellkonfigurationen versionieren:** Gemeinsame Agentenregeln und die tatsächlich verwendeten projektbezogenen KI-Konfigurationen im Repository führen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
-- [ ] **Persönliche Agentenregeln aller Teammitglieder sammeln:** Jedes Teammitglied legt seine Regeln als `agents/<Name>-AGENTS.md` ab. Die gemeinsame [AGENTS.md](AGENTS.md) bleibt zusätzlich auf oberster Ebene bestehen. (Projektfestlegung)
+- [ ] **`AGENTS.md` sowie Prompts, Skills und Modellkonfigurationen versionieren:** Gemeinsame Agentenregeln und die tatsächlich verwendeten projektbezogenen KI-Konfigurationen im Repository führen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- [ ] **Persönliche Agentenregeln aller Teammitglieder sammeln:** Jedes Teammitglied legt seine Regeln als `agents/<Name>-AGENTS.md` ab. Die gemeinsame `AGENTS.md` bleibt zusätzlich auf oberster Ebene bestehen. (Projektfestlegung)
 
 > **Dateien:** [README.md](README.md)
 
@@ -512,9 +512,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **Alle geforderten Fachdokumente bereitstellen:** [REQUIREMENTS.md](REQUIREMENTS.md), [ARCHITECTURE.md](ARCHITECTURE.md) mit [docs/adr/](docs/adr/) und [docs/design/](docs/design/), [TESTING.md](TESTING.md), [CHANGE_REQUEST.md](CHANGE_REQUEST.md), [docs/REFACTORING.md](docs/REFACTORING.md), [AI_USAGE.md](AI_USAGE.md) und [RISK_ANALYSIS.md](RISK_ANALYSIS.md) im Repository bereitstellen. ([PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
-> **Dateien:** Quellcode-/Testdateien · Build-Konfiguration und Wrapper · CI-Konfiguration · gemeinsame [AGENTS.md](AGENTS.md) · [CHANGELOG.md](CHANGELOG.md) · verwendete KI-Konfigurationen.
+> **Dateien:** Quellcode-/Testdateien · Build-Konfiguration und Wrapper · CI-Konfiguration · gemeinsame `AGENTS.md` · [CHANGELOG.md](CHANGELOG.md) · verwendete KI-Konfigurationen.
 
-- [ ] **Quellcode, Tests und Konfigurationen versionieren:** Quellcode und Tests, Build-Konfiguration mit Wrapper, CI-Konfiguration, [AGENTS.md](AGENTS.md) und [CHANGELOG.md](CHANGELOG.md) sowie verwendete Prompts, Skills und Modellkonfigurationen im Repository bereitstellen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- [ ] **Quellcode, Tests und Konfigurationen versionieren:** Quellcode und Tests, Build-Konfiguration mit Wrapper, CI-Konfiguration, `AGENTS.md` und [CHANGELOG.md](CHANGELOG.md) sowie verwendete Prompts, Skills und Modellkonfigurationen im Repository bereitstellen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md) · gegebenenfalls separat verwendete Prompt-/Skill-Dateien.
 
