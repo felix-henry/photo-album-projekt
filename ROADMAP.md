@@ -5,7 +5,7 @@
 | Block | Schwerpunkt | Wesentlicher Zwischenstand | Geplanter Tag | Erledigt |
 | --- | --- | --- | --- | :---: |
 | [1](#block-1-einführung-und-vorgehen) | Einführung und Vorgehen | Team, Repository, [README.md](README.md), Vorgehensentscheidung für Kanban und [Kanban-Board](https://photoalbum-kanban.vercel.app) | `block-1` | ✅ 19.10.2026 |
-| [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ☐ |
+| [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ✅ 09.11.2026 |
 | [3](#block-3-architektur-und-entwurf) | Architektur und Entwurf | [ARCHITECTURE.md](ARCHITECTURE.md), Klassen- und Sequenzdiagramm, mindestens ein ADR und Projektgerüst | `block-3` | ☐ |
 | [4](#block-4-implementierung-und-git) | Implementierung und Git | Pflichtfunktionalität, Build, Reviews und CI; Release `v0.1.0` | `block-4` | ☐ |
 | [5](#block-5-tests-und-qualität) | Tests und Qualität | [TESTING.md](TESTING.md), Unit- und Integrationstests, 2 Blackbox-Verfahren, Usability-Protokoll und Evaluation Set | `block-5` | ☐ |
@@ -85,7 +85,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 ### Block 2: Requirements Engineering
 
-**Ziel:** Anforderungen, Grenzen und prüfbare Abnahmekriterien stehen fest; offene Fachfragen sind ersichtlich. **Abschluss:** `block-2`, bis zum Vorabend von Block 3. Sammel-Issue: [#24](https://github.com/felix-henry/photo-album-projekt/issues/24).
+**Ziel:** Anforderungen, Grenzen und prüfbare Abnahmekriterien stehen fest; offene Fachfragen sind ersichtlich. **Abschluss:** `block-2`, bis zum Vorabend von Block 3. Sammel-Issue: [#31](https://github.com/felix-henry/photo-album-projekt/issues/31).
 
 <details open>
 <summary>Arbeitsschritte und Zuständigkeiten</summary>
@@ -94,41 +94,39 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [REQUIREMENTS.md](REQUIREMENTS.md)
 
-- [ ] **Stakeholder festhalten:** Mindestens vier Stakeholder mit Interesse, Einfluss (hoch/mittel/niedrig) und je einer Anforderung aus ihrer besonderen Sicht in [REQUIREMENTS.md](REQUIREMENTS.md) beschreiben. Die Übung verlangt eine Anforderung, die nur dieser Stakeholder stellt. Überschneidungen der allgemeinen Interessen ersetzen diese Zuordnung nicht.
-- [ ] **Kontextdiagramm erstellen:** Systeminhalt, Menschen/Nachbarsysteme, Schnittstellen und bewusst ausgeschlossenen Umfang zeigen. Fachliche Funktionen und Oberfläche liegen im System; der Nutzer und das lokale Dateisystem außerhalb. Eingaben, Ausgaben und Dateizugriffe als Schnittstellen benennen. Nur tatsächlich vorgesehene Schnittstellen einzeichnen.
-- [ ] **Use-Case-Diagramm korrigieren:** Die Use Cases aus Nutzersicht und innerhalb der vereinbarten Systemgrenze darstellen; technische Einzelschritte nicht ungeprüft als eigene Nutzerziele übernehmen.
-- [ ] **Mindestens zwei Use Cases ausarbeiten:** „Foto hinzufügen“ und ein zweiter zentraler Use Case, bei uns „Album erstellen“. Akteur, Ziel, Vor-/Nachbedingungen sowie Standard- und Alternativabläufe beschreiben. Für „Foto hinzufügen“ nennt die Übung einen Standardablauf mit höchstens sechs Schritten sowie zwei Alternativabläufe.
-- [ ] **Drei FA aus „Foto hinzufügen“ ableiten:** Je eine aus einem Systemschritt, einem Alternativablauf und einer Vorbedingung; mit den Use-Case-Stellen verknüpfen. Diese drei Anforderungen gehören zu den insgesamt 6-10 FA und kommen nicht zusätzlich dazu. Diagramm, Use-Case-Beschreibung und Ableitung stehen gemeinsam in REQUIREMENTS.md.
-
-**Prüfstand des Teams:** Lokal geprüft am **23.10.2026**. Die in [REQUIREMENTS.md](REQUIREMENTS.md) gekennzeichneten Fachfragen, insbesondere A-17 zu Dateifehlern, bleiben unter „3. Auftraggeber, Annahmen und Sicherheit“ zu klären.
+- [x] **Stakeholder festhalten:** Mindestens vier Stakeholder mit Interesse, Einfluss (hoch/mittel/niedrig) und je einer Anforderung aus ihrer besonderen Sicht in [REQUIREMENTS.md](REQUIREMENTS.md) beschreiben. Die Übung verlangt eine Anforderung, die nur dieser Stakeholder stellt. Überschneidungen der allgemeinen Interessen ersetzen diese Zuordnung nicht.
+- [x] **Kontextdiagramm erstellen:** Systeminhalt, Menschen/Nachbarsysteme, Schnittstellen und bewusst ausgeschlossenen Umfang zeigen. Fachliche Funktionen und Oberfläche liegen im System; der Nutzer und das lokale Dateisystem außerhalb. Eingaben, Ausgaben und Dateizugriffe als Schnittstellen benennen. Nur tatsächlich vorgesehene Schnittstellen einzeichnen.
+- [x] **Use-Case-Diagramm korrigieren:** Die Use Cases aus Nutzersicht und innerhalb der vereinbarten Systemgrenze darstellen; technische Einzelschritte nicht ungeprüft als eigene Nutzerziele übernehmen.
+- [x] **Mindestens zwei Use Cases ausarbeiten:** „Foto hinzufügen“ und ein zweiter zentraler Use Case, bei uns „Album erstellen“. Akteur, Ziel, Vor-/Nachbedingungen sowie Standard- und Alternativabläufe beschreiben. Für „Foto hinzufügen“ nennt die Übung einen Standardablauf mit höchstens sechs Schritten sowie zwei Alternativabläufe.
+- [x] **Drei FA aus „Foto hinzufügen“ ableiten:** Je eine aus einem Systemschritt, einem Alternativablauf und einer Vorbedingung; mit den Use-Case-Stellen verknüpfen. Diese drei Anforderungen gehören zu den insgesamt 6-10 FA und kommen nicht zusätzlich dazu. Diagramm, Use-Case-Beschreibung und Ableitung stehen gemeinsam in REQUIREMENTS.md.
 
 #### 2. Anforderungen und Akzeptanzkriterien
 
 > **Dateien:** [REQUIREMENTS.md](REQUIREMENTS.md)
 
-- [ ] **6-10 FA vervollständigen; unser Ziel sind zehn:** ID `FA-xx`, SOPHIST-Satzschablone und Verbindlichkeit (muss/sollte). Die Pflichtfunktionen abdecken: Alben erstellen/anzeigen/umbenennen/löschen, Fotos hinzufügen/anzeigen/aus Alben entfernen, Titel bzw. Beschreibung bearbeiten, ungültige Eingaben und definierte Fehlerfälle behandeln. Anforderungen einzeln prüfbar und ohne unnötige technische Vorentscheidungen formulieren. Jede FA mindestens einem Use Case zuordnen. Die vier Ausgangsregeln ausdrücklich abdecken: Albumname nicht leer und mit definierter Länge, Fotoobergrenze, maximale Textlängen und kein identisches Foto mehrfach im selben Album.
-- [ ] **3-5 NFA ausarbeiten; unser Ziel sind fünf:** Jeweils Qualitätsmerkmal, konkrete Messgröße und Bedingung nennen. Messgerät, Datensatz und Belastung festlegen, soweit sie für die Prüfung nötig sind. Vorschläge noch nicht als bestätigte Ziele ausgeben. Unsere vereinbarte gepufferte Bilddarstellung berücksichtigen; eine Zeitvorgabe für das gleichzeitige Laden aller 10.000 Bilder ist nicht vereinbart.
-- [ ] **Alle Anforderungen mit AK (Akzeptanzkriterium) versehen:** Prüfbare Given/When/Then-Kriterien mit IDs `AK-xx.n` und Zuordnung zur Anforderung. Ausgangszustand, Aktion und beobachtbares Ergebnis beschreiben; bei Ablehnung Fehlermeldung und unveränderten Zustand prüfen. Die Folien nennen je Anforderung mindestens einen Normal- und einen Fehlerfall. Die Kriterien müssen auch zu verbindlichen NFA und Sicherheitsanforderungen passen.
-- [ ] **Zwei Geschäftsregeln prüfen:** Jeweils mindestens drei AK für Normal-, Fehler- und Grenzfall formulieren und offene Fachfragen kennzeichnen.
-- [ ] **Sprach- und Konsistenzprüfung durchführen:** Unklare Wörter, fehlende Bedingungen, vermischte Anforderungen, widersprüchliche Regeln und falsche Verweise bereinigen. Nutzen, Systemgrenze, Realisierbarkeit, Prüfbarkeit und vollständige Abdeckung der Pflichtfunktionen prüfen.
+- [x] **6-10 FA vervollständigen; unser Ziel sind zehn:** ID `FA-xx`, SOPHIST-Satzschablone und Verbindlichkeit (muss/sollte). Die Pflichtfunktionen abdecken: Alben erstellen/anzeigen/umbenennen/löschen, Fotos hinzufügen/anzeigen/aus Alben entfernen, Titel bzw. Beschreibung bearbeiten, ungültige Eingaben und definierte Fehlerfälle behandeln. Anforderungen einzeln prüfbar und ohne unnötige technische Vorentscheidungen formulieren. Jede FA mindestens einem Use Case zuordnen. Die vier Ausgangsregeln ausdrücklich abdecken: Albumname nicht leer und mit definierter Länge, Fotoobergrenze, maximale Textlängen und kein identisches Foto mehrfach im selben Album.
+- [x] **3-5 NFA ausarbeiten; unser Ziel sind fünf:** Jeweils Qualitätsmerkmal, konkrete Messgröße und Bedingung nennen. Messgerät, Datensatz und Belastung festlegen, soweit sie für die Prüfung nötig sind. Vorschläge noch nicht als bestätigte Ziele ausgeben. Die vereinbarte gepufferte Bilddarstellung und das Ladeziel aus NFA-03 berücksichtigen.
+- [x] **Alle Anforderungen mit AK (Akzeptanzkriterium) versehen:** Prüfbare Given/When/Then-Kriterien mit IDs `AK-xx.n` und Zuordnung zur Anforderung. Ausgangszustand, Aktion und beobachtbares Ergebnis beschreiben; bei Ablehnung Fehlermeldung und unveränderten Zustand prüfen. Die Folien nennen je Anforderung mindestens einen Normal- und einen Fehlerfall. Die Kriterien müssen auch zu verbindlichen NFA und Sicherheitsanforderungen passen.
+- [x] **Zwei Geschäftsregeln prüfen:** Jeweils mindestens drei AK für Normal-, Fehler- und Grenzfall formulieren und offene Fachfragen kennzeichnen.
+- [x] **Sprach- und Konsistenzprüfung durchführen:** Unklare Wörter, fehlende Bedingungen, vermischte Anforderungen, widersprüchliche Regeln und falsche Verweise bereinigen. Nutzen, Systemgrenze, Realisierbarkeit, Prüfbarkeit und vollständige Abdeckung der Pflichtfunktionen prüfen.
 
 #### 3. Auftraggeber, Annahmen und Sicherheit
 
 > **Dateien:** [REQUIREMENTS.md](REQUIREMENTS.md)
 
-- [ ] **Offene Fachfragen klären:** Namens- und Textlängen, Dateitypen, Bedeutung von „identisch“ sowie offene Fragen aus den Use Cases klären. Antworten unter „Auftraggeber-Entscheidungen“, eigene Festlegungen begründet unter „Annahmen“ dokumentieren.
-- [ ] **KI-Umsetzung festlegen:** Entscheidung dokumentieren (keine KI-Systeme).
-- [ ] **„KI und Sicherheit“ ausarbeiten:** Einen konkreten Prompt-Injection-Angriff über ein Bild bzw. dessen fremden Inhalt mit betroffenem Tool und Schaden beschreiben. Drei Anforderungen nach Satzschablone zu Datenzugriff, Tool-Nutzung und Freigabe formulieren. Festhalten, welche Datenschutzanforderung auch ohne KI-Funktion gilt. Die Begründung gegen die fünf Schutzebenen der Folien prüfen: fremde Inhalte als Daten behandeln, Rechte begrenzen, menschliche Freigabe, Ausgabeprüfung und Protokollierung.
+- [x] **Offene Fachfragen klären:** Namens- und Textlängen, Dateitypen, Bedeutung von „identisch“ sowie offene Fragen aus den Use Cases klären. Antworten unter „Auftraggeber-Entscheidungen“, eigene Festlegungen begründet unter „Annahmen“ dokumentieren.
+- [x] **KI-Umsetzung festlegen:** Entscheidung dokumentieren (keine KI-Systeme).
+- [x] **„KI und Sicherheit“ ausarbeiten:** Einen konkreten Prompt-Injection-Angriff über ein Bild bzw. dessen fremden Inhalt mit betroffenem Tool und Schaden beschreiben. Drei Anforderungen nach Satzschablone zu Datenzugriff, Tool-Nutzung und Freigabe formulieren. Festhalten, welche Datenschutzanforderung auch ohne KI-Funktion gilt. Die Begründung gegen die fünf Schutzebenen der Folien prüfen: fremde Inhalte als Daten behandeln, Rechte begrenzen, menschliche Freigabe, Ausgabeprüfung und Protokollierung.
 
 #### 4. Prototyp und KI-Dokumentation
 
 > **Dateien:** [docs/prototype/index.html](docs/prototype/index.html)
 
-- [ ] **Ersten UI-Prototyp abgleichen:** Klickbarer oder Papier-Prototyp für die zwei ausgearbeiteten Use Cases; im Repository ablegen und aus [REQUIREMENTS.md](REQUIREMENTS.md) verlinken. Für uns ist das der [Klickprototyp](docs/prototype/index.html). Die Abläufe müssen zu den Anforderungen passen; vorläufige Regeln kennzeichnen.
+- [x] **Ersten UI-Prototyp abgleichen:** Klickbarer oder Papier-Prototyp für die zwei ausgearbeiteten Use Cases; im Repository ablegen und aus [REQUIREMENTS.md](REQUIREMENTS.md) verlinken. Für uns ist das der [Klickprototyp](docs/prototype/index.html). Die Abläufe müssen zu den Anforderungen passen; vorläufige Regeln kennzeichnen.
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Fall 1 dokumentieren:** Den „Grill me“-Durchlauf kritisch in [AI_USAGE.md](AI_USAGE.md) festhalten: Aufgabe/Block, Werkzeug/Modell soweit bekannt, tatsächlicher versionierter Prompt/Skill, Ergebnis, Bewertung und Entscheidung. Mindestens einen tatsächlichen Vorschlag begründet verwerfen. Unser vorhandener Fall wird auf Vollständigkeit geprüft; Routineaktionen brauchen keine eigenen Fälle.
+- [x] **KI-Fall 1 dokumentieren:** Den „Grill me“-Durchlauf kritisch in [AI_USAGE.md](AI_USAGE.md) festhalten: Aufgabe/Block, Werkzeug/Modell soweit bekannt, tatsächlicher versionierter Prompt/Skill, Ergebnis, Bewertung und Entscheidung. Mindestens einen tatsächlichen Vorschlag begründet verwerfen. Unser vorhandener Fall wird auf Vollständigkeit geprüft; Routineaktionen brauchen keine eigenen Fälle.
 
 #### Blockabschluss
 
@@ -136,15 +134,15 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Korrekturen und Abschlussarbeiten:** Felix.
 
 > **Dateien:** [REQUIREMENTS.md](REQUIREMENTS.md) · [docs/prototype/index.html](docs/prototype/index.html) · [AI_USAGE.md](AI_USAGE.md) · [README.md](README.md) · [ROADMAP.md](ROADMAP.md)
-> **Nachweise:** PR, Reviews, Git-Tag, Kanban-Board und Sammel-Issue.
+> **Nachweise:** [PR #32](https://github.com/felix-henry/photo-album-projekt/pull/32), Reviews, Git-Tag, Kanban-Board und Sammel-Issue.
 
-- [ ] **Begleitende Nachweise prüfen:** [README.md](README.md) mit Projekt und Zusammenarbeit abgleichen; [AI_USAGE.md](AI_USAGE.md), Fall 1, auf tatsächlichen Prompt, Ergebnis, kritische Bewertung und begründete Entscheidung prüfen.
-- [ ] **Review:** Stakeholder und Kontext, zehn FA, fünf NFA, zwei Use Cases, AK, Entscheidungen und Annahmen, Sicherheit, Prototyp und KI-Fall gemeinsam prüfen. Bei Codeänderungen passende Tests ausführen. Review-Kommentare beantworten. Jeder Reviewer prüft den zusammengeführten Stand und gibt vor dem Merge ein eigenes PR-Review ab. ([Block 2, S. 54–55](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=54))
-- [ ] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
+- [x] **Begleitende Nachweise prüfen:** [README.md](README.md) mit Projekt und Zusammenarbeit abgleichen; [AI_USAGE.md](AI_USAGE.md), Fall 1, auf tatsächlichen Prompt, Ergebnis, kritische Bewertung und begründete Entscheidung prüfen.
+- [x] **Review:** Stakeholder und Kontext, zehn FA, fünf NFA, zwei Use Cases, AK, Entscheidungen und Annahmen, Sicherheit, Prototyp und KI-Fall gemeinsam prüfen. Bei Codeänderungen passende Tests ausführen. Review-Kommentare beantworten. Die vier anderen Teammitglieder geben vor dem Merge jeweils ein eigenes PR-Review ab. ([Block 2, S. 54–55](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=54))
+- [x] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
 
-- [ ] **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
-- [ ] **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
-- [ ] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
+- [x] **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
+- [x] **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
+- [x] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
 
 **Quellen:** [Projektbeschreibung §4-7 und §13](docs/task_description/Projektbeschreibung_Photo_Album.md); [Block-2-Folien als Markdown](docs/lecture_slides/Block_2_Requirements_Engineering.md), [Original-PDF, 56 Seiten](docs/lecture_slides/Block_2_Requirements_Engineering.pdf).
 
@@ -181,6 +179,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **Mindestens ein ADR mit verworfener Alternative dokumentieren:** Die wichtigste Architekturentscheidung unter [docs/adr/](docs/adr/) festhalten, die verworfene Alternative begründen und das ADR aus [ARCHITECTURE.md](ARCHITECTURE.md) verlinken. Beispielpfad für die Speicherentscheidung: `docs/adr/ADR-001-repository.md`. Mindestens ein ADR ist Pflicht; drei bis vier zu Speicher, Fehlerbehandlung, UI-Technik und KI-Port sind eine realistische Orientierung. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 48–49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=48))
 - [ ] **Entwurfsmuster nur für ein benanntes Problem einsetzen:** Jedes tatsächlich eingesetzte Pattern durch ein Problem begründen und in einem ADR dokumentieren. Eine bestimmte Anzahl von Patterns ist nicht vorgegeben. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3))
+- [ ] **Duplikatprüfung entwerfen:** Das Verfahren zur Erkennung bytegleicher Duplikate beim Fotoimport festlegen. ([Teamfestlegung A-01](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
+- [ ] **Grenze für den Bildpuffer festlegen:** Die Puffergrenze für das bedarfsgerechte Nachladen großer Alben in [ARCHITECTURE.md](ARCHITECTURE.md) festhalten. ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
+- [ ] **Testbarkeit der Papierkorb-Regeln entwerfen:** In [ARCHITECTURE.md](ARCHITECTURE.md) festhalten, wie Unit-Tests die aktuelle Zeit vorgeben und einzelne Löschfehler ohne echte Dateizugriffe simulieren können. So lassen sich Fristablauf und Teilerfolge gezielt prüfen. ([NFA-05](REQUIREMENTS.md#22-nichtfunktionale-anforderungen))
 
 #### 3. KI-Entwurf und Projektgerüst
 
@@ -276,10 +277,10 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [ ] **Dokumentierte Code Reviews nachweisen:** Für jedes Teammitglied mindestens einen tatsächlichen Code-Review-Beitrag dokumentieren. Mindestens ein PR enthält ein dokumentiertes Review zu fachlicher Korrektheit, Verantwortlichkeiten und Tests (Ebenen 1–3) sowie Antworten auf die Review-Kommentare. Befunde beantworten oder einarbeiten. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 18](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=18); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
 - [ ] **Review-Kommentare als begründete Fragen formulieren:** Frage statt Befehl, Bezug auf eine Anforderung oder ein Prinzip und einen Vorschlag beilegen. „Warum …?“ ist erlaubt, ein bloßes „falsch“ nicht. ([Block 4, S. 18](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=18))
 
-> **Dateien:** Gemeinsame [AGENTS.md](AGENTS.md) · `agents/<Name>-AGENTS.md` · tatsächlich verwendete Prompt-, Skill- und Modellkonfigurationsdateien.
+> **Dateien:** Gemeinsame `AGENTS.md` · `agents/<Name>-AGENTS.md` · tatsächlich verwendete Prompt-, Skill- und Modellkonfigurationsdateien.
 
-- [ ] **[AGENTS.md](AGENTS.md) sowie Prompts, Skills und Modellkonfigurationen versionieren:** Gemeinsame Agentenregeln und die tatsächlich verwendeten projektbezogenen KI-Konfigurationen im Repository führen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
-- [ ] **Persönliche Agentenregeln aller Teammitglieder sammeln:** Jedes Teammitglied legt seine Regeln als `agents/<Name>-AGENTS.md` ab. Die gemeinsame [AGENTS.md](AGENTS.md) bleibt zusätzlich auf oberster Ebene bestehen. (Projektfestlegung)
+- [ ] **`AGENTS.md` sowie Prompts, Skills und Modellkonfigurationen versionieren:** Gemeinsame Agentenregeln und die tatsächlich verwendeten projektbezogenen KI-Konfigurationen im Repository führen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- [ ] **Persönliche Agentenregeln aller Teammitglieder sammeln:** Jedes Teammitglied legt seine Regeln als `agents/<Name>-AGENTS.md` ab. Die gemeinsame `AGENTS.md` bleibt zusätzlich auf oberster Ebene bestehen. (Projektfestlegung)
 
 > **Dateien:** [README.md](README.md)
 
@@ -351,16 +352,19 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **Ein bis zwei manuelle Systemtests dokumentieren:** Die gesamte Anwendung über die Benutzeroberfläche prüfen und Ablauf sowie Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 7](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7))
 - [ ] **Usability-Test protokollieren und drei konkrete Issues festhalten:** Durchführung und Ergebnisse in [TESTING.md](TESTING.md) dokumentieren. Drei beobachtete Usability-Probleme als GitHub-Issues festhalten und mit dem Protokoll verknüpfen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
+- [ ] **Mindestens ein Usability-Issue per PR beheben:** Mindestens eines der beobachteten Usability-Probleme beheben und die Änderung per PR mit dem zugehörigen Issue verknüpfen. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 > **Dateien:** Datei-/Security-Testdateien · [TESTING.md](TESTING.md) (Security-Fälle, Messaufbau und Performance-Ergebnisse).
 
 - [ ] **Security-Dateifälle konkret planen und testen:** Fälle wie falsche Endung, leere oder übergroße Datei in [TESTING.md](TESTING.md) aufführen und die Sicherheitsprüfung mit tatsächlichen Tests nachweisen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23))
+- [ ] **Performance-Messung vorbereiten:** Einen gemeinsamen Datensatz mit 100 Fotos zusammenstellen und seine Formate, Auflösungen und Dateigrößen dokumentieren. Jedes Teammitglied erfasst Betriebssystem, Prozessor und RAM seines Laptops für den Messaufbau in [TESTING.md](TESTING.md). ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
 - [ ] **Performance-Messung für eine NFA durchführen:** Die Performance unter den Bedingungen der betreffenden NFA messen und das Ergebnis dokumentieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
 
 > **Dateien:** Build-Konfiguration (JaCoCo) · [TESTING.md](TESTING.md).
 > **Nachweise:** Generierter JaCoCo-Report.
 
 - [ ] **Coverage mit JaCoCo erheben:** Einen Coverage-Report als Grundlage für die Interpretation je Schicht erzeugen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
+- [ ] **Drei Klassen mit der niedrigsten Branch-Coverage notieren:** Im JaCoCo-Report die drei Klassen mit der niedrigsten Branch-Coverage ermitteln und in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### 3. KI-Evaluation und KI-Einsatz
 
@@ -371,7 +375,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Einsatz beim Testen kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten; keine Ergebnisse oder Entscheidungen erfinden. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
+- [ ] **KI-Fall 4 zur Testgenerierung dokumentieren:** Aus einem Akzeptanzkriterium Tests von einer KI generieren lassen und kritisch prüfen, ob die Assertions tatsächlich das Kriterium prüfen. Den Einsatz mit Prompt, Ergebnis, kritischer Bewertung und begründeter Entscheidung in [AI_USAGE.md](AI_USAGE.md) dokumentieren. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### Blockabschluss
 
@@ -508,9 +512,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **Alle geforderten Fachdokumente bereitstellen:** [REQUIREMENTS.md](REQUIREMENTS.md), [ARCHITECTURE.md](ARCHITECTURE.md) mit [docs/adr/](docs/adr/) und [docs/design/](docs/design/), [TESTING.md](TESTING.md), [CHANGE_REQUEST.md](CHANGE_REQUEST.md), [docs/REFACTORING.md](docs/REFACTORING.md), [AI_USAGE.md](AI_USAGE.md) und [RISK_ANALYSIS.md](RISK_ANALYSIS.md) im Repository bereitstellen. ([PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
-> **Dateien:** Quellcode-/Testdateien · Build-Konfiguration und Wrapper · CI-Konfiguration · gemeinsame [AGENTS.md](AGENTS.md) · [CHANGELOG.md](CHANGELOG.md) · verwendete KI-Konfigurationen.
+> **Dateien:** Quellcode-/Testdateien · Build-Konfiguration und Wrapper · CI-Konfiguration · gemeinsame `AGENTS.md` · [CHANGELOG.md](CHANGELOG.md) · verwendete KI-Konfigurationen.
 
-- [ ] **Quellcode, Tests und Konfigurationen versionieren:** Quellcode und Tests, Build-Konfiguration mit Wrapper, CI-Konfiguration, [AGENTS.md](AGENTS.md) und [CHANGELOG.md](CHANGELOG.md) sowie verwendete Prompts, Skills und Modellkonfigurationen im Repository bereitstellen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- [ ] **Quellcode, Tests und Konfigurationen versionieren:** Quellcode und Tests, Build-Konfiguration mit Wrapper, CI-Konfiguration, `AGENTS.md` und [CHANGELOG.md](CHANGELOG.md) sowie verwendete Prompts, Skills und Modellkonfigurationen im Repository bereitstellen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md) · gegebenenfalls separat verwendete Prompt-/Skill-Dateien.
 
