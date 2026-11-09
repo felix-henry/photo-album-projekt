@@ -180,7 +180,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [ ] **Mindestens ein ADR mit verworfener Alternative dokumentieren:** Die wichtigste Architekturentscheidung unter [docs/adr/](docs/adr/) festhalten, die verworfene Alternative begründen und das ADR aus [ARCHITECTURE.md](ARCHITECTURE.md) verlinken. Beispielpfad für die Speicherentscheidung: `docs/adr/ADR-001-repository.md`. Mindestens ein ADR ist Pflicht; drei bis vier zu Speicher, Fehlerbehandlung, UI-Technik und KI-Port sind eine realistische Orientierung. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 48–49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=48))
 - [ ] **Entwurfsmuster nur für ein benanntes Problem einsetzen:** Jedes tatsächlich eingesetzte Pattern durch ein Problem begründen und in einem ADR dokumentieren. Eine bestimmte Anzahl von Patterns ist nicht vorgegeben. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3))
 - [ ] **Duplikatprüfung entwerfen:** Das Verfahren zur Erkennung bytegleicher Duplikate beim Fotoimport festlegen. ([Teamfestlegung A-01](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
-- [ ] **Grenze für den Bildpuffer festlegen:** Die Puffergrenze für das bedarfsgerechte Nachladen großer Alben in [ARCHITECTURE.md](ARCHITECTURE.md) festhalten. ([Teamfestlegung A-08](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
+- [ ] **Grenze für den Bildpuffer festlegen:** Die Puffergrenze für das bedarfsgerechte Nachladen großer Alben in [ARCHITECTURE.md](ARCHITECTURE.md) festhalten. ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
 
 #### 3. KI-Entwurf und Projektgerüst
 
@@ -356,7 +356,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** Datei-/Security-Testdateien · [TESTING.md](TESTING.md) (Security-Fälle, Messaufbau und Performance-Ergebnisse).
 
 - [ ] **Security-Dateifälle konkret planen und testen:** Fälle wie falsche Endung, leere oder übergroße Datei in [TESTING.md](TESTING.md) aufführen und die Sicherheitsprüfung mit tatsächlichen Tests nachweisen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23))
-- [ ] **Performance-Messung vorbereiten:** Einen gemeinsamen Datensatz mit 100 Fotos zusammenstellen und seine Formate, Auflösungen und Dateigrößen dokumentieren. Jedes Teammitglied erfasst Betriebssystem, Prozessor und RAM seines Laptops für den Messaufbau in [TESTING.md](TESTING.md). ([Teamfestlegung A-08](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
+- [ ] **Performance-Messung vorbereiten:** Einen gemeinsamen Datensatz mit 100 Fotos zusammenstellen und seine Formate, Auflösungen und Dateigrößen dokumentieren. Jedes Teammitglied erfasst Betriebssystem, Prozessor und RAM seines Laptops für den Messaufbau in [TESTING.md](TESTING.md). ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
 - [ ] **Performance-Messung für eine NFA durchführen:** Die Performance unter den Bedingungen der betreffenden NFA messen und das Ergebnis dokumentieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
 
 > **Dateien:** Build-Konfiguration (JaCoCo) · [TESTING.md](TESTING.md).
