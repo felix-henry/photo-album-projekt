@@ -16,3 +16,6 @@ CLAUDE.md
 
 # Lokale Hilfsdateien
 /.local/
+
+# Maven-Build-Ausgabe
+target/
