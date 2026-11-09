@@ -48,6 +48,7 @@ flowchart LR
         FA(["Fotos ansehen"])
         FE(["Foto aus Album entfernen"])
         FB(["Titel und Beschreibung bearbeiten"])
+        PK(["Papierkorb anzeigen · A-08"])
         WR(["Aus Papierkorb wiederherstellen"])
         FL(["Im Papierkorb endgültig löschen · SR-01"])
     end
@@ -59,6 +60,7 @@ flowchart LR
     U --- FA
     U --- FE
     U --- FB
+    U --- PK
     U --- WR
     U --- FL
 ```
@@ -125,12 +127,12 @@ flowchart LR
 | FA-01 | Das System muss dem Nutzer die Möglichkeit bieten, ein Album mit einem gültigen, eindeutigen Namen zu erstellen (A-02). | muss | [UC-02](#15-uc-02-album-erstellen) |
 | FA-02 | Das System muss dem Nutzer die Möglichkeit bieten, die vorhandenen Alben anzuzeigen. | muss | Alben anzeigen |
 | FA-03 | Das System muss dem Nutzer die Möglichkeit bieten, ein bestehendes Album unter Beachtung der Namensregeln umzubenennen (A-02). | muss | Album umbenennen |
-| FA-04 | Das System muss dem Nutzer die Möglichkeit bieten, ein Album samt Fotos als Einheit in den Papierkorb zu verschieben und daraus wiederherzustellen (A-07, A-09). Vor dem Verschieben muss das System eine Bestätigung einholen. | muss | Album löschen · Aus Papierkorb wiederherstellen |
+| FA-04 | Das System muss dem Nutzer die Möglichkeit bieten, ein Album samt Fotos als Einheit in den Papierkorb zu verschieben und daraus wiederherzustellen (A-07, A-08, A-09). Vor dem Verschieben muss das System eine Bestätigung einholen. | muss | Album löschen · Papierkorb anzeigen · Aus Papierkorb wiederherstellen |
 | FA-05 | Das System muss dem Nutzer die Möglichkeit bieten, eine Bilddatei nur zu einem geöffneten Album hinzuzufügen. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-06 | Das System muss das Hinzufügen einer bytegleichen Bilddatei zum selben Album unabhängig vom Dateinamen mit der Meldung „Dieses Bild befindet sich schon in diesem Album“ ablehnen. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-07 | Wenn ein Album bereits 100 Fotos enthält, muss das System den Import einer lesbaren, nach A-03 zulässigen und noch nicht enthaltenen Bilddatei mit einer Meldung zur erreichten Höchstzahl ablehnen. | muss | [UC-01](#14-uc-01-foto-hinzufügen) |
 | FA-08 | Das System muss dem Nutzer die Möglichkeit bieten, die Fotos eines Albums als Bilder anzusehen. | muss | [UC-01](#14-uc-01-foto-hinzufügen); Fotos ansehen |
-| FA-09 | Das System muss dem Nutzer die Möglichkeit bieten, ein Foto aus seinem Album in den Papierkorb zu verschieben und daraus wiederherzustellen (A-07, A-09). | muss | Foto aus Album entfernen · Aus Papierkorb wiederherstellen |
+| FA-09 | Das System muss dem Nutzer die Möglichkeit bieten, ein Foto aus seinem Album in den Papierkorb zu verschieben und daraus wiederherzustellen (A-07, A-08, A-09). | muss | Foto aus Album entfernen · Papierkorb anzeigen · Aus Papierkorb wiederherstellen |
 | FA-10 | Das System muss dem Nutzer die Möglichkeit bieten, Titel und Beschreibung eines Fotos unabhängig voneinander zu speichern, zu ändern und zu leeren (A-04). | muss | Titel und Beschreibung bearbeiten |
 
 Die [Teamfestlegungen in 3.2](#32-annahmen-und-offene-fragen) präzisieren Namensregeln, Bilddateien, Fototexte und Papierkorb. SR-01 regelt das endgültige Löschen.
@@ -200,7 +202,7 @@ Bei einer Ablehnung nennt das System den Grund. Für den Datenzustand bei Fehler
 | AK-10.5 | Ein Foto besitzt eine Beschreibung. | Der Nutzer versucht, eine Beschreibung mit 501 Zeichen zu speichern. | Das System meldet die überschrittene Beschreibungslänge. Die vorhandene Beschreibung bleibt erhalten. |
 | AK-10.6 | Ein Foto besitzt Titel und Beschreibung. | Der Nutzer leert und speichert eines der Felder. Der Fall wird für beide Felder geprüft. | Das geleerte Feld bleibt leer. Das jeweils andere Feld behält seinen Wert. |
 
-#### Wiederherstellung
+#### Papierkorb und Wiederherstellung
 
 | ID | Given | When | Then |
 | --- | --- | --- | --- |
@@ -208,6 +210,7 @@ Bei einer Ablehnung nennt das System den Grund. Für den Datenzustand bei Fehler
 | AK-04.4 | Die Albumkachel „Urlaub“ enthält 100 Fotos. Ein anderes aktives Album namens „Urlaub“ enthält bereits 100 Fotos. | Der Nutzer stellt die Kachel in ein neues Album mit einem freien Namen wieder her. | Das neue Album enthält alle 100 Fotos. Das aktive „Urlaub“ bleibt unverändert. |
 | AK-04.5 | Eine Albumkachel kann wiederhergestellt werden. Beim Speichern tritt nach der ersten Teiländerung ein Fehler auf. | Der Nutzer stellt die Kachel wieder her. | Das System meldet den Fehler und nimmt die Teiländerung zurück. Die gesamte Kachel bleibt im Papierkorb. |
 | AK-04.6 | Die Albumkachel „Urlaub“ liegt im Papierkorb. Das Ursprungsalbum fehlt und ein anderes aktives Album heißt „Urlaub“. | Der Nutzer versucht, die Kachel unter ihrem ursprünglichen Namen wiederherzustellen. | Das System meldet den Namenskonflikt. Die gesamte Kachel bleibt im Papierkorb und das aktive Album bleibt unverändert. |
+| AK-04.8 | Im Papierkorb liegen das Album „Urlaub“ mit zwei Fotos und ein einzeln entferntes Foto. Beide Einträge sind noch nicht zur endgültigen Löschung fällig. | Der Nutzer öffnet den Papierkorb. | Die Ansicht zeigt eine Kachel mit „Urlaub“, der Fotoanzahl 2 und den verbleibenden Tagen. Das einzeln entfernte Foto erscheint als separater Eintrag mit seinen verbleibenden Tagen (A-08). |
 | AK-09.3 | Ein einzelnes Foto liegt im Papierkorb. Das Ursprungsalbum hat Platz und enthält kein bytegleiches Foto. | Der Nutzer stellt das Foto wieder her. | Das Foto erscheint wieder im Ursprungsalbum. Sein Papierkorbeintrag verschwindet. |
 | AK-09.4 | Ein einzelnes Foto liegt im Papierkorb. Das Ursprungsalbum fehlt und sein Name ist frei. | Der Nutzer stellt das Foto wieder her. | Das Album wird mit den ursprünglichen Angaben neu angelegt und enthält das Foto. Der Papierkorbeintrag verschwindet. |
 | AK-09.5 | Das Ursprungsalbum eines Fotos ist voll oder enthält ein bytegleiches Foto. | Der Nutzer versucht, das Foto in das Ursprungsalbum zurückzuholen. | Das System nennt den Konflikt. Das Foto bleibt im Papierkorb und kann in ein neues Album mit freiem Namen übernommen werden. |
@@ -265,7 +268,7 @@ Messaufbauten und Testprotokolle werden in [TESTING.md](TESTING.md) dokumentiert
 | A-05 | FA-05, SR-01 | Beim Import legt die Anwendung eine eigene Kopie an. Jeder aktive Fotoeintrag gehört genau einem Album. Die ausgewählte Originaldatei bleibt erhalten. | Die App-Kopie bleibt verfügbar, wenn der Nutzer das Original verschiebt. |
 | A-06 | [NFA-03](#22-nichtfunktionale-anforderungen) | Die Puffergrenze ist offen und wird in Block 3 in [ARCHITECTURE.md](ARCHITECTURE.md) festgelegt. Bis dahin ist AK-N03.2 nicht prüfbar. | Große Alben sollen bei begrenztem Speicherbedarf bedienbar bleiben. |
 | A-07 | FA-04, FA-09 · Papierkorb | Das Team ergänzt einen Papierkorb. Beim Entfernen eines Fotos wandert seine App-Kopie in den Papierkorb. Beim bestätigten Löschen eines Albums wandert es samt Fotos als Einheit dorthin. Die App speichert den Bezug zum Ursprungsalbum, die zur Wiederherstellung nötigen Angaben und den Löschzeitpunkt. | Nutzer können versehentlich gelöschte Fotos und Alben wiederherstellen. |
-| A-08 | Papierkorb · Anzeige | Gemeinsam mit einem Album verschobene Fotos erscheinen als eine Kachel mit Albumname, Fotoanzahl und Resttagen. Einzeln entfernte Fotos bleiben eigene Einträge mit Resttagen. Bytegleiche Fotos aus verschiedenen Alben dürfen getrennt im Papierkorb liegen. | Die Kachel bildet den gemeinsamen Löschvorgang ab. |
+| A-08 | FA-04, FA-09 · Papierkorb anzeigen | Das System muss dem Nutzer ermöglichen, den Papierkorb zu öffnen und seine Einträge anzusehen. Gelöschte Alben erscheinen als Kacheln mit Albumname, Fotoanzahl und verbleibenden Tagen. Einzeln entfernte Fotos erscheinen als separate Einträge mit verbleibenden Tagen. Bytegleiche Fotos aus verschiedenen Alben dürfen getrennt im Papierkorb liegen. | Der Nutzer findet die Einträge zum Wiederherstellen oder endgültigen Löschen. Die Kachel bildet den gemeinsamen Löschvorgang ab. |
 | A-09 | FA-04, FA-09 · Wiederherstellen | Einzelne Fotos und ganze Albumkacheln lassen sich wiederherstellen. Eine Kachel wird als Einheit zurückgeholt. Fehlt das Ursprungsalbum, wird es mit seinen ursprünglichen Angaben neu angelegt. Für das Zielalbum gelten Namensregeln, Duplikatverbot und Fotoobergrenze. Bei einem Konflikt nennt die App den Grund und belässt den Eintrag im Papierkorb. Der Nutzer kann ihn in ein neues Album mit freiem Namen übernehmen. | Die Regeln des Zielalbums bleiben auch beim Wiederherstellen wirksam. |
 | A-10 | SR-01 · Endgültig löschen | Das manuelle endgültige Löschen erfordert eine Bestätigung. Sobald seit dem Löschzeitpunkt mindestens 30 × 24 Stunden vergangen sind, löscht die App den Eintrag und seine App-Kopien beim nächsten Start oder Zugriff auf den Papierkorb. | Die Frist lässt Zeit für eine Wiederherstellung und gibt danach Speicher frei. |
 | A-11 | NFA-01 · Reversible Vorgänge | Ein Import betrifft genau eine Datei. Schlägt eine reversible Aktion fehl, werden ihre Teiländerungen zurückgenommen. Reversible Albumaktionen werden als Einheit behandelt. | Album und Fotos bleiben bei einer Albumaktion zusammen. |
