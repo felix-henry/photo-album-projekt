@@ -41,7 +41,7 @@ Bei Block 2–6 übernimmt der Bearbeiter die Aufgaben und Dokumentation seines 
 
 Die Unterteilung ordnet die Vorgaben den jeweiligen Blöcken zu. Ergänzende Folienaufträge werden nach gemeinsamer Prüfung aufgenommen.
 
-Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen Punkt erst nach Prüfung; der gesamte Block wird oben mit Datum abgehakt, sobald sein abschließender Stand in `main` liegt und der Tag auf GitHub vorhanden ist. Die Quellenlage und widersprüchliche Angaben stehen [am Ende](#quellenstand-und-offene-auslegungen).
+Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen Punkt erst nach Prüfung. Kurz vor dem Abschluss-PR die erledigten Aufgaben abhaken, offene Aufgaben sichtbar lassen und das tatsächliche Erledigt-Datum oben in der Meilensteintabelle eintragen. Die aktualisierte Roadmap committen und auf den Arbeitsbranch pushen, damit sie mit dem PR nach `main` kommt. Ist der PR schon offen, den aktualisierten Stand vor dem Merge pushen. Nach dem Merge den vorgesehenen Tag auf den Merge-Commit setzen und pushen, dann lokal `main` aktualisieren. Der Arbeitsbranch bleibt lokal und auf GitHub erhalten. Die Quellenlage und widersprüchliche Angaben stehen [am Ende](#quellenstand-und-offene-auslegungen).
 
 </details>
 
@@ -73,9 +73,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [x] **Review:** [README.md](README.md), Teamorganisation und Vorgehen gemeinsam prüfen; Projektübersicht, Zusammenarbeit und Repository-/Board-Links abgleichen. Review-Kommentare beantworten.
 - [x] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
-- [x] **PR durchführen:** [README](README.md) und Projektgrundlage per PR nach `main` übernehmen.
-- [x] **Tag auf Merge-Commit setzen:** `block-1` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
-- [x] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
+- [x] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben und Erledigt-Datum in der [Roadmap](ROADMAP.md) festhalten und den Stand auf den Arbeitsbranch pushen.
+- **PR durchführen:** [README](README.md) und Projektgrundlage per PR nach `main` übernehmen.
+- **Tag auf Merge-Commit setzen:** `block-1` auf den Merge-Commit setzen, pushen und das Ziel auf GitHub prüfen.
 
 **Quellen:** [Projektbeschreibung §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PDF S. 2](docs/lecture_slides/Block_1_Vorgehsmodelle.pdf#page=2); bestätigte Teamorganisation aus der [README](README.md#vorgehen-und-zusammenarbeit).
 
@@ -140,9 +140,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [x] **Review:** Stakeholder und Kontext, zehn FA, fünf NFA, zwei Use Cases, AK, Entscheidungen und Annahmen, Sicherheit, Prototyp und KI-Fall gemeinsam prüfen. Bei Codeänderungen passende Tests ausführen. Review-Kommentare beantworten. Die vier anderen Teammitglieder geben vor dem Merge jeweils ein eigenes PR-Review ab. ([Block 2, S. 54–55](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=54))
 - [x] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
 
-- [x] **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
-- [x] **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
-- [x] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
+- [x] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben und Erledigt-Datum in der [Roadmap](ROADMAP.md) festhalten und den Stand auf den Arbeitsbranch pushen.
+- **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
+- **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen, pushen und das Ziel auf GitHub prüfen.
 
 **Quellen:** [Projektbeschreibung §4-7 und §13](docs/task_description/Projektbeschreibung_Photo_Album.md); [Block-2-Folien als Markdown](docs/lecture_slides/Block_2_Requirements_Engineering.md), [Original-PDF, 56 Seiten](docs/lecture_slides/Block_2_Requirements_Engineering.pdf).
 
@@ -212,8 +212,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Nachweise:** PR, Reviews und Git-Tag.
 
 - [ ] **Diagramm-Review über Kreuz erhalten, vergeben und einarbeiten:** Ein Review-Issue vom Partnerteam erhalten und im Partner-Repository eines mit dem Titel `review: architecture v1` und drei Prüfpunkten anlegen. Die Reviewer prüfen Klassen- und Sequenzdiagramm auf die Zuordnung aller Geschäftsregeln (keine in der UI), passende Klassenoperationen zu jeder Sequenznachricht und begründete Abhängigkeiten. Die Rückmeldungen vor dem Blockabschluss einarbeiten. ([Block 3, S. 50](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=50))
-- [ ] **Zwischenstand über PR und Review übernehmen:** Den prüfbaren Architektur- und Projektstand im Repository über den vorgesehenen Git-Prozess zusammenführen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
-- [ ] **Tag `block-3` setzen:** Den Zwischenstand mit `block-3` kennzeichnen; die vorgeschlagene Abgabe ist der Vorabend von Block 4. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
+- [ ] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Zwischenstand über PR und Review übernehmen:** Den prüfbaren Architektur- und Projektstand im Repository über den vorgesehenen Git-Prozess zusammenführen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- **Tag `block-3` setzen:** Den Merge-Commit mit `block-3` kennzeichnen und den Tag pushen. Die vorgeschlagene Abgabe ist der Vorabend von Block 4. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-3-Folien.
 
@@ -268,7 +269,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** `.github/pull_request_template.md`.
 > **Nachweise:** GitHub-Issues, Branches, Commit-Nachrichten, PRs und CI.
 
-- [ ] **Git-Workflow mit Sammel-Issues und Block-Branches anwenden:** Die vorhandenen Sammel-Issues weiterverwenden; unser Branch-Schema ist `block-x`, für diesen Block `block-4`. Änderungen über Issue → Branch → PR → Review → CI → Merge bearbeiten und den Arbeitsbranch nach erfolgreichem Merge löschen. KI-unterstützte PRs durchlaufen denselben Review-Prozess und tragen `ai-assisted`. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 4, S. 13](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=13); Projektfestlegung)
+- [ ] **Git-Workflow mit Sammel-Issues und Block-Branches anwenden:** Die vorhandenen Sammel-Issues weiterverwenden. Unser Branch-Schema ist `block-x`, für diesen Block `block-4`. Änderungen über Issue → Branch → PR → Review → CI → Merge bearbeiten. Der Arbeitsbranch bleibt nach dem Merge lokal und auf GitHub erhalten. KI-unterstützte PRs durchlaufen denselben Review-Prozess und tragen `ai-assisted`. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 4, S. 13](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=13); Projektfestlegung)
 - [ ] **Kleine, grün bauende Commits mit Anforderungs- oder Issue-Bezug erstellen:** Konventionelle Commit-Nachrichten verwenden; keine bloßen `fix`-/`WIP`-Nachrichten auf `main`. Jeder Commit baut grün, damit `git bisect` zuverlässig nutzbar bleibt. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 14](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=14))
 - [ ] **PR-Template hinterlegen:** In `.github/pull_request_template.md` Ziel, Prüfung und offene Risiken abfragen. ([Block 4, S. 14](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=14); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
 
@@ -304,8 +305,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** [CHANGELOG.md](CHANGELOG.md) · Ergebnisdateien dieses Blocks.
 > **Nachweise:** PR, Reviews, CI und Git-Tags.
 
-- [ ] **Pflichtfunktionalität mit Build, Reviews und grüner CI als Zwischenstand nachweisen:** Den Stand über Pull Request, Review und erfolgreiche CI zusammenführen. Den vertikalen Schnitt „Album erstellen und anzeigen“ über UI → Use Case → Domäne → Repository auf `main` lauffähig nachweisen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
-- [ ] **Release `v0.1.0` mit [CHANGELOG.md](CHANGELOG.md) erstellen und `block-4` setzen:** Änderungen im Changelog festhalten und Release- sowie Blocktag bereitstellen. `v1.0.0` kennzeichnet zusätzlich den vollständigen ursprünglichen Pflichtumfang. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- [ ] **Abschlussstand für den PR vorbereiten:** Änderungen für `v0.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Pflichtfunktionalität mit Build, Reviews und grüner CI als Zwischenstand nachweisen:** Den Stand über Pull Request, Review und erfolgreiche CI zusammenführen. Den vertikalen Schnitt „Album erstellen und anzeigen“ über UI → Use Case → Domäne → Repository auf `main` lauffähig nachweisen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
+- **Release `v0.1.0` erstellen und `block-4` setzen:** Release- und Blocktag bereitstellen. `v1.0.0` kennzeichnet zusätzlich den vollständigen ursprünglichen Pflichtumfang. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-4-Folien.
 
@@ -387,7 +389,8 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 - [ ] **[TESTING.md](TESTING.md) mit den geforderten Test- und Qualitätsnachweisen abgeben:** Teststrategie, Blackbox-Verfahren, Unit-/Integrations- und manuelle Systemtests, Zuordnungen, Usability-, Security- und Performance-Nachweise sowie den Verweis auf das verpflichtende Evaluation Set bereitstellen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
 - [ ] **Review über Kreuz für den Test-PR durchführen:** Den Lab-/Test-PR über Kreuz reviewen lassen, Rückmeldungen beantworten und erforderliche Korrekturen einarbeiten. ([Block 5, S. 19](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=19))
-- [ ] **Teststand über PR, Review und grüne CI übernehmen und `block-5` setzen:** Den prüfbaren Zwischenstand im Repository kennzeichnen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- [ ] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Teststand über PR, Review und grüne CI übernehmen und `block-5` setzen:** Den Merge-Commit mit `block-5` kennzeichnen und den Tag pushen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-5-Folien.
 
@@ -458,8 +461,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** [CHANGE_REQUEST.md](CHANGE_REQUEST.md) · [docs/REFACTORING.md](docs/REFACTORING.md) · [TESTING.md](TESTING.md) · [CHANGELOG.md](CHANGELOG.md) · geänderte Quellcode- und Testdateien.
 > **Nachweise:** PR, Reviews, CI und Git-Tags.
 
-- [ ] **Änderungen über PR, Review und grüne CI zusammenführen:** Tests, Analyse, Refactoring-Dokumentation und umgesetzten Stand im Repository zusammenführen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
-- [ ] **Release `v1.1.0` mit [CHANGELOG.md](CHANGELOG.md) erstellen und `block-6` setzen:** Den CR-Release bis Block 7 bereitstellen und den prüfbaren Zwischenstand mit dem Blocktag kennzeichnen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
+- [ ] **Abschlussstand für den PR vorbereiten:** Änderungen für `v1.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Änderungen über PR, Review und grüne CI zusammenführen:** Tests, Analyse, Refactoring-Dokumentation und umgesetzten Stand im Repository zusammenführen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
+- **Release `v1.1.0` erstellen und `block-6` setzen:** Den CR-Release bis Block 7 bereitstellen und den prüfbaren Zwischenstand mit dem Blocktag kennzeichnen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-6-Folien.
 
@@ -529,7 +533,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Reviewer:** Moritz, Alex, Alanur, Pit und Felix.
 > **Korrekturen und Abschlussarbeiten:** Alle.
 
-Der abschließende PR-Merge und der Tag `final` folgen nach dem [Abschlussreview](#abschlussreview-nach-block-7).
+- [ ] **Abschlussstand für den finalen PR vorbereiten:** Nach dem [Abschlussreview](#abschlussreview-nach-block-7) Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+
+Der abschließende PR-Merge und der Tag `final` folgen bei der [Abgabe](#abgabe-nach-den-fünf-abschlussreviews).
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-7-Folien.
 
@@ -570,8 +576,8 @@ Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentie
 
 > **Git-Maintenance:** Felix.
 
-- [ ] **Finalen Stand über PR, Review und grüne CI zusammenführen:** Nach dem Abschlussreview, vier Freigaben der anderen Teammitglieder und grüner CI die finale Repository-Abgabe nach `main` übernehmen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); Projektfestlegung)
-- [ ] **Erforderliche Tags und verbindliche Abgabe bereitstellen:** `block-1` bis `block-6`, `v0.1.0`, `v1.0.0` und `v1.1.0` prüfen. `final` auf den geprüften Merge-Commit setzen, pushen und die Zuordnung auf GitHub kontrollieren. `final` ist die verbindliche Abgabe, laut Projektbeschreibung spätestens am **23. November**. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- **Finalen Stand über PR, Review und grüne CI zusammenführen:** Nach dem Abschlussreview, vier Freigaben der anderen Teammitglieder und grüner CI die finale Repository-Abgabe nach `main` übernehmen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); Projektfestlegung)
+- **Erforderliche Tags und verbindliche Abgabe bereitstellen:** `block-1` bis `block-6`, `v0.1.0`, `v1.0.0` und `v1.1.0` prüfen. `final` auf den geprüften Merge-Commit setzen, pushen und die Zuordnung auf GitHub kontrollieren. `final` ist die verbindliche Abgabe, laut Projektbeschreibung spätestens am **23. November**. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
 </details>
 
