@@ -181,6 +181,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [ ] **Entwurfsmuster nur für ein benanntes Problem einsetzen:** Jedes tatsächlich eingesetzte Pattern durch ein Problem begründen und in einem ADR dokumentieren. Eine bestimmte Anzahl von Patterns ist nicht vorgegeben. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3))
 - [ ] **Duplikatprüfung entwerfen:** Das Verfahren zur Erkennung bytegleicher Duplikate beim Fotoimport festlegen. ([Teamfestlegung A-01](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
 - [ ] **Grenze für den Bildpuffer festlegen:** Die Puffergrenze für das bedarfsgerechte Nachladen großer Alben in [ARCHITECTURE.md](ARCHITECTURE.md) festhalten. ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
+- [ ] **Testbarkeit der Papierkorb-Regeln entwerfen:** In [ARCHITECTURE.md](ARCHITECTURE.md) festhalten, wie Unit-Tests die aktuelle Zeit vorgeben und einzelne Löschfehler ohne echte Dateizugriffe simulieren können. So lassen sich Fristablauf und Teilerfolge gezielt prüfen. ([NFA-05](REQUIREMENTS.md#22-nichtfunktionale-anforderungen))
 
 #### 3. KI-Entwurf und Projektgerüst
 
