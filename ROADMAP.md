@@ -5,7 +5,7 @@
 | Block | Schwerpunkt | Wesentlicher Zwischenstand | Geplanter Tag | Erledigt |
 | --- | --- | --- | --- | :---: |
 | [1](#block-1-einführung-und-vorgehen) | Einführung und Vorgehen | Team, Repository, [README.md](README.md), Vorgehensentscheidung für Kanban und [Kanban-Board](https://photoalbum-kanban.vercel.app) | `block-1` | ✅ 19.10.2026 |
-| [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ☐ |
+| [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ✅ 09.11.2026 |
 | [3](#block-3-architektur-und-entwurf) | Architektur und Entwurf | [ARCHITECTURE.md](ARCHITECTURE.md), Klassen- und Sequenzdiagramm, mindestens ein ADR und Projektgerüst | `block-3` | ☐ |
 | [4](#block-4-implementierung-und-git) | Implementierung und Git | Pflichtfunktionalität, Build, Reviews und CI; Release `v0.1.0` | `block-4` | ☐ |
 | [5](#block-5-tests-und-qualität) | Tests und Qualität | [TESTING.md](TESTING.md), Unit- und Integrationstests, 2 Blackbox-Verfahren, Usability-Protokoll und Evaluation Set | `block-5` | ☐ |
@@ -137,12 +137,12 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Nachweise:** [PR #32](https://github.com/felix-henry/photo-album-projekt/pull/32), Reviews, Git-Tag, Kanban-Board und Sammel-Issue.
 
 - [x] **Begleitende Nachweise prüfen:** [README.md](README.md) mit Projekt und Zusammenarbeit abgleichen; [AI_USAGE.md](AI_USAGE.md), Fall 1, auf tatsächlichen Prompt, Ergebnis, kritische Bewertung und begründete Entscheidung prüfen.
-- [ ] **Review:** Stakeholder und Kontext, zehn FA, fünf NFA, zwei Use Cases, AK, Entscheidungen und Annahmen, Sicherheit, Prototyp und KI-Fall gemeinsam prüfen. Bei Codeänderungen passende Tests ausführen. Review-Kommentare beantworten. Die vier anderen Teammitglieder geben vor dem Merge jeweils ein eigenes PR-Review ab. ([Block 2, S. 54–55](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=54))
-- [ ] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
+- [x] **Review:** Stakeholder und Kontext, zehn FA, fünf NFA, zwei Use Cases, AK, Entscheidungen und Annahmen, Sicherheit, Prototyp und KI-Fall gemeinsam prüfen. Bei Codeänderungen passende Tests ausführen. Review-Kommentare beantworten. Die vier anderen Teammitglieder geben vor dem Merge jeweils ein eigenes PR-Review ab. ([Block 2, S. 54–55](docs/lecture_slides/Block_2_Requirements_Engineering.pdf#page=54))
+- [x] **Korrekturen und Verbesserungen (bei Bedarf):** Review-Befunde einarbeiten und geänderte Punkte erneut reviewen.
 
-- [ ] **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
-- [ ] **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
-- [ ] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
+- [x] **PR durchführen:** Issue-Bezug der Commits und des PR sowie das Label `ai-assisted` bei KI-Unterstützung prüfen. Die vier Freigaben der anderen Teammitglieder abwarten, dann Änderungen nach `main` mergen.
+- [x] **Tag auf Merge-Commit setzen:** `block-2` auf den Merge-Commit setzen und auf GitHub pushen. Auf GitHub prüfen, dass jeder Tag auf den vorgesehenen Merge-Commit zeigt.
+- [x] **Kanban-Board, Issue und [ROADMAP](ROADMAP.md) prüfen:** Kanban-Board und Sammel-Issue mit dem Ergebnis abgleichen; offene Aufgaben sichtbar lassen. Bei vollständigem Abschluss [ROADMAP](ROADMAP.md) abhaken und tatsächliches Erledigt-Datum eintragen. Anschließend lokal auf `main` wechseln und aktualisieren; Arbeitsbranch optional löschen.
 
 **Quellen:** [Projektbeschreibung §4-7 und §13](docs/task_description/Projektbeschreibung_Photo_Album.md); [Block-2-Folien als Markdown](docs/lecture_slides/Block_2_Requirements_Engineering.md), [Original-PDF, 56 Seiten](docs/lecture_slides/Block_2_Requirements_Engineering.pdf).
 
