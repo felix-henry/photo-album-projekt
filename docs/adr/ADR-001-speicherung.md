@@ -14,7 +14,7 @@ Die Projektbeschreibung verlangt eine lokale Datenhaltung im Dateisystem mit dok
   - `trash.json`: die Papierkorbeinträge mit Löschzeitpunkt und Ursprungsalbum,
   - `photos/<PhotoId>`: die App-Kopie jedes Bildes.
 
-  Die genauen Felder legt das Projektgerüst fest.
+  Die genauen Felder legt die Umsetzung der Adapter fest.
 - `Sha256ImageHasher` berechnet beim Import einen SHA-256-Hash des Dateiinhalts. `Album` vergleicht nur noch Hashes und muss vorhandene Bilder nicht erneut lesen. Dass zwei verschiedene Dateien denselben SHA-256-Hash haben, ist praktisch ausgeschlossen.
 - Nur `Main` erzeugt die Adapter. Tests setzen Varianten im Arbeitsspeicher ein.
 
@@ -33,4 +33,4 @@ Damit setzen wir zwei Entwurfsmuster ein:
 
 - Die Regeln lassen sich ohne Dateien testen, und Speicherung oder Format lassen sich austauschen, ohne Use Cases zu ändern.
 - Jeder Port braucht ein Interface und einen Adapter. Zwischen Domänenobjekten und JSON ist Umwandlungscode nötig.
-- Java bringt keinen JSON-Parser mit. Die Bibliothek dafür wird beim Projektgerüst ausgewählt und in einem eigenen ADR begründet.
+- Java bringt keinen JSON-Parser mit. Die Bibliothek dafür wird mit den Adaptern ausgewählt und in einem eigenen ADR begründet.

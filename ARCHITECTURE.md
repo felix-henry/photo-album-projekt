@@ -44,7 +44,7 @@ Die Oberfläche nutzt Swing, weil es im JDK enthalten ist und keine zusätzliche
 
 ## 2. Komponenten und Ports
 
-Jede Schicht ist ein eigenes Java-Paket: `ui`, `application`, `domain` und `infrastructure`. Ihre Aufgaben stehen in Abschnitt 1. Die Klasse `Main` verbindet die Pakete beim Start.
+Jede Schicht ist ein eigenes Java-Paket unter `de.commitmentissues.photoalbum`: `ui`, `application`, `domain` und `infrastructure`. Das Projektgerüst legt diese Pakete mit Maven und Java 21 an. Ihre Aufgaben stehen in Abschnitt 1. Die Klasse `Main` verbindet die Pakete beim Start.
 
 Die Anwendung erreicht Dateien nur über vier Ports. Sie sind Interfaces im Paket `application` und in Fachsprache benannt.
 

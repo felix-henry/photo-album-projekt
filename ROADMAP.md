@@ -195,13 +195,13 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Quellcode und Maven-Konfiguration des Projektgerüsts; konkrete Dateien werden beim Anlegen festgelegt.
 
-- [ ] **Projektgerüst anlegen:** Ein zum Architekturentwurf passendes Projektgerüst für Java 21 mit Maven vorbereiten. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
+- [x] **Projektgerüst anlegen:** Ein zum Architekturentwurf passendes Projektgerüst für Java 21 mit Maven vorbereiten. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
 
 #### 4. KI-Einsatz dokumentieren
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Einsatz beim Entwurf kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz in [AI_USAGE.md](AI_USAGE.md) nach den Angaben aus PB §13 auswerten. Ein Fall je Block 2–6 ist empfohlen, keine Mindestquote pro Block. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
+- [x] **KI-Einsatz beim Entwurf kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz in [AI_USAGE.md](AI_USAGE.md) nach den Angaben aus PB §13 auswerten. Ein Fall je Block 2–6 ist empfohlen, keine Mindestquote pro Block. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
 
 #### Blockabschluss
 
