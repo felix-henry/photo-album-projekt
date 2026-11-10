@@ -47,8 +47,8 @@ Die Anforderungen, Auftraggeberentscheidungen und Teamannahmen stehen in [REQUIR
 | --- | --- |
 | Programmiersprache | Java 21 |
 | Build und Abhängigkeiten | Maven mit Wrapper |
-| Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
-| Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
+| Oberfläche | Swing ([ARCHITECTURE.md](ARCHITECTURE.md)) |
+| Datenhaltung | JSON-Dateien im lokalen Dateisystem ([ADR-001](docs/adr/ADR-001-speicherung.md)) |
 | Automatisierte Tests | JUnit 5 |
 | Coverage | JaCoCo |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
