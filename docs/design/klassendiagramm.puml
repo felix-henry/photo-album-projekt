@@ -10,7 +10,7 @@ package infrastructure {
   class FileTrashRepository
   class FilePhotoStorage
   class Sha256ImageHasher
-  class LlmDescriptionSuggester <<Entwurf, Won't>>
+  class LlmTitleSuggester <<Entwurf, Won't>>
 }
 
 package application {
@@ -31,8 +31,8 @@ package application {
   interface ImageHasher {
     +hash(file: Path): String
   }
-  interface DescriptionSuggester <<Entwurf, Won't>> {
-    +suggest(photo: Photo): String
+  interface TitleSuggester <<Entwurf, Won't>> {
+    +suggestTitle(image: byte[]): Optional<String>
   }
   class AddPhotoUseCase {
     +execute(albumId: AlbumId, file: Path): Result
@@ -92,7 +92,7 @@ FileAlbumRepository .down.|> AlbumRepository
 FileTrashRepository .down.|> TrashRepository
 FilePhotoStorage .down.|> PhotoStorage
 Sha256ImageHasher .down.|> ImageHasher
-LlmDescriptionSuggester .down.|> DescriptionSuggester
+LlmTitleSuggester .down.|> TitleSuggester
 
 AddPhotoUseCase .up.> AlbumRepository
 AddPhotoUseCase .up.> ImageHasher

@@ -69,7 +69,7 @@ Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 - `AlbumLibrary` sorgt für eindeutige Namen. `Album.rename` ist paketsichtbar, damit niemand diese Prüfung umgeht.
 - `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now` (Abschnitt 6).
 - `ImageHasher.hash` und die Domäne lehnen Verstöße mit einer Exception samt Grund ab. Der Use Case übersetzt sie in ein `Result` mit Erfolg oder Meldung für die UI.
-- Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `DescriptionSuggester` und sein Adapter sind nur ein Entwurf, die KI-Funktion wird nicht umgesetzt.
+- Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `TitleSuggester` und sein Adapter sind nur ein Entwurf, siehe Abschnitt 7.
 
 ## 4. Sequenzdiagramm „Foto hinzufügen“
 
@@ -92,7 +92,27 @@ Unit-Tests prüfen die Papierkorbregeln ohne Wartezeit und ohne echte Dateien (N
 - **Frist:** `Trash` und `TrashEntry` erhalten die aktuelle Zeit als Parameter `now`. Ein Test übergibt etwa einen Zeitpunkt genau 30 × 24 Stunden nach dem Löschen und prüft, ob der Eintrag fällig ist.
 - **Löschfehler:** Der Test setzt statt `FilePhotoStorage` eine Variante im Arbeitsspeicher ein, die beim Löschen eines bestimmten Fotos einen Fehler wirft. So lässt sich der Teilerfolg nach A-12 prüfen: Die übrigen Fotos sind gelöscht, das betroffene bleibt im Papierkorb.
 
-## 7. Architekturentscheidungen
+## 7. KI-Komponente (Entwurf)
+
+Die App enthält keine KI-Funktion (Won't, REQUIREMENTS 3.3). Die Projektbeschreibung verlangt aber einen Entwurf. Wie in REQUIREMENTS 3.3 betrachtet er einen Titelvorschlag für ein ausgewähltes Foto.
+
+- **Entwurf:** Der Port `TitleSuggester` in der Anwendung liefert zu einem Bild einen Titelvorschlag. Der Adapter `LlmTitleSuggester` in der Infrastruktur fragt dafür einen KI-Dienst an und protokolliert jeden Aufruf mit Ergebnis.
+- **Prüfung vor der Anfrage:** Der Port erhält nur die Bilddaten. Der Adapter entfernt Metadaten, bevor er sie sendet. Dateinamen und andere Fotos erreichen die KI nicht (KI-01).
+- **Prüfung nach der Antwort:** Der Adapter verwirft leere Vorschläge und solche über 100 Zeichen und gibt dann ein leeres `Optional` zurück. Die Daten bleiben unverändert, der Titel lässt sich weiter von Hand eingeben. Einen gültigen Vorschlag zeigt die UI als Vorschlag, gespeichert wird erst nach Bestätigung des Nutzers (KI-03).
+
+Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufräumen“. Für ihn gilt derselbe Grundsatz wie in KI-02: Er darf nichts ändern. Vorschläge setzt der Nutzer selbst über die normale Oberfläche um.
+
+| Werkzeug | Beschreibung | Einordnung |
+|---|---|---|
+| `listPhotos` | Listet ID und Titel der Fotos eines Albums auf. | direkt ausführen |
+| `removePhoto` | Verschiebt ein Foto in den Papierkorb. | nicht anbieten |
+| `renameAlbum` | Gibt einem Album einen neuen Namen. | nicht anbieten |
+| `deleteAlbum` | Verschiebt ein Album samt Fotos in den Papierkorb. | nicht anbieten |
+| `shareAlbum` | Gibt ein Album an andere weiter. Teilen liegt außerhalb des Projektumfangs. | nicht anbieten |
+
+„Nur mit Freigabe“ entfällt wegen KI-02. So kann auch ein Prompt-Injection-Angriff über ein Foto nichts verändern.
+
+## 8. Architekturentscheidungen
 
 - [ADR-001: Speicherung als JSON-Dateien hinter Ports](docs/adr/ADR-001-speicherung.md) mit den Mustern Repository und Adapter
 - [ADR-002: Fehlerbehandlung über Exceptions und Result](docs/adr/ADR-002-fehlerbehandlung.md)

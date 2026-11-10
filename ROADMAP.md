@@ -187,11 +187,11 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/design/](docs/design/)
 
-- [ ] **KI-Komponente entwerfen und als Won’t dokumentieren:** Die KI-Funktion bleibt Won’t und wird nicht umgesetzt. `DescriptionSuggester` als Port in der Anwendung und einen Adapter in der Infrastruktur im Klassendiagramm ergänzen. Zwei Adapterprüfungen festlegen: eine vor der Anfrage und eine nach der Antwort. In [ARCHITECTURE.md](ARCHITECTURE.md) fünf Zeilen „KI-Komponente“ mit Entwurf, Guardrails und Won’t-Entscheidung festhalten. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 47](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=47); Projektfestlegung)
+- [x] **KI-Komponente entwerfen und als Won’t dokumentieren:** Die KI-Funktion bleibt Won’t und wird nicht umgesetzt. `TitleSuggester` als Port in der Anwendung und einen Adapter in der Infrastruktur im Klassendiagramm ergänzen. Die Folie nennt `DescriptionSuggester`; REQUIREMENTS 3.3 betrachtet einen Titelvorschlag. Zwei Adapterprüfungen festlegen: eine vor der Anfrage und eine nach der Antwort. In [ARCHITECTURE.md](ARCHITECTURE.md) fünf Zeilen „KI-Komponente“ mit Entwurf, Guardrails und Won’t-Entscheidung festhalten. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [Block 3, S. 47](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=47); Projektfestlegung)
 
 > **Dateien:** [ARCHITECTURE.md](ARCHITECTURE.md)
 
-- [ ] **Tool-Liste für den Agentenentwurf „Fotos aufräumen“ festhalten:** In [ARCHITECTURE.md](ARCHITECTURE.md) höchstens vier `ToolSpec`s mit je einer Beschreibung notieren. `deleteAlbum`, `removePhoto`, `renameAlbum` und `shareAlbum` den Kategorien „direkt ausführen“, „nur mit Freigabe“ oder „gar nicht anbieten“ zuordnen. Das bleibt ein Entwurf. ([Block 3, S. 47](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=47))
+- [x] **Tool-Liste für den Agentenentwurf „Fotos aufräumen“ festhalten:** In [ARCHITECTURE.md](ARCHITECTURE.md) höchstens vier `ToolSpec`s mit je einer Beschreibung notieren. `deleteAlbum`, `removePhoto`, `renameAlbum` und `shareAlbum` den Kategorien „direkt ausführen“, „nur mit Freigabe“ oder „gar nicht anbieten“ zuordnen. Das bleibt ein Entwurf. ([Block 3, S. 47](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=47))
 
 > **Dateien:** Quellcode und Maven-Konfiguration des Projektgerüsts; konkrete Dateien werden beim Anlegen festgelegt.
 
