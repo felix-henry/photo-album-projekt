@@ -30,11 +30,24 @@ Geplant (empfohlen).
 
 | Feld | Inhalt |
 | --- | --- |
-| **Aufgabe/Ziel** | Den Entwurf für Fotoimport und Dateispeicherung auf klare Verantwortlichkeiten und Abhängigkeiten prüfen. |
-| **Werkzeug/Modell und Prompt oder Skill** | |
+| **Aufgabe/Ziel** | Das Klassendiagramm aus Block 3 auf klare Verantwortlichkeiten und Abhängigkeiten prüfen lassen. Einen Vorschlag übernehmen und einen verwerfen, jeweils begründet. |
+| **Werkzeug/Modell und Prompt oder Skill** | [Verwendeter Prompt](#prompt-zu-fall-2) |
 | **Ergebnis** | |
 | **Kritische Bewertung** | |
 | **Entscheidung** | |
+
+### Prompt zu Fall 2
+
+```text
+Prüfe als kritischer Reviewer das Klassendiagramm des Photo Albums. Lies dafür docs/design/klassendiagramm.puml, docs/design/crc-karten.md, ARCHITECTURE.md und REQUIREMENTS.md. Ändere keine Dateien.
+
+1. Regel-Check: Wo wird jede Geschäftsregel aus REQUIREMENTS.md geprüft? Fehlt eine Regel oder liegt sie außerhalb der Domäne?
+2. Verantwortlichkeiten: Hat eine Klasse zu viele Aufgaben oder eine Aufgabe, die nicht zu ihr passt? Stimmen Diagramm und CRC-Karten überein?
+3. Abhängigkeiten: Zeigen alle Abhängigkeiten nach innen zur Domäne? Welche Klasse hat die meisten Abhängigkeiten und ist das begründet?
+4. Multiplizitäten und Methoden: Passen sie zu den Anforderungen und Use Cases? Fehlt eine Methode, die „Foto hinzufügen“ oder „Album erstellen“ braucht?
+
+Nenne höchstens fünf Befunde, die wichtigsten zuerst. Gib zu jedem Befund die Stelle im Diagramm, die betroffene Anforderung, das Problem und einen konkreten Verbesserungsvorschlag an. Kennzeichne, wenn du dir unsicher bist oder eine Anforderung anders auslegst. Die Entscheidung über die Vorschläge treffe ich.
+```
 
 ## Fall 3 – Coding Agent bei der Implementierung, Block 4
 
