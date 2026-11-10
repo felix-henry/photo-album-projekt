@@ -57,7 +57,7 @@ Die Anwendung erreicht Dateien nur über vier Ports. Sie sind Interfaces im Pake
 
 `ImageHasher` übernimmt neben dem Hash auch die Prüfung, weil beides dieselben Bytes in einem Durchgang liest. Die Formatprüfung ist eine technische Eingangsprüfung. Sie braucht eine Bildbibliothek und liegt deshalb nicht in der Domäne. Ob ein Foto ein Duplikat ist, entscheidet `Album` anhand des Hashes.
 
-Methoden und Parameter legt das Klassendiagramm fest. Ports für die Uhrzeit des Papierkorbs und für die KI-Komponente folgen in eigenen Abschnitten.
+Methoden und Parameter legt das Klassendiagramm fest. Die Uhrzeit bekommt der Papierkorb als Parameter, ohne eigenen Port (Abschnitt 6).
 
 ## 3. Klassendiagramm
 
@@ -67,7 +67,7 @@ Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 
 - Ein `Album` enthält 0 bis 100 Fotos. Jedes aktive `Photo` gehört genau einem Album (A-05), im Papierkorb hält es ein `TrashEntry`.
 - `AlbumLibrary` sorgt für eindeutige Namen. `Album.rename` ist paketsichtbar, damit niemand diese Prüfung umgeht.
-- `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now`, so prüfen Unit-Tests den Fristablauf ohne Wartezeit (NFA-05).
+- `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now` (Abschnitt 6).
 - `ImageHasher.hash` und die Domäne lehnen Verstöße mit einer Exception samt Grund ab. Der Use Case übersetzt sie in ein `Result` mit Erfolg oder Meldung für die UI.
 - Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `DescriptionSuggester` und sein Adapter sind nur ein Entwurf, die KI-Funktion wird nicht umgesetzt.
 
@@ -79,7 +79,20 @@ Quelle: [sequenz-foto-hinzufuegen.puml](docs/design/sequenz-foto-hinzufuegen.pum
 
 Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und Album gespeichert. In jedem Fehlerzweig wurde noch nichts verändert (NFA-01). Die Meldungen stimmen mit dem Klickprototyp überein. Fehler beim Speichern und das Zurücknehmen der App-Kopie (A-11) zeigt das Diagramm nicht. Sie regelt [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md).
 
-## 5. Architekturentscheidungen
+## 5. Bildpuffer
+
+Beim Ansehen eines Albums hält die Anwendung höchstens **5 Bilder** gleichzeitig im Arbeitsspeicher: das angezeigte Foto und je zwei davor und danach (NFA-03, A-06). Beim Blättern lädt sie das nächste Bild nach und gibt das am weitesten entfernte frei. Die Bilder werden auf Anzeigegröße verkleinert gehalten, nicht in voller Auflösung. Beim Öffnen erscheinen zuerst Fotoanzahl und erstes Bild, die Nachbarn folgen danach.
+
+Der Puffer gehört zur Anzeige in der UI und enthält keine Geschäftsregel. Die Bilddaten bekommt er über die Anwendung, die sie mit `PhotoStorage.load` lädt.
+
+## 6. Testbarkeit des Papierkorbs
+
+Unit-Tests prüfen die Papierkorbregeln ohne Wartezeit und ohne echte Dateien (NFA-05):
+
+- **Frist:** `Trash` und `TrashEntry` erhalten die aktuelle Zeit als Parameter `now`. Ein Test übergibt etwa einen Zeitpunkt genau 30 × 24 Stunden nach dem Löschen und prüft, ob der Eintrag fällig ist.
+- **Löschfehler:** Der Test setzt statt `FilePhotoStorage` eine Variante im Arbeitsspeicher ein, die beim Löschen eines bestimmten Fotos einen Fehler wirft. So lässt sich der Teilerfolg nach A-12 prüfen: Die übrigen Fotos sind gelöscht, das betroffene bleibt im Papierkorb.
+
+## 7. Architekturentscheidungen
 
 - [ADR-001: Speicherung als JSON-Dateien hinter Ports](docs/adr/ADR-001-speicherung.md) mit den Mustern Repository und Adapter
 - [ADR-002: Fehlerbehandlung über Exceptions und Result](docs/adr/ADR-002-fehlerbehandlung.md)
