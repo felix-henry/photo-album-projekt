@@ -17,7 +17,7 @@ flowchart TB
         ports["Ports (Interfaces)<br/>AlbumRepository<br/>TrashRepository<br/>PhotoStorage<br/>ImageHasher"]
     end
     subgraph DOM["Domäne"]
-        dom["Album, Photo, AlbumLibrary, Trash<br/>alle Geschäftsregeln"]
+        dom["Album, Photo, AlbumLibrary,<br/>Trash, TrashEntry<br/>Geschäftsregeln"]
     end
     UI --> APP
     INFRA -- implementiert Ports --> APP
@@ -31,7 +31,7 @@ Ein Pfeil bedeutet „hängt ab von“. Die Infrastruktur implementiert die Port
 |---|---|---|
 | UI | Zeigt Alben und Fotos an, nimmt Eingaben entgegen und zeigt Meldungen. Enthält keine Geschäftsregeln und greift nicht auf Dateien zu. | Swing-Fenster |
 | Anwendung | Ein Use Case je Nutzerziel. Lädt das Album über einen Port, lässt die Domäne entscheiden und speichert das Ergebnis. Legt die Ports als Interfaces fest. | `AddPhotoUseCase`, `CreateAlbumUseCase`; Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage`, `ImageHasher` |
-| Domäne | Enthält alle Geschäftsregeln aus [REQUIREMENTS.md](REQUIREMENTS.md): Albumname, höchstens 100 Fotos, kein Duplikat, Textlängen. | `Album`, `Photo`, `AlbumLibrary`, `Trash` |
+| Domäne | Enthält die Geschäftsregeln aus [REQUIREMENTS.md](REQUIREMENTS.md): Albumname, höchstens 100 Fotos, kein Duplikat, Textlängen und Papierkorbfristen. Nur die technische Dateiprüfung nach A-03 liegt im Adapter (Abschnitt 2). | `Album`, `Photo`, `AlbumLibrary`, `Trash`, `TrashEntry` |
 | Infrastruktur | Setzt die Ports technisch um: JSON-Dateien, App-Kopien der Bilder, Bildprüfung und Inhaltshash. | `FileAlbumRepository`, `FileTrashRepository`, `FilePhotoStorage`, `Sha256ImageHasher` |
 
 Die Klassen leiten sich aus den [CRC-Karten](docs/design/crc-karten.md) ab und stehen im [Klassendiagramm](#3-klassendiagramm). Die Ports beschreibt [Abschnitt 2](#2-komponenten-und-ports).
@@ -65,8 +65,16 @@ Methoden und Parameter legt das Klassendiagramm fest. Ports für die Uhrzeit des
 
 Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 
-- Ein `Album` enthält 0 bis 100 Fotos. Jedes `Photo` gehört genau einem Album (A-05).
-- `AlbumLibrary` kennt alle aktiven Alben und sorgt für eindeutige Namen. `Trash` hält gelöschte Alben und Fotos, bis sie wiederhergestellt oder endgültig gelöscht werden.
-- `ImageHasher.hash` prüft die Datei nach A-03, bevor es den Hash berechnet.
-- `Trash` erhält die aktuelle Zeit als Parameter `now`. So prüfen Unit-Tests den Fristablauf ohne Wartezeit (NFA-05).
-- `DescriptionSuggester` und `LlmDescriptionSuggester` sind nur ein Entwurf. Die KI-Funktion wird nicht umgesetzt.
+- Ein `Album` enthält 0 bis 100 Fotos. Jedes aktive `Photo` gehört genau einem Album (A-05), im Papierkorb hält es ein `TrashEntry`.
+- `AlbumLibrary` sorgt für eindeutige Namen. `Album.rename` ist paketsichtbar, damit niemand diese Prüfung umgeht.
+- `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now`, so prüfen Unit-Tests den Fristablauf ohne Wartezeit (NFA-05).
+- `ImageHasher.hash` und die Domäne lehnen Verstöße mit einer Exception samt Grund ab. Der Use Case übersetzt sie in ein `Result` mit Erfolg oder Meldung für die UI.
+- Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `DescriptionSuggester` und sein Adapter sind nur ein Entwurf, die KI-Funktion wird nicht umgesetzt.
+
+## 4. Sequenzdiagramm „Foto hinzufügen“
+
+![Sequenzdiagramm Foto hinzufügen](docs/design/sequenz-foto-hinzufuegen.png)
+
+Quelle: [sequenz-foto-hinzufuegen.puml](docs/design/sequenz-foto-hinzufuegen.puml)
+
+Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und Album gespeichert. In jedem Fehlerzweig wurde noch nichts verändert (NFA-01). Die Meldungen stimmen mit dem Klickprototyp überein. Fehler beim Speichern und das Zurücknehmen der App-Kopie (A-11) zeigt das Diagramm nicht.

@@ -26,15 +26,13 @@ Beginne mit A-01 (Duplikate).
 
 ## Fall 2 – Architekturreview, Block 3
 
-Geplant (empfohlen).
-
 | Feld | Inhalt |
 | --- | --- |
 | **Aufgabe/Ziel** | Das Klassendiagramm aus Block 3 auf klare Verantwortlichkeiten und Abhängigkeiten prüfen lassen. Einen Vorschlag übernehmen und einen verwerfen, jeweils begründet. |
-| **Werkzeug/Modell und Prompt oder Skill** | [Verwendeter Prompt](#prompt-zu-fall-2) |
-| **Ergebnis** | |
-| **Kritische Bewertung** | |
-| **Entscheidung** | |
+| **Werkzeug/Modell und Prompt oder Skill** | Claude Code mit Claude Opus 5 in einer neuen Sitzung ohne Vorwissen zum Entwurf. Grundlage waren [Klassendiagramm](docs/design/klassendiagramm.puml), [CRC-Karten](docs/design/crc-karten.md), ARCHITECTURE.md und REQUIREMENTS.md. [Verwendeter Prompt](#prompt-zu-fall-2) |
+| **Ergebnis** | Fünf Befunde: (1) In den Use Cases fehlen Abhängigkeiten zu `Photo` und `Album`, `Photo` hat keinen Getter für seine ID und `AlbumLibrary` keinen Konstruktor. `Result` ist nicht erklärt. (2) Über das öffentliche `Album.rename` lässt sich die Namensprüfung in `AlbumLibrary` umgehen. (3) Für Löschzeitpunkt und Ursprungsalbum gibt es im Papierkorb keinen Platz. (4) Die Regeln für das Wiederherstellen sind nicht erreichbar. (5) Die Dateiregel A-03 liegt im Adapter, und der Name `ImageHasher` passt nicht zur Prüfaufgabe. |
+| **Kritische Bewertung** | Die Verweise auf AK-03.3, AK-04.6 und AK-09.5 stimmen. Befund 1 deckt einen echten Widerspruch auf: Das Sequenzdiagramm übergibt die ID des Fotos an `PhotoStorage`, das Klassendiagramm bot dafür aber keine Methode. Die Befunde 2 bis 4 sind durch A-02, A-07 und A-09 belegt. Befund 5 ist eine Auslegungsfrage. Die KI gibt selbst an, die Vorgabe strenger auszulegen, und nennt unsere Begründung schlüssig. |
+| **Entscheidung** | **Übernommen:** Befund 1 mit den fehlenden Pfeilen, `getId()`, dem Konstruktor von `AlbumLibrary` und einem Satz zu `Result`. Befund 2 mit paketsichtbarem `Album.rename`. Befund 3 mit der neuen Klasse `TrashEntry` und der Multiplizität `0..1` auf der Albumseite. Befund 4 in der vorgeschlagenen Variante: `Trash` prüft nur die Frist und gibt den Eintrag heraus, die Zielregeln prüfen `AlbumLibrary` und `Album`. **Verworfen:** Befund 5. Die Folien aus Block 3 weisen `ImageHasher` im CRC-Beispiel ausdrücklich die Prüfung von Dateityp und Größe zu. Die Prüfung braucht eine Bildbibliothek und gehört deshalb in die Infrastruktur. NFA-05 zählt die Dateiregel nicht zu den Regelgruppen, die ohne Dateizugriff testbar sein müssen. |
 
 ### Prompt zu Fall 2
 

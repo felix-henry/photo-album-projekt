@@ -12,29 +12,37 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 | Seine Fotos kennen und zählen | |
 | Foto hinzufügen, wenn noch kein Foto mit demselben Hash enthalten ist (A-01) und höchstens 100 Fotos erreicht werden | |
 | Foto entfernen | |
-| Umbenennen | |
+| Umbenennen; nur über `AlbumLibrary` aufrufbar | |
 
 ### `Photo`
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Eigene ID und Inhaltshash kennen; die App-Kopie ist unter der ID abgelegt | – |
+| Eigene ID und Inhaltshash kennen und die ID herausgeben; die App-Kopie ist unter der ID abgelegt | – |
 | Titel (höchstens 100 Zeichen) und Beschreibung (höchstens 500 Zeichen) prüfen, ändern und leeren (A-04) | |
 
 ### `AlbumLibrary`
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Die aktiven Alben kennen | `Album` |
-| Sicherstellen, dass Albumnamen unabhängig von Groß- und Kleinschreibung eindeutig sind (A-02) | |
+| Die aktiven Alben kennen; wird aus den geladenen Alben aufgebaut | `Album` |
+| Beim Anlegen, Umbenennen und Wiederherstellen sicherstellen, dass Albumnamen unabhängig von Groß- und Kleinschreibung eindeutig sind (A-02) | |
 
 ### `Trash`
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Gelöschte Alben und Fotos mit Löschzeitpunkt kennen (A-07) | `Album`, `Photo` |
-| Einen Eintrag ab 30 × 24 Stunden nach dem Löschzeitpunkt als fällig erkennen (A-10) | |
-| Nicht fällige Einträge wiederherstellen; fällige ablehnen (A-09, A-10) | |
+| Gelöschte Alben und Fotos als Einträge aufnehmen (A-07) | `TrashEntry` |
+| Einen nicht fälligen Eintrag zum Wiederherstellen herausgeben; fällige ablehnen (A-09, A-10) | |
+| Fällige Einträge entfernen (A-10) | |
+
+### `TrashEntry`
+
+| Verantwortlichkeiten | Partner |
+|---|---|
+| Löschzeitpunkt und Ursprungsalbum kennen (A-07) | `Album`, `Photo` |
+| Das gelöschte Album oder Foto halten | |
+| Ab 30 × 24 Stunden nach dem Löschzeitpunkt fällig sein und die verbleibenden Tage nennen (A-08, A-10) | |
 
 ## Anwendung
 
@@ -42,10 +50,11 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Album über `AlbumRepository` laden | `AlbumRepository` |
-| Datei von `ImageHasher` prüfen und hashen lassen | `ImageHasher` |
-| `Album` das Foto hinzufügen lassen und das Album speichern | `PhotoStorage` |
-| Nach der Aufnahme die App-Kopie anlegen und bei einem Fehler wieder entfernen (A-11) | `Album` |
+| Album laden und speichern | `AlbumRepository` |
+| Datei prüfen und hashen lassen | `ImageHasher` |
+| Neues `Photo` mit dem Hash erzeugen | `Photo` |
+| `Album` das Foto hinzufügen lassen | `Album` |
+| Nach der Aufnahme die App-Kopie anlegen und bei einem Fehler wieder entfernen (A-11) | `PhotoStorage` |
 | Fehler in eine verständliche Meldung für die UI übersetzen | |
 
 ### `CreateAlbumUseCase`
@@ -97,7 +106,8 @@ Jede Regel steht auf genau einer Karte.
 | Höchstens 100 Fotos je Album | `Album` |
 | Kein bytegleiches Foto zweimal im selben Album | `Album` |
 | Titel höchstens 100, Beschreibung höchstens 500 Zeichen | `Photo` |
-| Frist von 30 × 24 Stunden und Wiederherstellen nur vor Ablauf | `Trash` |
+| Frist von 30 × 24 Stunden | `TrashEntry` |
+| Wiederherstellen nur vor Ablauf der Frist | `Trash` |
 | Nur JPEG oder PNG bis 20 MiB (technische Eingangsprüfung) | `ImageHasher` |
 
 ## Durchspielen von „Foto hinzufügen“
@@ -111,6 +121,6 @@ Jede Regel steht auf genau einer Karte.
 
 Die Reihenfolge folgt UC-01: Erst laufen alle Prüfungen, dann wird gespeichert.
 
-Alle Karten außer `CreateAlbumUseCase`, `AlbumLibrary`, `Trash` und `TrashRepository` kommen dabei zu Wort. Diese vier gehören zu UC-02 und zum Papierkorb.
+Alle Karten außer `CreateAlbumUseCase`, `AlbumLibrary`, `Trash`, `TrashEntry` und `TrashRepository` kommen dabei zu Wort. Diese fünf gehören zu UC-02 und zum Papierkorb.
 
-`AddPhotoUseCase` hat vier Partner, einen mehr als die Faustregel der Folien. Die Karte koordiniert nur und trifft keine fachliche Entscheidung. Deshalb bleibt sie ungeteilt.
+`AddPhotoUseCase` hat fünf Partner, zwei mehr als die Faustregel der Folien. Die Karte koordiniert nur und trifft keine fachliche Entscheidung. Deshalb bleibt sie ungeteilt.

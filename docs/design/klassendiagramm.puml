@@ -1,5 +1,4 @@
 @startuml klassendiagramm
-!pragma layout smetana
 skinparam classAttributeIconSize 0
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -45,6 +44,7 @@ package application {
 
 package domain {
   class AlbumLibrary {
+    +AlbumLibrary(albums: List<Album>)
     +add(album: Album)
     +rename(album: Album, name: String)
   }
@@ -55,7 +55,7 @@ package domain {
     +Album(name: String)
     +addPhoto(photo: Photo)
     +removePhoto(id: PhotoId)
-    +rename(name: String)
+    ~rename(name: String)
   }
   class Photo {
     -id: PhotoId
@@ -63,21 +63,30 @@ package domain {
     -title: String
     -description: String
     +Photo(contentHash: String)
+    +getId(): PhotoId
     +changeTitle(title: String)
     +changeDescription(description: String)
   }
   class Trash {
     +moveAlbum(album: Album, now: Instant)
     +movePhoto(photo: Photo, from: AlbumId, now: Instant)
-    +isDue(entryId: String, now: Instant): boolean
-    +restore(entryId: String, now: Instant)
+    +take(id: TrashEntryId, now: Instant): TrashEntry
+    +removeDue(now: Instant): List<TrashEntry>
+  }
+  class TrashEntry {
+    -id: TrashEntryId
+    -deletedAt: Instant
+    -originAlbumId: AlbumId
+    +isDue(now: Instant): boolean
+    +remainingDays(now: Instant): int
   }
 }
 
-AlbumLibrary "1" o-down- "0..*" Album : aktive Alben
-Trash "1" o-down- "0..*" Album : gelöschte Alben
-Album "1" *-down- "0..100" Photo : enthält
-Trash "1" o-down- "0..*" Photo : gelöschte Fotos
+AlbumLibrary "0..1" o-down- "0..*" Album : aktive Alben
+Album "0..1" *-down- "0..100" Photo : enthält
+Trash "1" *-down- "0..*" TrashEntry : Einträge
+TrashEntry "0..1" o-down- "0..1" Album : gelöschtes Album
+TrashEntry "0..1" o-down- "0..1" Photo : gelöschtes Foto
 
 FileAlbumRepository .down.|> AlbumRepository
 FileTrashRepository .down.|> TrashRepository
@@ -91,5 +100,11 @@ AddPhotoUseCase .up.> PhotoStorage
 CreateAlbumUseCase .up.> AlbumRepository
 
 AddPhotoUseCase .down.> Album
+AddPhotoUseCase .down.> Photo
+CreateAlbumUseCase .down.> Album
 CreateAlbumUseCase .down.> AlbumLibrary
+
+CreateAlbumUseCase -[hidden]down- AlbumLibrary
+AddPhotoUseCase -[hidden]down- Album
+Album -[hidden]right- TrashEntry
 @enduml

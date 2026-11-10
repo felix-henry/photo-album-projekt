@@ -171,7 +171,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/design/](docs/design/)
 
-- [ ] **Sequenzdiagramm „Foto hinzufügen“ inklusive Fehlerpfad erstellen:** Den Ablauf mit dem Duplikat-Fehlerpfad als `alt`-Fragment darstellen und die Konsistenz mit dem Klassendiagramm prüfen. Als PlantUML oder Bild unter [docs/design/](docs/design/) ablegen und aus [ARCHITECTURE.md](ARCHITECTURE.md) verlinken. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); [Block 3, S. 49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=49))
+- [x] **Sequenzdiagramm „Foto hinzufügen“ inklusive Fehlerpfad erstellen:** Den Ablauf mit dem Duplikat-Fehlerpfad als `alt`-Fragment darstellen und die Konsistenz mit dem Klassendiagramm prüfen. Als PlantUML oder Bild unter [docs/design/](docs/design/) ablegen und aus [ARCHITECTURE.md](ARCHITECTURE.md) verlinken. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); [Block 3, S. 49](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=49))
 
 #### 2. Architekturentscheidungen
 

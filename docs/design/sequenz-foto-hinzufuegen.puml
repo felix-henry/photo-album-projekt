@@ -1,0 +1,44 @@
+@startuml sequenz-foto-hinzufuegen
+!pragma teoz true
+skinparam shadowing false
+skinparam sequenceMessageAlign left
+hide footbox
+title Sequenzdiagramm „Foto hinzufügen“ (UC-01)
+
+actor Nutzer
+participant UI
+participant AddPhotoUseCase as UC
+participant AlbumRepository as Repo
+participant ImageHasher as Hasher
+participant Album
+participant Photo
+participant PhotoStorage as Storage
+
+Nutzer -> UI : Bilddatei wählen
+UI -> UC : execute(albumId, file)
+UC -> Repo : findById(albumId)
+Repo --> UC : Optional<Album>
+
+UC -> Hasher : hash(file)
+alt Datei ungültig (nicht lesbar, leer, kein JPEG/PNG oder größer als 20 MiB)
+  Hasher --> UC : Fehler mit Grund
+  UC --> UI : Result mit Meldung zum Grund, z. B. „Die Bilddatei darf höchstens 20 MiB groß sein.“
+else Datei gültig
+  Hasher --> UC : contentHash
+  UC -> Photo ** : Photo(contentHash)
+  UC -> Album : addPhoto(photo)
+  alt Duplikat
+    Album --> UC : abgelehnt: Duplikat
+    UC --> UI : Result „Dieses Bild befindet sich schon in diesem Album“
+  else Album voll
+    Album --> UC : abgelehnt: 100 Fotos erreicht
+    UC --> UI : Result „Das Album ist voll (maximal 100 Fotos).“
+  else Foto aufgenommen
+    UC -> Storage : store(photo.getId(), file)
+    UC -> Repo : save(album)
+    UC --> UI : Result: Erfolg
+  end
+end
+
+UI --> Nutzer : Meldung oder Foto im Album
+@enduml
