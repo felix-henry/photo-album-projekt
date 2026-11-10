@@ -65,6 +65,13 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 | Alben speichern | `Album` |
 | Ein Album über seine ID laden; alle Alben laden | wird von `FileAlbumRepository` implementiert |
 
+### `TrashRepository`
+
+| Verantwortlichkeiten | Partner |
+|---|---|
+| Papierkorb speichern und laden | `Trash` |
+| | wird von `FileTrashRepository` implementiert |
+
 ### `PhotoStorage`
 
 | Verantwortlichkeiten | Partner |
@@ -104,6 +111,6 @@ Jede Regel steht auf genau einer Karte.
 
 Die Reihenfolge folgt UC-01: Erst laufen alle Prüfungen, dann wird gespeichert.
 
-Alle Karten außer `CreateAlbumUseCase`, `AlbumLibrary` und `Trash` kommen dabei zu Wort. Diese drei gehören zu UC-02 und zum Papierkorb.
+Alle Karten außer `CreateAlbumUseCase`, `AlbumLibrary`, `Trash` und `TrashRepository` kommen dabei zu Wort. Diese vier gehören zu UC-02 und zum Papierkorb.
 
 `AddPhotoUseCase` hat vier Partner, einen mehr als die Faustregel der Folien. Die Karte koordiniert nur und trifft keine fachliche Entscheidung. Deshalb bleibt sie ungeteilt.

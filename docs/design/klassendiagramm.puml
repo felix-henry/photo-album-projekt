@@ -1,0 +1,95 @@
+@startuml klassendiagramm
+!pragma layout smetana
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+hide empty members
+title Klassendiagramm Photo Album (Block 3)
+
+package infrastructure {
+  class FileAlbumRepository
+  class FileTrashRepository
+  class FilePhotoStorage
+  class Sha256ImageHasher
+  class LlmDescriptionSuggester <<Entwurf, Won't>>
+}
+
+package application {
+  interface AlbumRepository {
+    +findById(id: AlbumId): Optional<Album>
+    +findAll(): List<Album>
+    +save(album: Album)
+  }
+  interface TrashRepository {
+    +load(): Trash
+    +save(trash: Trash)
+  }
+  interface PhotoStorage {
+    +store(id: PhotoId, file: Path)
+    +load(id: PhotoId): byte[]
+    +delete(id: PhotoId)
+  }
+  interface ImageHasher {
+    +hash(file: Path): String
+  }
+  interface DescriptionSuggester <<Entwurf, Won't>> {
+    +suggest(photo: Photo): String
+  }
+  class AddPhotoUseCase {
+    +execute(albumId: AlbumId, file: Path): Result
+  }
+  class CreateAlbumUseCase {
+    +execute(name: String): Result
+  }
+}
+
+package domain {
+  class AlbumLibrary {
+    +add(album: Album)
+    +rename(album: Album, name: String)
+  }
+  class Album {
+    -id: AlbumId
+    -name: String
+    +{static} MAX_PHOTOS: int = 100
+    +Album(name: String)
+    +addPhoto(photo: Photo)
+    +removePhoto(id: PhotoId)
+    +rename(name: String)
+  }
+  class Photo {
+    -id: PhotoId
+    -contentHash: String
+    -title: String
+    -description: String
+    +Photo(contentHash: String)
+    +changeTitle(title: String)
+    +changeDescription(description: String)
+  }
+  class Trash {
+    +moveAlbum(album: Album, now: Instant)
+    +movePhoto(photo: Photo, from: AlbumId, now: Instant)
+    +isDue(entryId: String, now: Instant): boolean
+    +restore(entryId: String, now: Instant)
+  }
+}
+
+AlbumLibrary "1" o-down- "0..*" Album : aktive Alben
+Trash "1" o-down- "0..*" Album : gelöschte Alben
+Album "1" *-down- "0..100" Photo : enthält
+Trash "1" o-down- "0..*" Photo : gelöschte Fotos
+
+FileAlbumRepository .down.|> AlbumRepository
+FileTrashRepository .down.|> TrashRepository
+FilePhotoStorage .down.|> PhotoStorage
+Sha256ImageHasher .down.|> ImageHasher
+LlmDescriptionSuggester .down.|> DescriptionSuggester
+
+AddPhotoUseCase .up.> AlbumRepository
+AddPhotoUseCase .up.> ImageHasher
+AddPhotoUseCase .up.> PhotoStorage
+CreateAlbumUseCase .up.> AlbumRepository
+
+AddPhotoUseCase .down.> Album
+CreateAlbumUseCase .down.> AlbumLibrary
+@enduml
