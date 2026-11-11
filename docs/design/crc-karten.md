@@ -35,6 +35,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 | Gelöschte Alben und Fotos als Einträge aufnehmen (A-07) | `TrashEntry` |
 | Einen nicht fälligen Eintrag zum Wiederherstellen herausgeben; fällige ablehnen (A-09, A-10) | |
 | Fällige Einträge entfernen (A-10) | |
+| Nach dem endgültigen Löschen die gelöschten Fotos aus einem Eintrag entfernen; nicht gelöschte bleiben im Papierkorb (SR-01, A-12) | |
 
 ### `TrashEntry`
 
@@ -71,7 +72,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Alben speichern | `Album` |
+| Alben speichern und löschen | `Album` |
 | Ein Album über seine ID laden; alle Alben laden | wird von `FileAlbumRepository` implementiert |
 
 ### `TrashRepository`
@@ -97,17 +98,18 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 ## Zuordnung der Geschäftsregeln
 
-Jede Regel steht auf genau einer Karte.
+Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case über `Trash.removeDue` an.
 
 | Regel | Karte |
 |---|---|
-| Albumname 1 bis 50 Zeichen | `Album` |
+| Albumname 1 bis 50 Zeichen, gezählt nach A-04 | `Album` |
 | Albumname eindeutig | `AlbumLibrary` |
 | Höchstens 100 Fotos je Album | `Album` |
 | Kein bytegleiches Foto zweimal im selben Album | `Album` |
-| Titel höchstens 100, Beschreibung höchstens 500 Zeichen | `Photo` |
+| Titel höchstens 100, Beschreibung höchstens 500 Zeichen, gezählt nach A-04 | `Photo` |
 | Frist von 30 × 24 Stunden | `TrashEntry` |
 | Wiederherstellen nur vor Ablauf der Frist | `Trash` |
+| Endgültiges Löschen mit Teilerfolg je Foto (A-12) | `Trash` |
 | Nur JPEG oder PNG bis 20 MiB (technische Eingangsprüfung) | `ImageHasher` |
 
 ## Durchspielen von „Foto hinzufügen“

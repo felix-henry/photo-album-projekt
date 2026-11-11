@@ -50,7 +50,7 @@ Die Anwendung erreicht Dateien nur über vier Ports. Sie sind Interfaces im Pake
 
 | Port | Verantwortung | Adapter |
 |---|---|---|
-| `AlbumRepository` | Alben speichern, einzeln und vollständig laden. Die Daten bleiben über einen Neustart erhalten (NFA-02). | `FileAlbumRepository` (JSON-Dateien) |
+| `AlbumRepository` | Alben speichern, einzeln und vollständig laden und beim Verschieben in den Papierkorb löschen (A-07). Die Daten bleiben über einen Neustart erhalten (NFA-02). | `FileAlbumRepository` (JSON-Dateien) |
 | `TrashRepository` | Den Papierkorb mit seinen Einträgen und Löschzeitpunkten speichern und laden (A-07). | `FileTrashRepository` (JSON-Datei) |
 | `PhotoStorage` | Die eigene Kopie einer importierten Bilddatei anlegen (A-05), zum Anzeigen laden und wieder löschen. | `FilePhotoStorage` |
 | `ImageHasher` | Eine ausgewählte Datei lesen, als JPEG oder PNG bis 20 MiB prüfen (A-03) und den Inhaltshash für die Duplikatprüfung berechnen (A-01). | `Sha256ImageHasher` |
@@ -77,7 +77,7 @@ Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 
 Quelle: [sequenz-foto-hinzufuegen.puml](docs/design/sequenz-foto-hinzufuegen.puml)
 
-Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und Album gespeichert. In jedem Fehlerzweig wurde noch nichts verändert (NFA-01). Die Meldungen stimmen mit dem Klickprototyp überein. Fehler beim Speichern und das Zurücknehmen der App-Kopie (A-11) zeigt das Diagramm nicht. Sie regelt [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md).
+Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und Album gespeichert. In jedem Fehlerzweig wurde noch nichts verändert (NFA-01). Die Meldungen der Fehlerzweige stimmen mit dem Klickprototyp überein. UC-01 setzt ein geöffnetes Album voraus, deshalb fehlt im Diagramm der Fall, dass `findById` kein Album liefert. Der Use Case meldet dann „Das Album wurde nicht gefunden.“ Fehler beim Speichern und das Zurücknehmen der App-Kopie (A-11) zeigt das Diagramm nicht. Sie regelt [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md).
 
 ## 5. Bildpuffer
 
@@ -104,7 +104,7 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 | Werkzeug | Beschreibung | Einordnung |
 |---|---|---|
-| `listPhotos` | Listet ID und Titel der Fotos eines Albums auf. | direkt ausführen |
+| `listPhotos` | Listet die IDs der Fotos eines Albums auf. | direkt ausführen |
 | `removePhoto` | Verschiebt ein Foto in den Papierkorb. | nicht anbieten |
 | `renameAlbum` | Gibt einem Album einen neuen Namen. | nicht anbieten |
 | `deleteAlbum` | Verschiebt ein Album samt Fotos in den Papierkorb. | nicht anbieten |
@@ -116,3 +116,8 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 - [ADR-001: Speicherung als JSON-Dateien hinter Ports](docs/adr/ADR-001-speicherung.md) mit den Mustern Repository und Adapter
 - [ADR-002: Fehlerbehandlung über Exceptions und Result](docs/adr/ADR-002-fehlerbehandlung.md)
+
+## 9. Schwächen und offene Punkte
+
+- [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) lässt zwei Lücken offen: Eine App-Kopie ohne Albumeintrag kann zurückbleiben, und Aktionen über zwei Speicher sind noch nicht geregelt.
+- Das Diagramm-Review über Kreuz aus den Folien wurde im Unterricht nur mündlich besprochen. Ein Issue im Partner-Repository gibt es nicht. Die drei Prüffragen übernehmen die Team-Reviews des Block-3-PR.
