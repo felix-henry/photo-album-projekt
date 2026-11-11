@@ -6,7 +6,7 @@
 | --- | --- | --- | --- | :---: |
 | [1](#block-1-einführung-und-vorgehen) | Einführung und Vorgehen | Team, Repository, [README.md](README.md), Vorgehensentscheidung für Kanban und [Kanban-Board](https://photoalbum-kanban.vercel.app) | `block-1` | ✅ 19.10.2026 |
 | [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ✅ 09.11.2026 |
-| [3](#block-3-architektur-und-entwurf) | Architektur und Entwurf | [ARCHITECTURE.md](ARCHITECTURE.md), Klassen- und Sequenzdiagramm, mindestens ein ADR und Projektgerüst | `block-3` | ☐ |
+| [3](#block-3-architektur-und-entwurf) | Architektur und Entwurf | [ARCHITECTURE.md](ARCHITECTURE.md), Klassen- und Sequenzdiagramm, mindestens ein ADR und Projektgerüst | `block-3` | ✅ 11.11.2026 |
 | [4](#block-4-implementierung-und-git) | Implementierung und Git | Pflichtfunktionalität, Build, Reviews und CI; Release `v0.1.0` | `block-4` | ☐ |
 | [5](#block-5-tests-und-qualität) | Tests und Qualität | [TESTING.md](TESTING.md), Unit- und Integrationstests, 2 Blackbox-Verfahren, Usability-Protokoll und Evaluation Set | `block-5` | ☐ |
 | [6](#block-6-whitebox-change-request-und-refactoring) | Change Request und Refactoring | Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md), Coverage-Interpretation, [REFACTORING.md](docs/REFACTORING.md) und Umsetzung des Change Requests; Release `v1.1.0` | `block-6` | ☐ |
@@ -212,7 +212,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Nachweise:** PR, Reviews und Git-Tag.
 
 - [ ] **Diagramm-Review über Kreuz erhalten, vergeben und einarbeiten:** Ein Review-Issue vom Partnerteam erhalten und im Partner-Repository eines mit dem Titel `review: architecture v1` und drei Prüfpunkten anlegen. Die Reviewer prüfen Klassen- und Sequenzdiagramm auf die Zuordnung aller Geschäftsregeln (keine in der UI), passende Klassenoperationen zu jeder Sequenznachricht und begründete Abhängigkeiten. Die Rückmeldungen vor dem Blockabschluss einarbeiten. ([Block 3, S. 50](docs/lecture_slides/Block_3_Entwurf_und_Entwurfsmuster.pdf#page=50))
-- [ ] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- [x] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
 - **Zwischenstand über PR und Review übernehmen:** Den prüfbaren Architektur- und Projektstand im Repository über den vorgesehenen Git-Prozess zusammenführen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
 - **Tag `block-3` setzen:** Den Merge-Commit mit `block-3` kennzeichnen und den Tag pushen. Die vorgeschlagene Abgabe ist der Vorabend von Block 4. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
 
