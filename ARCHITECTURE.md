@@ -119,4 +119,3 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 ## 9. Schwächen und offene Punkte
 
 - Scheitern beim Wiederherstellen aus dem Papierkorb beide Schreibvorgänge, ist der Vorgang nach dem nächsten Start ausgeführt statt zurückgenommen ([ADR-002](docs/adr/ADR-002-fehlerbehandlung.md)). Es geht nichts verloren, NFA-01 ist in diesem Fall aber nicht ganz erfüllt.
-- Das Diagramm-Review über Kreuz mit einem Partnerteam ist offen. Es wurde im Unterricht nur mündlich besprochen, ein Issue im Partner-Repository gibt es nicht.
