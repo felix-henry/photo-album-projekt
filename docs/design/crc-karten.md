@@ -98,7 +98,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 ## Zuordnung der Geschäftsregeln
 
-Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case an: Er holt die fälligen Einträge über `Trash.dueEntries`, löscht ihre App-Kopien und nimmt danach nur die gelöschten Fotos über `Trash.remove` heraus (A-12). Beim Start bereinigt die Anwendung außerdem doppelte Fotos und verwaiste Kopien ([ADR-002](../adr/ADR-002-fehlerbehandlung.md)).
+Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case an: Er holt die fälligen Einträge über `Trash.dueEntries`, löscht ihre App-Kopien und nimmt danach nur die gelöschten Fotos über `Trash.remove` heraus (A-12). Beim Start bereinigt die Anwendung außerdem doppelte Foto-IDs und verwaiste Kopien ([ADR-002](../adr/ADR-002-fehlerbehandlung.md)).
 
 | Regel | Karte |
 |---|---|

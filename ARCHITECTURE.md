@@ -118,4 +118,4 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 ## 9. Schwächen und offene Punkte
 
-- Scheitern ein Speichern und danach auch das Zurücknehmen, bereinigt die App den Zustand erst beim nächsten Start. Ein doppelt gespeichertes Foto bleibt dann im Album. Diese Ausnahme ist in A-11 festgelegt und in [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) beschrieben.
+- Scheitern ein Speichern und danach auch das Zurücknehmen, bereinigt die App den Zustand erst beim nächsten Start. Liegt dieselbe Foto-ID dann in einem Album und im Papierkorb, bleibt das Foto im Album. Verwaiste Kopien löscht die App nur, wenn alle Alben und der Papierkorb lesbar sind. Diese Ausnahme ist in A-11 festgelegt und in [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) beschrieben.
