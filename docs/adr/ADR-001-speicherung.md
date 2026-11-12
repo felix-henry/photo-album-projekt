@@ -11,7 +11,7 @@ Die Projektbeschreibung verlangt eine lokale Datenhaltung im Dateisystem mit dok
 - Die Anwendung legt die Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage` und `ImageHasher` als Interfaces fest. Use Cases kennen nur diese Ports.
 - Adapter in der Infrastruktur setzen sie um. JSON ist lesbar und bildet ein Album mit seinen Fotos ohne Umwege ab. Im Datenordner der App liegen:
   - `albums/<AlbumId>.json`: ein Album mit Name und Fotos samt Hash, Titel und Beschreibung,
-  - `trash.json`: die Papierkorbeinträge mit Löschzeitpunkt und Ursprungsalbum,
+  - `trash.json`: die Papierkorbeinträge mit Löschzeitpunkt und Ursprungsalbum (ID und Name),
   - `photos/<PhotoId>`: die App-Kopie jedes Bildes.
 
   Die genauen Felder legt die Umsetzung der Adapter fest.

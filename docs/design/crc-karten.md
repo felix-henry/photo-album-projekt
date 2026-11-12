@@ -34,14 +34,14 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 |---|---|
 | Gelöschte Alben und Fotos als Einträge aufnehmen (A-07) | `TrashEntry` |
 | Einen nicht fälligen Eintrag zum Wiederherstellen herausgeben; fällige ablehnen (A-09, A-10) | |
-| Fällige Einträge entfernen (A-10) | |
+| Fällige Einträge nennen, ohne sie zu entfernen (A-10) | |
 | Nach dem endgültigen Löschen die gelöschten Fotos aus einem Eintrag entfernen; nicht gelöschte bleiben im Papierkorb (SR-01, A-12) | |
 
 ### `TrashEntry`
 
 | Verantwortlichkeiten | Partner |
 |---|---|
-| Löschzeitpunkt und Ursprungsalbum kennen (A-07) | `Album`, `Photo` |
+| Löschzeitpunkt und Ursprungsalbum mit ID und Namen kennen, damit ein fehlendes Album neu angelegt werden kann (A-07, A-09) | `Album`, `Photo` |
 | Das gelöschte Album oder Foto halten | |
 | Ab 30 × 24 Stunden nach dem Löschzeitpunkt fällig sein und die verbleibenden Tage nennen (A-08, A-10) | |
 
@@ -87,7 +87,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 | Verantwortlichkeiten | Partner |
 |---|---|
 | Eigene Kopie einer Bilddatei anlegen (A-05) | wird von `FilePhotoStorage` implementiert |
-| Kopie zum Anzeigen laden; Kopie löschen | |
+| Kopie zum Anzeigen laden; Kopie löschen, eine schon fehlende gilt als gelöscht; die IDs aller Kopien nennen | |
 
 ### `ImageHasher`
 
@@ -98,7 +98,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 ## Zuordnung der Geschäftsregeln
 
-Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case über `Trash.removeDue` an.
+Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case an: Er holt die fälligen Einträge über `Trash.dueEntries`, löscht ihre App-Kopien und nimmt danach nur die gelöschten Fotos über `Trash.remove` heraus (A-12). Beim Start bereinigt die Anwendung außerdem doppelte Fotos und verwaiste Kopien ([ADR-002](../adr/ADR-002-fehlerbehandlung.md)).
 
 | Regel | Karte |
 |---|---|

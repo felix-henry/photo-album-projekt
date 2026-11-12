@@ -52,7 +52,7 @@ Die Anwendung erreicht Dateien nur über vier Ports. Sie sind Interfaces im Pake
 |---|---|---|
 | `AlbumRepository` | Alben speichern, einzeln und vollständig laden und beim Verschieben in den Papierkorb löschen (A-07). Die Daten bleiben über einen Neustart erhalten (NFA-02). | `FileAlbumRepository` (JSON-Dateien) |
 | `TrashRepository` | Den Papierkorb mit seinen Einträgen und Löschzeitpunkten speichern und laden (A-07). | `FileTrashRepository` (JSON-Datei) |
-| `PhotoStorage` | Die eigene Kopie einer importierten Bilddatei anlegen (A-05), zum Anzeigen laden und wieder löschen. | `FilePhotoStorage` |
+| `PhotoStorage` | Die eigene Kopie einer importierten Bilddatei anlegen (A-05), zum Anzeigen laden und wieder löschen. Die IDs aller Kopien nennen, damit beim Start verwaiste Kopien entfernt werden (ADR-002). | `FilePhotoStorage` |
 | `ImageHasher` | Eine ausgewählte Datei lesen, als JPEG oder PNG bis 20 MiB prüfen (A-03) und den Inhaltshash für die Duplikatprüfung berechnen (A-01). | `Sha256ImageHasher` |
 
 `ImageHasher` übernimmt neben dem Hash auch die Prüfung, weil beides dieselben Bytes in einem Durchgang liest. Die Formatprüfung ist eine technische Eingangsprüfung. Sie braucht eine Bildbibliothek und liegt deshalb nicht in der Domäne. Ob ein Foto ein Duplikat ist, entscheidet `Album` anhand des Hashes.
@@ -67,7 +67,7 @@ Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 
 - Ein `Album` enthält 0 bis 100 Fotos. Jedes aktive `Photo` gehört genau einem Album (A-05), im Papierkorb hält es ein `TrashEntry`.
 - `AlbumLibrary` sorgt für eindeutige Namen. `Album.rename` ist paketsichtbar, damit niemand diese Prüfung umgeht.
-- `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now` (Abschnitt 6).
+- `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum mit ID und Namen und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now` (Abschnitt 6).
 - `ImageHasher.hash` und die Domäne lehnen Verstöße mit einer Exception samt Grund ab. Der Use Case übersetzt sie in ein `Result` mit Erfolg oder Meldung für die UI.
 - Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `TitleSuggester` und sein Adapter sind nur ein Entwurf, siehe Abschnitt 7.
 
@@ -98,19 +98,18 @@ Die App enthält keine KI-Funktion (Won't, REQUIREMENTS 3.3). Die Projektbeschre
 
 - **Entwurf:** Der Port `TitleSuggester` in der Anwendung liefert zu einem Bild einen Titelvorschlag. Der Adapter `LlmTitleSuggester` in der Infrastruktur fragt dafür einen KI-Dienst an und protokolliert jeden Aufruf mit Ergebnis.
 - **Prüfung vor der Anfrage:** Der Port erhält nur die Bilddaten. Der Adapter entfernt Metadaten, bevor er sie sendet. Dateinamen und andere Fotos erreichen die KI nicht (KI-01).
-- **Prüfung nach der Antwort:** Der Adapter verwirft leere Vorschläge und solche über 100 Zeichen und gibt dann ein leeres `Optional` zurück. Die Daten bleiben unverändert, der Titel lässt sich weiter von Hand eingeben. Einen gültigen Vorschlag zeigt die UI als Vorschlag, gespeichert wird erst nach Bestätigung des Nutzers (KI-03).
+- **Prüfung nach der Antwort:** Der Adapter verwirft leere Vorschläge und gibt dann ein leeres `Optional` zurück. Die Länge prüft die Anwendung mit `Photo.checkTitle` (A-04), damit die Regel nur an einer Stelle steht. Ist der Vorschlag zu lang, wird er nicht angezeigt. Die Daten bleiben unverändert, der Titel lässt sich weiter von Hand eingeben. Einen gültigen Vorschlag zeigt die UI als Vorschlag, gespeichert wird erst nach Bestätigung des Nutzers (KI-03).
 
 Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufräumen“. Für ihn gilt derselbe Grundsatz wie in KI-02: Er darf nichts ändern. Vorschläge setzt der Nutzer selbst über die normale Oberfläche um.
 
 | Werkzeug | Beschreibung | Einordnung |
 |---|---|---|
-| `listPhotos` | Listet die IDs der Fotos eines Albums auf. | direkt ausführen |
 | `removePhoto` | Verschiebt ein Foto in den Papierkorb. | nicht anbieten |
 | `renameAlbum` | Gibt einem Album einen neuen Namen. | nicht anbieten |
 | `deleteAlbum` | Verschiebt ein Album samt Fotos in den Papierkorb. | nicht anbieten |
 | `shareAlbum` | Gibt ein Album an andere weiter. Teilen liegt außerhalb des Projektumfangs. | nicht anbieten |
 
-„Nur mit Freigabe“ entfällt wegen KI-02. So kann auch ein Prompt-Injection-Angriff über ein Foto nichts verändern.
+„Nur mit Freigabe“ entfällt wegen KI-02. So kann auch ein Prompt-Injection-Angriff über ein Foto nichts verändern. Der Agent bekommt damit kein Werkzeug und bleibt wie die ganze KI-Komponente ein Entwurf.
 
 ## 8. Architekturentscheidungen
 
@@ -119,5 +118,5 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 ## 9. Schwächen und offene Punkte
 
-- [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) lässt zwei Lücken offen: Eine App-Kopie ohne Albumeintrag kann zurückbleiben, und Aktionen über zwei Speicher sind noch nicht geregelt.
-- Das Diagramm-Review über Kreuz aus den Folien wurde im Unterricht nur mündlich besprochen. Ein Issue im Partner-Repository gibt es nicht. Die drei Prüffragen übernehmen die Team-Reviews des Block-3-PR.
+- Scheitern beim Wiederherstellen aus dem Papierkorb beide Schreibvorgänge, ist der Vorgang nach dem nächsten Start ausgeführt statt zurückgenommen ([ADR-002](docs/adr/ADR-002-fehlerbehandlung.md)). Es geht nichts verloren, NFA-01 ist in diesem Fall aber nicht ganz erfüllt.
+- Das Diagramm-Review über Kreuz mit einem Partnerteam ist offen. Es wurde im Unterricht nur mündlich besprochen, ein Issue im Partner-Repository gibt es nicht.

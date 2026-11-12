@@ -28,6 +28,7 @@ package application {
     +store(id: PhotoId, file: Path)
     +load(id: PhotoId): byte[]
     +delete(id: PhotoId)
+    +ids(): Set<PhotoId>
   }
   interface ImageHasher {
     +hash(file: Path): String
@@ -65,20 +66,22 @@ package domain {
     -description: String
     +Photo(contentHash: String)
     +getId(): PhotoId
+    +{static} checkTitle(title: String)
     +changeTitle(title: String)
     +changeDescription(description: String)
   }
   class Trash {
     +moveAlbum(album: Album, now: Instant)
-    +movePhoto(photo: Photo, from: AlbumId, now: Instant)
+    +movePhoto(photo: Photo, from: Album, now: Instant)
     +take(id: TrashEntryId, now: Instant): TrashEntry
     +remove(id: TrashEntryId, deleted: List<PhotoId>)
-    +removeDue(now: Instant): List<TrashEntry>
+    +dueEntries(now: Instant): List<TrashEntry>
   }
   class TrashEntry {
     -id: TrashEntryId
     -deletedAt: Instant
     -originAlbumId: AlbumId
+    -originAlbumName: String
     +isDue(now: Instant): boolean
     +remainingDays(now: Instant): int
   }
