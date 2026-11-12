@@ -46,9 +46,9 @@ Die Anforderungen, Auftraggeberentscheidungen und Teamannahmen stehen in [REQUIR
 | Bereich | Vorgabe bzw. Entscheidungsstand |
 | --- | --- |
 | Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven mit Wrapper |
-| Oberfläche | JavaFX, Swing oder Konsole; Auswahl offen |
-| Datenhaltung | Lokal im Dateisystem; Format offen und zu dokumentieren |
+| Build und Abhängigkeiten | Maven; Wrapper folgt mit Block 4 |
+| Oberfläche | Swing ([ARCHITECTURE.md](ARCHITECTURE.md)) |
+| Datenhaltung | JSON-Dateien im lokalen Dateisystem ([ADR-001](docs/adr/ADR-001-speicherung.md)) |
 | Automatisierte Tests | JUnit 5 |
 | Coverage | JaCoCo |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
@@ -99,18 +99,23 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
+├── <a href="pom.xml">pom.xml</a>
+├── <a href="src/">src/</a>
+│   └── ...
 └── <a href="docs/">docs/</a>
     ├── <a href="docs/REFACTORING.md"><strong>REFACTORING.md</strong></a>
     ├── <a href="docs/adr/">adr/</a>
-    │   └── <a href="docs/adr/Inhalt%20folgt">Inhalt folgt</a>
+    │   └── ...
     ├── <a href="docs/design/">design/</a>
-    │   └── <a href="docs/design/Inhalt%20folgt">Inhalt folgt</a>
+    │   └── ...
     ├── <a href="docs/lecture_slides/">lecture_slides/</a>
     │   └── ...
     ├── <a href="docs/presentation/">presentation/</a>
     │   └── <a href="docs/presentation/Inhalt%20folgt">Inhalt folgt</a>
     ├── <a href="docs/prototype/">prototype/</a>
     │   └── <a href="docs/prototype/index.html">index.html</a>
+    ├── <a href="docs/review/">review/</a>
+    │   └── <a href="docs/review/BLOCK_REVIEW_GUIDE.md">BLOCK_REVIEW_GUIDE.md</a>
     └── <a href="docs/task_description/">task_description/</a>
         └── ...
 </pre>
@@ -120,6 +125,6 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 ## Build, Tests und Start
 
 > [!NOTE]
-> Das Projekt befindet sich in Vorbereitung. Quellcode, Build und CI sind noch nicht eingerichtet; eine Softwareversion ist noch nicht veröffentlicht.
+> Das Projektgerüst mit Maven und Java 21 ist angelegt. Maven-Wrapper, Tests und CI folgen mit Block 4; eine Softwareversion ist noch nicht veröffentlicht.
 
-Build-, Test- und Startbefehle ergänzen wir nach Einrichtung des Projekts.
+Mit einem lokal installierten Maven baut `mvn verify` das Gerüst. Test- und Startbefehle ergänzen wir mit der Implementierung.

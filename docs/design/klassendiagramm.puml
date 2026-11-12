@@ -1,0 +1,122 @@
+@startuml klassendiagramm
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+hide empty members
+title Klassendiagramm Photo Album (Block 3)
+
+package infrastructure {
+  class FileAlbumRepository
+  class FileTrashRepository
+  class FilePhotoStorage
+  class Sha256ImageHasher
+  class LlmTitleSuggester <<Entwurf, Won't>>
+}
+
+package application {
+  interface AlbumRepository {
+    +findById(id: AlbumId): Optional<Album>
+    +findAll(): List<Album>
+    +save(album: Album)
+    +delete(id: AlbumId)
+  }
+  interface TrashRepository {
+    +load(): Trash
+    +save(trash: Trash)
+  }
+  interface PhotoStorage {
+    +store(id: PhotoId, file: Path)
+    +load(id: PhotoId): byte[]
+    +delete(id: PhotoId)
+    +ids(): Set<PhotoId>
+  }
+  interface ImageHasher {
+    +hash(file: Path): String
+  }
+  interface TitleSuggester <<Entwurf, Won't>> {
+    +suggestTitle(image: byte[]): Optional<String>
+  }
+  class AddPhotoUseCase {
+    +execute(albumId: AlbumId, file: Path): Result
+  }
+  class CreateAlbumUseCase {
+    +execute(name: String): Result
+  }
+  class StartupCleanupUseCase {
+    +execute(now: Instant)
+  }
+}
+
+package domain {
+  class AlbumLibrary {
+    +AlbumLibrary(albums: List<Album>)
+    +add(album: Album)
+    +rename(album: Album, name: String)
+  }
+  class Album {
+    -id: AlbumId
+    -name: String
+    +{static} MAX_PHOTOS: int = 100
+    +Album(name: String)
+    +addPhoto(photo: Photo)
+    +removePhoto(id: PhotoId)
+    ~rename(name: String)
+  }
+  class Photo {
+    -id: PhotoId
+    -contentHash: String
+    -title: String
+    -description: String
+    +Photo(contentHash: String)
+    +getId(): PhotoId
+    +{static} checkTitle(title: String)
+    +changeTitle(title: String)
+    +changeDescription(description: String)
+  }
+  class Trash {
+    +moveAlbum(album: Album, now: Instant)
+    +movePhoto(photo: Photo, from: Album, now: Instant)
+    +take(id: TrashEntryId, now: Instant): TrashEntry
+    +remove(id: TrashEntryId, deleted: List<PhotoId>)
+    +dueEntries(now: Instant): List<TrashEntry>
+  }
+  class TrashEntry {
+    -id: TrashEntryId
+    -deletedAt: Instant
+    -originAlbumId: AlbumId
+    -originAlbumName: String
+    +isDue(now: Instant): boolean
+    +remainingDays(now: Instant): int
+  }
+}
+
+AlbumLibrary "0..1" o-down- "0..*" Album : aktive Alben
+Album "0..1" *-down- "0..100" Photo : enthält
+Trash "1" *-down- "0..*" TrashEntry : Einträge
+TrashEntry "0..1" o-down- "0..1" Album : gelöschtes Album
+TrashEntry "0..1" o-down- "0..1" Photo : gelöschtes Foto
+
+FileAlbumRepository .down.|> AlbumRepository
+FileTrashRepository .down.|> TrashRepository
+FilePhotoStorage .down.|> PhotoStorage
+Sha256ImageHasher .down.|> ImageHasher
+LlmTitleSuggester .down.|> TitleSuggester
+
+AddPhotoUseCase .up.> AlbumRepository
+AddPhotoUseCase .up.> ImageHasher
+AddPhotoUseCase .up.> PhotoStorage
+CreateAlbumUseCase .up.> AlbumRepository
+StartupCleanupUseCase .up.> AlbumRepository
+StartupCleanupUseCase .up.> TrashRepository
+StartupCleanupUseCase .up.> PhotoStorage
+StartupCleanupUseCase .down.> Trash
+
+AddPhotoUseCase .down.> Album
+AddPhotoUseCase .down.> Photo
+CreateAlbumUseCase .down.> Album
+CreateAlbumUseCase .down.> AlbumLibrary
+
+CreateAlbumUseCase -[hidden]down- AlbumLibrary
+AddPhotoUseCase -[hidden]down- Album
+Album -[hidden]right- TrashEntry
+@enduml
