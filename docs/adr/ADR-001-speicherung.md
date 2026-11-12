@@ -1,6 +1,6 @@
 # ADR-001: Speicherung als JSON-Dateien hinter Ports
 
-**Status:** akzeptiert · **Datum:** 10.11.2026
+**Status:** akzeptiert · **Datum:** 10.11.2026 · **geändert:** 12.11.2026
 
 ## Kontext
 
@@ -14,7 +14,7 @@ Die Projektbeschreibung verlangt eine lokale Datenhaltung im Dateisystem mit dok
   - `trash.json`: die Papierkorbeinträge mit Löschzeitpunkt und Ursprungsalbum (ID und Name),
   - `photos/<PhotoId>`: die App-Kopie jedes Bildes.
 
-  Die genauen Felder legt die Umsetzung der Adapter fest.
+  Die genauen Felder legt die Umsetzung der Adapter fest. Ein neu angelegtes Album bekommt immer eine neue ID, auch wenn es ein gelöschtes Ursprungsalbum ersetzt (A-09). So überschreibt keine Albumdatei eine andere.
 - `Sha256ImageHasher` berechnet beim Import einen SHA-256-Hash des Dateiinhalts. `Album` vergleicht nur noch Hashes und muss vorhandene Bilder nicht erneut lesen. Dass zwei verschiedene Dateien denselben SHA-256-Hash haben, ist praktisch ausgeschlossen.
 - Nur `Main` erzeugt die Adapter. Tests setzen Varianten im Arbeitsspeicher ein.
 

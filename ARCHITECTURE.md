@@ -13,7 +13,7 @@ flowchart TB
         infra["FileAlbumRepository<br/>FileTrashRepository<br/>FilePhotoStorage<br/>Sha256ImageHasher"]
     end
     subgraph APP["Anwendung"]
-        uc["AddPhotoUseCase<br/>CreateAlbumUseCase"]
+        uc["AddPhotoUseCase<br/>CreateAlbumUseCase<br/>StartupCleanupUseCase"]
         ports["Ports (Interfaces)<br/>AlbumRepository<br/>TrashRepository<br/>PhotoStorage<br/>ImageHasher"]
     end
     subgraph DOM["Domäne"]
@@ -30,8 +30,8 @@ Ein Pfeil bedeutet „hängt ab von“. Die Infrastruktur implementiert die Port
 | Schicht | Aufgabe | Klassen (vorläufig) |
 |---|---|---|
 | UI | Zeigt Alben und Fotos an, nimmt Eingaben entgegen und zeigt Meldungen. Enthält keine Geschäftsregeln und greift nicht auf Dateien zu. | Swing-Fenster |
-| Anwendung | Ein Use Case je Nutzerziel. Lädt das Album über einen Port, lässt die Domäne entscheiden und speichert das Ergebnis. Legt die Ports als Interfaces fest. | `AddPhotoUseCase`, `CreateAlbumUseCase`; Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage`, `ImageHasher` |
-| Domäne | Enthält die Geschäftsregeln aus [REQUIREMENTS.md](REQUIREMENTS.md): Albumname, höchstens 100 Fotos, kein Duplikat, Textlängen und Papierkorbfristen. Nur die technische Dateiprüfung nach A-03 liegt im Adapter (Abschnitt 2). | `Album`, `Photo`, `AlbumLibrary`, `Trash`, `TrashEntry` |
+| Anwendung | Ein Use Case je Nutzerziel, dazu die Bereinigung beim Start. Lädt das Album über einen Port, lässt die Domäne entscheiden und speichert das Ergebnis. Legt die Ports als Interfaces fest. | `AddPhotoUseCase`, `CreateAlbumUseCase`, `StartupCleanupUseCase`; Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage`, `ImageHasher` |
+| Domäne | Enthält die Geschäftsregeln aus [REQUIREMENTS.md](REQUIREMENTS.md): Albumname, höchstens 100 Fotos, kein Duplikat, Textlängen und Papierkorbfristen. Nur die technische Dateiprüfung nach A-03 liegt im Adapter (Abschnitt 2). Die Bereinigung beim Start nach A-11 koordiniert `StartupCleanupUseCase`, weil sie Alben, Papierkorb und Kopien zusammen betrachtet. | `Album`, `Photo`, `AlbumLibrary`, `Trash`, `TrashEntry` |
 | Infrastruktur | Setzt die Ports technisch um: JSON-Dateien, App-Kopien der Bilder, Bildprüfung und Inhaltshash. | `FileAlbumRepository`, `FileTrashRepository`, `FilePhotoStorage`, `Sha256ImageHasher` |
 
 Die Oberfläche nutzt Swing, weil es im JDK enthalten ist und keine zusätzliche Abhängigkeit braucht. Die Klassen leiten sich aus den [CRC-Karten](docs/design/crc-karten.md) ab und stehen im [Klassendiagramm](#3-klassendiagramm). Die Ports beschreibt [Abschnitt 2](#2-komponenten-und-ports).
@@ -81,7 +81,7 @@ Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und A
 
 ## 5. Bildpuffer
 
-Beim Ansehen eines Albums hält die Anwendung höchstens **5 Bilder** gleichzeitig im Arbeitsspeicher: das angezeigte Foto und je zwei davor und danach (NFA-03, A-06). Beim Blättern lädt sie das nächste Bild nach und gibt das am weitesten entfernte frei. Die Bilder werden auf Anzeigegröße verkleinert gehalten, nicht in voller Auflösung. Beim Öffnen erscheinen zuerst Fotoanzahl und erstes Bild, die Nachbarn folgen danach.
+Beim Ansehen eines Albums hält die Anwendung höchstens **5 Bilder** gleichzeitig im Arbeitsspeicher: das angezeigte Foto und je zwei davor und danach (NFA-03, A-06). Beim Blättern lädt sie das nächste Bild nach und gibt das am weitesten entfernte frei. Die Bilder werden auf Anzeigegröße verkleinert gehalten, nicht in voller Auflösung. Beim Öffnen erscheinen zuerst Fotoanzahl und erstes Bild, die Nachbarn folgen danach. Wie im Klickprototyp zeigt die Albumansicht außerdem kleine Vorschaubilder, höchstens 12 je Seite. Sie zählen nicht zum Puffer, die Grenze von 5 gilt für die großen Bilder der Einzelansicht.
 
 Der Puffer gehört zur Anzeige in der UI und enthält keine Geschäftsregel. Die Bilddaten bekommt er über die Anwendung, die sie mit `PhotoStorage.load` lädt.
 
@@ -119,3 +119,5 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 ## 9. Schwächen und offene Punkte
 
 - Scheitern ein Speichern und danach auch das Zurücknehmen, bereinigt die App den Zustand erst beim nächsten Start. Liegt dieselbe Foto-ID dann in einem Album und im Papierkorb, bleibt das Foto im Album. Verwaiste Kopien löscht die App nur, wenn alle Alben und der Papierkorb lesbar sind. Diese Ausnahme ist in A-11 festgelegt und in [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) beschrieben.
+- Ist eine einzige Albumdatei nicht lesbar, scheitert `findAll`. Die Übersicht meldet dann nur den Lesefehler (AK-02.3), und auch Album erstellen, Wiederherstellen und endgültiges Löschen scheitern, bis die Datei repariert ist. Der Fall ist selten, deshalb bleibt es bei diesem einfachen Verhalten.
+- `ImageHasher` und `PhotoStorage` lesen die gewählte Datei getrennt. Ändert sie sich genau dazwischen, etwa in einem synchronisierenden Cloud-Ordner, wird eine ungeprüfte Fassung gespeichert. Auch dieser Fall ist selten.

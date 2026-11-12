@@ -42,6 +42,9 @@ package application {
   class CreateAlbumUseCase {
     +execute(name: String): Result
   }
+  class StartupCleanupUseCase {
+    +execute(now: Instant)
+  }
 }
 
 package domain {
@@ -103,6 +106,10 @@ AddPhotoUseCase .up.> AlbumRepository
 AddPhotoUseCase .up.> ImageHasher
 AddPhotoUseCase .up.> PhotoStorage
 CreateAlbumUseCase .up.> AlbumRepository
+StartupCleanupUseCase .up.> AlbumRepository
+StartupCleanupUseCase .up.> TrashRepository
+StartupCleanupUseCase .up.> PhotoStorage
+StartupCleanupUseCase .down.> Trash
 
 AddPhotoUseCase .down.> Album
 AddPhotoUseCase .down.> Photo

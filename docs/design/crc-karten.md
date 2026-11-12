@@ -66,6 +66,14 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 | Neues `Album` von `AlbumLibrary` aufnehmen lassen und speichern | `AlbumLibrary` |
 | Fehler in eine verständliche Meldung für die UI übersetzen | `Album` |
 
+### `StartupCleanupUseCase`
+
+| Verantwortlichkeiten | Partner |
+|---|---|
+| Beim Start Alben und Papierkorb laden | `AlbumRepository`, `TrashRepository` |
+| Liegt dieselbe Foto-ID in einem Album und im Papierkorb, das Foto aus dem Papierkorb nehmen (A-11) | `Trash` |
+| Fällige Einträge und verwaiste Kopien löschen, nur wenn alle Alben und der Papierkorb lesbar sind (A-10, A-11, ADR-002) | `PhotoStorage` |
+
 ## Ports
 
 ### `AlbumRepository`
@@ -98,7 +106,7 @@ CRC steht für Class, Responsibilities, Collaborators. Die Karten leiten sich au
 
 ## Zuordnung der Geschäftsregeln
 
-Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case an: Er holt die fälligen Einträge über `Trash.dueEntries`, löscht ihre App-Kopien und nimmt danach nur die gelöschten Fotos über `Trash.remove` heraus (A-12). Beim Start bereinigt die Anwendung außerdem doppelte Foto-IDs und verwaiste Kopien ([ADR-002](../adr/ADR-002-fehlerbehandlung.md)).
+Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind Abläufe statt Regeln eines Objekts: Die Bestätigung vor dem Löschen (FA-04, A-10) fragt die UI ab, bevor sie den Use Case aufruft. Die Bereinigung beim Start, vor dem Anzeigen des Papierkorbs und vor einer Wiederherstellung (A-10) stößt der jeweilige Use Case an: Er holt die fälligen Einträge über `Trash.dueEntries`, löscht ihre App-Kopien und nimmt danach nur die gelöschten Fotos über `Trash.remove` heraus (A-12). Beim Start ist dafür `StartupCleanupUseCase` zuständig. Er bereinigt zusätzlich doppelte Foto-IDs und verwaiste Kopien ([ADR-002](../adr/ADR-002-fehlerbehandlung.md)).
 
 | Regel | Karte |
 |---|---|
@@ -111,6 +119,8 @@ Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind A
 | Wiederherstellen nur vor Ablauf der Frist | `Trash` |
 | Endgültiges Löschen mit Teilerfolg je Foto (A-12) | `Trash` |
 | Nur JPEG oder PNG bis 20 MiB (technische Eingangsprüfung) | `ImageHasher` |
+| Dieselbe Foto-ID in Album und Papierkorb bleibt im Album (A-11, Bereinigung nach Fehlern) | `StartupCleanupUseCase` |
+| Fällige Einträge und verwaiste Kopien nur löschen, wenn alles lesbar ist (A-11, ADR-002) | `StartupCleanupUseCase` |
 
 ## Durchspielen von „Foto hinzufügen“
 
@@ -123,6 +133,6 @@ Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind A
 
 Die Reihenfolge folgt UC-01: Erst laufen alle Prüfungen, dann wird gespeichert.
 
-Alle Karten außer `CreateAlbumUseCase`, `AlbumLibrary`, `Trash`, `TrashEntry` und `TrashRepository` kommen dabei zu Wort. Diese fünf gehören zu UC-02 und zum Papierkorb.
+Alle Karten außer `CreateAlbumUseCase`, `StartupCleanupUseCase`, `AlbumLibrary`, `Trash`, `TrashEntry` und `TrashRepository` kommen dabei zu Wort. Diese sechs gehören zu UC-02, zum Start und zum Papierkorb.
 
 `AddPhotoUseCase` hat fünf Partner, zwei mehr als die Faustregel der Folien. Die Karte koordiniert nur und trifft keine fachliche Entscheidung. Deshalb bleibt sie ungeteilt.
