@@ -119,7 +119,7 @@ Jede Regel steht auf genau einer Karte. Zwei Punkte aus den Anforderungen sind A
 3. `ImageHasher` prüft die Datei und liefert den Hash. Bei Lesefehler, leerer Datei, ungültigem Bild oder zu großer Datei endet der Ablauf hier.
 4. `Album` prüft Duplikat und Fotoanzahl und nimmt das neue `Photo` auf. Bei einem Verstoß endet der Ablauf, gespeichert wurde noch nichts.
 5. `PhotoStorage` legt die App-Kopie unter der ID des Fotos an.
-6. `AddPhotoUseCase` speichert das Album über `AlbumRepository` und meldet der UI das Ergebnis. Scheitert Schritt 5 oder 6, wird das Album nicht gespeichert und eine angelegte Kopie wieder gelöscht.
+6. `AddPhotoUseCase` speichert das Album über `AlbumRepository` und meldet der UI das Ergebnis. Scheitert Schritt 5 oder 6, wird das Album nicht gespeichert und eine angelegte Kopie wieder gelöscht. Scheitert auch das Löschen, gilt die Ausnahme aus A-11.
 
 Die Reihenfolge folgt UC-01: Erst laufen alle Prüfungen, dann wird gespeichert.
 

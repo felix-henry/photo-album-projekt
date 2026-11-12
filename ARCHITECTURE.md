@@ -118,4 +118,4 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 ## 9. Schwächen und offene Punkte
 
-- Scheitern beim Wiederherstellen aus dem Papierkorb beide Schreibvorgänge, ist der Vorgang nach dem nächsten Start ausgeführt statt zurückgenommen ([ADR-002](docs/adr/ADR-002-fehlerbehandlung.md)). Es geht nichts verloren, NFA-01 ist in diesem Fall aber nicht ganz erfüllt.
+- Scheitern ein Speichern und danach auch das Zurücknehmen, bereinigt die App den Zustand erst beim nächsten Start. Ein doppelt gespeichertes Foto bleibt dann im Album. Diese Ausnahme ist in A-11 festgelegt und in [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) beschrieben.
