@@ -6,5 +6,6 @@ package de.commitmentissues.photoalbum.domain;
  */
 public enum Violation {
     ALBUM_NAME_EMPTY,
-    ALBUM_NAME_TOO_LONG
+    ALBUM_NAME_TOO_LONG,
+    ALBUM_NAME_TAKEN
 }
