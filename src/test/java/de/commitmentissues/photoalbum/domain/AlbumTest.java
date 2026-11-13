@@ -2,7 +2,6 @@ package de.commitmentissues.photoalbum.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,5 +49,26 @@ class AlbumTest {
         DomainException exception = assertThrows(DomainException.class, () -> new Album(name));
 
         assertEquals(Violation.ALBUM_NAME_TOO_LONG, exception.getViolation());
+    }
+
+    @Test
+    @DisplayName("NFA-02: Ein gespeichertes Album behält beim Wiederherstellen seine ID und seinen Namen")
+    void restoreKeepsIdAndName() {
+        AlbumId id = AlbumId.newId();
+
+        Album album = Album.restore(id, "Urlaub");
+
+        assertEquals(id, album.getId());
+        assertEquals("Urlaub", album.getName());
+    }
+
+    @Test
+    @DisplayName("A-02: Auch beim Wiederherstellen wird ein leerer Name abgelehnt")
+    void restoreRejectsBlankName() {
+        AlbumId id = AlbumId.newId();
+
+        DomainException exception = assertThrows(DomainException.class, () -> Album.restore(id, " "));
+
+        assertEquals(Violation.ALBUM_NAME_EMPTY, exception.getViolation());
     }
 }

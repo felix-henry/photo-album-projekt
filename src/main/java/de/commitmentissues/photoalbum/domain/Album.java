@@ -13,8 +13,20 @@ public class Album {
     private final String name;
 
     public Album(String name) {
-        this.id = AlbumId.newId();
+        this(AlbumId.newId(), name);
+    }
+
+    private Album(AlbumId id, String name) {
+        this.id = Objects.requireNonNull(id, "id");
         this.name = checkName(name);
+    }
+
+    /**
+     * Stellt ein gespeichertes Album mit seiner bisherigen ID wieder her.
+     * Die Namensregel gilt auch hier.
+     */
+    public static Album restore(AlbumId id, String name) {
+        return new Album(id, name);
     }
 
     public AlbumId getId() {
