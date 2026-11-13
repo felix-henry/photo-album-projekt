@@ -7,6 +7,7 @@ import de.commitmentissues.photoalbum.domain.Album;
 
 /**
  * Speichert Alben im Arbeitsspeicher und kann Lese- und Speicherfehler simulieren.
+ * Wie eine Datei hält er Kopien: Änderungen an einem geladenen Album wirken erst nach save.
  */
 class InMemoryAlbumRepository implements AlbumRepository {
 
@@ -19,7 +20,7 @@ class InMemoryAlbumRepository implements AlbumRepository {
         if (failOnLoad) {
             throw new StorageException("Lesefehler simuliert");
         }
-        return List.copyOf(albums);
+        return albums.stream().map(InMemoryAlbumRepository::copy).toList();
     }
 
     @Override
@@ -28,10 +29,14 @@ class InMemoryAlbumRepository implements AlbumRepository {
             throw new StorageException("Speicherfehler simuliert");
         }
         albums.removeIf(stored -> stored.getId().equals(album.getId()));
-        albums.add(album);
+        albums.add(copy(album));
     }
 
     List<String> names() {
         return albums.stream().map(Album::getName).toList();
+    }
+
+    private static Album copy(Album album) {
+        return Album.restore(album.getId(), album.getName());
     }
 }
