@@ -23,6 +23,6 @@ Die Projektbeschreibung verlangt einen reproduzierbaren Build mit Maven oder Gra
 
 ## Konsequenzen
 
-- Ein frischer Clone baut mit einem Befehl. Vorausgesetzt ist nur ein installiertes JDK ab Version 21.
+- Ein frischer Clone baut mit einem Befehl. Vorausgesetzt ist nur ein installiertes JDK 21 (PB §6), wie es auch die CI verwendet.
 - Eine neue Maven-Version wird bewusst in `.mvn/wrapper/maven-wrapper.properties` geändert und per PR geprüft.
 - Weitere Bibliotheken, etwa für JSON, kommen nur mit eigenem ADR hinzu. Versionsupdates werden bewusst per PR übernommen.
