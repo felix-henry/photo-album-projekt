@@ -22,4 +22,4 @@ ADR-001 legt fest, dass die Adapter Alben und Papierkorb als JSON-Dateien speich
 
 - Die fertige App enthält zwei fremde Bibliotheken. Updates schlägt Dependabot vor, sie werden per PR geprüft.
 - Für jede gespeicherte Klasse braucht der Adapter ein DTO und eine Umwandlung in beide Richtungen.
-- Ein einfaches JAR enthält Gson nicht. Wie Gson beim Start mitgeliefert wird, legen wir mit der Startklasse `Main` fest.
+- Ein einfaches JAR enthält Gson nicht. Damit `java -jar` die App startet, packt das Shade-Plugin Gson beim Bauen mit ins JAR (ADR-000).
