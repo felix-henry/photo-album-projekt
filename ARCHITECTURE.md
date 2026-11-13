@@ -113,6 +113,7 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 
 ## 8. Architekturentscheidungen
 
+- [ADR-000: Maven mit Wrapper als Build-Werkzeug](docs/adr/ADR-000-build.md)
 - [ADR-001: Speicherung als JSON-Dateien hinter Ports](docs/adr/ADR-001-speicherung.md) mit den Mustern Repository und Adapter
 - [ADR-002: Fehlerbehandlung über Exceptions und Result](docs/adr/ADR-002-fehlerbehandlung.md)
 
