@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import de.commitmentissues.photoalbum.application.AlbumRepository;
 import de.commitmentissues.photoalbum.application.CreateAlbumUseCase;
 import de.commitmentissues.photoalbum.application.ListAlbumsUseCase;
+import de.commitmentissues.photoalbum.application.RenameAlbumUseCase;
 import de.commitmentissues.photoalbum.infrastructure.FileAlbumRepository;
 import de.commitmentissues.photoalbum.ui.AlbumOverviewWindow;
 
@@ -23,7 +24,9 @@ public final class Main {
         AlbumRepository albums = new FileAlbumRepository(dataDirectory);
         ListAlbumsUseCase listAlbums = new ListAlbumsUseCase(albums);
         CreateAlbumUseCase createAlbum = new CreateAlbumUseCase(albums);
+        RenameAlbumUseCase renameAlbum = new RenameAlbumUseCase(albums);
 
-        SwingUtilities.invokeLater(() -> new AlbumOverviewWindow(listAlbums, createAlbum).setVisible(true));
+        SwingUtilities.invokeLater(
+                () -> new AlbumOverviewWindow(listAlbums, createAlbum, renameAlbum).setVisible(true));
     }
 }

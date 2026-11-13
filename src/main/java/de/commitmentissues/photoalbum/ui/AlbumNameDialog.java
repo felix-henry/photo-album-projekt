@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,24 +16,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.commitmentissues.photoalbum.application.AlbumSummary;
-import de.commitmentissues.photoalbum.application.CreateAlbumUseCase;
 import de.commitmentissues.photoalbum.application.Result;
 
 /**
- * Dialog „Album erstellen“ (UC-02). Eine abgelehnte Eingabe wird im Dialog angezeigt,
- * damit der Nutzer den Namen korrigieren oder abbrechen kann.
+ * Dialog zur Eingabe eines Albumnamens für „Album erstellen“ (UC-02) und „Album umbenennen“ (FA-03).
+ * Eine abgelehnte Eingabe wird im Dialog angezeigt, damit der Nutzer den Namen korrigieren oder abbrechen kann.
  */
-class CreateAlbumDialog extends JDialog {
+class AlbumNameDialog extends JDialog {
 
-    private final CreateAlbumUseCase createAlbum;
+    private final Function<String, Result<AlbumSummary>> action;
     private final JTextField nameField = new JTextField(30);
     private final JLabel message = new JLabel(" ");
-    private AlbumSummary created;
+    private AlbumSummary saved;
 
-    CreateAlbumDialog(Frame owner, CreateAlbumUseCase createAlbum) {
-        super(owner, "Album erstellen", true);
-        this.createAlbum = createAlbum;
+    AlbumNameDialog(Frame owner, String title, String initialName, Function<String, Result<AlbumSummary>> action) {
+        super(owner, title, true);
+        this.action = action;
 
+        nameField.setText(initialName);
+        nameField.selectAll();
         message.setForeground(new Color(0xB00020));
 
         JPanel form = new JPanel(new GridLayout(0, 1, 0, 4));
@@ -62,13 +64,13 @@ class CreateAlbumDialog extends JDialog {
 
     Optional<AlbumSummary> showDialog() {
         setVisible(true);
-        return Optional.ofNullable(created);
+        return Optional.ofNullable(saved);
     }
 
     private void confirm() {
-        Result<AlbumSummary> result = createAlbum.execute(nameField.getText());
+        Result<AlbumSummary> result = action.apply(nameField.getText());
         if (result.isSuccess()) {
-            created = result.getValue();
+            saved = result.getValue();
             dispose();
         } else {
             message.setText(result.getMessage());
