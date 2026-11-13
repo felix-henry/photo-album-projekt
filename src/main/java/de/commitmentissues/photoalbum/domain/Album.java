@@ -10,7 +10,7 @@ public class Album {
     static final int MAX_NAME_LENGTH = 50;
 
     private final AlbumId id;
-    private final String name;
+    private String name;
 
     public Album(String name) {
         this(AlbumId.newId(), name);
@@ -37,7 +37,14 @@ public class Album {
         return name;
     }
 
-    private static String checkName(String name) {
+    /**
+     * Nur über {@link AlbumLibrary#rename} aufrufbar, damit die Eindeutigkeit geprüft wird (A-02).
+     */
+    void rename(String newName) {
+        this.name = checkName(newName);
+    }
+
+    static String checkName(String name) {
         Objects.requireNonNull(name, "name");
         String stripped = name.strip();
         int length = TextLength.count(stripped);
