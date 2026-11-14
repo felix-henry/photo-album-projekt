@@ -31,14 +31,22 @@ final class DueEntryCleanup {
 
     static void run(Trash trash, Set<PhotoId> photosInAlbums, PhotoStorage photoStorage, Instant now) {
         for (TrashEntry entry : trash.dueEntries(now)) {
-            List<PhotoId> removed = new ArrayList<>();
-            for (Photo photo : entry.getPhotos()) {
-                if (photosInAlbums.contains(photo.getId()) || tryDelete(photoStorage, photo.getId())) {
-                    removed.add(photo.getId());
-                }
-            }
-            trash.remove(entry.getId(), removed);
+            trash.remove(entry.getId(), deleteCopies(entry, photosInAlbums, photoStorage));
         }
+    }
+
+    /**
+     * Löscht die App-Kopien eines Eintrags und nennt die Fotos, die danach aus dem Papierkorb dürfen: die
+     * gelöschten und die, auf die noch ein Album verweist. Auch das endgültige Löschen nutzt diese Regel.
+     */
+    static List<PhotoId> deleteCopies(TrashEntry entry, Set<PhotoId> photosInAlbums, PhotoStorage photoStorage) {
+        List<PhotoId> removable = new ArrayList<>();
+        for (Photo photo : entry.getPhotos()) {
+            if (photosInAlbums.contains(photo.getId()) || tryDelete(photoStorage, photo.getId())) {
+                removable.add(photo.getId());
+            }
+        }
+        return removable;
     }
 
     private static boolean tryDelete(PhotoStorage photoStorage, PhotoId id) {

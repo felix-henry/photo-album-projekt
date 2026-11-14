@@ -3,19 +3,21 @@ package de.commitmentissues.photoalbum.application;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import de.commitmentissues.photoalbum.domain.PhotoId;
 
 /**
- * Merkt sich die angelegten App-Kopien und kann Speicher-, Lese- und Löschfehler simulieren.
- * Statt die Datei zu lesen, merkt er sich ihren Namen als Inhalt. So greifen Unit-Tests
- * nicht auf Dateien zu (NFA-05).
+ * Merkt sich die angelegten App-Kopien und kann Speicher-, Lese- und Löschfehler simulieren, beim Löschen
+ * auch für einzelne Fotos (ARCHITECTURE, Abschnitt 6). Statt die Datei zu lesen, merkt er sich ihren Namen
+ * als Inhalt. So greifen Unit-Tests nicht auf Dateien zu (NFA-05).
  */
 class InMemoryPhotoStorage implements PhotoStorage {
 
     private final Map<PhotoId, byte[]> stored = new HashMap<>();
+    final Set<PhotoId> undeletable = new HashSet<>();
     boolean failOnStore;
     boolean failOnLoad;
     boolean failOnDelete;
@@ -42,7 +44,7 @@ class InMemoryPhotoStorage implements PhotoStorage {
 
     @Override
     public void delete(PhotoId id) {
-        if (failOnDelete) {
+        if (failOnDelete || undeletable.contains(id)) {
             throw new StorageException("Löschfehler simuliert");
         }
         stored.remove(id);
