@@ -17,7 +17,7 @@ public record AlbumDetails(UUID id, String name, List<PhotoSummary> photos) {
 
     static AlbumDetails of(Album album) {
         List<PhotoSummary> photos = album.getPhotos().stream()
-                .map(photo -> new PhotoSummary(photo.getId().value()))
+                .map(PhotoSummary::of)
                 .toList();
         return new AlbumDetails(album.getId().value(), album.getName(), photos);
     }

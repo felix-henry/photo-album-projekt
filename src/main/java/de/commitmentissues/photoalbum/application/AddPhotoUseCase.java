@@ -65,7 +65,7 @@ public class AddPhotoUseCase {
         } catch (StorageException e) {
             return rollBack(photo.getId());
         }
-        return Result.success(new PhotoSummary(photo.getId().value()));
+        return Result.success(PhotoSummary.of(photo));
     }
 
     private Result<PhotoSummary> rollBack(PhotoId photoId) {

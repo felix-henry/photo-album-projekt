@@ -6,10 +6,12 @@ import java.util.Optional;
 
 import de.commitmentissues.photoalbum.domain.Album;
 import de.commitmentissues.photoalbum.domain.AlbumId;
+import de.commitmentissues.photoalbum.domain.Photo;
 
 /**
  * Speichert Alben im Arbeitsspeicher und kann Lese- und Speicherfehler simulieren.
- * Wie eine Datei hält er Kopien: Änderungen an einem geladenen Album wirken erst nach save.
+ * Wie eine Datei hält er Kopien von Album und Fotos: Änderungen an einem geladenen Album
+ * wirken erst nach save.
  */
 class InMemoryAlbumRepository implements AlbumRepository {
 
@@ -50,6 +52,10 @@ class InMemoryAlbumRepository implements AlbumRepository {
     }
 
     private static Album copy(Album album) {
-        return Album.restore(album.getId(), album.getName(), album.getPhotos());
+        List<Photo> photos = album.getPhotos().stream()
+                .map(photo -> Photo.restore(photo.getId(), photo.getContentHash(),
+                        photo.getTitle(), photo.getDescription()))
+                .toList();
+        return Album.restore(album.getId(), album.getName(), photos);
     }
 }

@@ -30,8 +30,8 @@ class OpenAlbumUseCaseTest {
 
         assertEquals("Urlaub", result.getValue().name());
         List<PhotoSummary> expected = List.of(
-                new PhotoSummary(strand.getId().value()),
-                new PhotoSummary(berg.getId().value()));
+                PhotoSummary.of(strand),
+                PhotoSummary.of(berg));
         assertEquals(expected, result.getValue().photos());
     }
 
