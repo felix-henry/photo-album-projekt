@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import de.commitmentissues.photoalbum.application.AddPhotoUseCase;
 import de.commitmentissues.photoalbum.application.AlbumRepository;
 import de.commitmentissues.photoalbum.application.CreateAlbumUseCase;
+import de.commitmentissues.photoalbum.application.EditPhotoTextsUseCase;
 import de.commitmentissues.photoalbum.application.ImageHasher;
 import de.commitmentissues.photoalbum.application.ListAlbumsUseCase;
 import de.commitmentissues.photoalbum.application.LoadPhotoUseCase;
@@ -38,8 +39,10 @@ public final class Main {
         OpenAlbumUseCase openAlbum = new OpenAlbumUseCase(albums);
         AddPhotoUseCase addPhoto = new AddPhotoUseCase(albums, imageHasher, photos);
         LoadPhotoUseCase loadPhoto = new LoadPhotoUseCase(photos);
+        EditPhotoTextsUseCase editPhotoTexts = new EditPhotoTextsUseCase(albums);
 
         SwingUtilities.invokeLater(() -> new AlbumOverviewWindow(
-                listAlbums, createAlbum, renameAlbum, openAlbum, addPhoto, loadPhoto).setVisible(true));
+                listAlbums, createAlbum, renameAlbum, openAlbum, addPhoto, loadPhoto, editPhotoTexts)
+                .setVisible(true));
     }
 }

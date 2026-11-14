@@ -18,6 +18,7 @@ import de.commitmentissues.photoalbum.application.AddPhotoUseCase;
 import de.commitmentissues.photoalbum.application.AlbumDetails;
 import de.commitmentissues.photoalbum.application.AlbumSummary;
 import de.commitmentissues.photoalbum.application.CreateAlbumUseCase;
+import de.commitmentissues.photoalbum.application.EditPhotoTextsUseCase;
 import de.commitmentissues.photoalbum.application.ListAlbumsUseCase;
 import de.commitmentissues.photoalbum.application.LoadPhotoUseCase;
 import de.commitmentissues.photoalbum.application.OpenAlbumUseCase;
@@ -37,6 +38,7 @@ public class AlbumOverviewWindow extends JFrame {
     private final OpenAlbumUseCase openAlbum;
     private final AddPhotoUseCase addPhoto;
     private final LoadPhotoUseCase loadPhoto;
+    private final EditPhotoTextsUseCase editPhotoTexts;
     private final DefaultListModel<String> albumNames = new DefaultListModel<>();
     private final JList<String> albumList = new JList<>(albumNames);
     private final JButton openButton = new JButton("Öffnen");
@@ -46,7 +48,7 @@ public class AlbumOverviewWindow extends JFrame {
 
     public AlbumOverviewWindow(ListAlbumsUseCase listAlbums, CreateAlbumUseCase createAlbum,
             RenameAlbumUseCase renameAlbum, OpenAlbumUseCase openAlbum, AddPhotoUseCase addPhoto,
-            LoadPhotoUseCase loadPhoto) {
+            LoadPhotoUseCase loadPhoto, EditPhotoTextsUseCase editPhotoTexts) {
         super("Photo Album");
         this.listAlbums = listAlbums;
         this.createAlbum = createAlbum;
@@ -54,6 +56,7 @@ public class AlbumOverviewWindow extends JFrame {
         this.openAlbum = openAlbum;
         this.addPhoto = addPhoto;
         this.loadPhoto = loadPhoto;
+        this.editPhotoTexts = editPhotoTexts;
 
         JButton createButton = new JButton("Album erstellen");
         createButton.addActionListener(event -> openCreateDialog());
@@ -116,7 +119,7 @@ public class AlbumOverviewWindow extends JFrame {
             status.setText(result.getMessage());
             return;
         }
-        new AlbumWindow(this, result.getValue(), openAlbum, addPhoto, loadPhoto).setVisible(true);
+        new AlbumWindow(this, result.getValue(), openAlbum, addPhoto, loadPhoto, editPhotoTexts).setVisible(true);
         refreshAndSelect(album);
     }
 
