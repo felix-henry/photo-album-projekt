@@ -23,18 +23,14 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import de.commitmentissues.photoalbum.application.AddPhotoUseCase;
 import de.commitmentissues.photoalbum.application.AlbumDetails;
-import de.commitmentissues.photoalbum.application.EditPhotoTextsUseCase;
-import de.commitmentissues.photoalbum.application.LoadPhotoUseCase;
-import de.commitmentissues.photoalbum.application.OpenAlbumUseCase;
 import de.commitmentissues.photoalbum.application.PhotoSummary;
 import de.commitmentissues.photoalbum.application.Result;
 
 /**
- * Albumansicht (FA-08) mit „Foto hinzufügen“ (UC-01) und „Texte bearbeiten“ (FA-10). Zeigt die Fotos
- * einzeln in Anzeigegröße mit Titel und Beschreibung; die Bilder kommen über den Bildpuffer
- * (NFA-03, ARCHITECTURE, Abschnitt 5). Enthält keine Geschäftsregeln: Sie zeigt nur an, was die
+ * Albumansicht (FA-08) mit „Foto hinzufügen“ (UC-01), „Texte bearbeiten“ (FA-10) und „Foto entfernen“
+ * (FA-09). Zeigt die Fotos einzeln in Anzeigegröße mit Titel und Beschreibung; die Bilder kommen über den
+ * Bildpuffer (NFA-03, ARCHITECTURE, Abschnitt 5). Enthält keine Geschäftsregeln: Sie zeigt nur an, was die
  * Use Cases zurückmelden.
  */
 class AlbumWindow extends JDialog {
@@ -43,10 +39,7 @@ class AlbumWindow extends JDialog {
     static final int IMAGE_HEIGHT = 600;
 
     private final UUID albumId;
-    private final OpenAlbumUseCase openAlbum;
-    private final AddPhotoUseCase addPhoto;
-    private final LoadPhotoUseCase loadPhoto;
-    private final EditPhotoTextsUseCase editPhotoTexts;
+    private final UseCases useCases;
     private final ImageBuffer buffer;
     private final JFileChooser fileChooser = new JFileChooser();
     private final JLabel heading = new JLabel();
@@ -56,20 +49,17 @@ class AlbumWindow extends JDialog {
     private final JTextArea photoDescription = new JTextArea(3, 60);
     private final JLabel counter = new JLabel(" ");
     private final JButton editTextsButton = new JButton("Texte bearbeiten");
+    private final JButton removeButton = new JButton("Foto entfernen");
     private final JButton previousButton = new JButton("Vorheriges Foto");
     private final JButton nextButton = new JButton("Nächstes Foto");
     private List<PhotoSummary> photos = List.of();
     private List<UUID> photoIds = List.of();
     private int current;
 
-    AlbumWindow(Frame owner, AlbumDetails album, OpenAlbumUseCase openAlbum, AddPhotoUseCase addPhoto,
-            LoadPhotoUseCase loadPhoto, EditPhotoTextsUseCase editPhotoTexts) {
+    AlbumWindow(Frame owner, AlbumDetails album, UseCases useCases) {
         super(owner, "Album „" + album.name() + "“", true);
         this.albumId = album.id();
-        this.openAlbum = openAlbum;
-        this.addPhoto = addPhoto;
-        this.loadPhoto = loadPhoto;
-        this.editPhotoTexts = editPhotoTexts;
+        this.useCases = useCases;
         this.buffer = new ImageBuffer(this::loadImage);
 
         JButton backButton = new JButton("Zurück zur Albumübersicht");
@@ -77,6 +67,7 @@ class AlbumWindow extends JDialog {
         JButton addButton = new JButton("Foto hinzufügen");
         addButton.addActionListener(event -> chooseAndAddPhoto());
         editTextsButton.addActionListener(event -> openTextsDialog());
+        removeButton.addActionListener(event -> removeCurrentPhoto());
         previousButton.addActionListener(event -> showPhoto(current - 1));
         nextButton.addActionListener(event -> showPhoto(current + 1));
         message.setForeground(new Color(0xB00020));
@@ -91,6 +82,7 @@ class AlbumWindow extends JDialog {
         buttons.add(backButton);
         buttons.add(addButton);
         buttons.add(editTextsButton);
+        buttons.add(removeButton);
 
         JPanel header = new JPanel(new BorderLayout(0, 4));
         header.add(heading, BorderLayout.NORTH);
@@ -128,6 +120,7 @@ class AlbumWindow extends JDialog {
         photoIds = photos.stream().map(PhotoSummary::id).toList();
         heading.setText("Album „" + album.name() + "“ – " + photoCount(photoIds.size()));
         editTextsButton.setEnabled(!photos.isEmpty());
+        removeButton.setEnabled(!photos.isEmpty());
         if (photos.isEmpty()) {
             image.setIcon(null);
             image.setText("Dieses Album enthält noch keine Fotos.");
@@ -176,7 +169,7 @@ class AlbumWindow extends JDialog {
         if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        Result<PhotoSummary> added = addPhoto.execute(albumId, fileChooser.getSelectedFile().toPath());
+        Result<PhotoSummary> added = useCases.addPhoto().execute(albumId, fileChooser.getSelectedFile().toPath());
         if (!added.isSuccess()) {
             message.setText(added.getMessage());
             return;
@@ -187,13 +180,24 @@ class AlbumWindow extends JDialog {
     private void openTextsDialog() {
         PhotoSummary photo = photos.get(current);
         new PhotoTextsDialog(this, photo,
-                (title, description) -> editPhotoTexts.execute(albumId, photo.id(), title, description))
+                (title, description) -> useCases.editPhotoTexts().execute(albumId, photo.id(), title, description))
                 .showDialog()
                 .ifPresent(saved -> reloadAndShow(saved.id()));
     }
 
+    private void removeCurrentPhoto() {
+        PhotoSummary photo = photos.get(current);
+        Result<AlbumDetails> result = useCases.removePhoto().execute(albumId, photo.id());
+        if (!result.isSuccess()) {
+            message.setText(result.getMessage());
+            return;
+        }
+        showAlbum(result.getValue(), Math.min(current, result.getValue().photos().size() - 1));
+        message.setText("Das Foto liegt jetzt im Papierkorb.");
+    }
+
     private void reloadAndShow(UUID photoId) {
-        Result<AlbumDetails> reloaded = openAlbum.execute(albumId);
+        Result<AlbumDetails> reloaded = useCases.openAlbum().execute(albumId);
         if (!reloaded.isSuccess()) {
             message.setText(reloaded.getMessage());
             return;
@@ -203,7 +207,7 @@ class AlbumWindow extends JDialog {
     }
 
     private Result<BufferedImage> loadImage(UUID photoId) {
-        Result<byte[]> data = loadPhoto.execute(photoId);
+        Result<byte[]> data = useCases.loadPhoto().execute(photoId);
         if (!data.isSuccess()) {
             return Result.failure(data.getMessage());
         }
