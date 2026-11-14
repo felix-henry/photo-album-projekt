@@ -81,7 +81,7 @@ Der Ablauf folgt UC-01: Erst laufen alle Prüfungen, dann werden App-Kopie und A
 
 ## 5. Bildpuffer
 
-Beim Ansehen eines Albums hält die Anwendung höchstens **5 Bilder** gleichzeitig im Arbeitsspeicher: das angezeigte Foto und je zwei davor und danach (NFA-03, A-06). Beim Blättern lädt sie das nächste Bild nach und gibt das am weitesten entfernte frei. Die Bilder werden auf Anzeigegröße verkleinert gehalten, nicht in voller Auflösung. Beim Öffnen erscheinen zuerst Fotoanzahl und erstes Bild, die Nachbarn folgen danach. Wie im Klickprototyp zeigt die Albumansicht außerdem kleine Vorschaubilder, höchstens 12 je Seite. Sie zählen nicht zum Puffer, die Grenze von 5 gilt für die großen Bilder der Einzelansicht.
+Beim Ansehen eines Albums hält die Anwendung höchstens **5 Bilder** gleichzeitig im Arbeitsspeicher: das angezeigte Foto und je zwei davor und danach (NFA-03, A-06). Beim Blättern lädt sie das nächste Bild nach und gibt das am weitesten entfernte frei. Die Bilder werden auf Anzeigegröße verkleinert gehalten, nicht in voller Auflösung. Beim Öffnen erscheinen zuerst Fotoanzahl und erstes Bild, die Nachbarn folgen danach. Anders als der Klickprototyp zeigt die Albumansicht keine Vorschaubilder, sondern nur diese Einzelansicht mit Fotozähler. Das hält die Oberfläche einfach und lädt keine Bilder über den Puffer hinaus.
 
 Der Puffer gehört zur Anzeige in der UI und enthält keine Geschäftsregel. Die Bilddaten bekommt er über die Anwendung, die sie mit `PhotoStorage.load` lädt.
 
