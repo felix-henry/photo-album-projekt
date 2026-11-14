@@ -2,9 +2,10 @@ package de.commitmentissues.photoalbum.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -19,8 +20,9 @@ import de.commitmentissues.photoalbum.application.AlbumSummary;
 import de.commitmentissues.photoalbum.application.Result;
 
 /**
- * Dialog zur Eingabe eines Albumnamens für „Album erstellen“ (UC-02) und „Album umbenennen“ (FA-03).
- * Eine abgelehnte Eingabe wird im Dialog angezeigt, damit der Nutzer den Namen korrigieren oder abbrechen kann.
+ * Dialog zur Eingabe eines Albumnamens für „Album erstellen“ (UC-02), „Album umbenennen“ (FA-03) und
+ * „In neues Album wiederherstellen“ (A-09). Eine abgelehnte Eingabe wird im Dialog angezeigt, damit der
+ * Nutzer den Namen korrigieren oder abbrechen kann.
  */
 class AlbumNameDialog extends JDialog {
 
@@ -29,8 +31,8 @@ class AlbumNameDialog extends JDialog {
     private final JLabel message = new JLabel(" ");
     private AlbumSummary saved;
 
-    AlbumNameDialog(Frame owner, String title, String initialName, Function<String, Result<AlbumSummary>> action) {
-        super(owner, title, true);
+    AlbumNameDialog(Window owner, String title, String initialName, Function<String, Result<AlbumSummary>> action) {
+        super(owner, title, Dialog.ModalityType.APPLICATION_MODAL);
         this.action = action;
 
         nameField.setText(initialName);

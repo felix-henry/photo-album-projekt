@@ -21,8 +21,9 @@ import de.commitmentissues.photoalbum.application.Result;
 
 /**
  * Albumübersicht (FA-02) mit dem Einstieg in „Album erstellen“ (UC-02), „Album öffnen“ (FA-08),
- * „Album umbenennen“ (FA-03) und „Album löschen“ (FA-04). Fotos lassen sich erst im geöffneten Album
- * hinzufügen (AK-05.3). Enthält keine Geschäftsregeln: Sie zeigt nur an, was die Use Cases zurückmelden.
+ * „Album umbenennen“ (FA-03), „Album löschen“ (FA-04) und den Papierkorb (A-08). Fotos lassen sich erst im
+ * geöffneten Album hinzufügen (AK-05.3). Enthält keine Geschäftsregeln: Sie zeigt nur an, was die Use Cases
+ * zurückmelden.
  */
 public class AlbumOverviewWindow extends JFrame {
 
@@ -44,6 +45,8 @@ public class AlbumOverviewWindow extends JFrame {
         openButton.addActionListener(event -> openSelectedAlbum());
         renameButton.addActionListener(event -> openRenameDialog());
         deleteButton.addActionListener(event -> deleteSelectedAlbum());
+        JButton trashButton = new JButton("Papierkorb");
+        trashButton.addActionListener(event -> openTrash());
         updateButtons();
         albumList.addListSelectionListener(event -> updateButtons());
 
@@ -53,6 +56,7 @@ public class AlbumOverviewWindow extends JFrame {
         top.add(openButton);
         top.add(renameButton);
         top.add(deleteButton);
+        top.add(trashButton);
 
         JPanel content = new JPanel(new BorderLayout(0, 8));
         content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -62,7 +66,7 @@ public class AlbumOverviewWindow extends JFrame {
 
         setContentPane(content);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(680, 360);
+        setSize(800, 360);
         setLocationRelativeTo(null);
         refresh();
     }
@@ -136,6 +140,11 @@ public class AlbumOverviewWindow extends JFrame {
         status.setText(result.isSuccess()
                 ? "„" + album.name() + "“ liegt jetzt im Papierkorb."
                 : result.getMessage());
+    }
+
+    private void openTrash() {
+        new TrashWindow(this, useCases).setVisible(true);
+        refresh();
     }
 
     private void refreshAndSelect(AlbumSummary album) {
