@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import de.commitmentissues.photoalbum.application.EditPhotoTextsUseCase;
 import de.commitmentissues.photoalbum.application.RenameAlbumUseCase;
 import de.commitmentissues.photoalbum.application.StorageException;
 import de.commitmentissues.photoalbum.domain.Album;
@@ -161,6 +163,36 @@ class FileAlbumRepositoryTest {
         Album loaded = new FileAlbumRepository(dataDirectory).findById(urlaub.getId()).orElseThrow();
         assertEquals("urlaub", loaded.getName());
         assertEquals(idsAndHashes(urlaub), idsAndHashes(loaded));
+    }
+
+    @Test
+    @DisplayName("AK-10.1: Titel und Beschreibung sind nach einem Neustart abrufbar")
+    void keepsPhotoTextsAfterRestart() {
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+        Album urlaub = albumWithPhotos("Urlaub", 1);
+        repository.save(urlaub);
+        UUID photoId = urlaub.getPhotos().get(0).getId().value();
+
+        new EditPhotoTextsUseCase(repository)
+                .execute(urlaub.getId().value(), photoId, "Grüße vom Strand 📷", "Sonne, \"Meer\" & <Wind>");
+
+        Photo loaded = new FileAlbumRepository(dataDirectory).findById(urlaub.getId()).orElseThrow().getPhotos().get(0);
+        assertEquals("Grüße vom Strand 📷", loaded.getTitle());
+        assertEquals("Sonne, \"Meer\" & <Wind>", loaded.getDescription());
+    }
+
+    @Test
+    @DisplayName("Ein Foto ohne Titel und Beschreibung aus einer früheren Version wird mit leeren Texten gelesen")
+    void readsPhotoWithoutTexts() throws IOException {
+        AlbumId id = AlbumId.newId();
+        writeAlbumFile(id, """
+                {"id": "%s", "name": "Party", "photos": [{"id": "%s", "contentHash": "hash-1"}]}
+                """.formatted(id.value(), PhotoId.newId().value()));
+
+        Photo loaded = new FileAlbumRepository(dataDirectory).findById(id).orElseThrow().getPhotos().get(0);
+
+        assertEquals("", loaded.getTitle());
+        assertEquals("", loaded.getDescription());
     }
 
     private void writeAlbumFile(AlbumId id, String json) throws IOException {

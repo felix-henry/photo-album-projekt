@@ -99,9 +99,14 @@ public class FileAlbumRepository implements AlbumRepository {
             if (photo == null || photo.id() == null || photo.contentHash() == null) {
                 throw new StorageException("Ein Foto in der Albumdatei ist unvollständig: " + file);
             }
-            photos.add(Photo.restore(new PhotoId(UUID.fromString(photo.id())), photo.contentHash()));
+            photos.add(Photo.restore(new PhotoId(UUID.fromString(photo.id())), photo.contentHash(),
+                    textOrEmpty(photo.title()), textOrEmpty(photo.description())));
         }
         return photos;
+    }
+
+    private static String textOrEmpty(String text) {
+        return text == null ? "" : text;
     }
 
     private static boolean isAlbumFile(Path file) {
