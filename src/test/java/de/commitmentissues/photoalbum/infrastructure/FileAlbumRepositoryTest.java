@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -85,5 +87,25 @@ class FileAlbumRepositoryTest {
         FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
 
         assertThrows(StorageException.class, () -> repository.save(new Album("Urlaub")));
+    }
+
+    @Test
+    @DisplayName("Ein gespeichertes Album wird über seine ID gefunden")
+    void findsAlbumById() {
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+        Album album = new Album("Urlaub");
+        repository.save(album);
+
+        Optional<Album> found = repository.findById(album.getId());
+
+        assertEquals("Urlaub", found.orElseThrow().getName());
+    }
+
+    @Test
+    @DisplayName("Zu einer unbekannten ID gibt es kein Album")
+    void findsNothingForUnknownId() {
+        Optional<Album> found = new FileAlbumRepository(dataDirectory).findById(AlbumId.newId());
+
+        assertTrue(found.isEmpty());
     }
 }

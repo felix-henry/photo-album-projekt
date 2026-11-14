@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -32,6 +33,15 @@ public class FileAlbumRepository implements AlbumRepository {
 
     public FileAlbumRepository(Path dataDirectory) {
         this.directory = dataDirectory.resolve("albums");
+    }
+
+    @Override
+    public Optional<Album> findById(AlbumId id) {
+        Path file = directory.resolve(id.value() + SUFFIX);
+        if (Files.notExists(file)) {
+            return Optional.empty();
+        }
+        return Optional.of(read(file));
     }
 
     @Override

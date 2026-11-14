@@ -2,8 +2,10 @@ package de.commitmentissues.photoalbum.application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import de.commitmentissues.photoalbum.domain.Album;
+import de.commitmentissues.photoalbum.domain.AlbumId;
 
 /**
  * Speichert Alben im Arbeitsspeicher und kann Lese- und Speicherfehler simulieren.
@@ -14,6 +16,17 @@ class InMemoryAlbumRepository implements AlbumRepository {
     private final List<Album> albums = new ArrayList<>();
     boolean failOnLoad;
     boolean failOnSave;
+
+    @Override
+    public Optional<Album> findById(AlbumId id) {
+        if (failOnLoad) {
+            throw new StorageException("Lesefehler simuliert");
+        }
+        return albums.stream()
+                .filter(album -> album.getId().equals(id))
+                .findFirst()
+                .map(InMemoryAlbumRepository::copy);
+    }
 
     @Override
     public List<Album> findAll() {
