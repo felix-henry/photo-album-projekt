@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +19,6 @@ import de.commitmentissues.photoalbum.application.StorageException;
 import de.commitmentissues.photoalbum.domain.Album;
 import de.commitmentissues.photoalbum.domain.AlbumId;
 import de.commitmentissues.photoalbum.domain.DomainException;
-import de.commitmentissues.photoalbum.domain.Photo;
-import de.commitmentissues.photoalbum.domain.PhotoId;
 
 /**
  * Speichert jedes Album samt seiner Fotos als eigene JSON-Datei {@code albums/<AlbumId>.json}
@@ -40,7 +37,7 @@ public class FileAlbumRepository implements AlbumRepository {
 
     @Override
     public Optional<Album> findById(AlbumId id) {
-        Path file = directory.resolve(id.value() + SUFFIX);
+        Path file = fileFor(id);
         if (Files.notExists(file)) {
             return Optional.empty();
         }
@@ -65,17 +62,26 @@ public class FileAlbumRepository implements AlbumRepository {
 
     @Override
     public void save(Album album) {
-        String fileName = album.getId().value() + SUFFIX;
-        Path target = directory.resolve(fileName);
-        Path temporary = directory.resolve(fileName + ".tmp");
+        Path target = fileFor(album.getId());
         try {
-            Files.createDirectories(directory);
-            Files.writeString(temporary, gson.toJson(AlbumFile.of(album)), StandardCharsets.UTF_8);
-            Files.move(temporary, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+            AtomicFile.write(target, gson.toJson(AlbumFile.of(album)));
         } catch (IOException e) {
-            deleteQuietly(temporary);
             throw new StorageException("Das Album ist nicht speicherbar: " + target, e);
         }
+    }
+
+    @Override
+    public void delete(AlbumId id) {
+        Path file = fileFor(id);
+        try {
+            Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new StorageException("Die Albumdatei ist nicht löschbar: " + file, e);
+        }
+    }
+
+    private Path fileFor(AlbumId id) {
+        return directory.resolve(id.value() + SUFFIX);
     }
 
     private Album read(Path file) {
@@ -84,40 +90,14 @@ public class FileAlbumRepository implements AlbumRepository {
             if (data == null || data.id() == null || data.name() == null) {
                 throw new StorageException("Die Albumdatei ist unvollständig: " + file);
             }
-            return Album.restore(new AlbumId(UUID.fromString(data.id())), data.name(), photosOf(data, file));
+            return Album.restore(new AlbumId(UUID.fromString(data.id())), data.name(),
+                    PhotoFile.toPhotos(data.photos()));
         } catch (IOException | JsonParseException | IllegalArgumentException | DomainException e) {
             throw new StorageException("Die Albumdatei ist nicht lesbar: " + file, e);
         }
     }
 
-    private static List<Photo> photosOf(AlbumFile data, Path file) {
-        if (data.photos() == null) {
-            return List.of();
-        }
-        List<Photo> photos = new ArrayList<>();
-        for (PhotoFile photo : data.photos()) {
-            if (photo == null || photo.id() == null || photo.contentHash() == null) {
-                throw new StorageException("Ein Foto in der Albumdatei ist unvollständig: " + file);
-            }
-            photos.add(Photo.restore(new PhotoId(UUID.fromString(photo.id())), photo.contentHash(),
-                    textOrEmpty(photo.title()), textOrEmpty(photo.description())));
-        }
-        return photos;
-    }
-
-    private static String textOrEmpty(String text) {
-        return text == null ? "" : text;
-    }
-
     private static boolean isAlbumFile(Path file) {
         return file.getFileName().toString().endsWith(SUFFIX);
-    }
-
-    private static void deleteQuietly(Path file) {
-        try {
-            Files.deleteIfExists(file);
-        } catch (IOException ignored) {
-            // Eine übrig gebliebene Zwischendatei stört nicht: findAll liest nur Dateien mit der Endung .json.
-        }
     }
 }

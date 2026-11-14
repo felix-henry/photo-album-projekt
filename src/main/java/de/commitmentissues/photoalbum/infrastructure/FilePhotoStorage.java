@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 import de.commitmentissues.photoalbum.application.PhotoStorage;
 import de.commitmentissues.photoalbum.application.StorageException;
@@ -56,8 +61,36 @@ public class FilePhotoStorage implements PhotoStorage {
         }
     }
 
+    /**
+     * Nennt nur Dateien, deren Name genau eine Foto-ID ist. Zwischendateien und fremde Dateien zählen nicht.
+     */
+    @Override
+    public Set<PhotoId> ids() {
+        if (Files.notExists(directory)) {
+            return Set.of();
+        }
+        Set<PhotoId> ids = new HashSet<>();
+        try (Stream<Path> files = Files.list(directory)) {
+            for (Path file : files.toList()) {
+                parseId(file.getFileName().toString()).ifPresent(ids::add);
+            }
+        } catch (IOException e) {
+            throw new StorageException("Der Fotoordner ist nicht lesbar: " + directory, e);
+        }
+        return ids;
+    }
+
     private Path fileFor(PhotoId id) {
         return directory.resolve(id.value().toString());
+    }
+
+    private static Optional<PhotoId> parseId(String fileName) {
+        try {
+            UUID uuid = UUID.fromString(fileName);
+            return uuid.toString().equals(fileName) ? Optional.of(new PhotoId(uuid)) : Optional.empty();
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     private static void deleteQuietly(Path file) {

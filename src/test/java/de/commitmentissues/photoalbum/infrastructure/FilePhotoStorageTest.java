@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -123,6 +124,27 @@ class FilePhotoStorageTest {
     @DisplayName("AK-08.3: Eine fehlende Kopie meldet einen Lesefehler")
     void loadOfMissingCopyFails() {
         assertThrows(StorageException.class, () -> storage.load(PhotoId.newId()));
+    }
+
+    @Test
+    @DisplayName("A-11: ids nennt alle App-Kopien, aber keine Zwischen- oder Fremddateien")
+    void idsListsOnlyCopies() throws IOException {
+        PhotoId first = PhotoId.newId();
+        PhotoId second = PhotoId.newId();
+        storage.store(first, original);
+        storage.store(second, original);
+        Files.writeString(photoFolder().resolve(PhotoId.newId().value() + ".tmp"), "Rest");
+        Files.writeString(photoFolder().resolve(first.value() + ".bak"), "Sicherung");
+
+        Set<PhotoId> ids = storage.ids();
+
+        assertEquals(Set.of(first, second), ids);
+    }
+
+    @Test
+    @DisplayName("Ohne Fotoordner gibt es keine App-Kopien")
+    void idsWithoutFolderIsEmpty() {
+        assertEquals(Set.of(), storage.ids());
     }
 
     private Path photoFolder() {

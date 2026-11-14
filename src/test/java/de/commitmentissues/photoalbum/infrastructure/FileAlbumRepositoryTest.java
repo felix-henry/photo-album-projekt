@@ -195,6 +195,30 @@ class FileAlbumRepositoryTest {
         assertEquals("", loaded.getDescription());
     }
 
+    @Test
+    @DisplayName("A-07: Ein gelöschtes Album ist nach einem Neustart nicht mehr vorhanden")
+    void deletesAlbumFile() {
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+        Album urlaub = new Album("Urlaub");
+        repository.save(urlaub);
+        repository.save(new Album("Party"));
+
+        repository.delete(urlaub.getId());
+
+        List<String> names = new FileAlbumRepository(dataDirectory).findAll().stream().map(Album::getName).toList();
+        assertEquals(List.of("Party"), names);
+    }
+
+    @Test
+    @DisplayName("Das Löschen eines schon fehlenden Albums gilt als Erfolg")
+    void deletingMissingAlbumSucceeds() {
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+
+        repository.delete(AlbumId.newId());
+
+        assertEquals(List.of(), repository.findAll());
+    }
+
     private void writeAlbumFile(AlbumId id, String json) throws IOException {
         Path albums = Files.createDirectories(dataDirectory.resolve("albums"));
         Files.writeString(albums.resolve(id.value() + ".json"), json);

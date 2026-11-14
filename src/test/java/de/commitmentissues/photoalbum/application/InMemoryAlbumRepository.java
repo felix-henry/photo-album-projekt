@@ -9,7 +9,7 @@ import de.commitmentissues.photoalbum.domain.AlbumId;
 import de.commitmentissues.photoalbum.domain.Photo;
 
 /**
- * Speichert Alben im Arbeitsspeicher und kann Lese- und Speicherfehler simulieren.
+ * Speichert Alben im Arbeitsspeicher und kann Lese-, Speicher- und Löschfehler simulieren.
  * Wie eine Datei hält er Kopien von Album und Fotos: Änderungen an einem geladenen Album
  * wirken erst nach save.
  */
@@ -18,6 +18,7 @@ class InMemoryAlbumRepository implements AlbumRepository {
     private final List<Album> albums = new ArrayList<>();
     boolean failOnLoad;
     boolean failOnSave;
+    boolean failOnDelete;
 
     @Override
     public Optional<Album> findById(AlbumId id) {
@@ -45,6 +46,14 @@ class InMemoryAlbumRepository implements AlbumRepository {
         }
         albums.removeIf(stored -> stored.getId().equals(album.getId()));
         albums.add(copy(album));
+    }
+
+    @Override
+    public void delete(AlbumId id) {
+        if (failOnDelete) {
+            throw new StorageException("Löschfehler simuliert");
+        }
+        albums.removeIf(stored -> stored.getId().equals(id));
     }
 
     List<String> names() {

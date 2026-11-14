@@ -48,6 +48,11 @@ class InMemoryPhotoStorage implements PhotoStorage {
         stored.remove(id);
     }
 
+    @Override
+    public Set<PhotoId> ids() {
+        return Set.copyOf(stored.keySet());
+    }
+
     void put(PhotoId id, byte[] content) {
         stored.put(id, content.clone());
     }

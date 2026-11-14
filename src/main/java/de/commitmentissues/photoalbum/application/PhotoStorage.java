@@ -1,6 +1,7 @@
 package de.commitmentissues.photoalbum.application;
 
 import java.nio.file.Path;
+import java.util.Set;
 
 import de.commitmentissues.photoalbum.domain.PhotoId;
 
@@ -21,4 +22,9 @@ public interface PhotoStorage {
      * Löscht die Kopie. Eine schon fehlende Kopie gilt als gelöscht (ADR-002).
      */
     void delete(PhotoId id);
+
+    /**
+     * Nennt die IDs aller App-Kopien, damit beim Start verwaiste Kopien entfernt werden (A-11).
+     */
+    Set<PhotoId> ids();
 }
