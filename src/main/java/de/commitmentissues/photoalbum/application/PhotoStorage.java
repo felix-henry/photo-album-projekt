@@ -13,6 +13,11 @@ public interface PhotoStorage {
     void store(PhotoId id, Path file);
 
     /**
+     * Liefert die Bilddaten der Kopie zum Anzeigen (FA-08).
+     */
+    byte[] load(PhotoId id);
+
+    /**
      * Löscht die Kopie. Eine schon fehlende Kopie gilt als gelöscht (ADR-002).
      */
     void delete(PhotoId id);

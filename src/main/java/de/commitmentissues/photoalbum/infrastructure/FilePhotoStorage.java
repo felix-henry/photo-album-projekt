@@ -37,6 +37,16 @@ public class FilePhotoStorage implements PhotoStorage {
     }
 
     @Override
+    public byte[] load(PhotoId id) {
+        Path file = fileFor(id);
+        try {
+            return Files.readAllBytes(file);
+        } catch (IOException e) {
+            throw new StorageException("Die App-Kopie ist nicht lesbar: " + file, e);
+        }
+    }
+
+    @Override
     public void delete(PhotoId id) {
         Path file = fileFor(id);
         try {

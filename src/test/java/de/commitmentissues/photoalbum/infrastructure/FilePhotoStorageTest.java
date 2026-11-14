@@ -108,6 +108,23 @@ class FilePhotoStorageTest {
         assertThrows(StorageException.class, () -> storage.delete(id));
     }
 
+    @Test
+    @DisplayName("AK-08.1: load liefert die Bilddaten der gespeicherten Kopie")
+    void loadReturnsStoredCopy() {
+        PhotoId id = PhotoId.newId();
+        storage.store(id, original);
+
+        byte[] content = storage.load(id);
+
+        assertArrayEquals(IMAGE_BYTES, content);
+    }
+
+    @Test
+    @DisplayName("AK-08.3: Eine fehlende Kopie meldet einen Lesefehler")
+    void loadOfMissingCopyFails() {
+        assertThrows(StorageException.class, () -> storage.load(PhotoId.newId()));
+    }
+
     private Path photoFolder() {
         return dir.resolve("daten").resolve("photos");
     }
