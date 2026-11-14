@@ -14,9 +14,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import de.commitmentissues.photoalbum.application.RenameAlbumUseCase;
 import de.commitmentissues.photoalbum.application.StorageException;
 import de.commitmentissues.photoalbum.domain.Album;
 import de.commitmentissues.photoalbum.domain.AlbumId;
+import de.commitmentissues.photoalbum.domain.Photo;
+import de.commitmentissues.photoalbum.domain.PhotoId;
 
 class FileAlbumRepositoryTest {
 
@@ -107,5 +110,75 @@ class FileAlbumRepositoryTest {
         Optional<Album> found = new FileAlbumRepository(dataDirectory).findById(AlbumId.newId());
 
         assertTrue(found.isEmpty());
+    }
+
+    @Test
+    @DisplayName("NFA-02: Fotos sind nach einem Neustart mit ID, Inhaltshash und Reihenfolge vorhanden")
+    void keepsPhotosAfterRestart() {
+        Album album = albumWithPhotos("Urlaub", 3);
+        new FileAlbumRepository(dataDirectory).save(album);
+
+        Album loaded = new FileAlbumRepository(dataDirectory).findById(album.getId()).orElseThrow();
+
+        assertEquals(idsAndHashes(album), idsAndHashes(loaded));
+    }
+
+    @Test
+    @DisplayName("Eine Albumdatei ohne Fotoliste aus einer früheren Version wird als Album ohne Fotos gelesen")
+    void readsAlbumFileWithoutPhotoList() throws IOException {
+        AlbumId id = AlbumId.newId();
+        writeAlbumFile(id, """
+                {"id": "%s", "name": "Party"}
+                """.formatted(id.value()));
+
+        Album loaded = new FileAlbumRepository(dataDirectory).findById(id).orElseThrow();
+
+        assertEquals("Party", loaded.getName());
+        assertEquals(List.of(), loaded.getPhotos());
+    }
+
+    @Test
+    @DisplayName("AK-02.3: Ein Foto ohne Inhaltshash macht die Albumdatei unlesbar")
+    void reportsPhotoWithoutHash() throws IOException {
+        AlbumId id = AlbumId.newId();
+        writeAlbumFile(id, """
+                {"id": "%s", "name": "Party", "photos": [{"id": "%s"}]}
+                """.formatted(id.value(), PhotoId.newId().value()));
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+
+        assertThrows(StorageException.class, repository::findAll);
+    }
+
+    @Test
+    @DisplayName("AK-03.1: Nach dem Umbenennen enthält das gespeicherte Album dieselben Fotos")
+    void renamedAlbumKeepsPhotos() {
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+        Album urlaub = albumWithPhotos("Urlaub", 3);
+        repository.save(urlaub);
+
+        new RenameAlbumUseCase(repository).execute(urlaub.getId().value(), "urlaub");
+
+        Album loaded = new FileAlbumRepository(dataDirectory).findById(urlaub.getId()).orElseThrow();
+        assertEquals("urlaub", loaded.getName());
+        assertEquals(idsAndHashes(urlaub), idsAndHashes(loaded));
+    }
+
+    private void writeAlbumFile(AlbumId id, String json) throws IOException {
+        Path albums = Files.createDirectories(dataDirectory.resolve("albums"));
+        Files.writeString(albums.resolve(id.value() + ".json"), json);
+    }
+
+    private static Album albumWithPhotos(String name, int count) {
+        Album album = new Album(name);
+        for (int i = 1; i <= count; i++) {
+            album.addPhoto(new Photo("hash-" + i));
+        }
+        return album;
+    }
+
+    private static List<String> idsAndHashes(Album album) {
+        return album.getPhotos().stream()
+                .map(photo -> photo.getId().value() + ":" + photo.getContentHash())
+                .toList();
     }
 }

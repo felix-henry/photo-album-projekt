@@ -20,9 +20,12 @@ import de.commitmentissues.photoalbum.application.StorageException;
 import de.commitmentissues.photoalbum.domain.Album;
 import de.commitmentissues.photoalbum.domain.AlbumId;
 import de.commitmentissues.photoalbum.domain.DomainException;
+import de.commitmentissues.photoalbum.domain.Photo;
+import de.commitmentissues.photoalbum.domain.PhotoId;
 
 /**
- * Speichert jedes Album als eigene JSON-Datei {@code albums/<AlbumId>.json} (ADR-001, ADR-003).
+ * Speichert jedes Album samt seiner Fotos als eigene JSON-Datei {@code albums/<AlbumId>.json}
+ * (ADR-001, ADR-003).
  */
 public class FileAlbumRepository implements AlbumRepository {
 
@@ -81,10 +84,24 @@ public class FileAlbumRepository implements AlbumRepository {
             if (data == null || data.id() == null || data.name() == null) {
                 throw new StorageException("Die Albumdatei ist unvollständig: " + file);
             }
-            return Album.restore(new AlbumId(UUID.fromString(data.id())), data.name());
+            return Album.restore(new AlbumId(UUID.fromString(data.id())), data.name(), photosOf(data, file));
         } catch (IOException | JsonParseException | IllegalArgumentException | DomainException e) {
             throw new StorageException("Die Albumdatei ist nicht lesbar: " + file, e);
         }
+    }
+
+    private static List<Photo> photosOf(AlbumFile data, Path file) {
+        if (data.photos() == null) {
+            return List.of();
+        }
+        List<Photo> photos = new ArrayList<>();
+        for (PhotoFile photo : data.photos()) {
+            if (photo == null || photo.id() == null || photo.contentHash() == null) {
+                throw new StorageException("Ein Foto in der Albumdatei ist unvollständig: " + file);
+            }
+            photos.add(Photo.restore(new PhotoId(UUID.fromString(photo.id())), photo.contentHash()));
+        }
+        return photos;
     }
 
     private static boolean isAlbumFile(Path file) {
