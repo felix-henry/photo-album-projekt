@@ -1,16 +1,20 @@
 package de.commitmentissues.photoalbum.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Ein Fotoalbum mit Namen (A-02). Fotos folgen mit UC-01.
+ * Ein Fotoalbum mit Namen (A-02) und höchstens 100 Fotos ohne bytegleiche Duplikate (FA-06, FA-07).
  */
 public class Album {
 
+    public static final int MAX_PHOTOS = 100;
     static final int MAX_NAME_LENGTH = 50;
 
     private final AlbumId id;
     private String name;
+    private final List<Photo> photos = new ArrayList<>();
 
     public Album(String name) {
         this(AlbumId.newId(), name);
@@ -22,11 +26,20 @@ public class Album {
     }
 
     /**
-     * Stellt ein gespeichertes Album mit seiner bisherigen ID wieder her.
-     * Die Namensregel gilt auch hier.
+     * Stellt ein gespeichertes Album ohne Fotos mit seiner bisherigen ID wieder her.
      */
     public static Album restore(AlbumId id, String name) {
-        return new Album(id, name);
+        return restore(id, name, List.of());
+    }
+
+    /**
+     * Stellt ein gespeichertes Album mit seiner bisherigen ID und seinen Fotos wieder her.
+     * Namensregel, Duplikatverbot und Höchstzahl gelten auch hier.
+     */
+    public static Album restore(AlbumId id, String name, List<Photo> photos) {
+        Album album = new Album(id, name);
+        photos.forEach(album::addPhoto);
+        return album;
     }
 
     public AlbumId getId() {
@@ -35,6 +48,27 @@ public class Album {
 
     public String getName() {
         return name;
+    }
+
+    public List<Photo> getPhotos() {
+        return List.copyOf(photos);
+    }
+
+    /**
+     * Nimmt ein Foto auf. Lehnt zuerst ein bytegleiches Duplikat ab (A-01),
+     * danach ein volles Album (FA-07), wie die Reihenfolge in UC-01 es vorgibt.
+     */
+    public void addPhoto(Photo photo) {
+        Objects.requireNonNull(photo, "photo");
+        boolean duplicate = photos.stream()
+                .anyMatch(existing -> existing.getContentHash().equals(photo.getContentHash()));
+        if (duplicate) {
+            throw new DomainException(Violation.PHOTO_DUPLICATE);
+        }
+        if (photos.size() >= MAX_PHOTOS) {
+            throw new DomainException(Violation.ALBUM_FULL);
+        }
+        photos.add(photo);
     }
 
     /**

@@ -37,6 +37,6 @@ class InMemoryAlbumRepository implements AlbumRepository {
     }
 
     private static Album copy(Album album) {
-        return Album.restore(album.getId(), album.getName());
+        return Album.restore(album.getId(), album.getName(), album.getPhotos());
     }
 }
