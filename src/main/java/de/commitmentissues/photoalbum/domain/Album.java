@@ -72,6 +72,18 @@ public class Album {
     }
 
     /**
+     * Nimmt ein Foto aus dem Album (FA-09) und gibt es zurück.
+     */
+    public Photo removePhoto(PhotoId id) {
+        Photo photo = photos.stream()
+                .filter(candidate -> candidate.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Das Foto gehört nicht zu diesem Album: " + id));
+        photos.remove(photo);
+        return photo;
+    }
+
+    /**
      * Nur über {@link AlbumLibrary#rename} aufrufbar, damit die Eindeutigkeit geprüft wird (A-02).
      */
     void rename(String newName) {

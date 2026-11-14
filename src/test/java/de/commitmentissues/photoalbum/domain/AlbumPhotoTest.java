@@ -101,6 +101,26 @@ class AlbumPhotoTest {
         assertEquals(Violation.PHOTO_DUPLICATE, exception.getViolation());
     }
 
+    @Test
+    @DisplayName("FA-09: Ein entferntes Foto verlässt das Album, die übrigen bleiben in ihrer Reihenfolge")
+    void removesOnlyThatPhoto() {
+        Album album = albumWithPhotos(3);
+        List<Photo> before = album.getPhotos();
+
+        album.removePhoto(before.get(1).getId());
+
+        assertEquals(List.of(before.get(0), before.get(2)), album.getPhotos());
+    }
+
+    @Test
+    @DisplayName("Ein Foto, das nicht im Album liegt, lässt sich nicht entfernen")
+    void rejectsRemovingUnknownPhoto() {
+        Album album = albumWithPhotos(1);
+        PhotoId unknown = PhotoId.newId();
+
+        assertThrows(IllegalArgumentException.class, () -> album.removePhoto(unknown));
+    }
+
     private static Album albumWithPhotos(int count) {
         Album album = new Album("Klassenfahrt");
         for (int i = 1; i <= count; i++) {
