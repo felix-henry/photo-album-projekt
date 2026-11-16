@@ -66,6 +66,8 @@ Für Änderungen ist folgender Ablauf vorgegeben:
 
 Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Request mit Freigaben (Approvals) durch die vier anderen Teammitglieder. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
+Gemeinsame Regeln für Coding Agents wie Claude Code stehen in [AGENTS.md](AGENTS.md).
+
 ## 🗺️ Projektplanung
 
 Meilensteine, geplante Releases, Abgaben und Arbeitsschritte je Block stehen in der [Roadmap](ROADMAP.md).
@@ -90,6 +92,7 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 <pre>
 .
 ├── <a href=".gitignore">.gitignore</a>
+├── <a href="AGENTS.md"><strong>AGENTS.md</strong></a>
 ├── <a href="AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
 ├── <a href="ARCHITECTURE.md"><strong>ARCHITECTURE.md</strong></a>
 ├── <a href="CHANGE_REQUEST.md"><strong>CHANGE_REQUEST.md</strong></a>
