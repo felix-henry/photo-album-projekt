@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -55,6 +56,9 @@ public class AlbumOverviewWindow extends JFrame {
         trashButton.addActionListener(event -> openTrash());
         updateButtons();
         albumList.addListSelectionListener(event -> updateButtons());
+        if (albumList.getCellRenderer() instanceof JComponent renderer) {
+            renderer.putClientProperty("html.disable", Boolean.TRUE);
+        }
         albumList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event) {

@@ -35,8 +35,8 @@ import de.commitmentissues.photoalbum.application.Result;
  */
 class AlbumWindow extends JDialog {
 
-    static final int IMAGE_WIDTH = 800;
-    static final int IMAGE_HEIGHT = 600;
+    static final int IMAGE_WIDTH = 640;
+    static final int IMAGE_HEIGHT = 420;
 
     private final UUID albumId;
     private final UseCases useCases;
