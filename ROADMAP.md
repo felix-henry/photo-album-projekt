@@ -233,22 +233,22 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Quellcode und Tests der Domäne/Albumverwaltung; bei betroffenem Feedback auch [REQUIREMENTS.md](REQUIREMENTS.md) und [ARCHITECTURE.md](ARCHITECTURE.md).
 
-- [ ] **Auftraggeber-Feedback aus Block 2 und 3 berücksichtigen:** Rückmeldungen bei den betroffenen Anforderungen und beim Entwurf einarbeiten und die Umsetzung darauf aufbauen. ([PB §4](docs/task_description/Projektbeschreibung_Photo_Album.md#4-rolle-des-auftraggebers))
-- [ ] **Alben erstellen, anzeigen, umbenennen und löschen:** Die vier vorgegebenen Albumfunktionen umsetzen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
-- [ ] **Geschäftsregeln und definierte Fehlerfälle umsetzen:** Regeln zu Albumnamen, Fotoanzahl, Textlängen und Duplikaten berücksichtigen. Ungültige Eingaben und definierte Fehlerfälle mit fachlicher Fehlermeldung behandeln; der Zustand bleibt dabei unverändert. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität); [PB §5.2](docs/task_description/Projektbeschreibung_Photo_Album.md#52-geschäftsregeln-ausgangsstand---werden-im-requirements-engineering-präzisiert))
+- [x] **Auftraggeber-Feedback aus Block 2 und 3 berücksichtigen:** Rückmeldungen bei den betroffenen Anforderungen und beim Entwurf einarbeiten und die Umsetzung darauf aufbauen. *Vermerk:* Zu Block 2 und 3 lag kein Feedback der Auftraggeberin vor, deshalb war nichts einzuarbeiten. ([PB §4](docs/task_description/Projektbeschreibung_Photo_Album.md#4-rolle-des-auftraggebers))
+- [x] **Alben erstellen, anzeigen, umbenennen und löschen:** Die vier vorgegebenen Albumfunktionen umsetzen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
+- [x] **Geschäftsregeln und definierte Fehlerfälle umsetzen:** Regeln zu Albumnamen, Fotoanzahl, Textlängen und Duplikaten berücksichtigen. Ungültige Eingaben und definierte Fehlerfälle mit fachlicher Fehlermeldung behandeln; der Zustand bleibt dabei unverändert. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität); [PB §5.2](docs/task_description/Projektbeschreibung_Photo_Album.md#52-geschäftsregeln-ausgangsstand---werden-im-requirements-engineering-präzisiert))
 
 > **Dateien:** Quellcode und Tests der Foto-Use-Cases und Fototexte.
 
-- [ ] **Fotos zu Alben hinzufügen, anzeigen und entfernen:** Die vorgegebenen Fotofunktionen umsetzen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
-- [ ] **Einem Foto einen Titel bzw. eine Beschreibung geben:** Die vorgegebene Bearbeitung der Fototexte ermöglichen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
+- [x] **Fotos zu Alben hinzufügen, anzeigen und entfernen:** Die vorgegebenen Fotofunktionen umsetzen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
+- [x] **Einem Foto einen Titel bzw. eine Beschreibung geben:** Die vorgegebene Bearbeitung der Fototexte ermöglichen. ([PB §5.1](docs/task_description/Projektbeschreibung_Photo_Album.md#51-pflichtfunktionalität))
 
 > **Dateien:** Quellcode und Tests der Dateispeicherung · [ARCHITECTURE.md](ARCHITECTURE.md) (Speicherformat).
 
-- [ ] **Lokale Datenhaltung umsetzen und Speicherformat dokumentieren:** Daten im lokalen Dateisystem speichern und das verwendete Format dokumentieren. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
+- [x] **Lokale Datenhaltung umsetzen und Speicherformat dokumentieren:** Daten im lokalen Dateisystem speichern und das verwendete Format dokumentieren. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
 
 > **Dateien:** Quellcode und Tests der Benutzeroberfläche.
 
-- [ ] **Eine einfache, zweckmäßige Benutzeroberfläche bereitstellen:** JavaFX, Swing oder Konsole sind zulässig. Die Use Cases müssen bedienbar sein; die optische Gestaltung ist nicht der Bewertungsmaßstab. ([PB §4](docs/task_description/Projektbeschreibung_Photo_Album.md#4-rolle-des-auftraggebers); [PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
+- [x] **Eine einfache, zweckmäßige Benutzeroberfläche bereitstellen:** JavaFX, Swing oder Konsole sind zulässig. Die Use Cases müssen bedienbar sein; die optische Gestaltung ist nicht der Bewertungsmaßstab. ([PB §4](docs/task_description/Projektbeschreibung_Photo_Album.md#4-rolle-des-auftraggebers); [PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen))
 
 #### 2. Build, Projektstruktur und CI
 
@@ -259,9 +259,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 - [x] **Ein JAR als Build-Artefakt erzeugen:** Der Wrapper-Aufruf `./mvnw verify` führt Build und Tests aus und erzeugt ein JAR unter `target/`. Ein fehlgeschlagener Test lässt den Build fehlschlagen. ([Block 4, S. 8–9](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=8))
 - [x] **Dependencies begründen und unnötige Bibliotheken entfernen:** Jede verwendete Dependency in einem ADR begründen und nicht benötigte Bibliotheken entfernen. Zusätzliche Technologien brauchen eine fachliche Begründung. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen); [Block 4, S. 10](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=10))
 - [x] **Repository nach Schichten strukturieren und [.gitignore](.gitignore) pflegen:** Quellcode nach Schichten ordnen und Projektdokumente auf oberster Ebene führen. Die Testpakete unter `src/test/java/` spiegeln die Produktionspakete unter `src/main/java/`. Build-Ausgaben und IDE-Dateien wie `target/`, `.idea/`, `.vscode/` und `*.iml` ausschließen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 6](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=6))
-- [ ] **Build-Check aus frischem Clone durch jedes Teammitglied durchführen:** Jeder klont das Repository in ein neues Verzeichnis und führt `./mvnw verify` aus. Fehlerursachen wie fehlender Wrapper, falsche Java-Version, IDE-Abhängigkeit oder absoluter Pfad im passenden Issue festhalten und mit einem zugehörigen Fix-Commit beheben. ([Block 4, S. 11](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=11))
+- [x] **Build-Check aus frischem Clone durch jedes Teammitglied durchführen:** Jeder klont das Repository in ein neues Verzeichnis und führt `./mvnw verify` aus. Fehlerursachen wie fehlender Wrapper, falsche Java-Version, IDE-Abhängigkeit oder absoluter Pfad im passenden Issue festhalten und mit einem zugehörigen Fix-Commit beheben. *Vermerk:* Alle fünf haben aus einem frischen Clone gebaut, vier mit JDK 21 und einer mit JDK 25. Die CI baut zusätzlich jeden Push mit Temurin 21. Nachweise in #26. ([Block 4, S. 11](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=11))
 - [x] **CI für Push auf `main` und jeden Pull Request einrichten:** In `.github/workflows/ci.yml` Java 21 passend zur `pom.xml`, Maven-Cache und `./mvnw --batch-mode verify` konfigurieren; keine manuelle Installation voraussetzen. Den JaCoCo-Report unter `target/site/jacoco/` als CI-Artefakt hochladen. Der geschützte `main` verlangt PRs, Reviews und den erfolgreichen Statuscheck `build`. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 21](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=21))
-- [ ] **GitHub Dependabot aktivieren:** `.github/dependabot.yml` anlegen und damit Abhängigkeitsupdates prüfen lassen. Hinweise bewerten und Updates vor dem Merge prüfen. ([Block 4, S. 10](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=10); [Block 4, S. 22](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=22); Projektfestlegung)
+- [x] **GitHub Dependabot aktivieren:** `.github/dependabot.yml` anlegen und damit Abhängigkeitsupdates prüfen lassen. Hinweise bewerten und Updates vor dem Merge prüfen. ([Block 4, S. 10](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=10); [Block 4, S. 22](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=22); Projektfestlegung)
 - [ ] **SpotBugs-Job ergänzen (optional):** Bei Bedarf einen zusätzlichen Job für statische Analyse in `.github/workflows/ci.yml` einrichten. ([Block 4, S. 22](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=22))
 
 #### 3. Git-Prozess, Agentenregeln und Dokumentation
@@ -284,17 +284,17 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [README.md](README.md)
 
-- [ ] **Build, Start, Team und Versionen in [README.md](README.md) beschreiben:** Die [README](README.md) enthält Projektzweck, Team, verwendete Versionen sowie nachvollziehbare Build- und Startanweisungen. ([PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- [x] **Build, Start, Team und Versionen in [README.md](README.md) beschreiben:** Die [README](README.md) enthält Projektzweck, Team, verwendete Versionen sowie nachvollziehbare Build- und Startanweisungen. ([PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
 
 > **Dateien:** [README.md](README.md) (Secrets-Regel).
 
-- [ ] **Secrets-Regel in [README.md](README.md) dokumentieren:** Keine Zugangsdaten ins Repository aufnehmen; CI-Secrets getrennt über GitHub Secrets verwalten. ([Block 4, S. 22](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=22))
+- [x] **Secrets-Regel in [README.md](README.md) dokumentieren:** Keine Zugangsdaten ins Repository aufnehmen; CI-Secrets getrennt über GitHub Secrets verwalten. ([Block 4, S. 22](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=22))
 
 #### 4. KI-Einsatz dokumentieren
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Fall 3 zum Coding-Agent-Einsatz dokumentieren:** Einen tatsächlichen substanziellen Coding-Agent-Einsatz bei der Implementierung in [AI_USAGE.md](AI_USAGE.md) mit Aufgabe/Ziel, Werkzeug/Modell, Ergebnis, kritischer Bewertung und begründeter Entscheidung auswerten. Den verwendeten Prompt dort festhalten oder den versionierten Skill verlinken. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
+- [x] **KI-Fall 3 zum Coding-Agent-Einsatz dokumentieren:** Einen tatsächlichen substanziellen Coding-Agent-Einsatz bei der Implementierung in [AI_USAGE.md](AI_USAGE.md) mit Aufgabe/Ziel, Werkzeug/Modell, Ergebnis, kritischer Bewertung und begründeter Entscheidung auswerten. Den verwendeten Prompt dort festhalten oder den versionierten Skill verlinken. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
 
 #### Blockabschluss
 
