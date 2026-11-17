@@ -2,17 +2,17 @@
 
 ## Meilensteine und Releases
 
-| Block | Schwerpunkt | Wesentlicher Zwischenstand | Geplanter Tag | Erledigt |
+| Block | Schwerpunkt | Wesentlicher Zwischenstand | Geplante Tags | Erledigt |
 | --- | --- | --- | --- | :---: |
 | [1](#block-1-einführung-und-vorgehen) | Einführung und Vorgehen | Team, Repository, [README.md](README.md), Vorgehensentscheidung für Kanban und [Kanban-Board](https://photoalbum-kanban.vercel.app) | `block-1` | ✅ 19.10.2026 |
 | [2](#block-2-requirements-engineering) | Requirements Engineering | [REQUIREMENTS.md](REQUIREMENTS.md) mit 6-10 FA, 3-5 NFA, mindestens 2 Use Cases und Akzeptanzkriterien; [UI-Prototyp](docs/prototype/index.html); erster Eintrag in [AI_USAGE.md](AI_USAGE.md); Anforderungsaufgaben im Kanban-Board | `block-2` | ✅ 09.11.2026 |
 | [3](#block-3-architektur-und-entwurf) | Architektur und Entwurf | [ARCHITECTURE.md](ARCHITECTURE.md), Klassen- und Sequenzdiagramm, mindestens ein ADR und Projektgerüst | `block-3` | ✅ 12.11.2026 |
-| [4](#block-4-implementierung-und-git) | Implementierung und Git | Pflichtfunktionalität, Build, Reviews und CI; Release `v0.1.0` | `block-4` | ☐ |
-| [5](#block-5-tests-und-qualität) | Tests und Qualität | [TESTING.md](TESTING.md), Unit- und Integrationstests, 2 Blackbox-Verfahren, Usability-Protokoll und Evaluation Set | `block-5` | ☐ |
-| [6](#block-6-whitebox-change-request-und-refactoring) | Change Request und Refactoring | Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md), Coverage-Interpretation, [REFACTORING.md](docs/REFACTORING.md) und Umsetzung des Change Requests; Release `v1.1.0` | `block-6` | ☐ |
-| [7](#block-7-risiken-release-entscheidung-und-präsentation) | Risiken und Präsentation | [RISK_ANALYSIS.md](RISK_ANALYSIS.md), begründete Release-Entscheidung und Abschlusspräsentation | `final` | ☐ |
+| [4](#block-4-implementierung-und-git) | Implementierung und Git | Pflichtfunktionalität, Build, Reviews und CI; Release `v0.1.0` | `block-4`, `v0.1.0` | ☐ |
+| [5](#block-5-tests-und-qualität) | Tests und Qualität | [TESTING.md](TESTING.md), Unit- und Integrationstests, 2 Blackbox-Verfahren, Usability-Protokoll und Evaluation Set; Release `v1.0.0` | `block-5`, `v1.0.0` | ☐ |
+| [6](#block-6-whitebox-change-request-und-refactoring) | Change Request und Refactoring | Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md), Coverage-Interpretation, [REFACTORING.md](docs/REFACTORING.md) und Umsetzung des Change Requests; Release `v1.1.0` | `block-6`, `v1.1.0` | ☐ |
+| [7](#block-7-risiken-release-entscheidung-und-präsentation) | Risiken und Präsentation | [RISK_ANALYSIS.md](RISK_ANALYSIS.md), begründete Release-Entscheidung und Abschlusspräsentation | `block-7`, `final` | ☐ |
 
-Für die vollständige Pflichtfunktionalität ist außerdem Release `v1.0.0` vorgesehen. Releases werden nach Semantic Versioning getaggt und in [CHANGELOG.md](CHANGELOG.md) dokumentiert. Der verbindliche Abgabetag `final` muss laut [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) spätestens am **23. November** vorliegen.
+Release-Versionen werden in `pom.xml`, den JAR-Namen der [README](README.md) und [CHANGELOG.md](CHANGELOG.md) vor dem jeweiligen Merge angepasst. Block- und Release-Tags zeigen auf denselben Merge-Commit. Nach Block 7 zeigt `final` zunächst auf den Block-7-Merge, nach dem Abschlussreview auf den neuesten geprüften Commit auf `main`. Der verbindliche Abgabetag `final` muss laut [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) spätestens am **23. November** vorliegen.
 
 ### Arbeitsverteilung
 
@@ -224,7 +224,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 ### Block 4: Implementierung und Git
 
-**Ziel:** Die Pflichtfunktionalität läuft mit reproduzierbarem Build, Reviews und grüner CI; Release v0.1.0 liegt vor. **Abschluss:** `block-4`. Sammel-Issue: [#26](https://github.com/felix-henry/photo-album-projekt/issues/26). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
+**Ziel:** Die Pflichtfunktionalität läuft mit reproduzierbarem Build, Reviews und grüner CI; Release v0.1.0 liegt vor. **Abschluss:** `block-4` und `v0.1.0`. Sammel-Issue: [#26](https://github.com/felix-henry/photo-album-projekt/issues/26). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
 
 <details>
 <summary>Arbeitsschritte und Zuständigkeiten</summary>
@@ -255,7 +255,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** `pom.xml` · Maven-Wrapper (`mvnw`, `mvnw.cmd`, `.mvn/wrapper/`) · [docs/adr/](docs/adr/) · `src/main/java/` und `src/test/java/` · [.gitignore](.gitignore) · `.github/workflows/ci.yml` · `.github/dependabot.yml`.
 
 - [x] **Maven als Build-Werkzeug festhalten und den Wrapper einrichten:** Die festgelegte Maven-Wahl in `ADR-000` unter [docs/adr/](docs/adr/) kurz begründen. Den Maven-Wrapper samt festgelegter Maven-Version im Repository bereitstellen. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen); [Block 4, S. 7–8](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=7); Projektfestlegung)
-- [x] **`pom.xml` für Java 21, Tests und Coverage konfigurieren:** Feste Dependency- und Plugin-Versionen, `maven.compiler.release=21`, UTF-8 und JUnit 5 im Test-Scope festlegen. Surefire führt die Tests aus; JaCoCo erzeugt den Report in der `verify`-Phase. Bis zum ersten Release `v0.1.0` die Projektversion als `0.1.0-SNAPSHOT` führen. ([Block 4, S. 9](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=9))
+- [x] **`pom.xml` für Java 21, Tests und Coverage konfigurieren:** Feste Dependency- und Plugin-Versionen, `maven.compiler.release=21`, UTF-8 und JUnit 5 im Test-Scope festlegen. Surefire führt die Tests aus; JaCoCo erzeugt den Report in der `verify`-Phase. Für Block 4 die Projektversion `0.1.0` führen. ([Block 4, S. 9](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=9); Teamfestlegung)
 - [x] **Ein JAR als Build-Artefakt erzeugen:** Der Wrapper-Aufruf `./mvnw verify` führt Build und Tests aus und erzeugt ein JAR unter `target/`. Ein fehlgeschlagener Test lässt den Build fehlschlagen. ([Block 4, S. 8–9](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=8))
 - [x] **Dependencies begründen und unnötige Bibliotheken entfernen:** Jede verwendete Dependency in einem ADR begründen und nicht benötigte Bibliotheken entfernen. Zusätzliche Technologien brauchen eine fachliche Begründung. ([PB §6](docs/task_description/Projektbeschreibung_Photo_Album.md#6-technische-rahmenbedingungen); [Block 4, S. 10](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=10))
 - [x] **Repository nach Schichten strukturieren und [.gitignore](.gitignore) pflegen:** Quellcode nach Schichten ordnen und Projektdokumente auf oberster Ebene führen. Die Testpakete unter `src/test/java/` spiegeln die Produktionspakete unter `src/main/java/`. Build-Ausgaben und IDE-Dateien wie `target/`, `.idea/`, `.vscode/` und `*.iml` ausschließen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 6](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=6))
@@ -301,12 +301,12 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Reviewer:** Moritz, Alex, Alanur, Pit und Felix.
 > **Korrekturen und Abschlussarbeiten:** Moritz.
 
-> **Dateien:** [CHANGELOG.md](CHANGELOG.md) · Ergebnisdateien dieses Blocks.
+> **Dateien:** `pom.xml` · [README.md](README.md) · [CHANGELOG.md](CHANGELOG.md) · Ergebnisdateien dieses Blocks.
 > **Nachweise:** PR, Reviews, CI und Git-Tags.
 
-- [ ] **Abschlussstand für den PR vorbereiten:** Änderungen für `v0.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- [ ] **Abschlussstand für den PR vorbereiten:** Projektversion `0.1.0` in `pom.xml` und die JAR-Namen in der [README](README.md) abgleichen. Änderungen für `v0.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
 - **Pflichtfunktionalität mit Build, Reviews und grüner CI als Zwischenstand nachweisen:** Den Stand über Pull Request, Review und erfolgreiche CI zusammenführen. Den vertikalen Schnitt „Album erstellen und anzeigen“ über UI → Use Case → Domäne → Repository auf `main` lauffähig nachweisen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 4, S. 30](docs/lecture_slides/Block_4_Implementierung_und_Versionsmanagement.pdf#page=30))
-- **Release `v0.1.0` erstellen und `block-4` setzen:** Release- und Blocktag bereitstellen. `v1.0.0` kennzeichnet zusätzlich den vollständigen ursprünglichen Pflichtumfang. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- **Release `v0.1.0` erstellen und `block-4` setzen:** Beide Tags auf den Merge-Commit setzen und auf GitHub pushen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-4-Folien.
 
@@ -316,7 +316,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 ### Block 5: Tests und Qualität
 
-**Ziel:** Testableitung, automatisierte Tests und Qualitätsnachweise sind in [TESTING.md](TESTING.md) dokumentiert. **Abschluss:** `block-5`. Sammel-Issue: [#27](https://github.com/felix-henry/photo-album-projekt/issues/27). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
+**Ziel:** Testableitung, automatisierte Tests und Qualitätsnachweise sind in [TESTING.md](TESTING.md) dokumentiert. Die geprüfte Pflichtfunktionalität liegt als Release `v1.0.0` vor. **Abschluss:** `block-5` und `v1.0.0`. Sammel-Issue: [#27](https://github.com/felix-henry/photo-album-projekt/issues/27). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); Teamfestlegung)
 
 <details>
 <summary>Arbeitsschritte und Zuständigkeiten</summary>
@@ -383,13 +383,13 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Reviewer:** Moritz, Alex, Alanur, Pit und Felix.
 > **Korrekturen und Abschlussarbeiten:** Pit.
 
-> **Dateien:** [TESTING.md](TESTING.md) · Testdateien · Build-Konfiguration · `eval/describe-photo/cases.md`.
+> **Dateien:** [TESTING.md](TESTING.md) · Testdateien · `pom.xml` · [README.md](README.md) · [CHANGELOG.md](CHANGELOG.md) · `eval/describe-photo/cases.md`.
 > **Nachweise:** Testergebnisse, Coverage-Report, PR, Reviews, CI und Git-Tag.
 
 - [ ] **[TESTING.md](TESTING.md) mit den geforderten Test- und Qualitätsnachweisen abgeben:** Teststrategie, Blackbox-Verfahren, Unit-/Integrations- und manuelle Systemtests, Zuordnungen, Usability-, Security- und Performance-Nachweise sowie den Verweis auf das verpflichtende Evaluation Set bereitstellen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
 - [ ] **Review über Kreuz für den Test-PR durchführen:** Den Lab-/Test-PR über Kreuz reviewen lassen, Rückmeldungen beantworten und erforderliche Korrekturen einarbeiten. ([Block 5, S. 19](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=19))
-- [ ] **Abschlussstand für den PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
-- **Teststand über PR, Review und grüne CI übernehmen und `block-5` setzen:** Den Merge-Commit mit `block-5` kennzeichnen und den Tag pushen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- [ ] **Abschlussstand für den PR vorbereiten:** Projektversion in `pom.xml` auf `1.0.0` setzen, die JAR-Namen in der [README](README.md) aktualisieren und Release `v1.0.0` in [CHANGELOG.md](CHANGELOG.md) dokumentieren. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Teststand als Release `v1.0.0` übernehmen und `block-5` setzen:** Nach PR, vier Freigaben und grüner CI nach `main` mergen. `block-5` und `v1.0.0` auf den Merge-Commit setzen und beide Tags pushen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); Teamfestlegung)
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-5-Folien.
 
@@ -399,7 +399,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 ### Block 6: Whitebox, Change Request und Refactoring
 
-**Ziel:** Coverage ist interpretiert; der Change Request ist analysiert und umgesetzt; Refactoring und Release v1.1.0 sind dokumentiert. **Abschluss:** `block-6`. Sammel-Issue: [#28](https://github.com/felix-henry/photo-album-projekt/issues/28). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
+**Ziel:** Coverage ist interpretiert; der Change Request ist analysiert und umgesetzt; Refactoring und Release v1.1.0 sind dokumentiert. **Abschluss:** `block-6` und `v1.1.0`. Sammel-Issue: [#28](https://github.com/felix-henry/photo-album-projekt/issues/28). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
 
 <details>
 <summary>Arbeitsschritte und Zuständigkeiten</summary>
@@ -457,12 +457,12 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Reviewer:** Moritz, Alex, Alanur, Pit und Felix.
 > **Korrekturen und Abschlussarbeiten:** Alex.
 
-> **Dateien:** [CHANGE_REQUEST.md](CHANGE_REQUEST.md) · [docs/REFACTORING.md](docs/REFACTORING.md) · [TESTING.md](TESTING.md) · [CHANGELOG.md](CHANGELOG.md) · geänderte Quellcode- und Testdateien.
+> **Dateien:** [CHANGE_REQUEST.md](CHANGE_REQUEST.md) · [docs/REFACTORING.md](docs/REFACTORING.md) · [TESTING.md](TESTING.md) · `pom.xml` · [README.md](README.md) · [CHANGELOG.md](CHANGELOG.md) · geänderte Quellcode- und Testdateien.
 > **Nachweise:** PR, Reviews, CI und Git-Tags.
 
-- [ ] **Abschlussstand für den PR vorbereiten:** Änderungen für `v1.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- [ ] **Abschlussstand für den PR vorbereiten:** Projektversion in `pom.xml` auf `1.1.0` setzen, die JAR-Namen in der [README](README.md) aktualisieren und Änderungen für `v1.1.0` in [CHANGELOG.md](CHANGELOG.md) festhalten. Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
 - **Änderungen über PR, Review und grüne CI zusammenführen:** Tests, Analyse, Refactoring-Dokumentation und umgesetzten Stand im Repository zusammenführen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
-- **Release `v1.1.0` erstellen und `block-6` setzen:** Den CR-Release bis Block 7 bereitstellen und den prüfbaren Zwischenstand mit dem Blocktag kennzeichnen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
+- **Release `v1.1.0` erstellen und `block-6` setzen:** Beide Tags auf den Merge-Commit des umgesetzten Change Requests setzen und bis Block 7 auf GitHub pushen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-6-Folien.
 
@@ -472,7 +472,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 ### Block 7: Risiken, Release-Entscheidung und Präsentation
 
-**Ziel:** Risikoanalyse, begründete Release-Entscheidung, Präsentation und vollständiger Abgabestand liegen für das Abschlussreview vor. **Abschluss:** `final` nach dem Abschlussreview. Sammel-Issue: [#29](https://github.com/felix-henry/photo-album-projekt/issues/29). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); Projektfestlegung)
+**Ziel:** Risikoanalyse, begründete Release-Entscheidung, Präsentation und vollständiger Abgabestand liegen für das Abschlussreview vor. **Abschluss:** `block-7` und erster Stand von `final`. Sammel-Issue: [#29](https://github.com/felix-henry/photo-album-projekt/issues/29). ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); Teamfestlegung)
 
 <details>
 <summary>Arbeitsschritte und Zuständigkeiten</summary>
@@ -532,9 +532,11 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Reviewer:** Moritz, Alex, Alanur, Pit und Felix.
 > **Korrekturen und Abschlussarbeiten:** Alle.
 
-- [ ] **Abschlussstand für den finalen PR vorbereiten:** Nach dem [Abschlussreview](#abschlussreview-nach-block-7) Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- [ ] **Abschlussstand für den Block-7-PR vorbereiten:** Kanban-Board und Sammel-Issue abgleichen, Aufgaben abhaken, Erledigt-Datum in der [Roadmap](ROADMAP.md) eintragen und den Stand auf den Arbeitsbranch pushen.
+- **Block 7 über PR, Review und grüne CI zusammenführen:** Nach vier Freigaben der anderen Teammitglieder und grüner CI nach `main` mergen. (Teamfestlegung)
+- **`block-7` und `final` setzen:** Beide Tags auf den Block-7-Merge-Commit setzen und auf GitHub pushen. `block-7` hält den Abschluss dieses Blocks fest. (Teamfestlegung)
 
-Der abschließende PR-Merge und der Tag `final` folgen bei der [Abgabe](#abgabe-nach-den-fünf-abschlussreviews).
+Das [Abschlussreview](#abschlussreview-nach-block-7) prüft anschließend den Gesamtstand. Danach wird `final` auf den neuesten geprüften Commit auf `main` aktualisiert.
 
 **Quellen:** [Projektbeschreibung](docs/task_description/Projektbeschreibung_Photo_Album.md) und die an den Punkten verlinkten Block-7-Folien.
 
@@ -544,7 +546,7 @@ Der abschließende PR-Merge und der Tag `final` folgen bei der [Abgabe](#abgabe-
 
 ### Abschlussreview nach Block 7
 
-**Ziel:** Das Team hat den vollständigen Abgabestand auf Vollständigkeit, Konsistenz und Qualität geprüft. Das Review erfolgt vor dem finalen PR-Merge und dem Tag `final`. (Projektfestlegung)
+**Ziel:** Das Team prüft nach dem Block-7-Merge den vollständigen Abgabestand auf Vollständigkeit, Konsistenz und Qualität. Nach der Prüfung und gegebenenfalls eingearbeiteten Korrekturen wird `final` auf den neuesten geprüften Commit auf `main` gesetzt. (Teamfestlegung)
 
 <details>
 <summary>Prüfung und Freigabe der finalen Abgabe</summary>
@@ -553,7 +555,7 @@ Der abschließende PR-Merge und der Tag `final` folgen bei der [Abgabe](#abgabe-
 > **Koordination:** Felix.
 > **Korrekturen:** Jeweiliger Blockbearbeiter; bei Block 1 und 7 gemeinsam.
 > **Dateien:** Vollständiger Repository-Stand einschließlich aller Dokumente und Nachweise aus den Blöcken 1–7.
-> **Nachweise:** Fünf dokumentierte Abschlussprüfungen mit Datum und Ergebnis; finaler PR mit vier Freigaben der anderen Teammitglieder, CI und die geforderten Git-Tags.
+> **Nachweise:** Fünf dokumentierte Abschlussprüfungen mit Datum und Ergebnis; bei Korrekturen zugehörige PRs mit vier Freigaben und grüner CI; die geforderten Git-Tags.
 
 #### Gemeinsamer Prüfumfang
 
@@ -563,7 +565,7 @@ Der abschließende PR-Merge und der Tag `final` folgen bei der [Abgabe](#abgabe-
 
 #### Persönliche Abschlussreviews
 
-Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentiert Datum und Ergebnis am finalen PR und prüft spätere Korrekturen an seinen Befunden erneut. Die Haken bestätigen die Prüfung des abschließenden Stands. Felix dokumentiert seine eigene Prüfung ebenfalls; die vier erforderlichen PR-Freigaben kommen von den anderen Teammitgliedern. (Projektfestlegung)
+Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentiert Datum und Ergebnis im [Abschlussreview-Issue #30](https://github.com/felix-henry/photo-album-projekt/issues/30) und prüft spätere Korrekturen an seinen Befunden erneut. Die Haken bestätigen die Prüfung des abschließenden Stands. Felix dokumentiert seine eigene Prüfung ebenfalls; die vier erforderlichen Freigaben für Korrektur-PRs kommen von den anderen Teammitgliedern. (Teamfestlegung)
 
 - [ ] **Abschlussreview Moritz:** Prüfung mit Datum und Ergebnis dokumentiert. (Projektfestlegung)
 - [ ] **Abschlussreview Alex:** Prüfung mit Datum und Ergebnis dokumentiert. (Projektfestlegung)
@@ -575,8 +577,9 @@ Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentie
 
 > **Git-Maintenance:** Felix.
 
-- **Finalen Stand über PR, Review und grüne CI zusammenführen:** Nach dem Abschlussreview, vier Freigaben der anderen Teammitglieder und grüner CI die finale Repository-Abgabe nach `main` übernehmen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); Projektfestlegung)
-- **Erforderliche Tags und verbindliche Abgabe bereitstellen:** `block-1` bis `block-6`, `v0.1.0`, `v1.0.0` und `v1.1.0` prüfen. `final` auf den geprüften Merge-Commit setzen, pushen und die Zuordnung auf GitHub kontrollieren. `final` ist die verbindliche Abgabe, laut Projektbeschreibung spätestens am **23. November**. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- [ ] **Abschlussstand und Korrekturen vorbereiten:** Kanban-Board, Sammel-Issues und Roadmap mit den Abschlussreviews abgleichen. Aufgaben und Erledigt-Daten vor einem Korrektur-PR aktualisieren und auf den Arbeitsbranch pushen. (Teamfestlegung)
+- **Korrekturen über PR, Review und grüne CI zusammenführen:** Änderungen aus dem Abschlussreview nach vier Freigaben der anderen Teammitglieder und grüner CI nach `main` übernehmen. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); Projektfestlegung)
+- **Erforderliche Tags prüfen und `final` aktualisieren:** `block-1` bis `block-7`, `v0.1.0`, `v1.0.0` und `v1.1.0` prüfen. Nach den fünf Abschlussreviews und dem Merge aller Korrekturen den bestehenden Tag `final` auf den neuesten geprüften Commit auf `main` setzen und den Remote-Tag gezielt ersetzen. Die Zuordnung auf GitHub kontrollieren. `final` ist die verbindliche Abgabe, laut Projektbeschreibung spätestens am **23. November**. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); Teamfestlegung)
 
 </details>
 
@@ -588,7 +591,7 @@ Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentie
 <summary>Vorgaben der Projektbeschreibung anzeigen</summary>
 
 - **Zwischenstände und Abgabe:** Jeder Block endet mit einem prüfbaren Zwischenstand im Repository. PB §3 schlägt die Blocktags für den Vorabend des Folgeblocks vor. Die Tagstände werden bewertet; spätere Verbesserungen zählen, wenn sie bis `final` vorliegen. `final` ist spätestens am 23. November abzugeben. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine))
-- **Versionen:** `v0.1.0` nach Block 4, `v1.0.0` für die vollständige ursprüngliche Pflichtfunktionalität und `v1.1.0` nach dem CR; Releases werden mit [CHANGELOG.md](CHANGELOG.md) dokumentiert. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4))
+- **Versionen:** `v0.1.0` nach Block 4, `v1.0.0` nach den Tests in Block 5 und `v1.1.0` nach dem CR in Block 6. Die Projektversion in `pom.xml` entspricht vor dem jeweiligen Merge der Release-Version; README und [CHANGELOG.md](CHANGELOG.md) werden mitgeführt. ([PB §9](docs/task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4); Teamfestlegung)
 - **KI-Dokumentation:** Mindestens drei substanzielle Einsatzfälle insgesamt, empfohlen fünf mit je einem aus Block 2–6. Aufgabe/Ziel, Werkzeug/Modell samt versioniertem Prompt oder Skill, Ergebnis, kritische Bewertung und begründete Entscheidung dokumentieren. Mindestens einen tatsächlichen Vorschlag begründet verwerfen; Coding-Agent-PRs erhalten `ai-assisted` und denselben Review-Prozess. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
 - **Zusammenarbeit und Mitarbeit:** Alle tragen nachvollziehbar und substanziell bei; die Git-Historie ist Teil der Bewertung. Aktive Beteiligung in der Vorlesung gehört ebenfalls zur Aufgabe. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §17](docs/task_description/Projektbeschreibung_Photo_Album.md#17-was-eine-sehr-gute-leistung-auszeichnet); [PB §18](docs/task_description/Projektbeschreibung_Photo_Album.md#18-checkliste-abgabe))
 - **Qualität und Bewertung:** Eine kleine, zuverlässige und verständliche Anwendung mit testbaren Anforderungen, begründetem Entwurf und systematischen Tests entwickeln. Bewertet werden Projektartefakte/Software mit 50 %, Präsentation mit 30 % und aktive Mitarbeit mit 20 %. ([PB §16](docs/task_description/Projektbeschreibung_Photo_Album.md#16-bewertung); [PB §17](docs/task_description/Projektbeschreibung_Photo_Album.md#17-was-eine-sehr-gute-leistung-auszeichnet))
@@ -605,6 +608,6 @@ Jeder prüft den vollständigen Abgabestand anhand der obigen Punkte, dokumentie
 - **Blackbox-Verfahren:** Die Meilensteintabelle nennt für Block 5 zwei Verfahren; §10 fordert mindestens eines und empfiehlt zwei. Der Plan enthält deshalb zwei. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
 - **KI-Entwurf und Evaluation:** §8 fordert den Entwurf mit Port, Adapter und Guardrails; nur die Umsetzung ist freiwillig. §10 verlangt ein Evaluation Set auch für eine nur entworfene KI-Funktion. Das Set bleibt Pflicht; die Kennzeichnung „optional“ im Block-5-Checkpoint wird nicht übernommen. ([PB §8](docs/task_description/Projektbeschreibung_Photo_Album.md#8-architektur-und-entwurf-block-3); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 27–28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=27))
 - **Change Request:** Die konkreten CR-Funktionen aus den Folien bleiben Beispiele. Dokumentiert und analysiert wird der tatsächlich gestellte CR mit eindeutigen Unterpunkten wie `CR-1.1`. Erst nach der Impact Analysis folgt die Umsetzung; Release `v1.1.0` ist bis Block 7 vorgesehen. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [Block 6, S. 11–12](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
-- **Finaler Tag:** §3 erwähnt „block-7“ beim letzten Meilenstein. Die Mindestliste in §15 nennt `block-1` bis `block-6` und `final`; eine zusätzliche Tagpflicht `block-7` wird daraus hier vorerst nicht abgeleitet. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe))
+- **Block-7- und Abgabetag:** Nach Block 7 werden `block-7` und `final` auf dessen Merge-Commit gesetzt. Nach dem Abschlussreview wird `final` auf den neuesten geprüften Commit auf `main` aktualisiert. Diese Reihenfolge und der zusätzliche Blocktag sind Teamfestlegungen. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §15](docs/task_description/Projektbeschreibung_Photo_Album.md#15-abgabe); Teamfestlegung)
 
 </details>
