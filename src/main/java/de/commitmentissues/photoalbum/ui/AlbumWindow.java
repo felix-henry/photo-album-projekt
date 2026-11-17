@@ -71,6 +71,7 @@ class AlbumWindow extends JDialog {
         previousButton.addActionListener(event -> showPhoto(current - 1));
         nextButton.addActionListener(event -> showPhoto(current + 1));
         message.setForeground(new Color(0xB00020));
+        heading.setFont(heading.getFont().deriveFont(Font.BOLD, heading.getFont().getSize2D() + 4f));
         image.setPreferredSize(new Dimension(IMAGE_WIDTH, IMAGE_HEIGHT));
         photoTitle.setFont(photoTitle.getFont().deriveFont(Font.BOLD));
         photoTitle.putClientProperty("html.disable", Boolean.TRUE);
@@ -91,7 +92,12 @@ class AlbumWindow extends JDialog {
 
         JPanel texts = new JPanel(new BorderLayout(0, 4));
         texts.add(photoTitle, BorderLayout.NORTH);
-        texts.add(new JScrollPane(photoDescription), BorderLayout.CENTER);
+        JScrollPane descriptionScroll = new JScrollPane(photoDescription);
+        descriptionScroll.setBorder(BorderFactory.createEmptyBorder());
+        descriptionScroll.setOpaque(false);
+        descriptionScroll.getViewport().setOpaque(false);
+        photoDescription.setOpaque(false);
+        texts.add(descriptionScroll, BorderLayout.CENTER);
 
         JPanel navigation = new JPanel(new FlowLayout(FlowLayout.CENTER));
         navigation.add(previousButton);

@@ -2,6 +2,10 @@ package de.commitmentissues.photoalbum.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -40,6 +44,8 @@ public class AlbumOverviewWindow extends JFrame {
         super("Photo Album");
         this.useCases = useCases;
 
+        JLabel title = new JLabel("Albumübersicht");
+        title.setFont(title.getFont().deriveFont(Font.BOLD, title.getFont().getSize2D() + 6f));
         JButton createButton = new JButton("Album erstellen");
         createButton.addActionListener(event -> openCreateDialog());
         openButton.addActionListener(event -> openSelectedAlbum());
@@ -49,14 +55,25 @@ public class AlbumOverviewWindow extends JFrame {
         trashButton.addActionListener(event -> openTrash());
         updateButtons();
         albumList.addListSelectionListener(event -> updateButtons());
+        albumList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 2 && isOnAlbum(event)) {
+                    openSelectedAlbum();
+                }
+            }
+        });
 
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        top.add(new JLabel("Albumübersicht"));
-        top.add(createButton);
-        top.add(openButton);
-        top.add(renameButton);
-        top.add(deleteButton);
-        top.add(trashButton);
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
+        actions.add(createButton);
+        actions.add(openButton);
+        actions.add(renameButton);
+        actions.add(deleteButton);
+
+        JPanel top = new JPanel(new BorderLayout(0, 8));
+        top.add(title, BorderLayout.NORTH);
+        top.add(actions, BorderLayout.CENTER);
+        top.add(trashButton, BorderLayout.EAST);
 
         JPanel content = new JPanel(new BorderLayout(0, 8));
         content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -66,9 +83,15 @@ public class AlbumOverviewWindow extends JFrame {
 
         setContentPane(content);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(800, 360);
+        setSize(800, 420);
         setLocationRelativeTo(null);
         refresh();
+    }
+
+    private boolean isOnAlbum(MouseEvent event) {
+        int index = albumList.locationToIndex(event.getPoint());
+        Rectangle cell = index < 0 ? null : albumList.getCellBounds(index, index);
+        return cell != null && cell.contains(event.getPoint());
     }
 
     private void updateButtons() {

@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.time.Clock;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import de.commitmentissues.photoalbum.application.AddPhotoUseCase;
 import de.commitmentissues.photoalbum.application.AlbumRepository;
@@ -62,6 +64,21 @@ public final class Main {
                 new RestoreTrashEntryUseCase(albums, trash, photos, clock),
                 new DeletePermanentlyUseCase(trash, albums, photos));
 
-        SwingUtilities.invokeLater(() -> new AlbumOverviewWindow(useCases).setVisible(true));
+        SwingUtilities.invokeLater(() -> {
+            useSystemLookAndFeel();
+            new AlbumOverviewWindow(useCases).setVisible(true);
+        });
+    }
+
+    /**
+     * Die Fenster sehen aus wie die übrigen Programme des Betriebssystems. Klappt das nicht, bleibt das
+     * Standardaussehen von Swing.
+     */
+    private static void useSystemLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ReflectiveOperationException | UnsupportedLookAndFeelException e) {
+            // Das Standardaussehen funktioniert genauso.
+        }
     }
 }
