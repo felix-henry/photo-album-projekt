@@ -1,6 +1,6 @@
 # ADR-002: Fehlerbehandlung über Exceptions und Result
 
-**Status:** akzeptiert · **Datum:** 10.11.2026 · **geändert:** 12.11.2026
+**Status:** akzeptiert · **Datum:** 10.11.2026 · **geändert:** 14.11.2026
 
 ## Kontext
 
