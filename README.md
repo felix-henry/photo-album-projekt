@@ -32,27 +32,29 @@ Felix übernimmt die Rolle des Git-Maintainers.
 
 ## Funktionsumfang
 
-Geplant sind:
+Die Anwendung bietet:
 
 - Alben erstellen, anzeigen, umbenennen und löschen.
 - Fotos zu einem Album hinzufügen, anzeigen und entfernen.
 - Fotos mit einem Titel bzw. einer Beschreibung versehen.
+- Einen Papierkorb: Gelöschte Alben und entfernte Fotos lassen sich 30 Tage lang wiederherstellen oder vorher endgültig löschen.
 - Ungültige Eingaben und definierte Fehlerfälle mit verständlichen fachlichen Fehlermeldungen behandeln. Bei abgewiesenen Operationen bleibt der Zustand unverändert.
 
 Die Anforderungen, Auftraggeberentscheidungen und Teamannahmen stehen in [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## ⚙️ Technische Rahmenbedingungen
 
-| Bereich | Vorgabe bzw. Entscheidungsstand |
+| Bereich | Festlegung und Version |
 | --- | --- |
-| Programmiersprache | Java 21 |
-| Build und Abhängigkeiten | Maven; Wrapper folgt mit Block 4 |
-| Oberfläche | Swing ([ARCHITECTURE.md](ARCHITECTURE.md)) |
-| Datenhaltung | JSON-Dateien im lokalen Dateisystem ([ADR-001](docs/adr/ADR-001-speicherung.md)) |
-| Automatisierte Tests | JUnit 5 |
-| Coverage | JaCoCo |
+| Programmiersprache | Java 21 (JDK 21, zum Beispiel Eclipse Temurin) |
+| Build | Maven 3.9.16 über den Maven-Wrapper im Repository ([ADR-000](docs/adr/ADR-000-build.md)) |
+| Oberfläche | Swing aus dem JDK ([ARCHITECTURE.md](ARCHITECTURE.md)) |
+| Datenhaltung | JSON-Dateien im lokalen Dateisystem mit Gson 2.15.0 ([ADR-001](docs/adr/ADR-001-speicherung.md), [ADR-003](docs/adr/ADR-003-json-bibliothek.md)); das Format beschreibt [ARCHITECTURE.md, Abschnitt 10](ARCHITECTURE.md#10-speicherformat) |
+| Automatisierte Tests | JUnit 5.14.4 mit Maven Surefire 3.5.6 |
+| Coverage | JaCoCo 0.8.16 |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
-| CI | Build und Tests bei jedem Pull Request; Anbieter und Konfiguration offen |
+| CI | GitHub Actions mit Temurin JDK 21 bei jedem Push auf `main` und jedem Pull Request; die Prüfung `build` ist für `main` Pflicht |
+| Abhängigkeitsupdates | GitHub Dependabot, wöchentlich für Maven und GitHub Actions |
 
 ## Vorgehen und Zusammenarbeit
 
@@ -67,6 +69,13 @@ Für Änderungen ist folgender Ablauf vorgegeben:
 Das Repository ist öffentlich. Änderungen an `main` erfordern einen Pull Request mit Freigaben (Approvals) durch die vier anderen Teammitglieder. Commit-Nachrichten sollen konventionell aufgebaut sein und auf eine Anforderungs- oder Issue-ID verweisen. KI-unterstützte Pull Requests erhalten das Label `ai-assisted`.
 
 Gemeinsame Regeln für Coding Agents wie Claude Code stehen in [AGENTS.md](AGENTS.md).
+
+## 🔒 Secrets
+
+- Zugangsdaten, Tokens, Passwörter und private Schlüssel gehören nicht ins Repository, auch nicht in alte Commits oder Logs. Die Anwendung selbst braucht keine Zugangsdaten.
+- Braucht die CI künftig ein Secret, wird es als GitHub Secret unter *Settings → Secrets and variables → Actions* hinterlegt und im Workflow über `${{ secrets.NAME }}` gelesen.
+- Lokale Dateien mit persönlichen Einstellungen oder Zugangsdaten stehen in der [.gitignore](.gitignore), etwa die persönliche `CLAUDE.md`.
+- Gelangt doch ein Secret ins Repository, wird es sofort ungültig gemacht und erneuert. Löschen allein reicht nicht, weil es in der Git-Historie bleibt.
 
 ## 🗺️ Projektplanung
 
@@ -91,6 +100,10 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 
 <pre>
 .
+├── <a href=".github/">.github/</a>
+│   └── ...
+├── <a href=".mvn/">.mvn/</a>
+│   └── ...
 ├── <a href=".gitignore">.gitignore</a>
 ├── <a href="AGENTS.md"><strong>AGENTS.md</strong></a>
 ├── <a href="AI_USAGE.md"><strong>AI_USAGE.md</strong></a>
@@ -102,6 +115,8 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 ├── <a href="RISK_ANALYSIS.md"><strong>RISK_ANALYSIS.md</strong></a>
 ├── <a href="ROADMAP.md"><strong>ROADMAP.md</strong></a>
 ├── <a href="TESTING.md"><strong>TESTING.md</strong></a>
+├── <a href="mvnw">mvnw</a>
+├── <a href="mvnw.cmd">mvnw.cmd</a>
 ├── <a href="pom.xml">pom.xml</a>
 ├── <a href="src/">src/</a>
 │   └── ...
@@ -127,7 +142,28 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 
 ## Build, Tests und Start
 
-> [!NOTE]
-> Das Projektgerüst mit Maven und Java 21 ist angelegt. Maven-Wrapper, Tests und CI folgen mit Block 4; eine Softwareversion ist noch nicht veröffentlicht.
+**Voraussetzung:** ein JDK 21. Maven muss nicht installiert sein, der Maven-Wrapper im Repository lädt Maven 3.9.16 beim ersten Aufruf selbst. Welches JDK der Wrapper verwendet, zeigt:
 
-Mit einem lokal installierten Maven baut `mvn verify` das Gerüst. Test- und Startbefehle ergänzen wir mit der Implementierung.
+```bash
+./mvnw -v          # Windows: .\mvnw.cmd -v
+```
+
+Unter „Java version“ muss 21 stehen. Sonst `JAVA_HOME` auf das JDK 21 setzen.
+
+**Bauen und testen:**
+
+```bash
+./mvnw verify      # Windows: .\mvnw.cmd verify
+```
+
+Der Befehl kompiliert, führt alle Tests aus und baut das ausführbare JAR `target/photo-album-0.1.0-SNAPSHOT.jar`. Schlägt ein Test fehl, schlägt auch der Build fehl. Den Coverage-Report von JaCoCo öffnet `target/site/jacoco/index.html`.
+
+**Starten:**
+
+```bash
+java -jar target/photo-album-0.1.0-SNAPSHOT.jar
+```
+
+`java` muss dabei ebenfalls Version 21 sein (`java -version`). Unter Windows geht es auch direkt über `JAVA_HOME`: `& "$env:JAVA_HOME\bin\java.exe" -jar target\photo-album-0.1.0-SNAPSHOT.jar`.
+
+Die Anwendung legt ihre Daten im Ordner `.photo-album` im Benutzerverzeichnis ab, unter Windows also `C:\Users\<Name>\.photo-album`. Aufbau und Dateiformat beschreibt [ARCHITECTURE.md, Abschnitt 10](ARCHITECTURE.md#10-speicherformat). Wer mit leeren Daten starten will, benennt den Ordner vorher um. Gelöscht wird dabei nichts.
