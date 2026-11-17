@@ -27,12 +27,12 @@ flowchart TB
 
 Ein Pfeil bedeutet „hängt ab von“. Die Infrastruktur implementiert die Ports der Anwendung und kennt `Album` und `Photo`, um sie zu speichern. Die Domäne hängt von keiner anderen Schicht ab. Die Klasse `Main` erzeugt die Infrastrukturklassen und übergibt sie den Use Cases. Nur sie kennt alle Schichten.
 
-| Schicht | Aufgabe | Klassen (vorläufig) |
+| Schicht | Aufgabe | Klassen (Auswahl) |
 |---|---|---|
-| UI | Zeigt Alben und Fotos an, nimmt Eingaben entgegen und zeigt Meldungen. Enthält keine Geschäftsregeln und greift nicht auf Dateien zu. | Swing-Fenster |
-| Anwendung | Ein Use Case je Nutzerziel, dazu die Bereinigung beim Start. Lädt das Album über einen Port, lässt die Domäne entscheiden und speichert das Ergebnis. Legt die Ports als Interfaces fest. | `AddPhotoUseCase`, `CreateAlbumUseCase`, `StartupCleanupUseCase`; Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage`, `ImageHasher` |
+| UI | Zeigt Alben, Fotos und den Papierkorb an, nimmt Eingaben entgegen und zeigt Meldungen. Enthält keine Geschäftsregeln und greift nicht auf Dateien zu. | `AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`, die Dialoge und der Bildpuffer `ImageBuffer` |
+| Anwendung | Ein Use Case je Nutzerziel, dazu die Bereinigung beim Start. Lädt das Album über einen Port, lässt die Domäne entscheiden und speichert das Ergebnis. Legt die Ports als Interfaces fest. Gibt der UI nur `Result` und einfache Datenklassen wie `AlbumSummary` zurück. | `AddPhotoUseCase`, `CreateAlbumUseCase`, `RestoreTrashEntryUseCase`, `StartupCleanupUseCase` und weitere; Ports `AlbumRepository`, `TrashRepository`, `PhotoStorage`, `ImageHasher` |
 | Domäne | Enthält die Geschäftsregeln aus [REQUIREMENTS.md](REQUIREMENTS.md): Albumname, höchstens 100 Fotos, kein Duplikat, Textlängen und Papierkorbfristen. Nur die technische Dateiprüfung nach A-03 liegt im Adapter (Abschnitt 2). Die Bereinigung beim Start nach A-11 koordiniert `StartupCleanupUseCase`, weil sie Alben, Papierkorb und Kopien zusammen betrachtet. | `Album`, `Photo`, `AlbumLibrary`, `Trash`, `TrashEntry` |
-| Infrastruktur | Setzt die Ports technisch um: JSON-Dateien, App-Kopien der Bilder, Bildprüfung und Inhaltshash. | `FileAlbumRepository`, `FileTrashRepository`, `FilePhotoStorage`, `Sha256ImageHasher` |
+| Infrastruktur | Setzt die Ports technisch um: JSON-Dateien, App-Kopien der Bilder, Bildprüfung und Inhaltshash. Das Speicherformat beschreibt Abschnitt 10. | `FileAlbumRepository`, `FileTrashRepository`, `FilePhotoStorage`, `Sha256ImageHasher` |
 
 Die Oberfläche nutzt Swing, weil es im JDK enthalten ist und keine zusätzliche Abhängigkeit braucht. Die Klassen leiten sich aus den [CRC-Karten](docs/design/crc-karten.md) ab und stehen im [Klassendiagramm](#3-klassendiagramm). Die Ports beschreibt [Abschnitt 2](#2-komponenten-und-ports).
 
@@ -90,6 +90,7 @@ Der Puffer gehört zur Anzeige in der UI und enthält keine Geschäftsregel. Die
 Unit-Tests prüfen die Papierkorbregeln ohne Wartezeit und ohne echte Dateien (NFA-05):
 
 - **Frist:** `Trash` und `TrashEntry` erhalten die aktuelle Zeit als Parameter `now`. Ein Test übergibt etwa einen Zeitpunkt genau 30 × 24 Stunden nach dem Löschen und prüft, ob der Eintrag fällig ist.
+- **Uhrzeit:** Die Use Cases bekommen eine `java.time.Clock` aus dem JDK und reichen `clock.instant()` als `now` weiter. `Main` übergibt die Systemuhr, Tests eine feste Uhr (`Clock.fixed`). Ein eigener Port ist dafür nicht nötig.
 - **Löschfehler:** Der Test setzt statt `FilePhotoStorage` eine Variante im Arbeitsspeicher ein, die beim Löschen eines bestimmten Fotos einen Fehler wirft. So lässt sich der Teilerfolg nach A-12 prüfen: Die übrigen Fotos sind gelöscht, das betroffene bleibt im Papierkorb.
 
 ## 7. KI-Komponente (Entwurf)
@@ -123,3 +124,58 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 - Scheitern ein Speichern und danach auch das Zurücknehmen, bereinigt die App den Zustand erst beim nächsten Start. Liegt dieselbe Foto-ID dann in einem Album und im Papierkorb, bleibt das Foto im Album. Verwaiste Kopien löscht die App nur, wenn alle Alben und der Papierkorb lesbar sind. Diese Ausnahme ist in A-11 festgelegt und in [ADR-002](docs/adr/ADR-002-fehlerbehandlung.md) beschrieben.
 - Ist eine einzige Albumdatei nicht lesbar, scheitert `findAll`. Die Übersicht meldet dann nur den Lesefehler (AK-02.3), und auch Album erstellen, Wiederherstellen und endgültiges Löschen scheitern, bis die Datei repariert ist. Der Fall ist selten, deshalb bleibt es bei diesem einfachen Verhalten.
 - `ImageHasher` und `PhotoStorage` lesen die gewählte Datei getrennt. Ändert sie sich genau dazwischen, etwa in einem synchronisierenden Cloud-Ordner, wird eine ungeprüfte Fassung gespeichert. Auch dieser Fall ist selten.
+- Ein einzeln entferntes Foto sucht sein Ursprungsalbum über die Album-ID. Wurde dieses Album inzwischen gelöscht und als Kachel wiederhergestellt, hat es eine neue ID (ADR-001). Beim Wiederherstellen des Fotos ist der Name dann vergeben. Die App meldet den Konflikt, und der Nutzer stellt das Foto in ein neues Album wieder her. Es geht kein Foto verloren, es ist nur ein Schritt mehr nötig.
+- Bildprüfung, Inhaltshash und das Verkleinern zur Anzeige laufen im Swing-Thread. Bei großen Bildern reagiert die Oberfläche deshalb kurz nicht. Ob die Grenze aus NFA-03 eingehalten wird, misst Block 5 (AK-N03.1).
+- Bricht die App beim Schreiben ab, kann eine Zwischendatei `*.tmp` liegen bleiben. Die App liest und zeigt sie nie. Die Bereinigung beim Start entfernt sie aber auch nicht, weil sie nur Dateien betrachtet, deren Name eine Foto-ID ist.
+
+## 10. Speicherformat
+
+Die App speichert alle Daten im Ordner `.photo-album` im Benutzerverzeichnis, unter Windows also `C:\Users\<Name>\.photo-album`. `Main` legt den Ordner fest. Fehlende Ordner und Dateien legen die Adapter beim ersten Speichern an.
+
+| Pfad | Inhalt | Adapter |
+|---|---|---|
+| `albums/<AlbumId>.json` | Ein Album mit ID, Name und seinen Fotos samt Inhaltshash, Titel und Beschreibung, in der Reihenfolge des Hinzufügens | `FileAlbumRepository` |
+| `trash.json` | Alle Papierkorbeinträge: Kacheln gelöschter Alben und einzeln entfernte Fotos | `FileTrashRepository` |
+| `photos/<PhotoId>` | Die App-Kopie eines Bildes, bytegleich zur ausgewählten Datei und ohne Dateiendung | `FilePhotoStorage` |
+
+Die JSON-Dateien sind UTF-8-kodiert und eingerückt, damit sie lesbar bleiben. Gson schreibt sie über eigene Dateiklassen, nicht über die Domänenklassen (ADR-003). IDs sind UUIDs, der Inhaltshash ist ein SHA-256-Wert mit 64 Hexadezimalzeichen, und Zeitpunkte stehen als ISO-8601-Text in UTC. In den Beispielen sind IDs und Hashes gekürzt.
+
+Albumdatei `albums/<AlbumId>.json`:
+
+```json
+{
+  "id": "35154bc3-…",
+  "name": "Urlaub",
+  "photos": [
+    { "id": "4d240acf-…", "contentHash": "1f4ccd53…", "title": "Am Strand", "description": "" }
+  ]
+}
+```
+
+Papierkorb `trash.json`:
+
+```json
+{
+  "entries": [
+    {
+      "id": "936f7511-…",
+      "deletedAt": "2026-11-14T17:11:26.653482400Z",
+      "originAlbumId": "35154bc3-…",
+      "originAlbumName": "Urlaub",
+      "album": false,
+      "photos": [
+        { "id": "4d240acf-…", "contentHash": "1f4ccd53…", "title": "Am Strand", "description": "" }
+      ]
+    }
+  ]
+}
+```
+
+`album` ist `true` für die Kachel eines gelöschten Albums und `false` für ein einzeln entferntes Foto. Ein Foto steht im Papierkorb in derselben Form wie in der Albumdatei. So behält ein wiederhergestelltes Foto ID, Hash und Texte, und seine App-Kopie bleibt unter derselben ID erreichbar.
+
+Regeln beim Lesen und Schreiben:
+
+- Jede JSON-Datei entsteht zuerst als `<Name>.tmp` und ersetzt dann die alte Datei in einem Schritt. App-Kopien entstehen ebenso über `<PhotoId>.tmp` (ADR-002).
+- Fehlt `trash.json`, ist der Papierkorb leer. Fehlt bei einem Album `photos`, hat es keine Fotos. Fehlen bei einem Foto `title` oder `description`, gelten die Texte als leer. So bleiben Dateien aus früheren Ständen lesbar.
+- Fehlt eine Pflichtangabe wie ID, Name, Inhaltshash, Löschzeitpunkt oder die Art des Eintrags, oder verletzt der Inhalt eine Regel der Domäne, ist die Datei nicht lesbar. `findAll` und `load` melden das als Fehler, statt die Datei zu überspringen (ADR-002, AK-02.3, AK-N02.2).
+- `photos/` enthält nur App-Kopien. Dateien, deren Name keine Foto-ID ist, beachtet die App nicht.
