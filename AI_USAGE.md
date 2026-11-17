@@ -49,15 +49,30 @@ Nenne höchstens fünf Befunde, die wichtigsten zuerst. Gib zu jedem Befund die 
 
 ## Fall 3 – Coding Agent bei der Implementierung, Block 4
 
-Geplant.
-
 | Feld | Inhalt |
 | --- | --- |
-| **Aufgabe/Ziel** | Einen Coding Agent für eine abgegrenzte Implementierungsaufgabe einsetzen und seinen Diff anhand der Anforderungen und Tests prüfen. |
-| **Werkzeug/Modell und Prompt oder Skill** | |
-| **Ergebnis** | |
-| **Kritische Bewertung** | |
-| **Entscheidung** | |
+| **Aufgabe/Ziel** | Block 4 mit einem Coding Agent umsetzen: Build und CI einrichten und die Pflichtfunktionalität samt Papierkorb in kleinen, geprüften Schritten nach der Roadmap implementieren. Der Agent analysiert den Stand, schlägt Code, Tests und Dokumentation vor und prüft jeden Schritt. Änderungen am Repository und alle Git-Schritte führt der Blockbearbeiter selbst aus. |
+| **Werkzeug/Modell und Prompt oder Skill** | Claude Code in der VS-Code-Erweiterung mit Claude Opus 5.5, Sitzungen vom 12. bis 17.11.2026. Kontext waren Projektbeschreibung, ROADMAP, REQUIREMENTS.md, ARCHITECTURE.md, die ADRs, die CI-Konfiguration und das Sammel-Issue #26, ab dem 15.11. auch die gemeinsame [AGENTS.md](AGENTS.md). [Arbeitsauftrag und Regeln](#prompt-zu-fall-3) |
+| **Ergebnis** | 47 Commits auf `block-4` mit grüner CI: Maven-Wrapper, `pom.xml`, CI und Dependabot, die Use Cases für Alben, Fotos, Fototexte und Papierkorb sowie die Swing-Oberfläche. Dazu 209 automatisierte Tests mit Bezug zu den Akzeptanzkriterien und 62 manuelle Testfälle für die Oberfläche. In der Dokumentation entstanden ADR-000 und ADR-003, Ergänzungen in ADR-002 und REQUIREMENTS (A-03, A-08) sowie das Speicherformat und die Abweichungen vom Entwurf in ARCHITECTURE. |
+| **Kritische Bewertung** | Jeder Vorschlag wurde vor dem Übernehmen gelesen, gebaut und gegen REQUIREMENTS und ADRs geprüft. Dabei fielen drei Arten von Fehlern auf. (1) **Umgebung statt Vorgabe:** Der Agent übernahm zunächst das lokal installierte JDK 25 und formulierte in ADR-000 „JDK ab Version 21“, obwohl die Projektbeschreibung Java 21 festlegt. Erkannt hat das ein Teammitglied beim Build-Check. (2) **Tests, die trotz falschen Verhaltens grün bleiben:** Ein Test-Fake gab dieselben `Photo`-Objekte zurück, statt wie die echte Speicherung Kopien zu halten, und eine vorgeschlagene Prüfung war immer wahr. Beides fiel beim Lesen der Tests auf, ein grüner Build hätte es nicht gezeigt. (3) **Lücken in den Anforderungen:** Die Rundung der Resttage, der Schutz vor sehr großen Bildern und die Vorschaubilder aus dem Klickprototyp waren nicht eindeutig geregelt. Der Agent erkannte diese Punkte und legte Optionen vor, statt still eine Annahme zu treffen. Erfundene APIs oder Bibliotheken sind nicht aufgefallen. Alle verwendeten Klassen stammen aus dem JDK, JUnit 5 oder Gson und sind durch Build und Tests belegt. |
+| **Entscheidung** | **Übernommen:** die geprüften Vorschläge für Code, Tests und Dokumentation sowie die Teamentscheidungen nach vorgelegten Optionen: Pixelgrenze und Kopfprüfung großer Dateien (ADR-002, A-03), aufgerundete Resttage (A-08) und Einzelansicht ohne Vorschaubilder (ARCHITECTURE, Abschnitt 5). **Angepasst:** Die Test-Fakes halten jetzt Kopien wie die echte Speicherung. ADR-000 und die Anleitung zum Build-Check nennen JDK 21, die Version wird seitdem mit `mvnw -v` geprüft und steht als Verbot in AGENTS.md. **Verworfen:** „JDK ab Version 21“, weil PB §6 Java 21 vorgibt und die CI mit Temurin 21 baut, sowie die immer wahre Testprüfung, ersetzt durch eine Prüfung des gespeicherten Werts. **Bewusst offen gelassen:** Doppelungen in den Use Cases, die der Agent beim Prüfen fand, sind als Kandidat für das Refactoring in Block 6 vorgemerkt. |
+
+### Prompt zu Fall 3
+
+Arbeitsauftrag, zusammengefasst aus den Anweisungen in den Sitzungen:
+
+```text
+Ich bearbeite Block 4 (Issue #26). Führe mich Schritt für Schritt durch die Punkte der ROADMAP. Prüfe vor jedem Schritt Projektbeschreibung, ROADMAP, REQUIREMENTS.md, ARCHITECTURE.md, die ADRs und die CI-Konfiguration und melde Abweichungen. Schlage für jeden Schritt vollständige Dateien mit Tests vor und nenne die erwartete Testanzahl. Prüfe das Ergebnis danach anhand von Diff und Testberichten. Lege offene Fachfragen als Optionen mit Empfehlung vor. Die Entscheidung treffe ich oder das Team.
+```
+
+Dauerhafte Regeln aus der lokalen `CLAUDE.md`, die zusätzlich die gemeinsame [AGENTS.md](AGENTS.md) lädt:
+
+```text
+- Nur lesen und analysieren. Keine Git-Schreibaktionen (commit, push, pull, merge, branch, tag, PR, Kommentare) und keine Dateien im Projekt anlegen oder ändern. Git und Dateien mache ich selbst nach Anleitung.
+- Keine Befehle ausführen, die ins Projekt schreiben.
+- Kleinschrittig anleiten: vollständige Dateien zum Ersetzen, danach .\mvnw.cmd verify mit erwarteter Testanzahl. Ergebnisse nach jedem Schritt selbst prüfen.
+- Vor jeder Anleitung gegen Projektbeschreibung, ROADMAP, CI und Teamabsprachen in #26 prüfen und Abweichungen selbst melden. Die JDK-Version mit .\mvnw.cmd -v prüfen.
+```
 
 ## Fall 4 – Tests aus einem Akzeptanzkriterium ableiten, Block 5
 
