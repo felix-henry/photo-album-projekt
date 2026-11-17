@@ -57,7 +57,7 @@ Die Anwendung erreicht Dateien nur über vier Ports. Sie sind Interfaces im Pake
 
 `ImageHasher` übernimmt neben dem Hash auch die Prüfung, weil beides dieselben Bytes in einem Durchgang liest. Die Formatprüfung ist eine technische Eingangsprüfung. Sie braucht eine Bildbibliothek und liegt deshalb nicht in der Domäne. Ob ein Foto ein Duplikat ist, entscheidet `Album` anhand des Hashes.
 
-Methoden und Parameter legt das Klassendiagramm fest. Die Uhrzeit bekommt der Papierkorb als Parameter, ohne eigenen Port (Abschnitt 6).
+Methoden und Parameter zeigt das Klassendiagramm aus dem Entwurf. Die Abweichungen der Umsetzung nennt Abschnitt 3. Die Uhrzeit bekommt der Papierkorb als Parameter, ohne eigenen Port (Abschnitt 6).
 
 ## 3. Klassendiagramm
 
@@ -70,6 +70,19 @@ Quelle: [klassendiagramm.puml](docs/design/klassendiagramm.puml)
 - `TrashEntry` kennt Löschzeitpunkt und Ursprungsalbum mit ID und Namen und berechnet Fälligkeit und Resttage. Beim Wiederherstellen prüft `Trash` nur die Frist, die übrigen Regeln prüfen wie sonst `AlbumLibrary` und `Album`. Die aktuelle Zeit kommt als Parameter `now` (Abschnitt 6).
 - `ImageHasher.hash` und die Domäne lehnen Verstöße mit einer Exception samt Grund ab. Der Use Case übersetzt sie in ein `Result` mit Erfolg oder Meldung für die UI.
 - Einfache Getter sind nur eingezeichnet, wenn das Sequenzdiagramm sie aufruft. `TitleSuggester` und sein Adapter sind nur ein Entwurf, siehe Abschnitt 7.
+
+### Abweichungen der Umsetzung vom Entwurf
+
+Das Diagramm zeigt den Entwurf aus Block 3. Beim Umsetzen in Block 4 haben sich die folgenden Punkte geändert. Die Geschäftsregeln und ihre Zuordnung zu den Klassen sind gleich geblieben.
+
+| Entwurf | Umsetzung | Grund |
+|---|---|---|
+| Use Cases mit Domänentypen, etwa `execute(albumId: AlbumId, file: Path): Result` | Use Cases nehmen `UUID` entgegen und liefern `Result<T>` mit einfachen Datenklassen wie `AlbumSummary`, `AlbumDetails`, `PhotoSummary` und `TrashEntrySummary`. | Die UI kennt keine Domänenklassen (Abschnitt 1). |
+| Drei Use Cases als Beispiele | Ein Use Case je Nutzerziel, insgesamt 13, darunter `RenameAlbumUseCase`, `RemovePhotoUseCase`, `RestoreTrashEntryUseCase` und `DeletePermanentlyUseCase`. `Main` übergibt sie der UI gebündelt im Record `UseCases`. | Ein Use Case je Nutzerziel (Abschnitt 1). Die Bündelung hält die Konstruktoren der Fenster kurz. |
+| Die aktuelle Zeit als Parameter `now` | Die Use Cases des Papierkorbs bekommen eine `java.time.Clock`. `StartupCleanupUseCase.execute(now)` bleibt wie im Entwurf. | Tests setzen eine feste Uhr ein (Abschnitt 6). |
+| `TrashEntry` hält das gelöschte `Album` oder `Photo` | `TrashEntry` hält die Fotos des Eintrags, das Ursprungsalbum mit ID und Namen und ob es eine Albumkachel ist. | Ein wiederhergestelltes Album bekommt ohnehin eine neue ID (ADR-001). Fotos, Name und ID genügen, und auch eine teilweise gelöschte Kachel (A-12) lässt sich so abbilden. |
+| `Album.removePhoto(id)`, `Trash` ohne Abfragen | `removePhoto` liefert das entfernte Foto zurück. `Trash` hat zusätzlich `find(id)` und `getEntries()`. | Das entfernte Foto wandert in den Papierkorb. Use Cases prüfen, ob ein Eintrag existiert, und die UI zeigt den Papierkorb an. |
+| Nicht im Entwurf | Weitere Hilfsklassen: `DomainException` mit `Violation`, `StorageException`, `TextLength`, `DueEntryCleanup`, `AtomicFile` und die Dateiklassen `AlbumFile`, `PhotoFile`, `TrashFile` und `TrashEntryFile` | Fehlerbehandlung (ADR-002), Zählweise nach A-04, eine gemeinsame Löschregel für Bereinigung und endgültiges Löschen, sicheres Schreiben (ADR-002) und JSON-Dateiklassen (ADR-003). |
 
 ## 4. Sequenzdiagramm „Foto hinzufügen“
 
