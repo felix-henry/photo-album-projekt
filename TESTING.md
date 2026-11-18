@@ -180,3 +180,5 @@ Die folgenden Tests decken die fünf Regelgruppen aus NFA-05 ab und sind mit `@T
 | Papierkorb | `DeletePermanentlyUseCaseTest.reportsPartialSuccessForTile` | Fehlerfall (Teilerfolg, AK-SR01.4) | Kachel behält das nicht gelöschte Foto und seine App-Kopie |
 
 Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `RestoreTrashEntryUseCaseTest.reportsDuplicateInOrigin` und `RestoreTrashEntryUseCaseTest.reportsFullOrigin`.
+
+**Aufbau der Tests (Arrange–Act–Assert).** Methodennamen beschreiben Verhalten und Bedingung, zum Beispiel `rejectsPhotoForFullAlbum`. `@DisplayName` beginnt mit der AK-ID oder, wo kein AK passt, mit der Regel (A-xx, ADR-xxx, NFA-xx). Jeder Test bereitet nur die nötigen Daten vor, führt genau eine Aktion aus und prüft danach Ergebnis und Zustand; die drei Teile sind durch Leerzeilen getrennt ([Block 5, S. 10](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=10)). 35 Tests prüfen technische Fehlerwege ohne eigenes AK, etwa unbekannte IDs, nicht lesbare Dateien oder Albumdateien früherer Versionen. Ihr `@DisplayName` beschreibt das Verhalten ohne ID.
