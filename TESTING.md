@@ -98,3 +98,61 @@ Nicht automatisiert geprüft:
 | AK-N03.1 | Performance-Messung, Abschnitt 7 |
 | AK-N04.1 | Usability-Selbsttest, Abschnitt 5 |
 | AK-N05.1 | Zuordnung der Regelgruppen, Abschnitt 4.1 |
+
+## 3. Test Design Lab
+
+Gewählt sind die Namensregel für Alben (A-02 mit der Zeichenzählung nach A-04) und der Use Case UC-01 „Foto hinzufügen“ ([Block 5, S. 12 und 19](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=12)). Die neuen Tests stehen in `AlbumNameLabTest` und `AddPhotoDecisionTableTest` und sind mit `@Tag("normalfall")`, `@Tag("fehlerfall")` oder `@Tag("grenzfall")` gekennzeichnet.
+
+### 3.1 Verfahren 1: Äquivalenzklassen und Grenzwerte für den Albumnamen
+
+Regel A-02: Nach dem Entfernen äußerer Leerzeichen sind 1 bis 50 Zeichen erlaubt. Die Namen aktiver Alben sind unabhängig von Groß- und Kleinschreibung eindeutig. Ein Emoji zählt als ein Zeichen (A-04).
+
+| Klasse | Typ | Beschreibung | Repräsentant | Erwartetes Verhalten | Testmethode |
+| --- | --- | --- | --- | --- | --- |
+| ÄK1 | gültig | 1–50 Zeichen nach dem Entfernen äußerer Leerzeichen, Name frei | „  Urlaub  2026 “ | Album „Urlaub  2026“ gespeichert, innere Leerzeichen bleiben | `AlbumNameLabTest.keepsInnerSpaces` |
+| ÄK2 | ungültig | kein Zeichen | „“ | „Der Albumname darf nicht leer sein.“, kein Album gespeichert | `AlbumNameLabTest.rejectsNameWithoutCharacters` |
+| ÄK3 | ungültig | nur Leerraum: Leerzeichen, Tabulator, Zeilenumbruch | „\t\n \t“ | wie ÄK2 | `AlbumNameLabTest.rejectsNameOfTabsAndLineBreaks`, `AlbumTest.rejectsBlankName` |
+| ÄK4 | ungültig | mehr als 50 Zeichen | 51 × „👨‍👩‍👧“ | „Der Albumname darf höchstens 50 Zeichen lang sein.“, kein Album gespeichert | `AlbumNameLabTest.rejectsFiftyOneComposedEmoji`, `AlbumTest.rejectsFiftyOneCharacters` |
+| ÄK5 | ungültig | Name eines aktiven Albums in anderer Groß- und Kleinschreibung, auch bei Umlauten | „äPFEL UND öL“ neben „Äpfel und Öl“ | „Dieser Albumname ist bereits vergeben.“, Alben unverändert | `AlbumNameLabTest.rejectsNameDifferingOnlyInUmlautCase`, `CreateAlbumUseCaseTest.rejectsTakenName` |
+| ÄK6 | offen | nur unsichtbare Zeichen, die nicht als Leerraum gelten: geschütztes Leerzeichen (U+00A0), Nullbreite-Leerzeichen (U+200B) | „ “ | Derzeit als Name mit 1 Zeichen angenommen; das Album hat dann einen unsichtbaren Namen. | offene Frage 1 |
+| ÄK7 | offen | gleich aussehender Name in anderer Unicode-Schreibweise: „é“ als ein Zeichen oder als „e“ mit Akzent, „ß“ und „SS“ | „Café“ neben „Café“ (zerlegt) | Derzeit als verschiedene Namen angenommen; zwei Alben sehen gleich aus. | offene Frage 2 |
+
+Der Wert `null` ist keine Klasse für Nutzereingaben: Bricht der Nutzer den Dialog ab, ruft die Oberfläche den Use Case nicht auf (AK-01.2, Systemtest).
+
+| Grenzwert | Eingabe | Erwartet | Testmethode |
+| --- | --- | --- | --- |
+| 0 Zeichen | „“ | abgelehnt (ÄK2) | `AlbumNameLabTest.rejectsNameWithoutCharacters` |
+| 1 Zeichen | „A“ | angenommen | `AlbumTest.acceptsNameWithOneCharacter` |
+| 50 Zeichen | 50 × „👨‍👩‍👧“; 49 × „a“ und „📷“ mit äußeren Leerzeichen | angenommen | `AlbumNameLabTest.acceptsFiftyComposedEmoji`, `AlbumTest.acceptsFiftyCharactersWithEmoji` |
+| 51 Zeichen | 51 × „👨‍👩‍👧“; 51 × „a“ mit äußeren Leerzeichen | abgelehnt (ÄK4) | `AlbumNameLabTest.rejectsFiftyOneComposedEmoji`, `AlbumTest.rejectsFiftyOneCharacters` |
+
+Offene fachliche Fragen (an die Auftraggeberin, festgehalten in [#27](https://github.com/felix-henry/photo-album-projekt/issues/27)):
+
+1. Sollen Namen aus unsichtbaren Zeichen wie leere Namen abgelehnt werden (ÄK6)?
+2. Sollen gleich aussehende Namen in anderer Unicode-Schreibweise als derselbe Name gelten (ÄK7)?
+
+### 3.2 Verfahren 2: Entscheidungstabelle für UC-01 „Foto hinzufügen“
+
+Schlägt eine Prüfung fehl, meldet das System nur den ersten zutreffenden Grund: Lesefehler → leere Datei → kein JPEG oder PNG → zu groß → Duplikat → Album voll (UC-01, Schritt 4). „–“ heißt, die Bedingung ist für die Regel ohne Bedeutung.
+
+| Bedingung | R1 | R2 | R3 | R4 | R5 | R6 | R7 |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| B1 Datei lesbar | J | N | J | J | J | J | J |
+| B2 Datei nicht leer | J | – | N | J | J | J | J |
+| B3 JPEG oder PNG | J | – | – | N | J | J | J |
+| B4 höchstens 20 MiB | J | – | – | – | N | J | J |
+| B5 kein Duplikat im Album | J | – | – | – | – | N | J |
+| B6 Album nicht voll | J | – | – | – | – | – | N |
+| **Aktion** | Foto hinzugefügt | Lesefehler | leere Datei | kein gültiges Bild | zu groß | Duplikat | Album voll |
+
+Bei jeder Ablehnung bleiben Album und App-Kopien unverändert (NFA-01). Über 20 MiB liest das System nur den Dateikopf. Eine beschädigte Datei mit gültigem JPEG- oder PNG-Kopf wird deshalb als zu groß gemeldet (ADR-002).
+
+| Regel | AK | Testmethode |
+| --- | --- | --- |
+| R1 | AK-05.1 | `AddPhotoUseCaseTest.addsPhotoAndStoresCopy` |
+| R2 | AK-05.4 | `Sha256ImageHasherTest.rejectsMissingFile` |
+| R3 | AK-05.2 | `Sha256ImageHasherTest.rejectsEmptyFile`, `AddPhotoDecisionTableTest.reportsInvalidFileBeforeFullAlbum` (B6 = N) |
+| R4 | AK-05.2 | `Sha256ImageHasherTest.rejectsTextFileWithJpgExtension`, `Sha256ImageHasherTest.rejectsLargeNonImageAsNotAnImage` (B4 = N) |
+| R5 | AK-05.2 | `Sha256ImageHasherTest.rejectsImageOneByteTooLarge` |
+| R6 | AK-06.1, AK-06.3 | `AddPhotoUseCaseTest.rejectsDuplicateWithoutStoringCopy`, `AddPhotoDecisionTableTest.reportsDuplicateBeforeFullAlbum` (B6 = N) |
+| R7 | AK-07.2 | `AddPhotoUseCaseTest.rejectsPhotoForFullAlbum` |
