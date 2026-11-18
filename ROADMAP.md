@@ -338,12 +338,12 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Integrationstestdateien · [TESTING.md](TESTING.md).
 
-- [ ] **Mindestens zwei Integrationstests mit echter Infrastruktur nachweisen:** Use Case und echte Infrastruktur verbinden, beispielsweise Datei-Repository und Hasher. Je Test eine fachliche Frage zu Persistenz, Serialisierung oder Pfadverhalten prüfen; Dateitests mit `@TempDir` isolieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 21](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=21))
+- [x] **Mindestens zwei Integrationstests mit echter Infrastruktur nachweisen:** Use Case und echte Infrastruktur verbinden, beispielsweise Datei-Repository und Hasher. Je Test eine fachliche Frage zu Persistenz, Serialisierung oder Pfadverhalten prüfen; Dateitests mit `@TempDir` isolieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 21](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=21))
 
 > **Dateien:** Testdateien für UI-Adapter/Use Case · [TESTING.md](TESTING.md).
 > **Hinweis:** Der UI-Adapter-Test kann einer der beiden Integrationstests sein; es entsteht keine zusätzliche Testquote.
 
-- [ ] **UI-Adapter als mögliche zweite Integration prüfen:** Für einen der beiden Integrationstests kommt ein UI-Adapter mit dem Use Case infrage; bei JavaFX beispielsweise Controller-Logik ohne echtes Fenster. ([Block 5, S. 21](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=21))
+- [x] **UI-Adapter als mögliche zweite Integration prüfen:** Für einen der beiden Integrationstests kommt ein UI-Adapter mit dem Use Case infrage; bei JavaFX beispielsweise Controller-Logik ohne echtes Fenster. ([Block 5, S. 21](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=21))
 
 #### 2. Qualität und nichtfunktionale Anforderungen prüfen
 

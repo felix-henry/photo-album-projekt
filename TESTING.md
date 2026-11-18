@@ -182,3 +182,16 @@ Die folgenden Tests decken die fünf Regelgruppen aus NFA-05 ab und sind mit `@T
 Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `RestoreTrashEntryUseCaseTest.reportsDuplicateInOrigin` und `RestoreTrashEntryUseCaseTest.reportsFullOrigin`.
 
 **Aufbau der Tests (Arrange–Act–Assert).** Methodennamen beschreiben Verhalten und Bedingung, zum Beispiel `rejectsPhotoForFullAlbum`. `@DisplayName` beginnt mit der AK-ID oder, wo kein AK passt, mit der Regel (A-xx, ADR-xxx, NFA-xx). Jeder Test bereitet nur die nötigen Daten vor, führt genau eine Aktion aus und prüft danach Ergebnis und Zustand; die drei Teile sind durch Leerzeilen getrennt ([Block 5, S. 10](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=10)). 35 Tests prüfen technische Fehlerwege ohne eigenes AK, etwa unbekannte IDs, nicht lesbare Dateien oder Albumdateien früherer Versionen. Ihr `@DisplayName` beschreibt das Verhalten ohne ID.
+
+### 4.2 Integrationstests
+
+`PersistenceIntegrationTest` verbindet die Use Cases mit den echten Dateiadaptern (`FileAlbumRepository`, `FileTrashRepository`, `FilePhotoStorage`, `Sha256ImageHasher`). Jeder Test nutzt einen eigenen Datenordner über `@TempDir`. Ein Neustart heißt: Neue Adapter-Objekte lesen die Daten von der Platte ([Block 5, S. 21](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=21)).
+
+| Testmethode | Fachliche Frage | AK |
+| --- | --- | --- |
+| `duplicateIsDetectedAfterRestart` | Erkennt das System ein bytegleiches Bild mit anderem Namen und anderer Endung auch nach einem Neustart als Duplikat? Geprüft werden der gespeicherte Hash (Serialisierung) und dass keine zweite App-Kopie entsteht. | AK-06.1, NFA-02 |
+| `deletedAlbumIsRestoredAfterRestart` | Lässt sich ein gelöschtes Album nach einem Neustart mit Name, Foto und lesbarer App-Kopie wiederherstellen? Geprüft werden das Speichern des Papierkorbs mit Ursprungsangaben und die Pfade der App-Kopien. | AK-04.3, NFA-02 |
+
+### 4.3 UI-Adapter als zweite Integration
+
+Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer` und `ImageDecoder`; beide haben Unit-Tests (AK-N03.2, AK-08.3). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
