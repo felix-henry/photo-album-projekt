@@ -247,3 +247,35 @@ Jede Datei, die der Nutzer auswählt, gilt als nicht vertrauenswürdig. Die App 
 | Sonderzeichen im Dateinamen | `Foto; 😀 ä & $(rm).png` | angenommen, der Dateiname geht nicht in den Namen der App-Kopie ein | `FileInputSecurityTest.storesCopyOfFileWithSpecialNameUnderPhotoId` |
 
 Steuerzeichen in Dateinamen erlaubt Windows nicht. Da der Name der App-Kopie nie vom Dateinamen abhängt, deckt der Sonderzeichen-Test diesen Fall mit ab. Bildmetadaten wertet die App nicht aus; sie kopiert die Datei unverändert. Eine Angriffsfläche über Metadaten entstünde erst mit der nur entworfenen KI-Funktion (KI-01 bis KI-03 in REQUIREMENTS.md).
+
+## 7. Performance-Messung (NFA-03)
+
+NFA-03 verlangt: Ab dem Öffnen eines Albums mit 100 Fotos sind Fotoanzahl und erstes Bild in höchstens 1 Sekunde sichtbar, und der Bildpuffer bleibt innerhalb von 5 Bildern (AK-N03.1, A-06). Gemessen wird auf allen fünf Team-Laptops mit demselben Anwendungsstand und demselben Datensatz.
+
+### 7.1 Messaufbau
+
+`OpenAlbumPerformanceTest` (Tag `performance`) läuft nicht im normalen Build und nicht in der CI, sondern nur auf Abruf:
+
+```powershell
+.\mvnw.cmd test "-Dtest=OpenAlbumPerformanceTest" "-DexcludedGroups="
+```
+
+Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-dataset` und legt über die echten Use Cases und Dateiadapter ein Album mit allen 100 Fotos in einem temporären Datenordner an. Dann misst er elfmal, was `AlbumWindow` beim Öffnen ausführt, bevor Fotoanzahl und erstes Bild sichtbar sind: Album von der Platte laden, erstes Bild über den `ImageBuffer` laden und auf Anzeigegröße (640 × 420) entschlüsseln. Jede Messung beginnt mit neuen Adaptern und leerem Puffer. Die erste Messung entspricht dem ersten Öffnen nach dem Start, die zehn weiteren dem erneuten Öffnen. Nach jeder Messung prüft der Test, dass der Puffer mit den nachgeladenen Nachbarn höchstens 5 Bilder hält. Das Zeichnen durch Swing ist nicht enthalten.
+
+**Datensatz.** Fest erzeugt, auf jedem Laptop gleich (Prüfsumme in der Ausgabe):
+
+| Dateien | Format | Auflösung | Dateigröße |
+| --- | --- | --- | --- |
+| `foto-001.jpg` bis `foto-090.jpg` | JPEG | 4000 × 3000 (12 MP) | 0,8 bis 3,2 MiB |
+| `foto-091.png` bis `foto-100.png` | PNG | 1920 × 1080 | 0,8 bis 3,2 MiB |
+| zusammen 100 Dateien | | | 113,1 MiB, Prüfsumme `e5456c0b45364a47` |
+
+### 7.2 Ergebnisse
+
+| Teammitglied | Betriebssystem | Prozessor | RAM | Java | Erstes Öffnen | Wiederholt (Median / Max.) | Ergebnis |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Pit | Windows 11 Home | Intel Core 7 150U (12 Threads) | 15,7 GiB | 21.0.13 | 91 ms | 60 / 66 ms | bestanden |
+| Moritz | ausstehend | | | | | | |
+| Alex | ausstehend | | | | | | |
+| Alanur | ausstehend | | | | | | |
+| Felix | ausstehend | | | | | | |
