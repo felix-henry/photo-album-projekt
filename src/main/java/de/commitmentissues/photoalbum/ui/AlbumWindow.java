@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import de.commitmentissues.photoalbum.application.AlbumDetails;
@@ -31,12 +32,13 @@ import de.commitmentissues.photoalbum.application.Result;
  * Albumansicht (FA-08) mit „Foto hinzufügen“ (UC-01), „Texte bearbeiten“ (FA-10) und „Foto entfernen“
  * (FA-09). Zeigt die Fotos einzeln in Anzeigegröße mit Titel und Beschreibung; die Bilder kommen über den
  * Bildpuffer (NFA-03, ARCHITECTURE, Abschnitt 5). Enthält keine Geschäftsregeln: Sie zeigt nur an, was die
- * Use Cases zurückmelden.
+ * Use Cases zurückmelden. Fehlermeldungen erscheinen rot, Erfolgsmeldungen in normaler Schrift.
  */
 class AlbumWindow extends JDialog {
 
     static final int IMAGE_WIDTH = 640;
     static final int IMAGE_HEIGHT = 420;
+    private static final Color ERROR_COLOR = new Color(0xB00020);
 
     private final UUID albumId;
     private final UseCases useCases;
@@ -70,7 +72,6 @@ class AlbumWindow extends JDialog {
         removeButton.addActionListener(event -> removeCurrentPhoto());
         previousButton.addActionListener(event -> showPhoto(current - 1));
         nextButton.addActionListener(event -> showPhoto(current + 1));
-        message.setForeground(new Color(0xB00020));
         heading.setFont(heading.getFont().deriveFont(Font.BOLD, heading.getFont().getSize2D() + 4f));
         image.setPreferredSize(new Dimension(IMAGE_WIDTH, IMAGE_HEIGHT));
         photoTitle.setFont(photoTitle.getFont().deriveFont(Font.BOLD));
@@ -177,7 +178,7 @@ class AlbumWindow extends JDialog {
         }
         Result<PhotoSummary> added = useCases.addPhoto().execute(albumId, fileChooser.getSelectedFile().toPath());
         if (!added.isSuccess()) {
-            message.setText(added.getMessage());
+            showError(added.getMessage());
             return;
         }
         reloadAndShow(added.getValue().id());
@@ -195,21 +196,31 @@ class AlbumWindow extends JDialog {
         PhotoSummary photo = photos.get(current);
         Result<AlbumDetails> result = useCases.removePhoto().execute(albumId, photo.id());
         if (!result.isSuccess()) {
-            message.setText(result.getMessage());
+            showError(result.getMessage());
             return;
         }
         showAlbum(result.getValue(), Math.min(current, result.getValue().photos().size() - 1));
-        message.setText("Das Foto liegt jetzt im Papierkorb.");
+        showInfo("Das Foto liegt jetzt im Papierkorb.");
     }
 
     private void reloadAndShow(UUID photoId) {
         Result<AlbumDetails> reloaded = useCases.openAlbum().execute(albumId);
         if (!reloaded.isSuccess()) {
-            message.setText(reloaded.getMessage());
+            showError(reloaded.getMessage());
             return;
         }
         List<UUID> ids = reloaded.getValue().photos().stream().map(PhotoSummary::id).toList();
         showAlbum(reloaded.getValue(), Math.max(0, ids.indexOf(photoId)));
+    }
+
+    private void showError(String text) {
+        message.setForeground(ERROR_COLOR);
+        message.setText(text);
+    }
+
+    private void showInfo(String text) {
+        message.setForeground(UIManager.getColor("Label.foreground"));
+        message.setText(text);
     }
 
     private Result<BufferedImage> loadImage(UUID photoId) {
