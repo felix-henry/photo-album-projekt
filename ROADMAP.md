@@ -351,7 +351,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Hinweis:** Für den Usability-Test einen tatsächlichen Testnutzer einbeziehen.
 > **Nachweise:** Drei konkrete Usability-Issues auf GitHub.
 
-- [ ] **Ein bis zwei manuelle Systemtests dokumentieren:** Die gesamte Anwendung über die Benutzeroberfläche prüfen und Ablauf sowie Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 7](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7))
+- [x] **Ein bis zwei manuelle Systemtests dokumentieren:** Die gesamte Anwendung über die Benutzeroberfläche prüfen und Ablauf sowie Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 7](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7))
 - [ ] **Usability-Test protokollieren und drei konkrete Issues festhalten:** Durchführung und Ergebnisse in [TESTING.md](TESTING.md) dokumentieren. Drei beobachtete Usability-Probleme als GitHub-Issues festhalten und mit dem Protokoll verknüpfen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
 - [ ] **Mindestens ein Usability-Issue per PR beheben:** Mindestens eines der beobachteten Usability-Probleme beheben und die Änderung per PR mit dem zugehörigen Issue verknüpfen. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 

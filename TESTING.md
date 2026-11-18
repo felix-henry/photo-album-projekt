@@ -195,3 +195,34 @@ Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `Restore
 ### 4.3 UI-Adapter als zweite Integration
 
 Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer` und `ImageDecoder`; beide haben Unit-Tests (AK-N03.2, AK-08.3). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
+
+## 5. Systemtests und Usability
+
+### 5.1 Manuelle Systemtests
+
+Beide Systemtests prüfen die gebaute JAR (`photo-album-0.1.0.jar`, Stand `block-5`) über die Oberfläche. Durchgeführt am 18.11.2026 auf Windows 11 mit Java 21 (Temurin 21.0.13+9), Start mit leerem Datenordner (`java -Duser.home=<Testordner> -jar target/photo-album-0.1.0.jar`). Testbilder: `strand.jpg` (JPEG) und `berg.png` (PNG) mit je 800 × 600 Pixeln, dazu die Textdatei `notiz.jpg`.
+
+**S1: Album anlegen → Foto hinzufügen → Neustart → Löschen und Wiederherstellen**
+
+| Schritt | Aktion | Erwartet | Ergebnis |
+| --- | --- | --- | --- |
+| 1 | App starten | Übersicht leer, „Noch keine Alben vorhanden.“; in der Übersicht gibt es keine Funktion „Foto hinzufügen“ (AK-02.2, AK-05.3) | bestanden |
+| 2 | „Album erstellen“, Namen eingeben, „Abbrechen“ | kein Album angelegt (AK-01.2) | bestanden |
+| 3 | „Album erstellen“, „Sommer“, Enter | „Sommer“ steht in der Übersicht (AK-01.1) | bestanden |
+| 4 | Album öffnen, „Foto hinzufügen“, `strand.jpg` | „Album „Sommer“ – 1 Foto“, Bild sichtbar (AK-05.1, AK-08.1) | bestanden |
+| 5 | „Texte bearbeiten“: Titel „Strandtag“, Beschreibung „Ostsee 2026“, „Speichern“ | Texte unter dem Bild sichtbar (AK-10.1) | bestanden |
+| 6 | `berg.png` hinzufügen, mit „Vorheriges Foto“ und „Nächstes Foto“ blättern | „2 Fotos“, „Foto 2 von 2“ (AK-05.1) | bestanden |
+| 7 | Beide Fenster schließen, App neu starten, Album öffnen | 2 Fotos, Titel und Beschreibung unverändert (NFA-02, AK-N02.1) | bestanden |
+| 8 | „Album löschen“, Rückfrage mit „Nein“ beantworten | Album bleibt in der Übersicht (AK-04.7) | bestanden |
+| 9 | „Album löschen“, „Ja“, „Papierkorb“ | Eintrag „Album „Sommer“ · 2 Fotos · … · noch 30 Tage“ (AK-04.1, AK-04.8) | bestanden |
+| 10 | Eintrag wählen, „Endgültig löschen“, „Nein“ | Eintrag bleibt (AK-SR01.5) | bestanden |
+| 11 | „Wiederherstellen“, zurück zur Übersicht, Album öffnen | „Wiederhergestellt in „Sommer“.“, Album mit 2 Fotos und Texten (AK-04.3) | bestanden |
+
+**S2: Ablehnungen beim Hinzufügen**
+
+| Schritt | Aktion | Erwartet | Ergebnis |
+| --- | --- | --- | --- |
+| 1 | Im Album „Sommer“ `notiz.jpg` (Text mit Bildendung) hinzufügen | „Die Datei enthält kein gültiges JPEG- oder PNG-Bild.“, weiterhin 2 Fotos (AK-05.2) | bestanden |
+| 2 | `strand.jpg` erneut hinzufügen | „Dieses Bild befindet sich schon in diesem Album“, weiterhin 2 Fotos (AK-06.1) | bestanden |
+
+Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen.
