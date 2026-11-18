@@ -8,6 +8,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -58,6 +59,7 @@ class AddPhotoUseCaseTest {
 
     @Test
     @DisplayName("AK-06.1: Ein bytegleiches Bild mit anderem Namen wird abgelehnt, keine Kopie wird angelegt")
+    @Tag("fehlerfall")
     void rejectsDuplicateWithoutStoringCopy() {
         Album album = new Album("Urlaub");
         album.addPhoto(new Photo("hash-strand"));
@@ -74,6 +76,7 @@ class AddPhotoUseCaseTest {
 
     @Test
     @DisplayName("AK-07.2: Ein volles Album lehnt das Foto ab und behält seine 100 Fotos")
+    @Tag("grenzfall")
     void rejectsPhotoForFullAlbum() {
         Album album = new Album("Klassenfahrt");
         for (int i = 1; i <= 100; i++) {

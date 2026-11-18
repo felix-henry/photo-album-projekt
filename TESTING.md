@@ -156,3 +156,27 @@ Bei jeder Ablehnung bleiben Album und App-Kopien unverändert (NFA-01). Über 20
 | R5 | AK-05.2 | `Sha256ImageHasherTest.rejectsImageOneByteTooLarge` |
 | R6 | AK-06.1, AK-06.3 | `AddPhotoUseCaseTest.rejectsDuplicateWithoutStoringCopy`, `AddPhotoDecisionTableTest.reportsDuplicateBeforeFullAlbum` (B6 = N) |
 | R7 | AK-07.2 | `AddPhotoUseCaseTest.rejectsPhotoForFullAlbum` |
+
+## 4. Unit- und Integrationstests
+
+### 4.1 Unit-Tests für Domäne und Use Cases
+
+Domäne und Use Cases haben 164 Unit-Tests (55 in `domain`, 109 in `application`). Sie laufen gegen Fakes, ohne Oberfläche, ohne echte Dateien und mit fester Uhr statt Wartezeit (NFA-05). Jeder Fehlerfalltest prüft neben der Meldung auch, dass Album, Papierkorb und App-Kopien unverändert bleiben (NFA-01, AK-N01.1).
+
+Die folgenden Tests decken die fünf Regelgruppen aus NFA-05 ab und sind mit `@Tag` als Normal-, Fehler- oder Grenzfall gekennzeichnet. Dazu kommen die acht Lab-Tests aus Abschnitt 3.
+
+| Regelgruppe | Testmethode | Fall | Geprüfter Zustand |
+| --- | --- | --- | --- |
+| Albumnamen | `CreateAlbumUseCaseTest.savesValidAlbum` | Normalfall | Album ohne äußere Leerzeichen gespeichert |
+| Textlängen | `PhotoTest.acceptsTitleOfMaxLength` | Grenzfall (100 Zeichen) | Titel gesetzt, Beschreibung unverändert |
+| Textlängen | `EditPhotoTextsUseCaseTest.rejectsTooLongTitle` | Fehlerfall (101 Zeichen) | gespeicherter Titel unverändert |
+| Fotoanzahl | `AlbumPhotoTest.acceptsHundredthPhoto` | Grenzfall (100. Foto) | Album enthält 100 Fotos |
+| Fotoanzahl | `AddPhotoUseCaseTest.rejectsPhotoForFullAlbum` | Grenzfall (101. Foto) | Album behält 100 Fotos, keine App-Kopie |
+| Duplikate | `AddPhotoUseCaseTest.rejectsDuplicateWithoutStoringCopy` | Fehlerfall | Album behält 1 Foto, keine App-Kopie |
+| Papierkorb | `RemovePhotoUseCaseTest.movesPhotoToTrash` | Normalfall | Foto im Papierkorb mit Ursprungsalbum und Zeitpunkt |
+| Papierkorb | `TrashEntryTest.isNotDueOneSecondBeforeDeadline` | Grenzfall (1 s vor Fristablauf, AK-SR01.6) | Eintrag nicht fällig |
+| Papierkorb | `TrashEntryTest.isDueAfterExactlyThirtyTimesTwentyFourHours` | Grenzfall (genau bei Fristablauf, AK-SR01.3) | Eintrag fällig |
+| Papierkorb | `RestoreTrashEntryUseCaseTest.reportsNameConflictForTile` | Fehlerfall (Namenskonflikt, AK-04.6) | Kachel bleibt im Papierkorb, aktives Album unverändert |
+| Papierkorb | `DeletePermanentlyUseCaseTest.reportsPartialSuccessForTile` | Fehlerfall (Teilerfolg, AK-SR01.4) | Kachel behält das nicht gelöschte Foto und seine App-Kopie |
+
+Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `RestoreTrashEntryUseCaseTest.reportsDuplicateInOrigin` und `RestoreTrashEntryUseCaseTest.reportsFullOrigin`.

@@ -5,6 +5,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class AlbumPhotoTest {
@@ -47,6 +48,7 @@ class AlbumPhotoTest {
 
     @Test
     @DisplayName("AK-07.1: Das 100. Foto wird noch aufgenommen")
+    @Tag("grenzfall")
     void acceptsHundredthPhoto() {
         Album album = albumWithPhotos(99);
 

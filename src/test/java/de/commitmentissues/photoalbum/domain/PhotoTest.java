@@ -3,6 +3,7 @@ package de.commitmentissues.photoalbum.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class PhotoTest {
@@ -30,6 +31,7 @@ class PhotoTest {
 
     @Test
     @DisplayName("AK-10.2: Ein Titel mit genau 100 Zeichen wird gespeichert, die Beschreibung bleibt leer")
+    @Tag("grenzfall")
     void acceptsTitleOfMaxLength() {
         Photo photo = new Photo("hash-strand");
 

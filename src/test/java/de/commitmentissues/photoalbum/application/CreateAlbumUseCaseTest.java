@@ -5,6 +5,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.commitmentissues.photoalbum.domain.Album;
@@ -16,6 +17,7 @@ class CreateAlbumUseCaseTest {
 
     @Test
     @DisplayName("AK-01.1: Ein gültiges Album wird ohne äußere Leerzeichen gespeichert")
+    @Tag("normalfall")
     void savesValidAlbum() {
         Result<AlbumSummary> result = useCase.execute(" Urlaub ");
 
