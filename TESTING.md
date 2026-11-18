@@ -227,6 +227,25 @@ Beide Systemtests prüfen die gebaute JAR (`photo-album-0.1.0.jar`, Stand `block
 
 Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen.
 
+### 5.2 Usability-Test (NFA-04)
+
+Nach Teamabsprache testen die fünf Teammitglieder selbst (NFA-04, AK-N04.1). Jede Person startet die App mit leerem Datenordner und löst ohne Hilfe zwei Aufgaben ([Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23)):
+
+1. „Lege ein Album ‚Sommer‘ an.“ Gemessen ab dem Klick auf „Album erstellen“ bis „Sommer“ in der Übersicht steht.
+2. „Füge dem Album ‚Sommer‘ das Foto vom Desktop hinzu.“ Gemessen ab dem Klick auf „Foto hinzufügen“ bis das Foto im Album angezeigt wird. Zusätzlich notiert: die Zeit vom Beginn der Aufgabe bis zu diesem Klick.
+
+Bestanden ist NFA-04, wenn alle Personen beide Schritte in jeweils höchstens 60 Sekunden schaffen. Notiert werden Beobachtungen statt Meinungen, zum Beispiel „suchte 20 s den Knopf“ statt „unübersichtlich“. Einschränkung: Die Teammitglieder kennen die App aus den Reviews. Wie neue Nutzer bedienen sie sie also nicht; Probleme beim ersten Zurechtfinden zeigen sich deshalb eher schwächer.
+
+| Teammitglied | Album erstellen | Bis „Foto hinzufügen“ | Foto hinzufügen | NFA-04 | Beobachtungen |
+| --- | ---: | ---: | ---: | --- | --- |
+| Pit | ausstehend | | | | |
+| Moritz | ausstehend | | | | |
+| Alex | ausstehend | | | | |
+| Alanur | ausstehend | | | | |
+| Felix | ausstehend | | | | |
+
+Aus den Beobachtungen entstehen drei Usability-Issues, nach Auswirkung geordnet: Aufgabe nicht lösbar vor verzögert vor kosmetisch.
+
 ## 6. Security-Tests für Dateieingaben
 
 Jede Datei, die der Nutzer auswählt, gilt als nicht vertrauenswürdig. Die App prüft sie nach ihrem Inhalt, nicht nach der Endung (A-03), und legt die App-Kopie immer unter der Foto-ID ab (A-05). Fälle nach [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23):
