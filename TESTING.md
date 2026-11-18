@@ -304,3 +304,7 @@ JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `targ
 | `ui.AlbumOverviewWindow` | 0 % (0 von 26) | Swing-Fenster, nur im Systemtest geprüft |
 
 Außerhalb der Oberfläche sind es `infrastructure.TrashEntryFile` (60 %, 6 von 10), `infrastructure.FileTrashRepository` (70 %, 7 von 10) und `application.CreateAlbumUseCase` (75 %, 3 von 4). Diese Klassen sind Kandidaten für Regressionstests in Block 6.
+
+## 9. Evaluation Set für die KI-Funktion
+
+Die KI-Funktion ist nur entworfen (Won't). Für ihren Titelvorschlag liegt das Evaluation Set unter [eval/describe-photo/cases.md](eval/describe-photo/cases.md): fünf Fälle (normal, mehrdeutig, sensibel, adversarial, fehlerhaft) mit je drei prüfbaren Kriterien, dazu die Sicherheitsanforderungen KI-01 bis KI-03 und die begründete Freigabe-Pass-Rate.

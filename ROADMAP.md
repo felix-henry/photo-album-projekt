@@ -371,8 +371,8 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** `eval/describe-photo/cases.md` · [TESTING.md](TESTING.md) (Verweis auf das Evaluation Set).
 
-- [ ] **Mini-Evaluation-Set erstellen (Pflicht, auch bei Won’t):** Fünf Fälle mit konkreter Eingabe festlegen: normal, mehrdeutig, sensibel, adversarial und fehlerhaft. Je Fall zwei bis drei prüfbare Kriterien formulieren, möglichst regelbasiert. Das Set bleibt auch für die nur entworfene KI-Funktion verpflichtend. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 27](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=27))
-- [ ] **Freigabe-Pass-Rate begründen und das Evaluation Set versionieren:** Festlegen, ab welcher Pass-Rate die entworfene Funktion freigegeben würde, und die Zahl begründen. Das Set unter `eval/describe-photo/cases.md` ablegen und aus [TESTING.md](TESTING.md) verlinken. ([Block 5, S. 27](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=27))
+- [x] **Mini-Evaluation-Set erstellen (Pflicht, auch bei Won’t):** Fünf Fälle mit konkreter Eingabe festlegen: normal, mehrdeutig, sensibel, adversarial und fehlerhaft. Je Fall zwei bis drei prüfbare Kriterien formulieren, möglichst regelbasiert. Das Set bleibt auch für die nur entworfene KI-Funktion verpflichtend. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 27](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=27))
+- [x] **Freigabe-Pass-Rate begründen und das Evaluation Set versionieren:** Festlegen, ab welcher Pass-Rate die entworfene Funktion freigegeben würde, und die Zahl begründen. Das Set unter `eval/describe-photo/cases.md` ablegen und aus [TESTING.md](TESTING.md) verlinken. ([Block 5, S. 27](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=27))
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
