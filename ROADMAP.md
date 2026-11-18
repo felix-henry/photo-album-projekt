@@ -364,8 +364,8 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** Build-Konfiguration (JaCoCo) · [TESTING.md](TESTING.md).
 > **Nachweise:** Generierter JaCoCo-Report.
 
-- [ ] **Coverage mit JaCoCo erheben:** Einen Coverage-Report als Grundlage für die Interpretation je Schicht erzeugen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
-- [ ] **Drei Klassen mit der niedrigsten Branch-Coverage notieren:** Im JaCoCo-Report die drei Klassen mit der niedrigsten Branch-Coverage ermitteln und in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
+- [x] **Coverage mit JaCoCo erheben:** Einen Coverage-Report als Grundlage für die Interpretation je Schicht erzeugen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
+- [x] **Drei Klassen mit der niedrigsten Branch-Coverage notieren:** Im JaCoCo-Report die drei Klassen mit der niedrigsten Branch-Coverage ermitteln und in [TESTING.md](TESTING.md) festhalten. ([Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### 3. KI-Evaluation und KI-Einsatz
 
