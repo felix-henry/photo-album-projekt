@@ -239,7 +239,7 @@ Bestanden ist NFA-04, wenn alle Personen beide Schritte in jeweils höchstens 60
 | Teammitglied | Album erstellen | Bis „Foto hinzufügen“ | Foto hinzufügen | NFA-04 | Beobachtungen |
 | --- | ---: | ---: | ---: | --- | --- |
 | Pit | ausstehend | | | | |
-| Moritz | ausstehend | | | | |
+| Moritz | 3 s | 2 s | 6 s | bestanden | Kennt die App gut aus den Block-4-Tests. Öffnete „Sommer“ per Doppelklick statt über „Öffnen“. Kein Zögern, keine Fehlklicks, keine Meldungen. |
 | Alex | ausstehend | | | | |
 | Alanur | ausstehend | | | | |
 | Felix | ausstehend | | | | |
@@ -294,7 +294,7 @@ Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-datase
 | Teammitglied | Betriebssystem | Prozessor | RAM | Java | Erstes Öffnen | Wiederholt (Median / Max.) | Ergebnis |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Pit | Windows 11 Home | Intel Core 7 150U (12 Threads) | 15,7 GiB | 21.0.13 | 91 ms | 60 / 66 ms | bestanden |
-| Moritz | ausstehend | | | | | | |
+| Moritz | Windows 11 Pro | Intel Core i5-8365U (8 Threads) | 15,8 GiB | 21.0.13 | 148 ms | 103 / 157 ms | bestanden |
 | Alex | ausstehend | | | | | | |
 | Alanur | ausstehend | | | | | | |
 | Felix | ausstehend | | | | | | |
