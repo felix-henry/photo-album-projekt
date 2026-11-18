@@ -65,6 +65,7 @@ class DeletePermanentlyUseCaseTest {
 
         assertEquals("2 von 3 Fotos wurden endgültig gelöscht. 1 Foto bleibt im Papierkorb.", result.getMessage());
         assertEquals(1, trash.entries().size());
+        assertTrue(trash.entries().get(0).isAlbum(), "Das Foto bleibt in der Kachel");
         assertEquals(List.of(stuck.getId()), trash.entries().get(0).getPhotos().stream().map(Photo::getId).toList());
         assertEquals(Set.of(stuck.getId()), photos.storedIds());
     }

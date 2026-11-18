@@ -376,7 +376,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Fall 4 zur Testgenerierung dokumentieren:** Aus einem Akzeptanzkriterium Tests von einer KI generieren lassen und kritisch prüfen, ob die Assertions tatsächlich das Kriterium prüfen. Den Einsatz mit Prompt, Ergebnis, kritischer Bewertung und begründeter Entscheidung in [AI_USAGE.md](AI_USAGE.md) dokumentieren. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
+- [x] **KI-Fall 4 zur Testgenerierung dokumentieren:** Aus einem Akzeptanzkriterium Tests von einer KI generieren lassen und kritisch prüfen, ob die Assertions tatsächlich das Kriterium prüfen. Den Einsatz mit Prompt, Ergebnis, kritischer Bewertung und begründeter Entscheidung in [AI_USAGE.md](AI_USAGE.md) dokumentieren. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki); [Block 5, S. 29](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=29))
 
 #### Blockabschluss
 

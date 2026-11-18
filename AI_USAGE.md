@@ -76,15 +76,37 @@ Dauerhafte Regeln aus der lokalen `CLAUDE.md`, die zusätzlich die gemeinsame [A
 
 ## Fall 4 – Tests aus einem Akzeptanzkriterium ableiten, Block 5
 
-Geplant.
-
 | Feld | Inhalt |
 | --- | --- |
-| **Aufgabe/Ziel** | Aus einem Akzeptanzkriterium Tests generieren lassen und prüfen, ob die Assertions das geforderte Verhalten absichern. |
-| **Werkzeug/Modell und Prompt oder Skill** | |
-| **Ergebnis** | |
-| **Kritische Bewertung** | |
-| **Entscheidung** | |
+| **Aufgabe/Ziel** | Aus einem Akzeptanzkriterium Tests generieren lassen und prüfen, ob die Assertions das geforderte Verhalten absichern. Gewählt ist AK-SR01.4: Beim endgültigen Löschen einer Albumkachel mit drei Fotos scheitert eines; zwei Fotos und ihre App-Kopien sind danach gelöscht, das dritte bleibt in der Kachel, und das System meldet den Teilerfolg. |
+| **Werkzeug/Modell und Prompt oder Skill** | Claude Code (Desktop-App) mit Claude Opus 5.5 am 18.11.2026. Die Tests erzeugte ein eigener Agent ohne Projektkontext, der nur den Use Case, die Fakes und die Domänenklassen lesen durfte, den vorhandenen Test aber nicht. [Prompt](#prompt-zu-fall-4) |
+| **Ergebnis** | Eine Testklasse mit einem Test nach Arrange–Act–Assert. Sie kompilierte ohne Änderung und lief grün. Geprüft werden die verbleibende App-Kopie, ein Eintrag im Papierkorb mit derselben ID und nur dem gescheiterten Foto, `isSuccess() == false` und der genaue Meldungstext. |
+| **Kritische Bewertung** | Die Assertions decken drei der vier Teile des Kriteriums ab: gelöschte App-Kopien, verbleibendes Foto und Meldung. Die Zusage „bleibt in der Kachel“ prüft der Test nicht. Um das zu belegen, wurde in `Trash.remove` probeweise ein Fehler eingebaut, der aus der Kachel einen Einzelfoto-Eintrag macht. Der KI-Test blieb dabei grün, ebenso der vorhandene Test `DeletePermanentlyUseCaseTest.reportsPartialSuccessForTile`; nur `TrashTest` schlug an, und zwar über den Objektvergleich, nicht über eine gezielte Prüfung. Außerdem doppelt der KI-Test den vorhandenen Test fast genau. Die Prüfung `isSuccess() == false` hält eine Umsetzungsentscheidung fest, die das Kriterium nicht verlangt. Erfundene Klassen oder Methoden kamen nicht vor. |
+| **Entscheidung** | **Verworfen:** die generierte Testklasse, weil sie den vorhandenen Test doppelt. **Übernommen und angepasst:** die Erkenntnis aus der Prüfung. `reportsPartialSuccessForTile` prüft jetzt zusätzlich, dass der verbleibende Eintrag eine Kachel ist. Mit dem probeweise eingebauten Fehler schlägt er an, mit dem echten Code ist er grün. |
+
+### Prompt zu Fall 4
+
+```text
+Du sollst nur lesen und Code als Text zurückgeben. Lege keine Dateien an und ändere keine. Führe keine Befehle aus, die schreiben.
+
+Projekt: Java-21-Fotoalbum unter C:/Users/pitwi/Documents/photo-album-projekt (Maven, JUnit 5).
+
+Akzeptanzkriterium AK-SR01.4:
+- Ausgangslage: Eine Albumkachel im Papierkorb enthält drei Fotos. Beim endgültigen Löschen schlägt der Zugriff auf eines davon fehl.
+- Aktion: Der Nutzer bestätigt das endgültige Löschen der Kachel.
+- Erwartetes Ergebnis: Zwei Fotos und ihre App-Kopien sind gelöscht. Das betroffene Foto bleibt in der Kachel, deren Anzahl auf eins sinkt. Das System meldet den Teilerfolg.
+
+Lies dazu nur:
+- src/main/java/de/commitmentissues/photoalbum/application/DeletePermanentlyUseCase.java
+- src/test/java/de/commitmentissues/photoalbum/application/InMemoryTrashRepository.java
+- src/test/java/de/commitmentissues/photoalbum/application/InMemoryPhotoStorage.java
+- src/test/java/de/commitmentissues/photoalbum/application/InMemoryAlbumRepository.java
+- die Domänenklassen, die du für die Testdaten brauchst (src/main/java/de/commitmentissues/photoalbum/domain/)
+
+Lies NICHT die vorhandene Datei DeletePermanentlyUseCaseTest.java.
+
+Aufgabe: Schreibe eine vollständige JUnit-5-Testklasse `DeletePermanentlyPartialSuccessTest` im Paket de.commitmentissues.photoalbum.application, die AK-SR01.4 mit den vorhandenen Fakes prüft. Nach Arrange–Act–Assert, mit @DisplayName, das mit „AK-SR01.4:“ beginnt. Gib nur die Java-Datei als Codeblock zurück, danach höchstens drei Sätze, welche Annahmen du getroffen hast.
+```
 
 ## Fall 5 – Refactoring prüfen, Block 6
 
