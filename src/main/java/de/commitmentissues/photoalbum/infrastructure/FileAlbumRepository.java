@@ -22,7 +22,7 @@ import de.commitmentissues.photoalbum.domain.DomainException;
 
 /**
  * Speichert jedes Album samt seiner Fotos als eigene JSON-Datei {@code albums/<AlbumId>.json}
- * (ADR-001, ADR-003).
+ * (ADR-001, ADR-003). Passt die ID in der Datei nicht zum Dateinamen, gilt die Datei als unlesbar.
  */
 public class FileAlbumRepository implements AlbumRepository {
 
@@ -90,8 +90,11 @@ public class FileAlbumRepository implements AlbumRepository {
             if (data == null || data.id() == null || data.name() == null) {
                 throw new StorageException("Die Albumdatei ist unvollständig: " + file);
             }
-            return Album.restore(new AlbumId(UUID.fromString(data.id())), data.name(),
-                    PhotoFile.toPhotos(data.photos()));
+            AlbumId id = new AlbumId(UUID.fromString(data.id()));
+            if (!file.getFileName().toString().equals(id.value() + SUFFIX)) {
+                throw new StorageException("Die ID in der Albumdatei passt nicht zum Dateinamen: " + file);
+            }
+            return Album.restore(id, data.name(), PhotoFile.toPhotos(data.photos()));
         } catch (IOException | JsonParseException | IllegalArgumentException | DomainException e) {
             throw new StorageException("Die Albumdatei ist nicht lesbar: " + file, e);
         }

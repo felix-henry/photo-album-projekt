@@ -190,5 +190,5 @@ Regeln beim Lesen und Schreiben:
 
 - Jede JSON-Datei entsteht zuerst als `<Name>.tmp` und ersetzt dann die alte Datei in einem Schritt. App-Kopien entstehen ebenso über `<PhotoId>.tmp` (ADR-002).
 - Fehlt `trash.json`, ist der Papierkorb leer. Fehlt bei einem Album `photos`, hat es keine Fotos. Fehlen bei einem Foto `title` oder `description`, gelten die Texte als leer. So bleiben Dateien aus früheren Ständen lesbar.
-- Fehlt eine Pflichtangabe wie ID, Name, Inhaltshash, Löschzeitpunkt oder die Art des Eintrags, oder verletzt der Inhalt eine Regel der Domäne, ist die Datei nicht lesbar. `findAll` und `load` melden das als Fehler, statt die Datei zu überspringen (ADR-002, AK-02.3, AK-N02.2).
+- Fehlt eine Pflichtangabe wie ID, Name, Inhaltshash, Löschzeitpunkt oder die Art des Eintrags, passt die ID einer Albumdatei nicht zu ihrem Dateinamen, oder verletzt der Inhalt eine Regel der Domäne, ist die Datei nicht lesbar. `findAll` und `load` melden das als Fehler, statt die Datei zu überspringen (ADR-002, AK-02.3, AK-N02.2).
 - `photos/` enthält nur App-Kopien. Dateien, deren Name keine Foto-ID ist, beachtet die App nicht.

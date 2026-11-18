@@ -152,6 +152,19 @@ class FileAlbumRepositoryTest {
     }
 
     @Test
+    @DisplayName("AK-02.3: Eine Albumdatei, deren ID nicht zum Dateinamen passt, wird als Fehler gemeldet")
+    void reportsAlbumIdNotMatchingFileName() throws IOException {
+        AlbumId fileId = AlbumId.newId();
+        writeAlbumFile(fileId, """
+                {"id": "%s", "name": "Party"}
+                """.formatted(AlbumId.newId().value()));
+        FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
+
+        assertThrows(StorageException.class, repository::findAll);
+        assertThrows(StorageException.class, () -> repository.findById(fileId));
+    }
+
+    @Test
     @DisplayName("AK-03.1: Nach dem Umbenennen enthält das gespeicherte Album dieselben Fotos")
     void renamedAlbumKeepsPhotos() {
         FileAlbumRepository repository = new FileAlbumRepository(dataDirectory);
