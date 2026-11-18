@@ -1,6 +1,6 @@
 # ADR-002: Fehlerbehandlung über Exceptions und Result
 
-**Status:** akzeptiert · **Datum:** 10.11.2026 · **geändert:** 14.11.2026
+**Status:** akzeptiert · **Datum:** 10.11.2026 · **geändert:** 18.11.2026
 
 ## Kontext
 
@@ -16,6 +16,7 @@ Abgelehnte Eingaben brauchen eine verständliche Meldung mit Grund. Der gespeich
 - Beim Erstellen eines Albums gibt es nur einen Schreibvorgang. Scheitert er, ist nichts zurückzunehmen.
 - Verschieben in den Papierkorb und Wiederherstellen ändern zwei Dateien: die Albumdatei und `trash.json`. Der jeweilige Use Case koordiniert beide. Er ändert zuerst die Datei, die das Foto oder Album aufnimmt, und danach die, aus der es verschwindet: beim Verschieben erst `trash.json`, dann die Albumdatei, beim Wiederherstellen umgekehrt. Scheitert der zweite Schritt, stellt er den alten Stand der ersten Datei wieder her (AK-04.2, AK-04.5, AK-09.2). So ist ein Foto nach einem Fehler höchstens doppelt gespeichert, aber nie verloren.
 - Scheitert auch das Wiederherstellen des alten Stands, gilt die Ausnahme aus A-11: Dieselbe Foto-ID liegt dann zugleich in einem aktiven Album und im Papierkorb. Beim nächsten Start nimmt die Anwendung das Foto aus dem Papierkorbeintrag heraus, ein leerer Eintrag entfällt. Das Foto bleibt also im Album, auch wenn der Vorgang ein Wiederherstellen war.
+- Beim endgültigen Löschen nimmt der Use Case den Eintrag zuerst aus `trash.json` und löscht danach die App-Kopien. Scheitert das Speichern, ist nichts gelöscht. Fotos, deren Kopie sich nicht löschen ließ, schreibt er danach wieder in den Eintrag (A-12). Scheitert auch dieses zweite Speichern, bleiben sie nicht im Papierkorb. Ihre Kopien sind dann verwaist und werden beim nächsten Start gelöscht (A-11). So verweist kein Papierkorbeintrag auf eine gelöschte Kopie, und kein Foto ohne Bilddatei lässt sich wiederherstellen.
 - `StartupCleanupUseCase` bereinigt beim Start in dieser Reihenfolge: doppelte Foto-IDs, fällige Einträge (A-10), verwaiste Kopien. Fällige Einträge und verwaiste Kopien löscht er nur, wenn jede Albumdatei und `trash.json` fehlerfrei gelesen wurden. `findAll` und `load` melden eine unlesbare Datei dafür als Fehler, statt sie zu überspringen. Sonst lässt er alle Kopien unberührt (AK-N02.2). Folgen für die übrigen Use Cases stehen in ARCHITECTURE, Abschnitt 9. Das Löschen einer schon fehlenden Kopie gilt als Erfolg. Endgültiges Löschen und die Bereinigung nach A-10 löschen keine App-Kopie, auf die noch ein Album verweist.
 - `Sha256ImageHasher` fragt zuerst die Dateigröße ab. Bis 20 MiB liest er die Datei vollständig, entschlüsselt sie zur Prüfung und meldet Fehler in der Reihenfolge aus UC-01. Über 20 MiB liest er nur den Dateikopf: Ist sie kein JPEG oder PNG, meldet er „kein gültiges Bild“, sonst „zu groß“. So muss die App keine beliebig großen Dateien laden. Ein beschädigtes JPEG oder PNG über 20 MiB wird deshalb als zu groß gemeldet.
 - Bilder mit mehr als 100 Millionen Pixeln lehnt `Sha256ImageHasher` als ungültiges Bild ab, bevor er sie entschlüsselt. Eine kleine Datei mit riesigen Bildmaßen würde sonst den Arbeitsspeicher füllen. Smartphone-Fotos haben üblicherweise 12 bis 50 Millionen Pixel.

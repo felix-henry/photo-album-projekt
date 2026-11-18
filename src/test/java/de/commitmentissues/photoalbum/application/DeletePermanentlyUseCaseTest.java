@@ -1,10 +1,13 @@
 package de.commitmentissues.photoalbum.application;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
@@ -104,14 +107,51 @@ class DeletePermanentlyUseCaseTest {
     }
 
     @Test
-    @DisplayName("Scheitert das Speichern des Papierkorbs, wird der Fehler gemeldet")
-    void reportsTrashSaveFailure() {
+    @DisplayName("ADR-002: Scheitert das Speichern des Papierkorbs, bleiben Eintrag und App-Kopie erhalten")
+    void deletesNothingWhenTrashCannotBeSaved() {
         TrashEntry entry = trashPhoto("hash-1");
+        Photo photo = entry.getPhotos().get(0);
         trash.failOnSave = true;
 
         Result<Void> result = useCase.execute(entry.getId().value());
 
         assertEquals("Der Papierkorb konnte nicht gespeichert werden.", result.getMessage());
+        assertEquals(List.of(entry.getId()), trash.entries().stream().map(TrashEntry::getId).toList());
+        assertEquals(Set.of(photo.getId()), photos.storedIds());
+    }
+
+    @Test
+    @DisplayName("ADR-002: Nach gescheitertem Speichern lässt sich das Foto samt Bilddatei wiederherstellen")
+    void restoresPhotoWithCopyAfterFailedSave() {
+        TrashEntry entry = trashPhoto("hash-1");
+        Photo photo = entry.getPhotos().get(0);
+        trash.failOnSave = true;
+        useCase.execute(entry.getId().value());
+        trash.failOnSave = false;
+        RestoreTrashEntryUseCase restore = new RestoreTrashEntryUseCase(albums, trash, photos,
+                Clock.fixed(DELETED.plusSeconds(60), ZoneOffset.UTC));
+
+        Result<AlbumSummary> result = restore.execute(entry.getId().value());
+
+        assertTrue(result.isSuccess());
+        assertEquals(List.of(photo.getId()), albums.findAll().get(0).getPhotos().stream().map(Photo::getId).toList());
+        assertArrayEquals(new byte[] {1}, photos.load(photo.getId()));
+    }
+
+    @Test
+    @DisplayName("ADR-002: Scheitert das zweite Speichern, verweist der Papierkorb auf keine gelöschte Kopie")
+    void leavesNoEntryWithoutCopyWhenSecondSaveFails() {
+        TrashEntry tile = trashAlbum("hash-1", "hash-2");
+        Photo stuck = tile.getPhotos().get(1);
+        photos.undeletable.add(stuck.getId());
+        trash.failAfterSaves(1);
+
+        Result<Void> result = useCase.execute(tile.getId().value());
+
+        assertEquals("Die Fotos wurden aus dem Papierkorb entfernt. Übrige Bilddateien löscht die App beim nächsten Start.",
+                result.getMessage());
+        assertEquals(List.of(), trash.entries());
+        assertEquals(Set.of(stuck.getId()), photos.storedIds());
     }
 
     @Test
