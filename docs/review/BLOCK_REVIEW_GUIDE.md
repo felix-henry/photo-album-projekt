@@ -76,4 +76,17 @@ Vor dem Merge sind die vier Freigaben der anderen Teammitglieder erforderlich. N
 
 „Reviewed“ im Issue erst nach der eigenen abschließenden Prüfung abhaken. Den gesamten Block erst gemäß Blockabschluss in der ROADMAP als erledigt markieren.
 
+## 5. Schwerpunkte bei großen PRs
+
+Umfasst ein PR viele Dateien, schlägt der Blockbearbeiter in der PR-Beschreibung Schwerpunkte je Reviewer vor. Jeder Reviewer prüft seinen Schwerpunkt gründlich nach den Abschnitten 1 bis 4 und den übrigen PR im Überblick; abweichend von Abschnitt 1 muss er dafür nicht jede geänderte Datei im Detail lesen. Die Freigabe gilt trotzdem für den ganzen PR, und jeder schreibt wie gewohnt ein eigenes Gesamtreview. Darin nennt er unter „Geprüft“ seinen Schwerpunkt. Befunde außerhalb des Schwerpunkts werden wie alle anderen gemeldet.
+
+**Beispiel aus Block 4** ([PR #35](https://github.com/felix-henry/photo-album-projekt/pull/35)):
+
+| Reviewer | Schwerpunkt |
+| --- | --- |
+| Alex | Domäne und Papierkorb: `domain`, `RemovePhotoUseCase`, `DeleteAlbumUseCase`, `RestoreTrashEntryUseCase`, `DeletePermanentlyUseCase` und `StartupCleanupUseCase` |
+| Alanur | Speicherung und Bildprüfung: `infrastructure` und [ARCHITECTURE.md, Abschnitt 10](../../ARCHITECTURE.md#10-speicherformat) |
+| Pit | Oberfläche: `ui` und ein kurzer manueller Test mit dem JAR |
+| Felix | Build, CI, Projektstruktur und Git-Prozess |
+
 Grundlagen: [Projektbeschreibung §9](../task_description/Projektbeschreibung_Photo_Album.md#9-implementierung-git-und-ci-block-4), [Block 4: Code Review](../lecture_slides/Block_4_Implementierung_und_Versionsmanagement.md#4-code-review-und-continuous-integration) und [Arbeitsverteilung und Blockabschlüsse](../../ROADMAP.md).
