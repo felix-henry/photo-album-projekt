@@ -47,10 +47,10 @@ Die Anforderungen, Auftraggeberentscheidungen und Teamannahmen stehen in [REQUIR
 | Bereich | Festlegung und Version |
 | --- | --- |
 | Programmiersprache | Java 21 (JDK 21, zum Beispiel Eclipse Temurin) |
-| Build | Maven 3.9.16 über den Maven-Wrapper im Repository ([ADR-000](docs/adr/ADR-000-build.md)) |
+| Build | Maven 3.10.1 über den Maven-Wrapper im Repository ([ADR-000](docs/adr/ADR-000-build.md)) |
 | Oberfläche | Swing aus dem JDK ([ARCHITECTURE.md](ARCHITECTURE.md)) |
 | Datenhaltung | JSON-Dateien im lokalen Dateisystem mit Gson 2.15.0 ([ADR-001](docs/adr/ADR-001-speicherung.md), [ADR-003](docs/adr/ADR-003-json-bibliothek.md)); das Format beschreibt [ARCHITECTURE.md, Abschnitt 10](ARCHITECTURE.md#10-speicherformat) |
-| Automatisierte Tests | JUnit 5.14.4 mit Maven Surefire 3.5.6 |
+| Automatisierte Tests | JUnit 5.14.4 mit Maven Surefire 3.6.1 |
 | Coverage | JaCoCo 0.8.16 |
 | Versionsverwaltung | Git, gemeinsames Repository und geschützter `main`-Branch |
 | CI | GitHub Actions mit Temurin JDK 21 bei jedem Push auf `main` und jedem Pull Request; die Prüfung `build` ist für `main` Pflicht |
@@ -142,7 +142,7 @@ Versionierte Dateien und Ordner; Unterrichtsfolien und Projektbeschreibung sind 
 
 ## Build, Tests und Start
 
-**Voraussetzung:** ein JDK 21. Maven muss nicht installiert sein, der Maven-Wrapper im Repository lädt Maven 3.9.16 beim ersten Aufruf selbst. Welches JDK der Wrapper verwendet, zeigt:
+**Voraussetzung:** ein JDK 21. Maven muss nicht installiert sein, der Maven-Wrapper im Repository lädt Maven 3.10.1 beim ersten Aufruf selbst. Welches JDK der Wrapper verwendet, zeigt:
 
 ```bash
 ./mvnw -v          # Windows: .\mvnw.cmd -v
