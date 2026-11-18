@@ -20,15 +20,20 @@ public class RenameAlbumUseCase {
     }
 
     public Result<AlbumSummary> execute(UUID albumId, String newName) {
+        List<Album> all;
         try {
-            List<Album> all = albums.findAll();
-            Album album = all.stream()
-                    .filter(candidate -> candidate.getId().value().equals(albumId))
-                    .findFirst()
-                    .orElse(null);
-            if (album == null) {
-                return Result.failure("Das Album wurde nicht gefunden.");
-            }
+            all = albums.findAll();
+        } catch (StorageException e) {
+            return Result.failure("Die Alben konnten nicht geladen werden.");
+        }
+        Album album = all.stream()
+                .filter(candidate -> candidate.getId().value().equals(albumId))
+                .findFirst()
+                .orElse(null);
+        if (album == null) {
+            return Result.failure("Das Album wurde nicht gefunden.");
+        }
+        try {
             new AlbumLibrary(all).rename(album, newName);
             albums.save(album);
             return Result.success(AlbumSummary.of(album));

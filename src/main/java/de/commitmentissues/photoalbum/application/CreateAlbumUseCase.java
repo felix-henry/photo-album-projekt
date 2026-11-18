@@ -19,9 +19,14 @@ public class CreateAlbumUseCase {
     }
 
     public Result<AlbumSummary> execute(String name) {
+        List<Album> existing;
+        try {
+            existing = albums.findAll();
+        } catch (StorageException e) {
+            return Result.failure("Die Alben konnten nicht geladen werden.");
+        }
         try {
             Album album = new Album(name);
-            List<Album> existing = albums.findAll();
             new AlbumLibrary(existing).add(album);
             albums.save(album);
             return Result.success(AlbumSummary.of(album));

@@ -90,6 +90,19 @@ class RenameAlbumUseCaseTest {
     }
 
     @Test
+    @DisplayName("NFA-01: Ein Lesefehler wird als Lesefehler gemeldet, der bisherige Name bleibt")
+    void reportsLoadFailureAndKeepsOldName() {
+        Album urlaub = new Album("Urlaub");
+        albums.save(urlaub);
+        albums.failOnLoad = true;
+
+        Result<AlbumSummary> result = useCase.execute(urlaub.getId().value(), "Sommer");
+
+        assertEquals("Die Alben konnten nicht geladen werden.", result.getMessage());
+        assertEquals(List.of("Urlaub"), albums.names());
+    }
+
+    @Test
     @DisplayName("Ein unbekanntes Album wird mit Meldung abgelehnt")
     void reportsUnknownAlbum() {
         albums.save(new Album("Urlaub"));

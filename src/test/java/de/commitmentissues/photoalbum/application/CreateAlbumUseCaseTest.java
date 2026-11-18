@@ -1,12 +1,13 @@
 package de.commitmentissues.photoalbum.application;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import de.commitmentissues.photoalbum.domain.Album;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import de.commitmentissues.photoalbum.domain.Album;
 
 class CreateAlbumUseCaseTest {
 
@@ -61,5 +62,17 @@ class CreateAlbumUseCaseTest {
 
         assertEquals("Das Album konnte nicht gespeichert werden.", result.getMessage());
         assertEquals(List.of(), albums.names());
+    }
+
+    @Test
+    @DisplayName("NFA-01: Ein Lesefehler wird als Lesefehler gemeldet, die Alben bleiben unverändert")
+    void reportsLoadFailure() {
+        albums.save(new Album("Party"));
+        albums.failOnLoad = true;
+
+        Result<AlbumSummary> result = useCase.execute("Urlaub");
+
+        assertEquals("Die Alben konnten nicht geladen werden.", result.getMessage());
+        assertEquals(List.of("Party"), albums.names());
     }
 }
