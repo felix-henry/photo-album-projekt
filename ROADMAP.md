@@ -325,7 +325,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [TESTING.md](TESTING.md) · Testdateien (AK-Zuordnung).
 
-- [ ] **Teststrategie mit Teststufen und Testarten beschreiben:** In [TESTING.md](TESTING.md) festhalten, welche Teststufen und Testarten für die Anwendung eingesetzt werden. ([Block 5, S. 7–9](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
+- [x] **Teststrategie mit Teststufen und Testarten beschreiben:** In [TESTING.md](TESTING.md) festhalten, welche Teststufen und Testarten für die Anwendung eingesetzt werden. ([Block 5, S. 7–9](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=7); [Block 5, S. 28](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=28))
 - [ ] **Akzeptanzkriterien, Verfahren und Testmethoden zuordnen:** Die Kette Akzeptanzkriterium → Verfahren → Testmethode in [TESTING.md](TESTING.md) nachvollziehbar dokumentieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
 
 > **Dateien:** [TESTING.md](TESTING.md) · Unit-Testdateien für Domäne und Use Cases.
