@@ -8,7 +8,8 @@ import java.nio.file.StandardCopyOption;
 
 /**
  * Schreibt eine Textdatei zuerst unter einem temporären Namen und ersetzt das Original erst danach in
- * einem Schritt (ADR-002). Die Datei ist dadurch immer vollständig alt oder vollständig neu.
+ * einem Schritt (ADR-002). Bricht die App dabei ab, ist die Datei dadurch immer vollständig alt oder
+ * vollständig neu. Vor einem Stromausfall schützt das nicht sicher (ARCHITECTURE, Abschnitt 9).
  */
 final class AtomicFile {
 

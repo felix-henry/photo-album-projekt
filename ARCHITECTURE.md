@@ -140,6 +140,7 @@ Die Folien fragen zusätzlich nach Werkzeugen für einen Agenten „Fotos aufrä
 - Ein einzeln entferntes Foto sucht sein Ursprungsalbum über die Album-ID. Wurde dieses Album inzwischen gelöscht und als Kachel wiederhergestellt, hat es eine neue ID (ADR-001). Beim Wiederherstellen des Fotos ist der Name dann vergeben. Die App meldet den Konflikt, und der Nutzer stellt das Foto in ein neues Album wieder her. Es geht kein Foto verloren, es ist nur ein Schritt mehr nötig.
 - Bildprüfung, Inhaltshash und das Verkleinern zur Anzeige laufen im Swing-Thread. Bei großen Bildern reagiert die Oberfläche deshalb kurz nicht. Ob die Grenze aus NFA-03 eingehalten wird, misst Block 5 (AK-N03.1).
 - Bricht die App beim Schreiben ab, kann eine Zwischendatei `*.tmp` liegen bleiben. Die App liest und zeigt sie nie. Die Bereinigung beim Start entfernt sie aber auch nicht, weil sie nur Dateien betrachtet, deren Name eine Foto-ID ist.
+- Die App schreibt Dateien vor dem Ersetzen nicht ausdrücklich auf den Datenträger. Nach einem Absturz der App ist eine Datei trotzdem vollständig alt oder vollständig neu, nach einem Stromausfall hängt das vom Betriebssystem ab. Ein `force()` vor dem Umbenennen allein würde nicht reichen, weil auch das Umbenennen gesichert sein müsste, und das lässt sich aus Java nicht auf allen Systemen erreichen. Für eine Einzelplatz-App nehmen wir das in Kauf. Ein Kandidat für Block 6.
 
 ## 10. Speicherformat
 
