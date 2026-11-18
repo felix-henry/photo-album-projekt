@@ -357,7 +357,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Datei-/Security-Testdateien · [TESTING.md](TESTING.md) (Security-Fälle, Messaufbau und Performance-Ergebnisse).
 
-- [ ] **Security-Dateifälle konkret planen und testen:** Fälle wie falsche Endung, leere oder übergroße Datei in [TESTING.md](TESTING.md) aufführen und die Sicherheitsprüfung mit tatsächlichen Tests nachweisen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23))
+- [x] **Security-Dateifälle konkret planen und testen:** Fälle wie falsche Endung, leere oder übergroße Datei in [TESTING.md](TESTING.md) aufführen und die Sicherheitsprüfung mit tatsächlichen Tests nachweisen. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23))
 - [ ] **Performance-Messung vorbereiten:** Einen gemeinsamen Datensatz mit 100 Fotos zusammenstellen und seine Formate, Auflösungen und Dateigrößen dokumentieren. Jedes Teammitglied erfasst Betriebssystem, Prozessor und RAM seines Laptops für den Messaufbau in [TESTING.md](TESTING.md). ([Teamfestlegung A-06](REQUIREMENTS.md#32-annahmen-und-offene-fragen))
 - [ ] **Performance-Messung für eine NFA durchführen:** Die Performance unter den Bedingungen der betreffenden NFA messen und das Ergebnis dokumentieren. ([PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6))
 

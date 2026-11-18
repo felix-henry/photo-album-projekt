@@ -226,3 +226,24 @@ Beide Systemtests prüfen die gebaute JAR (`photo-album-0.1.0.jar`, Stand `block
 | 2 | `strand.jpg` erneut hinzufügen | „Dieses Bild befindet sich schon in diesem Album“, weiterhin 2 Fotos (AK-06.1) | bestanden |
 
 Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen.
+
+## 6. Security-Tests für Dateieingaben
+
+Jede Datei, die der Nutzer auswählt, gilt als nicht vertrauenswürdig. Die App prüft sie nach ihrem Inhalt, nicht nach der Endung (A-03), und legt die App-Kopie immer unter der Foto-ID ab (A-05). Fälle nach [Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23):
+
+| Fall | Eingabe | Erwartetes Verhalten | Testmethode |
+| --- | --- | --- | --- |
+| Falsche Endung, kein Bild | Textdatei `notiz.jpg` | „kein gültiges JPEG- oder PNG-Bild“, nichts gespeichert | `Sha256ImageHasherTest.rejectsTextFileWithJpgExtension`, Systemtest S2 |
+| Falsche Endung, gültiges Bild | PNG-Inhalt mit Endung `.jpg` | angenommen, weil der Inhalt zählt | `Sha256ImageHasherTest.acceptsPngWithJpgExtension` |
+| Nicht zugelassenes Format | GIF | „kein gültiges JPEG- oder PNG-Bild“ | `Sha256ImageHasherTest.rejectsGif` |
+| Leere Datei | 0 Byte | „Die Bilddatei ist leer.“ | `Sha256ImageHasherTest.rejectsEmptyFile` |
+| Zu große Datei | gültiges Bild mit 20 MiB + 1 Byte | „höchstens 20 MiB“; die Datei wird nicht vollständig gelesen | `Sha256ImageHasherTest.rejectsImageOneByteTooLarge` |
+| Große Datei ohne Bildinhalt | über 20 MiB, kein JPEG- oder PNG-Kopf | „kein gültiges JPEG- oder PNG-Bild“, nur der Dateikopf wird gelesen | `Sha256ImageHasherTest.rejectsLargeNonImageAsNotAnImage` |
+| Dekompressionsbombe | kleine Datei, die über 100 Megapixel angibt | abgelehnt, bevor das Bild entschlüsselt wird | `Sha256ImageHasherTest.rejectsImageWithTooManyPixels` |
+| Beschädigtes Bild | PNG-Signatur mit unbrauchbaren Bilddaten | „kein gültiges JPEG- oder PNG-Bild“ | `Sha256ImageHasherTest.rejectsDamagedPng` |
+| Fehlende Datei | Pfad ohne Datei | „Die Datei konnte nicht gelesen werden.“ | `Sha256ImageHasherTest.rejectsMissingFile` |
+| Ordner statt Datei | Ordner `ordner.jpg` | „Die Datei konnte nicht gelesen werden.“, keine App-Kopie | `FileInputSecurityTest.rejectsDirectoryWithImageExtension` |
+| Pfad mit `../` | `unterordner/../strand.png` | App-Kopie liegt nur unter `photos/<Foto-ID>`, außerhalb entsteht keine Datei | `FileInputSecurityTest.storesCopyOfTraversalPathOnlyUnderPhotoId` |
+| Sonderzeichen im Dateinamen | `Foto; 😀 ä & $(rm).png` | angenommen, der Dateiname geht nicht in den Namen der App-Kopie ein | `FileInputSecurityTest.storesCopyOfFileWithSpecialNameUnderPhotoId` |
+
+Steuerzeichen in Dateinamen erlaubt Windows nicht. Da der Name der App-Kopie nie vom Dateinamen abhängt, deckt der Sonderzeichen-Test diesen Fall mit ab. Bildmetadaten wertet die App nicht aus; sie kopiert die Datei unverändert. Eine Angriffsfläche über Metadaten entstünde erst mit der nur entworfenen KI-Funktion (KI-01 bis KI-03 in REQUIREMENTS.md).
