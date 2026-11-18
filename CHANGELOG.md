@@ -2,7 +2,7 @@
 
 Alle wichtigen Änderungen am Photo Album stehen in dieser Datei. Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die Versionsnummern folgen [Semantic Versioning](https://semver.org/lang/de/).
 
-## [0.1.0] – noch nicht veröffentlicht
+## [0.1.0] – 2026-11-18
 
 Erste lauffähige Version mit der Pflichtfunktionalität aus Block 4 ([#26](https://github.com/felix-henry/photo-album-projekt/issues/26), [#35](https://github.com/felix-henry/photo-album-projekt/pull/35)).
 
@@ -17,4 +17,4 @@ Erste lauffähige Version mit der Pflichtfunktionalität aus Block 4 ([#26](http
 - Swing-Oberfläche mit Albumübersicht, Albumansicht und Papierkorb im Aussehen des Betriebssystems.
 - Build mit Maven-Wrapper (Maven 3.9.16), Java 21, JUnit 5, JaCoCo und einem ausführbaren JAR mit Gson ([ADR-000](docs/adr/ADR-000-build.md), [ADR-003](docs/adr/ADR-003-json-bibliothek.md)).
 - CI mit GitHub Actions, Dependabot, PR-Vorlage und gemeinsame Agentenregeln in [AGENTS.md](AGENTS.md).
-- 209 automatisierte Tests mit Bezug zu den Akzeptanzkriterien.
+- 214 automatisierte Tests mit Bezug zu den Akzeptanzkriterien.
