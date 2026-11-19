@@ -194,7 +194,7 @@ Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `Restore
 
 ### 4.3 UI-Adapter als zweite Integration
 
-Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer` und `ImageDecoder`; beide haben Unit-Tests (AK-N03.2, AK-08.3). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
+Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer`, `ImageDecoder` und der Wahl des Startordners in `PhotoFileChooser`; alle drei haben Unit-Tests (AK-N03.2, AK-08.3, #42). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
 
 ## 5. Systemtests und Usability
 
@@ -225,7 +225,7 @@ Beide Systemtests prüfen die gebaute JAR (`photo-album-0.1.0.jar`, Stand `block
 | 1 | Im Album „Sommer“ `notiz.jpg` (Text mit Bildendung) hinzufügen | „Die Datei enthält kein gültiges JPEG- oder PNG-Bild.“, weiterhin 2 Fotos (AK-05.2) | bestanden |
 | 2 | `strand.jpg` erneut hinzufügen | „Dieses Bild befindet sich schon in diesem Album“, weiterhin 2 Fotos (AK-06.1) | bestanden |
 
-Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen.
+Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen ([#44](https://github.com/felix-henry/photo-album-projekt/issues/44)).
 
 ### 5.2 Usability-Test (NFA-04)
 
@@ -244,7 +244,22 @@ Bestanden ist NFA-04, wenn alle Personen beide Schritte in jeweils höchstens 60
 | Alanur | 7 s | 3,5 s | 37 s | bestanden | Die Dateiauswahl öffnete auf „Macintosh HD“. Der Weg über „Benutzer“, den eigenen Ordner und „Schreibtisch“ kostete den Großteil der 37 s. Vermutlich durch den Testaufbau verstärkt: Mit geändertem `user.home` startet die Dateiauswahl nicht im eigenen Benutzerordner. Keine Fehlklicks, keine Meldungen. |
 | Felix | 1,62 s | 3,14 s | 5,16 s | bestanden | Nach dem Klick auf „Öffnen“ erschien die Albumansicht mit kurzer Verzögerung. Keine Fehlklicks oder Meldungen aufgefallen. |
 
-Aus den Beobachtungen entstehen drei Usability-Issues, nach Auswirkung geordnet: Aufgabe nicht lösbar vor verzögert vor kosmetisch.
+Alle fünf schaffen beide Schritte deutlich unter 60 Sekunden; NFA-04 ist erfüllt. Aus den Beobachtungen entstehen drei Usability-Issues, nach Auswirkung geordnet: Aufgabe nicht lösbar vor verzögert vor kosmetisch.
+
+| Issue | Beobachtung | Auswirkung | Stand |
+| --- | --- | --- | --- |
+| [#44](https://github.com/felix-henry/photo-album-projekt/issues/44) | Foto kommt nach schneller Pfadeingabe ohne Meldung nicht an (Systemtest S1, Abschnitt 5.1) | Aufgabe im ersten Versuch nicht gelöst | offen, Ursache nicht belegt |
+| [#42](https://github.com/felix-henry/photo-album-projekt/issues/42) | Dateiauswahl startet weit entfernt von den Fotos (Alanur) und beginnt in jedem Album neu | verzögert (37 s) | behoben in `block-5` |
+| [#43](https://github.com/felix-henry/photo-album-projekt/issues/43) | Albumansicht erscheint nach „Öffnen“ verzögert (Felix) | kurz verzögert | behoben in `block-5` |
+
+**Behebung von #42 und #43.** Alle Albumansichten teilen sich jetzt eine Dateiauswahl (`PhotoFileChooser`). Sie startet beim ersten Mal im Ordner „Pictures“ des Benutzerordners, falls es ihn gibt, und merkt sich danach den zuletzt benutzten Ordner über alle Alben hinweg. Erzeugt wird sie erst beim ersten „Foto hinzufügen“. Vorher erzeugte jede Albumansicht beim Öffnen eine eigene. Gemessen auf Pits Laptop mit einem Album mit einem Foto, je drei Programmstarts mit sechsmal Öffnen:
+
+| | Erstes Öffnen | Weiteres Öffnen |
+| --- | ---: | ---: |
+| vorher | 550 bis 583 ms | 214 bis 258 ms |
+| nachher | 139 bis 161 ms | 56 bis 63 ms |
+
+In der gebauten JAR geprüft: Die Dateiauswahl öffnete in „Pictures“; nach dem Hinzufügen aus „Pictures/Urlaub“ startete sie im zweiten Album wieder in „Urlaub“. `PhotoFileChooserTest` prüft die Wahl des Startordners.
 
 ## 6. Security-Tests für Dateieingaben
 
