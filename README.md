@@ -156,14 +156,14 @@ Unter „Java version“ muss 21 stehen. Sonst `JAVA_HOME` auf das JDK 21 setzen
 ./mvnw verify      # Windows: .\mvnw.cmd verify
 ```
 
-Der Befehl kompiliert, führt alle Tests aus und baut das ausführbare JAR `target/photo-album-0.1.0.jar`. Schlägt ein Test fehl, schlägt auch der Build fehl. Den Coverage-Report von JaCoCo öffnet `target/site/jacoco/index.html`.
+Der Befehl kompiliert, führt alle Tests aus und baut das ausführbare JAR `target/photo-album-1.0.0.jar`. Schlägt ein Test fehl, schlägt auch der Build fehl. Den Coverage-Report von JaCoCo öffnet `target/site/jacoco/index.html`.
 
 **Starten:**
 
 ```bash
-java -jar target/photo-album-0.1.0.jar
+java -jar target/photo-album-1.0.0.jar
 ```
 
-`java` muss dabei ebenfalls Version 21 sein (`java -version`). Unter Windows geht es auch direkt über `JAVA_HOME`: `& "$env:JAVA_HOME\bin\java.exe" -jar target\photo-album-0.1.0.jar`.
+`java` muss dabei ebenfalls Version 21 sein (`java -version`). Unter Windows geht es auch direkt über `JAVA_HOME`: `& "$env:JAVA_HOME\bin\java.exe" -jar target\photo-album-1.0.0.jar`.
 
 Die Anwendung legt ihre Daten im Ordner `.photo-album` im Benutzerverzeichnis ab, unter Windows also `C:\Users\<Name>\.photo-album`. Aufbau und Dateiformat beschreibt [ARCHITECTURE.md, Abschnitt 10](ARCHITECTURE.md#10-speicherformat). Wer mit leeren Daten starten will, benennt den Ordner vorher um. Gelöscht wird dabei nichts.
