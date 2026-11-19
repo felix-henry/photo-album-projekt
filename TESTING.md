@@ -126,7 +126,7 @@ Der Wert `null` ist keine Klasse für Nutzereingaben: Bricht der Nutzer den Dial
 | 50 Zeichen | 50 × „👨‍👩‍👧“; 49 × „a“ und „📷“ mit äußeren Leerzeichen | angenommen | `AlbumNameLabTest.acceptsFiftyComposedEmoji`, `AlbumTest.acceptsFiftyCharactersWithEmoji` |
 | 51 Zeichen | 51 × „👨‍👩‍👧“; 51 × „a“ mit äußeren Leerzeichen | abgelehnt (ÄK4) | `AlbumNameLabTest.rejectsFiftyOneComposedEmoji`, `AlbumTest.rejectsFiftyOneCharacters` |
 
-Offene fachliche Fragen (an die Auftraggeberin, festgehalten in [#27](https://github.com/felix-henry/photo-album-projekt/issues/27)):
+Offene fachliche Fragen (an die Auftraggeberin, festgehalten in [#45](https://github.com/felix-henry/photo-album-projekt/issues/45)):
 
 1. Sollen Namen aus unsichtbaren Zeichen wie leere Namen abgelehnt werden (ÄK6)?
 2. Sollen gleich aussehende Namen in anderer Unicode-Schreibweise als derselbe Name gelten (ÄK7)?
@@ -181,7 +181,7 @@ Die folgenden Tests decken die fünf Regelgruppen aus NFA-05 ab und sind mit `@T
 
 Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `RestoreTrashEntryUseCaseTest.reportsDuplicateInOrigin` und `RestoreTrashEntryUseCaseTest.reportsFullOrigin`.
 
-**Aufbau der Tests (Arrange–Act–Assert).** Methodennamen beschreiben Verhalten und Bedingung, zum Beispiel `rejectsPhotoForFullAlbum`. `@DisplayName` beginnt mit der AK-ID oder, wo kein AK passt, mit der Regel (A-xx, ADR-xxx, NFA-xx). Jeder Test bereitet nur die nötigen Daten vor, führt genau eine Aktion aus und prüft danach Ergebnis und Zustand; die drei Teile sind durch Leerzeilen getrennt ([Block 5, S. 10](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=10)). 35 Tests prüfen technische Fehlerwege ohne eigenes AK, etwa unbekannte IDs, nicht lesbare Dateien oder Albumdateien früherer Versionen. Ihr `@DisplayName` beschreibt das Verhalten ohne ID.
+**Aufbau der Tests (Arrange–Act–Assert).** Methodennamen beschreiben Verhalten und Bedingung, zum Beispiel `rejectsPhotoForFullAlbum`. `@DisplayName` beginnt mit der AK-ID oder, wo kein AK passt, mit der Regel (A-xx, ADR-xxx, NFA-xx). Jeder Test bereitet nur die nötigen Daten vor, führt genau eine Aktion aus und prüft danach Ergebnis und Zustand; die drei Teile sind durch Leerzeilen getrennt ([Block 5, S. 10](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=10)). 35 Tests ohne eigenes AK prüfen technische Abläufe, vor allem Fehlerwege wie unbekannte IDs, nicht lesbare Dateien oder Albumdateien früherer Versionen. Ihr `@DisplayName` beschreibt das Verhalten ohne ID.
 
 ### 4.2 Integrationstests
 
@@ -251,7 +251,7 @@ Alle fünf schaffen beide Schritte deutlich unter 60 Sekunden; NFA-04 ist erfül
 | Issue | Beobachtung | Auswirkung | Stand |
 | --- | --- | --- | --- |
 | [#44](https://github.com/felix-henry/photo-album-projekt/issues/44) | Foto kommt nach schneller Pfadeingabe ohne Meldung nicht an (Systemtest S1, Abschnitt 5.1) | Aufgabe im ersten Versuch nicht gelöst | untersucht: mit Tastatureingabe nicht reproduzierbar, wahrscheinlich Ursache im Testwerkzeug (Abschnitt 5.1) |
-| [#42](https://github.com/felix-henry/photo-album-projekt/issues/42) | Dateiauswahl startet weit entfernt von den Fotos (Alanur) und beginnt in jedem Album neu | verzögert (37 s) | behoben in `block-5` |
+| [#42](https://github.com/felix-henry/photo-album-projekt/issues/42) | Dateiauswahl startet weit entfernt von den Fotos (Alanur) und beginnt in jedem Album neu | verzögert (37 s) | behoben in `block-5`, auf macOS mit Einschränkung (unten) |
 | [#43](https://github.com/felix-henry/photo-album-projekt/issues/43) | Albumansicht erscheint nach „Öffnen“ verzögert (Felix) | kurz verzögert | behoben in `block-5` |
 
 **Behebung von #42 und #43.** Alle Albumansichten teilen sich jetzt eine Dateiauswahl (`PhotoFileChooser`). Sie startet beim ersten Mal im Ordner „Pictures“ des Benutzerordners, falls es ihn gibt, und merkt sich danach den zuletzt benutzten Ordner über alle Alben hinweg. Erzeugt wird sie erst beim ersten „Foto hinzufügen“. Vorher erzeugte jede Albumansicht beim Öffnen eine eigene. Gemessen auf Pits Laptop mit einem Album mit einem Foto, je drei Programmstarts mit sechsmal Öffnen:
@@ -261,7 +261,11 @@ Alle fünf schaffen beide Schritte deutlich unter 60 Sekunden; NFA-04 ist erfül
 | vorher | 550 bis 583 ms | 214 bis 258 ms |
 | nachher | 139 bis 161 ms | 56 bis 63 ms |
 
-In der gebauten JAR geprüft: Die Dateiauswahl öffnete in „Pictures“; nach dem Hinzufügen aus „Pictures/Urlaub“ startete sie im zweiten Album wieder in „Urlaub“. Bei der Nachstellung von #44 fiel auf, dass ein eingetipptes Suchmuster wie `*.jpg` als Filter stehen blieb, durch die gemeinsame Dateiauswahl nun auch im nächsten Album; ein Ordner mit PNG-Bildern wirkte dann leer. Die Dateiauswahl setzt den Filter jetzt vor jedem Öffnen auf „Alle Dateien“ zurück, in der JAR nachgeprüft. `PhotoFileChooserTest` prüft die Wahl des Startordners und das Zurücksetzen des Filters.
+In der gebauten JAR unter Windows und macOS geprüft: Die Dateiauswahl öffnete in „Pictures“; nach dem Hinzufügen aus „Pictures/Urlaub“ startete sie im zweiten Album wieder in „Urlaub“. Ohne „Pictures“ startete sie im Benutzerordner (macOS, Alanur).
+
+Einschränkung auf macOS: Die Swing-Dateiauswahl hat dort keine Seitenleiste. Von „Pictures“ zum Schreibtisch geht es nur über die Pfadliste oben; vorher startete sie bei unverändertem `user.home` im Benutzerordner selbst. Für die Testaufgabe „Foto vom Desktop“ ist der Weg auf dem Mac also nicht kürzer geworden. Alanurs 37 s kamen nach ihrer Einschätzung vor allem durch den Testaufbau mit geändertem `user.home` zustande. Mit diesem Startbefehl gibt es im Testordner kein „Pictures“, und die Dateiauswahl startet im Testordner. Ein erneuter Usability-Test mit diesem Aufbau würde die Behebung also nicht zeigen.
+
+Bei der Nachstellung von #44 fiel auf, dass ein eingetipptes Suchmuster wie `*.jpg` als Filter stehen blieb, durch die gemeinsame Dateiauswahl nun auch im nächsten Album; ein Ordner mit PNG-Bildern wirkte dann leer. Die Dateiauswahl setzt den Filter jetzt vor jedem Öffnen auf „Alle Dateien“ zurück, in der JAR unter Windows und macOS nachgeprüft. `PhotoFileChooserTest` prüft die Wahl des Startordners und das Zurücksetzen des Filters.
 
 ## 6. Security-Tests für Dateieingaben
 
@@ -316,7 +320,7 @@ Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-datase
 | Alanur | macOS 27.2.1 | Apple M1 Pro (10 Threads) | 32,0 GiB | 21.0.12.1 | 327 ms | 52 / 52 ms | bestanden |
 | Felix | Windows 11 Pro | AMD Ryzen 5 PRO 230 (12 Threads) | 15,3 GiB | 21.0.12.1 | 164 ms | 87 / 90 ms | bestanden |
 
-NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 ms (erstes Öffnen bei Alanur), also bei rund einem Drittel der Grenze.
+NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 ms (erstes Öffnen bei Alanur), also bei rund einem Drittel der Grenze. Einschließlich des Zeichnens durch Swing waren bei Felix in einem zusätzlichen Durchlauf mit 100 Fotos Fotoanzahl, erstes Bild und der aktive Knopf „Nächstes Foto“ nach 563 ms sichtbar.
 
 ## 8. Coverage mit JaCoCo
 
