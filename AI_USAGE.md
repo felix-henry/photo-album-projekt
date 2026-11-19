@@ -89,7 +89,7 @@ Dauerhafte Regeln aus der lokalen `CLAUDE.md`, die zusätzlich die gemeinsame [A
 ```text
 Du sollst nur lesen und Code als Text zurückgeben. Lege keine Dateien an und ändere keine. Führe keine Befehle aus, die schreiben.
 
-Projekt: Java-21-Fotoalbum unter C:/Users/pitwi/Documents/photo-album-projekt (Maven, JUnit 5).
+Projekt: Java-21-Fotoalbum unter <Projektordner> (Maven, JUnit 5).
 
 Akzeptanzkriterium AK-SR01.4:
 - Ausgangslage: Eine Albumkachel im Papierkorb enthält drei Fotos. Beim endgültigen Löschen schlägt der Zugriff auf eines davon fehl.
