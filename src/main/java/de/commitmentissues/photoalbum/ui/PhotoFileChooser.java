@@ -11,7 +11,8 @@ import javax.swing.JFileChooser;
 /**
  * Eine Dateiauswahl für alle Albumansichten (#42, #43). Sie entsteht erst beim ersten „Foto hinzufügen“,
  * weil das Erzeugen einer {@link JFileChooser} das Öffnen eines Albums spürbar verzögert. Danach merkt
- * sie sich den zuletzt benutzten Ordner über alle Alben hinweg.
+ * sie sich den zuletzt benutzten Ordner über alle Alben hinweg. Ein Suchmuster wie {@code *.jpg} gilt nur bis
+ * zum Schließen; beim nächsten Öffnen zeigt sie wieder alle Dateien.
  */
 final class PhotoFileChooser {
 
@@ -25,11 +26,19 @@ final class PhotoFileChooser {
         if (chooser == null) {
             chooser = new JFileChooser(startDirectory(Path.of(System.getProperty("user.home"))).toFile());
         }
+        showAllFiles(chooser);
         if (chooser.showOpenDialog(parent) != JFileChooser.APPROVE_OPTION) {
             return Optional.empty();
         }
         File selected = chooser.getSelectedFile();
         return Optional.ofNullable(selected).map(File::toPath);
+    }
+
+    /**
+     * Setzt einen beim letzten Öffnen eingetippten Filter zurück, damit der Ordner nicht leer wirkt.
+     */
+    static void showAllFiles(JFileChooser chooser) {
+        chooser.setFileFilter(chooser.getAcceptAllFileFilter());
     }
 
     /**

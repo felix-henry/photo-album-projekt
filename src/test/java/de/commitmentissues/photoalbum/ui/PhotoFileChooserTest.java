@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -38,5 +41,17 @@ class PhotoFileChooserTest {
         Files.createFile(home.resolve("Pictures"));
 
         assertEquals(home, PhotoFileChooser.startDirectory(home));
+    }
+
+    @Test
+    @Tag("normalfall")
+    @DisplayName("NFA-04, #42: Ein beim letzten Öffnen gesetzter Filter wird zurückgesetzt, alle Dateien sind sichtbar")
+    void resetsFilterFromLastOpening() {
+        JFileChooser chooser = new JFileChooser(home.toFile());
+        chooser.setFileFilter(new FileNameExtensionFilter("JPEG", "jpg"));
+
+        PhotoFileChooser.showAllFiles(chooser);
+
+        assertEquals(chooser.getAcceptAllFileFilter(), chooser.getFileFilter());
     }
 }
