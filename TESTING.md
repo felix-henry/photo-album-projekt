@@ -242,7 +242,7 @@ Bestanden ist NFA-04, wenn alle Personen beide Schritte in jeweils höchstens 60
 | Moritz | 3 s | 2 s | 6 s | bestanden | Kennt die App gut aus den Block-4-Tests. Öffnete „Sommer“ per Doppelklick statt über „Öffnen“. Kein Zögern, keine Fehlklicks, keine Meldungen. |
 | Alex | ausstehend | | | | |
 | Alanur | 7 s | 3,5 s | 37 s | bestanden | Die Dateiauswahl öffnete auf „Macintosh HD“. Der Weg über „Benutzer“, den eigenen Ordner und „Schreibtisch“ kostete den Großteil der 37 s. Vermutlich durch den Testaufbau verstärkt: Mit geändertem `user.home` startet die Dateiauswahl nicht im eigenen Benutzerordner. Keine Fehlklicks, keine Meldungen. |
-| Felix | ausstehend | | | | |
+| Felix | 1,62 s | 3,14 s | 5,16 s | bestanden | Nach dem Klick auf „Öffnen“ erschien die Albumansicht mit kurzer Verzögerung. Keine Fehlklicks oder Meldungen aufgefallen. |
 
 Aus den Beobachtungen entstehen drei Usability-Issues, nach Auswirkung geordnet: Aufgabe nicht lösbar vor verzögert vor kosmetisch.
 
@@ -297,7 +297,7 @@ Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-datase
 | Moritz | Windows 11 Pro | Intel Core i5-8365U (8 Threads) | 15,8 GiB | 21.0.13 | 148 ms | 103 / 157 ms | bestanden |
 | Alex | ausstehend | | | | | | |
 | Alanur | macOS 27.2.1 | Apple M1 Pro (10 Threads) | 32,0 GiB | 21.0.12.1 | 327 ms | 52 / 52 ms | bestanden |
-| Felix | ausstehend | | | | | | |
+| Felix | Windows 11 Pro | AMD Ryzen 5 PRO 230 (12 Threads) | 15,3 GiB | 21.0.12.1 | 164 ms | 87 / 90 ms | bestanden |
 
 ## 8. Coverage mit JaCoCo
 
