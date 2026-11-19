@@ -238,7 +238,7 @@ Bestanden ist NFA-04, wenn alle Personen beide Schritte in jeweils höchstens 60
 
 | Teammitglied | Album erstellen | Bis „Foto hinzufügen“ | Foto hinzufügen | NFA-04 | Beobachtungen |
 | --- | ---: | ---: | ---: | --- | --- |
-| Pit | ausstehend | | | | |
+| Pit | 7 s | 8 s | 15 s | bestanden | Keine Beobachtungen notiert. |
 | Moritz | 3 s | 2 s | 6 s | bestanden | Kennt die App gut aus den Block-4-Tests. Öffnete „Sommer“ per Doppelklick statt über „Öffnen“. Kein Zögern, keine Fehlklicks, keine Meldungen. |
 | Alex | 4 s | 4 s | 9 s | bestanden | Keine Auffälligkeiten notiert. |
 | Alanur | 7 s | 3,5 s | 37 s | bestanden | Die Dateiauswahl öffnete auf „Macintosh HD“. Der Weg über „Benutzer“, den eigenen Ordner und „Schreibtisch“ kostete den Großteil der 37 s. Vermutlich durch den Testaufbau verstärkt: Mit geändertem `user.home` startet die Dateiauswahl nicht im eigenen Benutzerordner. Keine Fehlklicks, keine Meldungen. |
