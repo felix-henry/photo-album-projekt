@@ -227,6 +227,8 @@ Beide Systemtests prüfen die gebaute JAR (`photo-album-0.1.0.jar`, Stand `block
 
 Beobachtung: Einmal kam ein Foto nicht im Album an, nachdem in der Dateiauswahl sofort nach dem Öffnen ein ganzer Pfad eingetippt und mit Enter bestätigt wurde. Beim erneuten Öffnen stand die Datei vorausgewählt im richtigen Ordner, und „Öffnen“ fügte sie hinzu. Bei langsamer Eingabe ließ sich der Fall nicht wiederholen ([#44](https://github.com/felix-henry/photo-album-projekt/issues/44)).
 
+**Nachstellung von #44** (19.11.2026, JAR `1.0.0`, Windows 11): Viermal wurde ein ganzer Pfad per Tastatur eingetippt und mit Enter bestätigt, jeweils mit einem anderen Bild. Getestet wurden der Ablauf aus S1 (Dateiauswahl öffnen, 1 s warten, ins Feld klicken, tippen), das Tippen sofort nach dem Klick auf „Foto hinzufügen“ und das Tippen direkt nach einem Neustart, wenn die Dateiauswahl erst entsteht. Jedes Foto kam an. Laut Sitzungsprotokoll kam der Pfad in S1 nicht über die Tastatur, sondern über das Einfügen aus der Zwischenablage durch das Testwerkzeug. Bei der Nachstellung fügte dasselbe Werkzeug einmal einen veralteten Inhalt der Zwischenablage statt des Pfads ein. Die Ursache lag deshalb wahrscheinlich im Testwerkzeug, nicht in der App; ein Fehler der App ließ sich nicht nachweisen.
+
 ### 5.2 Usability-Test (NFA-04)
 
 Nach Teamabsprache testen die fünf Teammitglieder selbst (NFA-04, AK-N04.1). Jede Person startet die App mit leerem Datenordner und löst ohne Hilfe zwei Aufgaben ([Block 5, S. 23](docs/lecture_slides/Block_5_Testen_Blackbox.pdf#page=23)):
@@ -248,7 +250,7 @@ Alle fünf schaffen beide Schritte deutlich unter 60 Sekunden; NFA-04 ist erfül
 
 | Issue | Beobachtung | Auswirkung | Stand |
 | --- | --- | --- | --- |
-| [#44](https://github.com/felix-henry/photo-album-projekt/issues/44) | Foto kommt nach schneller Pfadeingabe ohne Meldung nicht an (Systemtest S1, Abschnitt 5.1) | Aufgabe im ersten Versuch nicht gelöst | offen, Ursache nicht belegt |
+| [#44](https://github.com/felix-henry/photo-album-projekt/issues/44) | Foto kommt nach schneller Pfadeingabe ohne Meldung nicht an (Systemtest S1, Abschnitt 5.1) | Aufgabe im ersten Versuch nicht gelöst | untersucht: mit Tastatureingabe nicht reproduzierbar, wahrscheinlich Ursache im Testwerkzeug (Abschnitt 5.1) |
 | [#42](https://github.com/felix-henry/photo-album-projekt/issues/42) | Dateiauswahl startet weit entfernt von den Fotos (Alanur) und beginnt in jedem Album neu | verzögert (37 s) | behoben in `block-5` |
 | [#43](https://github.com/felix-henry/photo-album-projekt/issues/43) | Albumansicht erscheint nach „Öffnen“ verzögert (Felix) | kurz verzögert | behoben in `block-5` |
 
@@ -259,7 +261,7 @@ Alle fünf schaffen beide Schritte deutlich unter 60 Sekunden; NFA-04 ist erfül
 | vorher | 550 bis 583 ms | 214 bis 258 ms |
 | nachher | 139 bis 161 ms | 56 bis 63 ms |
 
-In der gebauten JAR geprüft: Die Dateiauswahl öffnete in „Pictures“; nach dem Hinzufügen aus „Pictures/Urlaub“ startete sie im zweiten Album wieder in „Urlaub“. `PhotoFileChooserTest` prüft die Wahl des Startordners.
+In der gebauten JAR geprüft: Die Dateiauswahl öffnete in „Pictures“; nach dem Hinzufügen aus „Pictures/Urlaub“ startete sie im zweiten Album wieder in „Urlaub“. Bei der Nachstellung von #44 fiel auf, dass ein eingetipptes Suchmuster wie `*.jpg` als Filter stehen blieb, durch die gemeinsame Dateiauswahl nun auch im nächsten Album; ein Ordner mit PNG-Bildern wirkte dann leer. Die Dateiauswahl setzt den Filter jetzt vor jedem Öffnen auf „Alle Dateien“ zurück, in der JAR nachgeprüft. `PhotoFileChooserTest` prüft die Wahl des Startordners und das Zurücksetzen des Filters.
 
 ## 6. Security-Tests für Dateieingaben
 
@@ -318,14 +320,14 @@ NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 m
 
 ## 8. Coverage mit JaCoCo
 
-JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 230 Tests (ohne die Performance-Messung):
+JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 231 Tests (ohne die Performance-Messung):
 
 | Schicht | Anweisungen | Zweige | Zeilen |
 | --- | ---: | ---: | ---: |
 | `domain` | 96 % | 92 % | 98 % |
 | `application` | 96 % | 91 % | 96 % |
 | `infrastructure` | 91 % | 76 % | 90 % |
-| `ui` | 9 % | 11 % | 8 % |
+| `ui` | 9 % | 11 % | 9 % |
 | `Main` | 0 % | – | 0 % |
 | gesamt | 57 % | 59 % | 62 % |
 

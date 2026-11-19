@@ -9,7 +9,7 @@ Geprüfte Pflichtfunktionalität mit den Test- und Qualitätsnachweisen aus Bloc
 ### Hinzugefügt
 
 - [TESTING.md](TESTING.md) mit Teststrategie, Zuordnung der Akzeptanzkriterien zu Verfahren und Testmethoden, Test Design Lab (Äquivalenzklassen und Entscheidungstabelle), Unit-, Integrations- und Systemtests, Usability-, Security- und Performance-Nachweisen sowie Coverage je Schicht.
-- Tests aus dem Test Design Lab, Integrationstests mit den echten Dateiadaptern nach einem Neustart und Security-Tests für Dateieingaben; zusammen 230 automatisierte Tests.
+- Tests aus dem Test Design Lab, Integrationstests mit den echten Dateiadaptern nach einem Neustart und Security-Tests für Dateieingaben; zusammen 231 automatisierte Tests.
 - Performance-Messung für NFA-03 (`OpenAlbumPerformanceTest`), die nur auf Abruf läuft. NFA-03 ist auf allen fünf Team-Laptops erfüllt.
 - Evaluation Set für den nur entworfenen KI-Titelvorschlag mit Freigabe-Pass-Rate ([eval/describe-photo/cases.md](eval/describe-photo/cases.md)).
 
@@ -21,6 +21,7 @@ Geprüfte Pflichtfunktionalität mit den Test- und Qualitätsnachweisen aus Bloc
 
 - Die Dateiauswahl startet im Ordner „Pictures“ und merkt sich den zuletzt benutzten Ordner über alle Alben hinweg ([#42](https://github.com/felix-henry/photo-album-projekt/issues/42)).
 - Die Albumansicht öffnet schneller, weil die Dateiauswahl erst beim ersten „Foto hinzufügen“ entsteht ([#43](https://github.com/felix-henry/photo-album-projekt/issues/43)).
+- Ein eingetipptes Suchmuster wie `*.jpg` bleibt nicht mehr als Filter in der Dateiauswahl stehen ([#42](https://github.com/felix-henry/photo-album-projekt/issues/42)).
 
 ## [0.1.0] – 2026-11-18
 
