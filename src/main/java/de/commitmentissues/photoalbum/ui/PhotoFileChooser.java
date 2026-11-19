@@ -15,23 +15,15 @@ import javax.swing.JFileChooser;
  */
 final class PhotoFileChooser {
 
-    private final Path home;
     private JFileChooser chooser;
 
-    PhotoFileChooser() {
-        this(Path.of(System.getProperty("user.home")));
-    }
-
-    PhotoFileChooser(Path home) {
-        this.home = home;
-    }
-
     /**
-     * Zeigt die Dateiauswahl und liefert die gewählte Datei; leer, wenn der Nutzer abbricht.
+     * Zeigt die Dateiauswahl und liefert die gewählte Datei; leer, wenn der Nutzer abbricht oder keine Datei
+     * ausgewählt ist.
      */
     Optional<Path> choose(Component parent) {
         if (chooser == null) {
-            chooser = new JFileChooser(startDirectory(home).toFile());
+            chooser = new JFileChooser(startDirectory(Path.of(System.getProperty("user.home"))).toFile());
         }
         if (chooser.showOpenDialog(parent) != JFileChooser.APPROVE_OPTION) {
             return Optional.empty();
@@ -41,7 +33,8 @@ final class PhotoFileChooser {
     }
 
     /**
-     * Beim ersten Mal der Ordner „Bilder“ im Benutzerordner, falls es ihn gibt, sonst der Benutzerordner.
+     * Beim ersten Mal der Ordner „Pictures“ im Benutzerordner (unter Windows als „Bilder“ angezeigt), falls es ihn
+     * gibt, sonst der Benutzerordner.
      */
     static Path startDirectory(Path home) {
         Path pictures = home.resolve("Pictures");
