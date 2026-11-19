@@ -28,7 +28,7 @@ Die Testabdeckung wird mit JaCoCo erhoben und je Schicht interpretiert, siehe Ab
 
 ## 2. Zuordnung Akzeptanzkriterium → Verfahren → Testmethode
 
-Jeder automatisierte Test nennt seine AK-ID am Anfang von `@DisplayName`. Die Tabelle ist daraus abgeleitet. „Szenario aus dem AK“ heißt, dass der Test Ausgangslage, Aktion und Ergebnis des Akzeptanzkriteriums direkt umsetzt. Die Tests aus dem Test Design Lab (Abschnitt 3) sind gesondert aufgeführt.
+Jeder automatisierte Test mit AK-Bezug nennt seine AK-ID am Anfang von `@DisplayName`. Die Tabelle ist daraus abgeleitet; Tests ohne eigenes AK beschreibt Abschnitt 4.1. „Szenario aus dem AK“ heißt, dass der Test Ausgangslage, Aktion und Ergebnis des Akzeptanzkriteriums direkt umsetzt. Die Tests aus dem Test Design Lab (Abschnitt 3) sind gesondert aufgeführt.
 
 | AK | Verfahren | Testmethode |
 | --- | --- | --- |
@@ -48,16 +48,16 @@ Jeder automatisierte Test nennt seine AK-ID am Anfang von `@DisplayName`. Die Ta
 | AK-03.5 | Szenario aus dem AK | `RenameAlbumUseCaseTest.reportsSaveFailureAndKeepsOldName` |
 | AK-04.1 | Szenario aus dem AK | `DeleteAlbumUseCaseTest.movesAlbumAsTile`<br>`TrashTest.movesAlbumAsTile` |
 | AK-04.2 | Szenario aus dem AK | `DeleteAlbumUseCaseTest.rollsBackTrashWhenDeletingFails` |
-| AK-04.3 | Szenario aus dem AK | `RestoreTrashEntryUseCaseTest.restoresTileAsAlbum` |
+| AK-04.3 | Szenario aus dem AK | `RestoreTrashEntryUseCaseTest.restoresTileAsAlbum`<br>`PersistenceIntegrationTest.deletedAlbumIsRestoredAfterRestart` |
 | AK-04.4 | Szenario aus dem AK | `RestoreTrashEntryUseCaseTest.restoresFullTileIntoNewAlbum` |
 | AK-04.5 | Szenario aus dem AK | `RestoreTrashEntryUseCaseTest.removesCreatedAlbumWhenTrashSaveFails` |
 | AK-04.6 | Szenario aus dem AK | `RestoreTrashEntryUseCaseTest.reportsNameConflictForTile` |
 | AK-04.8 | Szenario aus dem AK | `ListTrashUseCaseTest.showsTileAndSinglePhoto` |
 | AK-05.1 | Szenario aus dem AK | `AddPhotoUseCaseTest.addsPhotoAndStoresCopy`<br>`AlbumPhotoTest.addsPhotoToAlbumWithSpace`<br>`FilePhotoStorageTest.storeKeepsOriginal`<br>`Sha256ImageHasherTest.acceptsJpeg`<br>`Sha256ImageHasherTest.acceptsPngWithJpgExtension`<br>`Sha256ImageHasherTest.acceptsImageOfExactlyMaxSize` |
 | AK-05.2 | Äquivalenzklassen | `AddPhotoUseCaseTest.rejectsInvalidFile`<br>`Sha256ImageHasherTest.rejectsImageOneByteTooLarge`<br>`Sha256ImageHasherTest.rejectsEmptyFile`<br>`Sha256ImageHasherTest.rejectsTextFileWithJpgExtension`<br>`Sha256ImageHasherTest.rejectsDamagedPng` |
-| AK-05.4 | Szenario aus dem AK | `AddPhotoUseCaseTest.rejectsInvalidFile`<br>`Sha256ImageHasherTest.rejectsMissingFile` |
+| AK-05.4 | Szenario aus dem AK | `AddPhotoUseCaseTest.rejectsInvalidFile`<br>`Sha256ImageHasherTest.rejectsMissingFile`<br>`FileInputSecurityTest.rejectsDirectoryWithImageExtension` |
 | AK-05.5 | Szenario aus dem AK | `AddPhotoUseCaseTest.rollsBackCopyWhenAlbumCannotBeSaved` |
-| AK-06.1 | Äquivalenzklassen | `AddPhotoUseCaseTest.rejectsDuplicateWithoutStoringCopy`<br>`AlbumPhotoTest.rejectsDuplicateContent`<br>`Sha256ImageHasherTest.sameContentGivesSameHash` |
+| AK-06.1 | Äquivalenzklassen | `AddPhotoUseCaseTest.rejectsDuplicateWithoutStoringCopy`<br>`AlbumPhotoTest.rejectsDuplicateContent`<br>`Sha256ImageHasherTest.sameContentGivesSameHash`<br>`PersistenceIntegrationTest.duplicateIsDetectedAfterRestart` |
 | AK-06.2 | Äquivalenzklassen | `AlbumPhotoTest.acceptsDifferentContent`<br>`Sha256ImageHasherTest.differentContentGivesDifferentHash` |
 | AK-06.3 | Szenario aus dem AK | `AlbumPhotoTest.reportsDuplicateBeforeFullAlbum` |
 | AK-07.1 | Grenzwertanalyse | `AlbumPhotoTest.acceptsHundredthPhoto` |
@@ -79,6 +79,7 @@ Jeder automatisierte Test nennt seine AK-ID am Anfang von `@DisplayName`. Die Ta
 | AK-10.6 | Szenario aus dem AK | `PhotoTest.clearsTitleOnly`<br>`PhotoTest.clearsDescriptionOnly` |
 | AK-N02.1 | Szenario aus dem AK | `FileTrashRepositoryTest.keepsEntriesAfterRestart` |
 | AK-N02.2 | Szenario aus dem AK | `StartupCleanupUseCaseTest.changesNothingWhenAlbumsAreUnreadable`<br>`StartupCleanupUseCaseTest.changesNothingWhenTrashIsUnreadable`<br>`FileTrashRepositoryTest.reportsUnreadableFile` |
+| AK-N03.1 | Messung, nur auf Abruf (Abschnitt 7) | `OpenAlbumPerformanceTest.opensAlbumWithHundredPhotosWithinOneSecond` |
 | AK-N03.2 | Szenario aus dem AK | `ImageBufferTest.neverHoldsMoreThanCapacity`<br>`ImageBufferTest.doesNotReloadBufferedImage`<br>`ImageBufferTest.releasesDistantImages` |
 | AK-SR01.1 | Szenario aus dem AK | `DeletePermanentlyUseCaseTest.deletesPhotoEntryAndCopy` |
 | AK-SR01.2 | Szenario aus dem AK | `DeletePermanentlyUseCaseTest.keepsPhotoWhenDeletionFails` |
@@ -95,7 +96,6 @@ Nicht automatisiert geprüft:
 | AK-05.3 | Systemtest S1 (Hinzufügen nur in einem geöffneten Album) |
 | AK-SR01.5 | Systemtest S1 (Abbrechen beim endgültigen Löschen) |
 | AK-N01.1 | Zustandsprüfung in den Fehlerfalltests, Abschnitt 4.1 |
-| AK-N03.1 | Performance-Messung, Abschnitt 7 |
 | AK-N04.1 | Usability-Selbsttest, Abschnitt 5 |
 | AK-N05.1 | Zuordnung der Regelgruppen, Abschnitt 4.1 |
 
@@ -194,7 +194,7 @@ Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `Restore
 
 ### 4.3 UI-Adapter als zweite Integration
 
-Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer`, `ImageDecoder` und der Wahl des Startordners in `PhotoFileChooser`; alle drei haben Unit-Tests (AK-N03.2, AK-08.3, #42). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
+Geprüft, aber nicht als Integrationstest genutzt. Die Fenster (`AlbumOverviewWindow`, `AlbumWindow`, `TrashWindow`) rufen die Use Cases direkt auf und enthalten außer Anzeige und Rückfragen keine eigene Logik. Ohne echtes Fenster prüfbar ist die Logik im UI-Adapter nur in `ImageBuffer`, `ImageDecoder` und in `PhotoFileChooser` (Startordner und Zurücksetzen des Filters); alle drei haben Unit-Tests (AK-N03.2, AK-08.3, #42). Für die Fenster bräuchte ein Test einen Bildschirm, den die CI nicht hat. Sie werden deshalb im Systemtest (Abschnitt 5) geprüft. Die beiden Integrationstests in 4.2 prüfen Persistenz, Serialisierung und Pfade, wie die Folie es verlangt.
 
 ## 5. Systemtests und Usability
 
@@ -298,7 +298,7 @@ NFA-03 verlangt: Ab dem Öffnen eines Albums mit 100 Fotos sind Fotoanzahl und e
 
 Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-dataset` und legt über die echten Use Cases und Dateiadapter ein Album mit allen 100 Fotos in einem temporären Datenordner an. Dann misst er elfmal, was `AlbumWindow` beim Öffnen ausführt, bevor Fotoanzahl und erstes Bild sichtbar sind: Album von der Platte laden, erstes Bild über den `ImageBuffer` laden und auf Anzeigegröße (640 × 420) entschlüsseln. Jede Messung beginnt mit neuen Adaptern und leerem Puffer. Die erste Messung entspricht dem ersten Öffnen nach dem Start, die zehn weiteren dem erneuten Öffnen. Nach jeder Messung prüft der Test, dass der Puffer mit den nachgeladenen Nachbarn höchstens 5 Bilder hält. Das Zeichnen durch Swing ist nicht enthalten.
 
-**Datensatz.** Fest erzeugt, auf jedem Laptop gleich (Prüfsumme in der Ausgabe):
+**Datensatz.** Aus festen Startwerten erzeugt; ob er auf einem Laptop übereinstimmt, zeigt die Prüfsumme in der Ausgabe:
 
 | Dateien | Format | Auflösung | Dateigröße |
 | --- | --- | --- | --- |
@@ -331,7 +331,7 @@ JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `targ
 | `Main` | 0 % | – | 0 % |
 | gesamt | 57 % | 59 % | 62 % |
 
-**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die fehlenden Zweige dort sind vor allem Abwehrprüfungen für Programmierfehler. In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer`, `ImageDecoder` und die Wahl des Startordners in `PhotoFileChooser`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb ist jedem Test ein AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
+**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die fehlenden Zweige dort sind vor allem Abwehrprüfungen für Programmierfehler. In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer`, `ImageDecoder` und Startordner und Filter in `PhotoFileChooser`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb sind die Tests den AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
 
 **Drei Klassen mit der niedrigsten Branch-Coverage:**
 
