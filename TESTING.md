@@ -299,6 +299,8 @@ Der Test erzeugt beim ersten Lauf den Datensatz unter `target/performance-datase
 | Alanur | macOS 27.2.1 | Apple M1 Pro (10 Threads) | 32,0 GiB | 21.0.12.1 | 327 ms | 52 / 52 ms | bestanden |
 | Felix | Windows 11 Pro | AMD Ryzen 5 PRO 230 (12 Threads) | 15,3 GiB | 21.0.12.1 | 164 ms | 87 / 90 ms | bestanden |
 
+NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 ms (erstes Öffnen bei Alanur), also bei rund einem Drittel der Grenze.
+
 ## 8. Coverage mit JaCoCo
 
 JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 227 Tests (ohne die Performance-Messung):
