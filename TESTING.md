@@ -189,7 +189,7 @@ Die Konflikte beim Wiederherstellen eines Einzelfotos (AK-09.5) prüfen `Restore
 
 | Testmethode | Fachliche Frage | AK |
 | --- | --- | --- |
-| `duplicateIsDetectedAfterRestart` | Erkennt das System ein bytegleiches Bild mit anderem Namen und anderer Endung auch nach einem Neustart als Duplikat? Geprüft werden der gespeicherte Hash (Serialisierung) und dass keine zweite App-Kopie entsteht. | AK-06.1, NFA-02 |
+| `duplicateIsDetectedAfterRestart` | Erkennt das System ein bytegleiches Bild mit anderem Namen und anderer Endung auch nach einem Neustart als Duplikat? Geprüft werden der gespeicherte Hash (Serialisierung), dass das vorhandene Foto mit Titel und Beschreibung unverändert bleibt und dass keine zweite App-Kopie entsteht. | AK-06.1, NFA-02 |
 | `deletedAlbumIsRestoredAfterRestart` | Lässt sich ein gelöschtes Album nach einem Neustart mit Name, Foto und lesbarer App-Kopie wiederherstellen? Geprüft werden das Speichern des Papierkorbs mit Ursprungsangaben und die Pfade der App-Kopien. | AK-04.3, NFA-02 |
 
 ### 4.3 UI-Adapter als zweite Integration
@@ -285,6 +285,8 @@ Jede Datei, die der Nutzer auswählt, gilt als nicht vertrauenswürdig. Die App 
 | Ordner statt Datei | Ordner `ordner.jpg` | „Die Datei konnte nicht gelesen werden.“, keine App-Kopie | `FileInputSecurityTest.rejectsDirectoryWithImageExtension` |
 | Pfad mit `../` | `unterordner/../strand.png` | App-Kopie liegt nur unter `photos/<Foto-ID>`, außerhalb entsteht keine Datei | `FileInputSecurityTest.storesCopyOfTraversalPathOnlyUnderPhotoId` |
 | Sonderzeichen im Dateinamen | `Foto; 😀 ä & $(rm).png` | angenommen, der Dateiname geht nicht in den Namen der App-Kopie ein | `FileInputSecurityTest.storesCopyOfFileWithSpecialNameUnderPhotoId` |
+
+Eine fehlende Leseberechtigung (AK-05.4) hat keinen eigenen Test, weil sie sich nicht auf allen Systemen gleich herstellen lässt; unter Windows ginge das nur über Zugriffslisten. `Sha256ImageHasher` erkennt sie in derselben Prüfung wie eine fehlende Datei oder einen Ordner (`Files.isReadable`), und auch ein Fehler beim Lesen führt zu „Die Datei konnte nicht gelesen werden.“
 
 Steuerzeichen in Dateinamen erlaubt Windows nicht. Da der Name der App-Kopie nie vom Dateinamen abhängt, deckt der Sonderzeichen-Test diesen Fall mit ab. Bildmetadaten wertet die App nicht aus; sie kopiert die Datei unverändert. Eine Angriffsfläche über Metadaten entstünde erst mit der nur entworfenen KI-Funktion (KI-01 bis KI-03 in REQUIREMENTS.md).
 
