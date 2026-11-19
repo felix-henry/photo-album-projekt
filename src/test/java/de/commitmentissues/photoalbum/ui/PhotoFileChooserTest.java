@@ -17,7 +17,7 @@ class PhotoFileChooserTest {
 
     @Test
     @Tag("normalfall")
-    @DisplayName("#42: Die Dateiauswahl startet im Ordner „Bilder“, wenn es ihn gibt")
+    @DisplayName("NFA-04, #42: Die Dateiauswahl startet im Ordner „Bilder“, wenn es ihn gibt")
     void startsInPicturesFolder() throws IOException {
         Path pictures = Files.createDirectory(home.resolve("Pictures"));
 
@@ -26,14 +26,14 @@ class PhotoFileChooserTest {
 
     @Test
     @Tag("grenzfall")
-    @DisplayName("#42: Ohne Ordner „Bilder“ startet die Dateiauswahl im Benutzerordner")
+    @DisplayName("NFA-04, #42: Ohne Ordner „Bilder“ startet die Dateiauswahl im Benutzerordner")
     void startsInHomeWithoutPicturesFolder() {
         assertEquals(home, PhotoFileChooser.startDirectory(home));
     }
 
     @Test
     @Tag("grenzfall")
-    @DisplayName("#42: Eine Datei namens „Pictures“ gilt nicht als Bilderordner")
+    @DisplayName("NFA-04, #42: Eine Datei namens „Pictures“ gilt nicht als Bilderordner")
     void ignoresFileNamedPictures() throws IOException {
         Files.createFile(home.resolve("Pictures"));
 

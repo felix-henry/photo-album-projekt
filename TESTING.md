@@ -318,18 +318,18 @@ NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 m
 
 ## 8. Coverage mit JaCoCo
 
-JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 227 Tests (ohne die Performance-Messung):
+JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 230 Tests (ohne die Performance-Messung):
 
 | Schicht | Anweisungen | Zweige | Zeilen |
 | --- | ---: | ---: | ---: |
 | `domain` | 96 % | 92 % | 98 % |
 | `application` | 96 % | 91 % | 96 % |
 | `infrastructure` | 91 % | 76 % | 90 % |
-| `ui` | 9 % | 10 % | 8 % |
+| `ui` | 9 % | 11 % | 8 % |
 | `Main` | 0 % | – | 0 % |
 | gesamt | 57 % | 59 % | 62 % |
 
-**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die fehlenden Zweige dort sind vor allem Abwehrprüfungen für Programmierfehler. In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer` und `ImageDecoder`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb ist jedem Test ein AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
+**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die fehlenden Zweige dort sind vor allem Abwehrprüfungen für Programmierfehler. In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer`, `ImageDecoder` und die Wahl des Startordners in `PhotoFileChooser`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb ist jedem Test ein AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
 
 **Drei Klassen mit der niedrigsten Branch-Coverage:**
 
