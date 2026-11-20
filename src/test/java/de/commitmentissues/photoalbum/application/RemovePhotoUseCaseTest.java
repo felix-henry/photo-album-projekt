@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.commitmentissues.photoalbum.domain.Album;
@@ -37,6 +38,7 @@ class RemovePhotoUseCaseTest {
 
     @Test
     @DisplayName("AK-09.1: Das Foto wird ein Papierkorbeintrag mit Ursprungsalbum und Löschzeitpunkt, die anderen bleiben")
+    @Tag("normalfall")
     void movesPhotoToTrash() {
         Result<AlbumDetails> result = execute(1);
 

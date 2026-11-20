@@ -6,7 +6,7 @@
 
     <groupId>de.commitmentissues.photoalbum</groupId>
     <artifactId>photo-album</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Photo Album</name>
@@ -16,6 +16,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.14.4</junit.version>
         <gson.version>2.15.0</gson.version>
+        <!-- Die NFA-03-Messung läuft nur auf Abruf, siehe TESTING.md, Abschnitt 7. -->
+        <excludedGroups>performance</excludedGroups>
     </properties>
 
     <dependencies>

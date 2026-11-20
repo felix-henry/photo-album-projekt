@@ -2,6 +2,27 @@
 
 Alle wichtigen Änderungen am Photo Album stehen in dieser Datei. Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die Versionsnummern folgen [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.0] – 2026-11-20
+
+Geprüfte Pflichtfunktionalität mit den Test- und Qualitätsnachweisen aus Block 5 ([#27](https://github.com/felix-henry/photo-album-projekt/issues/27), [#41](https://github.com/felix-henry/photo-album-projekt/pull/41)).
+
+### Hinzugefügt
+
+- [TESTING.md](TESTING.md) mit Teststrategie, Zuordnung der Akzeptanzkriterien zu Verfahren und Testmethoden, Test Design Lab (Äquivalenzklassen und Entscheidungstabelle), Unit-, Integrations- und Systemtests, Usability-, Security- und Performance-Nachweisen sowie Coverage je Schicht.
+- Tests aus dem Test Design Lab, Integrationstests mit den echten Dateiadaptern nach einem Neustart und Security-Tests für Dateieingaben; zusammen 231 automatisierte Tests.
+- Performance-Messung für NFA-03 (`OpenAlbumPerformanceTest`), die nur auf Abruf läuft. NFA-03 ist auf allen fünf Team-Laptops erfüllt.
+- Evaluation Set für den nur entworfenen KI-Titelvorschlag mit Freigabe-Pass-Rate ([eval/describe-photo/cases.md](eval/describe-photo/cases.md)).
+
+### Geändert
+
+- NFA-04 und AK-N04.1: Die fünf Teammitglieder testen die Bedienung selbst (Teamabsprache).
+
+### Behoben
+
+- Die Dateiauswahl startet im Ordner „Pictures“ und merkt sich den zuletzt benutzten Ordner über alle Alben hinweg ([#42](https://github.com/felix-henry/photo-album-projekt/issues/42)).
+- Die Albumansicht öffnet schneller, weil die Dateiauswahl erst beim ersten „Foto hinzufügen“ entsteht ([#43](https://github.com/felix-henry/photo-album-projekt/issues/43)).
+- Ein eingetipptes Suchmuster wie `*.jpg` bleibt nicht mehr als Filter in der Dateiauswahl stehen ([#42](https://github.com/felix-henry/photo-album-projekt/issues/42)).
+
 ## [0.1.0] – 2026-11-18
 
 Erste lauffähige Version mit der Pflichtfunktionalität aus Block 4 ([#26](https://github.com/felix-henry/photo-album-projekt/issues/26), [#35](https://github.com/felix-henry/photo-album-projekt/pull/35)).

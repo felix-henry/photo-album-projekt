@@ -39,6 +39,7 @@ public class AlbumOverviewWindow extends JFrame {
     private final JButton renameButton = new JButton("Umbenennen");
     private final JButton deleteButton = new JButton("Album löschen");
     private final JLabel status = new JLabel(" ");
+    private final PhotoFileChooser fileChooser = new PhotoFileChooser();
     private List<AlbumSummary> shownAlbums = List.of();
 
     public AlbumOverviewWindow(UseCases useCases) {
@@ -135,7 +136,7 @@ public class AlbumOverviewWindow extends JFrame {
             status.setText(result.getMessage());
             return;
         }
-        new AlbumWindow(this, result.getValue(), useCases).setVisible(true);
+        new AlbumWindow(this, result.getValue(), useCases, fileChooser).setVisible(true);
         refreshAndSelect(album);
     }
 

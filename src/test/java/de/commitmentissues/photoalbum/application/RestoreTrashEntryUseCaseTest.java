@@ -11,6 +11,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.commitmentissues.photoalbum.domain.Album;
@@ -74,6 +75,7 @@ class RestoreTrashEntryUseCaseTest {
 
     @Test
     @DisplayName("AK-04.6: Heißt ein anderes Album schon so, wird der Konflikt gemeldet und die Kachel bleibt")
+    @Tag("fehlerfall")
     void reportsNameConflictForTile() {
         TrashEntry tile = trashAlbum(albumWith("Urlaub", "hash-1"), DELETED);
         Album active = albumWith("urlaub", "hash-9");

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.commitmentissues.photoalbum.domain.Album;
@@ -54,6 +55,7 @@ class DeletePermanentlyUseCaseTest {
 
     @Test
     @DisplayName("AK-SR01.4: Scheitert eines von drei Fotos, sind zwei gelöscht und die Kachel behält eines")
+    @Tag("fehlerfall")
     void reportsPartialSuccessForTile() {
         TrashEntry tile = trashAlbum("hash-1", "hash-2", "hash-3");
         Photo stuck = tile.getPhotos().get(1);
@@ -63,6 +65,7 @@ class DeletePermanentlyUseCaseTest {
 
         assertEquals("2 von 3 Fotos wurden endgültig gelöscht. 1 Foto bleibt im Papierkorb.", result.getMessage());
         assertEquals(1, trash.entries().size());
+        assertTrue(trash.entries().get(0).isAlbum(), "Das Foto bleibt in der Kachel");
         assertEquals(List.of(stuck.getId()), trash.entries().get(0).getPhotos().stream().map(Photo::getId).toList());
         assertEquals(Set.of(stuck.getId()), photos.storedIds());
     }

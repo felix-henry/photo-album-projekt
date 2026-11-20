@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,12 +21,14 @@ class TrashEntryTest {
 
     @Test
     @DisplayName("AK-SR01.6: Eine Sekunde vor Ablauf von 30 × 24 Stunden ist der Eintrag noch nicht fällig")
+    @Tag("grenzfall")
     void isNotDueOneSecondBeforeDeadline() {
         assertFalse(entry.isDue(DELETED_AT.plus(RETENTION).minusSeconds(1)));
     }
 
     @Test
     @DisplayName("AK-SR01.3: Nach genau 30 × 24 Stunden ist der Eintrag fällig")
+    @Tag("grenzfall")
     void isDueAfterExactlyThirtyTimesTwentyFourHours() {
         assertTrue(entry.isDue(DELETED_AT.plus(RETENTION)));
     }

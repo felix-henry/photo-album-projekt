@@ -7,14 +7,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.image.BufferedImage;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,7 +44,7 @@ class AlbumWindow extends JDialog {
     private final UUID albumId;
     private final UseCases useCases;
     private final ImageBuffer buffer;
-    private final JFileChooser fileChooser = new JFileChooser();
+    private final PhotoFileChooser fileChooser;
     private final JLabel heading = new JLabel();
     private final JLabel message = new JLabel(" ");
     private final JLabel image = new JLabel("", SwingConstants.CENTER);
@@ -58,10 +59,11 @@ class AlbumWindow extends JDialog {
     private List<UUID> photoIds = List.of();
     private int current;
 
-    AlbumWindow(Frame owner, AlbumDetails album, UseCases useCases) {
+    AlbumWindow(Frame owner, AlbumDetails album, UseCases useCases, PhotoFileChooser fileChooser) {
         super(owner, "Album „" + album.name() + "“", true);
         this.albumId = album.id();
         this.useCases = useCases;
+        this.fileChooser = fileChooser;
         this.buffer = new ImageBuffer(this::loadImage);
 
         JButton backButton = new JButton("Zurück zur Albumübersicht");
@@ -173,10 +175,11 @@ class AlbumWindow extends JDialog {
     }
 
     private void chooseAndAddPhoto() {
-        if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+        Optional<Path> file = fileChooser.choose(this);
+        if (file.isEmpty()) {
             return;
         }
-        Result<PhotoSummary> added = useCases.addPhoto().execute(albumId, fileChooser.getSelectedFile().toPath());
+        Result<PhotoSummary> added = useCases.addPhoto().execute(albumId, file.get());
         if (!added.isSuccess()) {
             showError(added.getMessage());
             return;

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.commitmentissues.photoalbum.domain.Album;
@@ -38,6 +39,7 @@ class EditPhotoTextsUseCaseTest {
 
     @Test
     @DisplayName("AK-10.3: Ein zu langer Titel wird gemeldet, der gespeicherte Titel bleibt")
+    @Tag("fehlerfall")
     void rejectsTooLongTitle() {
         Result<PhotoSummary> result = execute("a".repeat(101), "Sommer 2025");
 
