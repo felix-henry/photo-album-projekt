@@ -2,7 +2,7 @@
 
 Alle wichtigen Änderungen am Photo Album stehen in dieser Datei. Das Format folgt [Keep a Changelog](https://keepachangelog.com/de/1.1.0/), die Versionsnummern folgen [Semantic Versioning](https://semver.org/lang/de/).
 
-## [1.0.0] – 2026-11-19
+## [1.0.0] – 2026-11-20
 
 Geprüfte Pflichtfunktionalität mit den Test- und Qualitätsnachweisen aus Block 5 ([#27](https://github.com/felix-henry/photo-album-projekt/issues/27), [#41](https://github.com/felix-henry/photo-album-projekt/pull/41)).
 
