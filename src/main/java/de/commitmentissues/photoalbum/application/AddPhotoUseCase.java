@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 import de.commitmentissues.photoalbum.domain.Album;
-import de.commitmentissues.photoalbum.domain.AlbumId;
 import de.commitmentissues.photoalbum.domain.DomainException;
 import de.commitmentissues.photoalbum.domain.Photo;
 import de.commitmentissues.photoalbum.domain.PhotoId;
@@ -31,15 +30,11 @@ public class AddPhotoUseCase {
     }
 
     public Result<PhotoSummary> execute(UUID albumId, Path file) {
-        Album album;
-        try {
-            album = albums.findById(new AlbumId(albumId)).orElse(null);
-        } catch (StorageException e) {
-            return Result.failure("Das Album konnte nicht geladen werden.");
+        Result<Album> loaded = AlbumLookup.load(albums, albumId);
+        if (!loaded.isSuccess()) {
+            return Result.failure(loaded.getMessage());
         }
-        if (album == null) {
-            return Result.failure("Das Album wurde nicht gefunden.");
-        }
+        Album album = loaded.getValue();
 
         Photo photo;
         try {
