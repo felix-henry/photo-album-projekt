@@ -3,6 +3,7 @@ package de.commitmentissues.photoalbum.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Ein Fotoalbum mit Namen (A-02) und höchstens 100 Fotos ohne bytegleiche Duplikate (FA-06, FA-07).
@@ -72,12 +73,17 @@ public class Album {
     }
 
     /**
+     * Sucht ein Foto dieses Albums über seine ID.
+     */
+    public Optional<Photo> findPhoto(PhotoId id) {
+        return photos.stream().filter(candidate -> candidate.getId().equals(id)).findFirst();
+    }
+
+    /**
      * Nimmt ein Foto aus dem Album (FA-09) und gibt es zurück.
      */
     public Photo removePhoto(PhotoId id) {
-        Photo photo = photos.stream()
-                .filter(candidate -> candidate.getId().equals(id))
-                .findFirst()
+        Photo photo = findPhoto(id)
                 .orElseThrow(() -> new IllegalArgumentException("Das Foto gehört nicht zu diesem Album: " + id));
         photos.remove(photo);
         return photo;

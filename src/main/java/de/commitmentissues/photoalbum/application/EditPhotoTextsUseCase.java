@@ -5,6 +5,7 @@ import java.util.UUID;
 import de.commitmentissues.photoalbum.domain.Album;
 import de.commitmentissues.photoalbum.domain.DomainException;
 import de.commitmentissues.photoalbum.domain.Photo;
+import de.commitmentissues.photoalbum.domain.PhotoId;
 import de.commitmentissues.photoalbum.domain.Violation;
 
 /**
@@ -25,10 +26,7 @@ public class EditPhotoTextsUseCase {
             return Result.failure(loaded.getMessage());
         }
         Album album = loaded.getValue();
-        Photo photo = album.getPhotos().stream()
-                .filter(candidate -> candidate.getId().value().equals(photoId))
-                .findFirst()
-                .orElse(null);
+        Photo photo = album.findPhoto(new PhotoId(photoId)).orElse(null);
         if (photo == null) {
             return Result.failure("Das Foto wurde nicht gefunden.");
         }
