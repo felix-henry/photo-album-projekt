@@ -450,7 +450,7 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Einsatz bei der Weiterentwicklung kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten. Ein Fall aus Block 6 gehört zur Empfehlung von fünf Fällen insgesamt. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
+- [x] **KI-Einsatz bei der Weiterentwicklung kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten. Ein Fall aus Block 6 gehört zur Empfehlung von fünf Fällen insgesamt. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
 
 #### Blockabschluss
 

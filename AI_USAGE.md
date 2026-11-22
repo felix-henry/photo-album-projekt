@@ -110,12 +110,19 @@ Aufgabe: Schreibe eine vollständige JUnit-5-Testklasse `DeletePermanentlyPartia
 
 ## Fall 5 – Refactoring prüfen, Block 6
 
-Geplant (empfohlen).
-
 | Feld | Inhalt |
 | --- | --- |
-| **Aufgabe/Ziel** | Einen KI-Vorschlag für ein Refactoring prüfen und anhand des Diffs und der Tests bewerten, ob das Verhalten erhalten bleibt. |
-| **Werkzeug/Modell und Prompt oder Skill** | |
-| **Ergebnis** | |
-| **Kritische Bewertung** | |
-| **Entscheidung** | |
+| **Aufgabe/Ziel** | Einen KI-Vorschlag für ein Refactoring prüfen und anhand des Diffs und der Tests bewerten, ob das Verhalten erhalten bleibt. Der Agent sollte eine Stelle mit Smell und Metrik auswählen, die den Change Request CR-1 erleichtert, sie in kleinen Schritten umbauen und das Ergebnis in [docs/REFACTORING.md](docs/REFACTORING.md) dokumentieren. |
+| **Werkzeug/Modell und Prompt oder Skill** | Claude Code in der Desktop-App mit Claude Opus 5.5 am 22.11.2026. Anders als in Fall 3 hat der Agent in dieser Sitzung selbst gebaut, committet und auf `block-6` gepusht. Kontext waren ROADMAP Block 6, AGENTS.md, die Impact Analysis in CHANGE_REQUEST.md und der Code auf `block-6`. [Arbeitsauftrag](#prompt-zu-fall-5) |
+| **Ergebnis** | Der Agent fand den Smell *Duplicated Code*: denselben Ladeblock in fünf Use Cases und dieselbe Foto-Suche an drei Stellen. Er baute in zwei Commits um (`2b0a107` `AlbumLookup.load`, `8afd7d1` `Album.findPhoto`), ließ nach jedem Schritt `.\mvnw.cmd verify` laufen (234 Tests grün) und schrieb REFACTORING.md mit Messwerten vorher und nachher. Tests musste er nicht ändern. |
+| **Kritische Bewertung** | (1) **Verhaltensabweichung im Diff:** In Schritt 2 vergleicht die Suche jetzt `PhotoId` statt `UUID`. Eine `null`-Foto-ID führt dadurch zu einer `NullPointerException` statt zur Meldung „Das Foto wurde nicht gefunden.“. Das fiel erst bei der Diff-Prüfung über den Konstruktor von `PhotoId` auf, nicht durch die Tests: Kein Test übergibt `null`. Grüne Tests allein belegen die Verhaltensneutralität also nicht. (2) **Falsche Aussagen im Entwurf der Dokumentation:** Der Agent schrieb zuerst, im Paket seien 25 Zeilen weggefallen, und `RenameAlbumUseCase` lade über `AlbumLibrary`. Der Abgleich mit `git diff --shortstat` und dem Quelltext zeigte: In den Use Cases fallen 29 Zeilen weg, die neue Klasse hat 29, die Gesamtlänge bleibt gleich, und `RenameAlbumUseCase` lädt mit `findAll`. Beides wurde vor dem Commit korrigiert. Ähnlich bei der Coverage in diesem Block: Die zwei Zeilen in `Trash` mit nicht ausgeführtem Lambda hatte der Agent zuerst als grün beschrieben; JaCoCo zeigt sie gelb. (3) **Nutzen:** Das Refactoring ist klein. Dass es CR-1 erleichtert, ist eine Erwartung aus der Impact Analysis und zeigt sich erst bei der Umsetzung. |
+| **Entscheidung** | **Übernommen:** beide Refactoring-Schritte als eigene `refactor`-Commits ohne fachliche Änderung. **Angepasst:** die Zahlen und die Aussage zu `RenameAlbumUseCase` in REFACTORING.md. Die `null`-Abweichung bleibt, weil die Album-ID sich schon vorher so verhielt und `AlbumWindow` die ID immer aus einer `PhotoSummary` nimmt; sie ist in REFACTORING.md, Abschnitt 3 begründet. **Verworfen:** auch `RenameAlbumUseCase` auf `AlbumLookup` umzustellen, weil er alle Alben lädt und eigene Meldungen hat; das hätte Verhalten geändert. |
+
+### Prompt zu Fall 5
+
+Arbeitsauftrag, zusammengefasst aus der Sitzung:
+
+```text
+Bearbeite Block 6 (Issue #28) Schritt für Schritt nach der ROADMAP und AGENTS.md. Immer nur den aktuellen Roadmap-Punkt, Umfang auf das Nötige beschränken, danach prüfen, ob das Ergebnis fachlich stimmt und zum Gesamtprojekt passt.
+Aktueller Punkt: Refactoring. Wähle eine intern verbesserungsbedürftige Stelle mit Nachweis (Klasse, Metrik, Smell), vorzugsweise eine, die den Change Request CR-1 erleichtert. Gehe nach den fünf Schritten aus Block 6, S. 10 vor: Verhalten mit grünen Tests absichern, kleine Strukturänderung, Tests ausführen, Diff auf Verhaltensneutralität prüfen, eigener Refactoring-Commit. Dokumentiere Ausgangssituation, Problem, Schritte, Ergebnis und Testabsicherung in docs/REFACTORING.md.
+```
