@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import de.commitmentissues.photoalbum.domain.Album;
-import de.commitmentissues.photoalbum.domain.AlbumId;
 import de.commitmentissues.photoalbum.domain.Photo;
+import de.commitmentissues.photoalbum.domain.PhotoId;
 import de.commitmentissues.photoalbum.domain.Trash;
 import de.commitmentissues.photoalbum.domain.TrashEntry;
 
@@ -30,19 +30,12 @@ public class RemovePhotoUseCase {
     }
 
     public Result<AlbumDetails> execute(UUID albumId, UUID photoId) {
-        Album album;
-        try {
-            album = albums.findById(new AlbumId(albumId)).orElse(null);
-        } catch (StorageException e) {
-            return Result.failure("Das Album konnte nicht geladen werden.");
+        Result<Album> loaded = AlbumLookup.load(albums, albumId);
+        if (!loaded.isSuccess()) {
+            return Result.failure(loaded.getMessage());
         }
-        if (album == null) {
-            return Result.failure("Das Album wurde nicht gefunden.");
-        }
-        Photo photo = album.getPhotos().stream()
-                .filter(candidate -> candidate.getId().value().equals(photoId))
-                .findFirst()
-                .orElse(null);
+        Album album = loaded.getValue();
+        Photo photo = album.findPhoto(new PhotoId(photoId)).orElse(null);
         if (photo == null) {
             return Result.failure("Das Foto wurde nicht gefunden.");
         }

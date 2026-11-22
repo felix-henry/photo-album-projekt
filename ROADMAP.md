@@ -409,11 +409,11 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** [TESTING.md](TESTING.md) · JaCoCo-/Build-Konfiguration.
 > **Nachweise:** Generierter JaCoCo-Report unter `target/site/jacoco/index.html`.
 
-- [ ] **Coverage je Schicht erheben und interpretieren:** Mit `./mvnw verify` den JaCoCo-Report erzeugen und `target/site/jacoco/index.html` öffnen. Statement- und Branch-Coverage je Schicht in [TESTING.md](TESTING.md) notieren und ihre Aussagekraft erklären. Eine hohe Coverage allein ist kein Qualitätsnachweis. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
+- [x] **Coverage je Schicht erheben und interpretieren:** Mit `./mvnw verify` den JaCoCo-Report erzeugen und `target/site/jacoco/index.html` öffnen. Statement- und Branch-Coverage je Schicht in [TESTING.md](TESTING.md) notieren und ihre Aussagekraft erklären. Eine hohe Coverage allein ist kein Qualitätsnachweis. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
 
 > **Dateien:** Domänentestdateien · [TESTING.md](TESTING.md).
 
-- [ ] **Gelbe Domänenzeilen erklären und fehlende Zweige absichern:** Die nur teilweise abgedeckten Zweige der Domäne erklären und mindestens zwei Tests für bislang nicht abgedeckte Zweige ergänzen. Die Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
+- [x] **Gelbe Domänenzeilen erklären und fehlende Zweige absichern:** Die nur teilweise abgedeckten Zweige der Domäne erklären und mindestens zwei Tests für bislang nicht abgedeckte Zweige ergänzen. Die Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
 
 > **Dateien:** Regressionstestdateien · [TESTING.md](TESTING.md).
 
@@ -423,12 +423,12 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** [CHANGE_REQUEST.md](CHANGE_REQUEST.md)
 
-- [ ] **Den tatsächlichen Change Request mit eindeutigen IDs dokumentieren:** Den CR und seine Priorität in [CHANGE_REQUEST.md](CHANGE_REQUEST.md) festhalten und die einzelnen Änderungsanforderungen nummerieren, beispielsweise `CR-1.1`, `CR-1.2` usw. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
-- [ ] **Die Mini-Impact-Analysis mit drei konkreten Antworten beginnen:** In [CHANGE_REQUEST.md](CHANGE_REQUEST.md) festhalten: Welche Anforderung widerspricht dem tatsächlichen CR (ID aus [REQUIREMENTS.md](REQUIREMENTS.md))? Welche Klasse ändert sich am stärksten? Welcher vorhandene Test wird nach der Änderung rot (Testname)? ([Block 6, S. 12](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=12))
-- [ ] **Betroffene und neue Anforderungen sowie Akzeptanzkriterien analysieren:** Vor CR-Code die Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md) erstellen; betroffene Anforderungen und AK mit IDs sowie neue Anforderungen nennen. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
-- [ ] **Auswirkungen auf Architektur, Datenmodell und ADRs beschreiben:** Betroffene Teile, ungültig gewordene ADRs und ein neues ADR in der Impact Analysis festhalten. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
-- [ ] **Rot werdende und neue Tests benennen:** Regressionen und neu erforderliche Tests vor der Umsetzung in der Impact Analysis beschreiben. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
-- [ ] **Risiken, Aufwand je Teil und Umsetzungsreihenfolge festhalten:** Änderungsrisiken, Aufwandsschätzung je Teil und Reihenfolge der Umsetzung in der Impact Analysis dokumentieren. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
+- [x] **Den tatsächlichen Change Request mit eindeutigen IDs dokumentieren:** Den CR und seine Priorität in [CHANGE_REQUEST.md](CHANGE_REQUEST.md) festhalten und die einzelnen Änderungsanforderungen nummerieren, beispielsweise `CR-1.1`, `CR-1.2` usw. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6); [Block 6, S. 11](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=11))
+- [x] **Die Mini-Impact-Analysis mit drei konkreten Antworten beginnen:** In [CHANGE_REQUEST.md](CHANGE_REQUEST.md) festhalten: Welche Anforderung widerspricht dem tatsächlichen CR (ID aus [REQUIREMENTS.md](REQUIREMENTS.md))? Welche Klasse ändert sich am stärksten? Welcher vorhandene Test wird nach der Änderung rot (Testname)? ([Block 6, S. 12](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=12))
+- [x] **Betroffene und neue Anforderungen sowie Akzeptanzkriterien analysieren:** Vor CR-Code die Impact Analysis in [CHANGE_REQUEST.md](CHANGE_REQUEST.md) erstellen; betroffene Anforderungen und AK mit IDs sowie neue Anforderungen nennen. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
+- [x] **Auswirkungen auf Architektur, Datenmodell und ADRs beschreiben:** Betroffene Teile, ungültig gewordene ADRs und ein neues ADR in der Impact Analysis festhalten. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
+- [x] **Rot werdende und neue Tests benennen:** Regressionen und neu erforderliche Tests vor der Umsetzung in der Impact Analysis beschreiben. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
+- [x] **Risiken, Aufwand je Teil und Umsetzungsreihenfolge festhalten:** Änderungsrisiken, Aufwandsschätzung je Teil und Reihenfolge der Umsetzung in der Impact Analysis dokumentieren. ([PB §11](docs/task_description/Projektbeschreibung_Photo_Album.md#11-change-request-block-6))
 
 > **Dateien:** Betroffene Quellcode- und Testdateien · [REQUIREMENTS.md](REQUIREMENTS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/adr/](docs/adr/) · [TESTING.md](TESTING.md).
 
@@ -442,15 +442,15 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Betroffene Quellcode- und Testdateien · [docs/REFACTORING.md](docs/REFACTORING.md).
 
-- [ ] **Refactoring anhand von Klasse, Metrik und Smell begründen:** Eine intern verbesserungsbedürftige Stelle mit Nachweis auswählen; vorzugsweise eine, deren Verbesserung den CR erleichtert. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
-- [ ] **Verhaltensneutral nach den fünf Refactoring-Schritten vorgehen:** Verhalten durch grüne Tests absichern → kleine Strukturänderung → Tests ausführen → Diff auf Verhaltensneutralität prüfen → eigener Refactoring-Commit. Jeden Änderungsschritt mit grünen Tests absichern; fachliche Änderungen bleiben in getrennten Commits. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6); [Block 6, S. 10](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=10))
-- [ ] **Refactoring in [docs/REFACTORING.md](docs/REFACTORING.md) dokumentieren:** Ausgangssituation, Problem, Änderungsschritte, Ergebnis und Testabsicherung festhalten. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
+- [x] **Refactoring anhand von Klasse, Metrik und Smell begründen:** Eine intern verbesserungsbedürftige Stelle mit Nachweis auswählen; vorzugsweise eine, deren Verbesserung den CR erleichtert. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
+- [x] **Verhaltensneutral nach den fünf Refactoring-Schritten vorgehen:** Verhalten durch grüne Tests absichern → kleine Strukturänderung → Tests ausführen → Diff auf Verhaltensneutralität prüfen → eigener Refactoring-Commit. Jeden Änderungsschritt mit grünen Tests absichern; fachliche Änderungen bleiben in getrennten Commits. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6); [Block 6, S. 10](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=10))
+- [x] **Refactoring in [docs/REFACTORING.md](docs/REFACTORING.md) dokumentieren:** Ausgangssituation, Problem, Änderungsschritte, Ergebnis und Testabsicherung festhalten. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
 
 #### 4. KI-Einsatz dokumentieren
 
 > **Dateien:** [AI_USAGE.md](AI_USAGE.md)
 
-- [ ] **KI-Einsatz bei der Weiterentwicklung kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten. Ein Fall aus Block 6 gehört zur Empfehlung von fünf Fällen insgesamt. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
+- [x] **KI-Einsatz bei der Weiterentwicklung kritisch dokumentieren (empfohlen):** Einen tatsächlichen substanziellen Einsatz nach PB §13 in [AI_USAGE.md](AI_USAGE.md) auswerten. Ein Fall aus Block 6 gehört zur Empfehlung von fünf Fällen insgesamt. ([PB §13](docs/task_description/Projektbeschreibung_Photo_Album.md#13-einsatz-von-ki))
 
 #### Blockabschluss
 

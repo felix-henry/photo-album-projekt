@@ -4,7 +4,7 @@
 
 Quelle: [Originalfolien, 14 PDF-Seiten](Block_6_Whitebox_Wartung_Change_Request_final.pdf). Tabellen und Codebeispiele sind formatiert, Kontrollflussgraphen als Abbildungen übernommen. Seitenangaben beziehen sich auf die PDF-Seiten.
 
-> Die folgenden Inhalte übertragen die Unterrichtsunterlagen. Beispielwerte, Klassen, Tests und der dort formulierte Change Request ändern nicht automatisch unsere aktuellen Requirements oder den Bearbeitungsstand. Insbesondere bleibt unsere bestätigte Grenze von 10.000 Fotos pro Album bestehen; die Folie verwendet 100. Aussagen und Faustregeln werden als Folieninhalt wiedergegeben.
+> Die folgenden Inhalte übertragen die Unterrichtsunterlagen. Beispielwerte, Klassen, Tests und der dort formulierte Change Request ändern nicht automatisch unsere aktuellen Requirements oder den Bearbeitungsstand. Die Grenze von 100 Fotos pro Album entspricht unseren Requirements (FA-07) und dem CR auf der Folie. Aussagen und Faustregeln werden als Folieninhalt wiedergegeben.
 
 ## 1. Einordnung und Einstieg
 
@@ -177,7 +177,7 @@ Die folgende Tabelle überträgt den in den Unterlagen beschriebenen CR. Sie ist
 
 **Als unverändert bezeichnet die Folie:** maximal 100 Fotos je Album; ein Foto zählt in jedem Album, in dem es enthalten ist. Duplikatregel gilt je Album; bisherige AK bleiben gültig.
 
-**Abgleich mit unserem Projekt:** Die Folienzahl 100 ersetzt nicht unsere bestätigten 10.000 Fotos pro Album. Vor der späteren Anwendung des CR müssen die Angaben mit unserem Stand und Ana abgeglichen werden.
+**Abgleich mit unserem Projekt:** Die Folienzahl 100 entspricht unserer Grenze aus FA-07 (Teamentscheidung F-5 in [CHANGE_REQUEST.md](../../CHANGE_REQUEST.md#9-entscheidungen-zu-den-offenen-fragen), 22.11.2026).
 
 **Arbeitsauftrag der Folie:** Zunächst Impact Analysis in `CHANGE_REQUEST.md`, noch nicht programmieren. Umsetzung bis Block 7 mit Tag `v1.1.0`.
 
