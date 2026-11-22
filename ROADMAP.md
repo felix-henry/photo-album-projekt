@@ -409,11 +409,11 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 > **Dateien:** [TESTING.md](TESTING.md) · JaCoCo-/Build-Konfiguration.
 > **Nachweise:** Generierter JaCoCo-Report unter `target/site/jacoco/index.html`.
 
-- [ ] **Coverage je Schicht erheben und interpretieren:** Mit `./mvnw verify` den JaCoCo-Report erzeugen und `target/site/jacoco/index.html` öffnen. Statement- und Branch-Coverage je Schicht in [TESTING.md](TESTING.md) notieren und ihre Aussagekraft erklären. Eine hohe Coverage allein ist kein Qualitätsnachweis. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
+- [x] **Coverage je Schicht erheben und interpretieren:** Mit `./mvnw verify` den JaCoCo-Report erzeugen und `target/site/jacoco/index.html` öffnen. Statement- und Branch-Coverage je Schicht in [TESTING.md](TESTING.md) notieren und ihre Aussagekraft erklären. Eine hohe Coverage allein ist kein Qualitätsnachweis. ([PB §3](docs/task_description/Projektbeschreibung_Photo_Album.md#3-organisation-und-meilensteine); [PB §10](docs/task_description/Projektbeschreibung_Photo_Album.md#10-testing-und-qualitätssicherung-block-5-und-6); [Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
 
 > **Dateien:** Domänentestdateien · [TESTING.md](TESTING.md).
 
-- [ ] **Gelbe Domänenzeilen erklären und fehlende Zweige absichern:** Die nur teilweise abgedeckten Zweige der Domäne erklären und mindestens zwei Tests für bislang nicht abgedeckte Zweige ergänzen. Die Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
+- [x] **Gelbe Domänenzeilen erklären und fehlende Zweige absichern:** Die nur teilweise abgedeckten Zweige der Domäne erklären und mindestens zwei Tests für bislang nicht abgedeckte Zweige ergänzen. Die Ergebnisse in [TESTING.md](TESTING.md) festhalten. ([Block 6, S. 13](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=13))
 
 > **Dateien:** Regressionstestdateien · [TESTING.md](TESTING.md).
 

@@ -326,18 +326,18 @@ NFA-03 ist auf allen fünf Laptops erfüllt. Der langsamste Wert liegt bei 327 m
 
 ## 8. Coverage mit JaCoCo
 
-JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-5` mit 231 Tests (ohne die Performance-Messung):
+JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `target/site/jacoco/index.html`; die CI lädt ihn als Artefakt `jacoco-report` hoch. Stand `block-6` mit 234 Tests (ohne die Performance-Messung). In Klammern der Wert aus Block 5 mit 231 Tests, wo er sich geändert hat:
 
 | Schicht | Anweisungen | Zweige | Zeilen |
 | --- | ---: | ---: | ---: |
-| `domain` | 96 % | 92 % | 98 % |
+| `domain` | 98 % (96 %) | 100 % (92 %) | 100 % (98 %) |
 | `application` | 96 % | 91 % | 96 % |
 | `infrastructure` | 91 % | 76 % | 90 % |
 | `ui` | 9 % | 11 % | 9 % |
 | `Main` | 0 % | – | 0 % |
-| gesamt | 57 % | 59 % | 62 % |
+| gesamt | 57 % | 60 % (59 %) | 62 % |
 
-**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die fehlenden Zweige dort sind vor allem Abwehrprüfungen für Programmierfehler. In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer`, `ImageDecoder` und Startordner und Filter in `PhotoFileChooser`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb sind die Tests den AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
+**Interpretation je Schicht.** Domäne und Use Cases tragen alle Geschäftsregeln und sind fast vollständig abgedeckt, wie NFA-05 es verlangt. Die in Block 5 fehlenden Zweige der Domäne waren Abwehrprüfungen; seit Block 6 sind sie getestet (Abschnitt 8.1). In der Infrastruktur fehlen Zweige beim Lesen beschädigter Dateien: Die Prüfung auf fehlende Felder in `TrashEntryFile` ist nur für einen Teil der Felder getestet. Die Oberfläche ist kaum abgedeckt, weil ihre Fenster einen Bildschirm brauchen, den die CI nicht hat. Abgedeckt sind dort nur `ImageBuffer`, `ImageDecoder` und Startordner und Filter in `PhotoFileChooser`; die Fenster prüfen die Systemtests in Abschnitt 5.1. Die Coverage zeigt nur, welcher Code bei den Tests lief, nicht, ob die Assertions das richtige Verhalten prüfen. Deshalb sind die Tests den AK zugeordnet (Abschnitt 2), und die Fehlerfalltests prüfen den Zustand.
 
 **Drei Klassen mit der niedrigsten Branch-Coverage:**
 
@@ -348,6 +348,18 @@ JaCoCo läuft bei jedem `./mvnw verify` mit. Der Report liegt danach unter `targ
 | `ui.AlbumOverviewWindow` | 0 % (0 von 26) | Swing-Fenster, nur im Systemtest geprüft |
 
 Außerhalb der Oberfläche sind es `infrastructure.TrashEntryFile` (60 %, 6 von 10), `infrastructure.FileTrashRepository` (70 %, 7 von 10) und `application.CreateAlbumUseCase` (75 %, 3 von 4). Diese Klassen sind Kandidaten für Regressionstests in Block 6.
+
+### 8.1 Teilweise abgedeckte Domänenzeilen (Block 6)
+
+Der Report von Block 5 zeigte in der Domäne drei Zeilen mit nur teilweise durchlaufenen Entscheidungen (gelbe Raute). Alle drei sind Abwehrprüfungen gegen ungültige Aufrufe oder beschädigte Daten, keine Geschäftsregel aus REQUIREMENTS.md. Kein Test hatte bis dahin den Fehlerausgang ausgelöst:
+
+| Klasse, Zeile | Entscheidung | Fehlender Ausgang | Wann er eintritt | Neuer Test |
+| --- | --- | --- | --- | --- |
+| `AlbumLibrary`, Z. 30 | `!albums.contains(album)` in `rename` | Album gehört nicht zur Bibliothek | Programmierfehler im Aufrufer | `AlbumLibraryTest.rejectsRenameOfForeignAlbum` |
+| `Photo`, Z. 27 | `contentHash.isBlank()` | leerer Inhaltshash | Programmierfehler oder beschädigte Albumdatei | `PhotoTest.rejectsBlankContentHash` |
+| `TrashEntry`, Z. 35 | `!album && photos.size() != 1` | Einzelfoto-Eintrag mit mehr als einem Foto | beschädigte `trash.json` beim Laden über `TrashEntry.restore` | `TrashEntryTest.rejectsRestoredSinglePhotoEntryWithTwoPhotos` |
+
+Die Tests prüfen jeweils, dass die Ausnahme fliegt; der Test zu `AlbumLibrary` prüft zusätzlich, dass Name und Bibliothek unverändert bleiben. Danach liegt die Domäne bei 100 % der Zweige und Zeilen. Gelb bleiben zwei Zeilen in `Trash.take` (Z. 55) und `Trash.remove` (Z. 77), die übrigen 2 % der Anweisungen: Die Fehlermeldung für eine unbekannte Eintrags-ID steht in einem Lambda für `Optional.orElseThrow`, das nie ausgeführt wird. JaCoCo zählt das als fehlende Anweisungen, nicht als Zweig. Die Use Cases suchen den Eintrag vorher mit `Trash.find` und melden eine unbekannte ID selbst, daher ist der Fall über die Oberfläche nicht erreichbar. 100 % Zweige heißen nicht, dass die Domäne fehlerfrei ist: Die drei Tests belegen nur, dass die Abwehr anschlägt, nicht dass jede beschädigte Datei erkannt wird.
 
 ## 9. Evaluation Set für die KI-Funktion
 
