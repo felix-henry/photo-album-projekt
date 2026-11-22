@@ -442,9 +442,9 @@ Die Listen ab Block 2 sind Arbeitslisten. Ein vorhandener Entwurf erfüllt einen
 
 > **Dateien:** Betroffene Quellcode- und Testdateien · [docs/REFACTORING.md](docs/REFACTORING.md).
 
-- [ ] **Refactoring anhand von Klasse, Metrik und Smell begründen:** Eine intern verbesserungsbedürftige Stelle mit Nachweis auswählen; vorzugsweise eine, deren Verbesserung den CR erleichtert. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
-- [ ] **Verhaltensneutral nach den fünf Refactoring-Schritten vorgehen:** Verhalten durch grüne Tests absichern → kleine Strukturänderung → Tests ausführen → Diff auf Verhaltensneutralität prüfen → eigener Refactoring-Commit. Jeden Änderungsschritt mit grünen Tests absichern; fachliche Änderungen bleiben in getrennten Commits. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6); [Block 6, S. 10](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=10))
-- [ ] **Refactoring in [docs/REFACTORING.md](docs/REFACTORING.md) dokumentieren:** Ausgangssituation, Problem, Änderungsschritte, Ergebnis und Testabsicherung festhalten. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
+- [x] **Refactoring anhand von Klasse, Metrik und Smell begründen:** Eine intern verbesserungsbedürftige Stelle mit Nachweis auswählen; vorzugsweise eine, deren Verbesserung den CR erleichtert. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
+- [x] **Verhaltensneutral nach den fünf Refactoring-Schritten vorgehen:** Verhalten durch grüne Tests absichern → kleine Strukturänderung → Tests ausführen → Diff auf Verhaltensneutralität prüfen → eigener Refactoring-Commit. Jeden Änderungsschritt mit grünen Tests absichern; fachliche Änderungen bleiben in getrennten Commits. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6); [Block 6, S. 10](docs/lecture_slides/Block_6_Whitebox_Wartung_Change_Request_final.pdf#page=10))
+- [x] **Refactoring in [docs/REFACTORING.md](docs/REFACTORING.md) dokumentieren:** Ausgangssituation, Problem, Änderungsschritte, Ergebnis und Testabsicherung festhalten. ([PB §12](docs/task_description/Projektbeschreibung_Photo_Album.md#12-wartung-und-refactoring-block-6))
 
 #### 4. KI-Einsatz dokumentieren
 
