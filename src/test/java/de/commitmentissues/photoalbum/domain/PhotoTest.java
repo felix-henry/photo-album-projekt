@@ -111,4 +111,10 @@ class PhotoTest {
     private static Photo photoWith(String title, String description) {
         return Photo.restore(PhotoId.newId(), "hash-strand", title, description);
     }
+
+    @Test
+    @DisplayName("Ein Foto ohne Inhaltshash wird abgelehnt")
+    void rejectsBlankContentHash() {
+        assertThrows(IllegalArgumentException.class, () -> new Photo(" "));
+    }
 }

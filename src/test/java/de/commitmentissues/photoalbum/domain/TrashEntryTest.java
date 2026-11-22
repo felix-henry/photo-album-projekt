@@ -2,9 +2,11 @@ package de.commitmentissues.photoalbum.domain;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -45,5 +47,14 @@ class TrashEntryTest {
     })
     void countsStartedDaysUntilDeadline(long secondsAfterDeletion, int expectedDays) {
         assertEquals(expectedDays, entry.remainingDays(DELETED_AT.plusSeconds(secondsAfterDeletion)));
+    }
+
+    @Test
+    @DisplayName("Ein gespeicherter Einzelfoto-Eintrag mit zwei Fotos wird beim Laden abgelehnt")
+    void rejectsRestoredSinglePhotoEntryWithTwoPhotos() {
+        List<Photo> twoPhotos = List.of(new Photo("hash-1"), new Photo("hash-2"));
+
+        assertThrows(IllegalArgumentException.class, () -> TrashEntry.restore(TrashEntryId.newId(), DELETED_AT,
+                AlbumId.newId(), "Urlaub", false, twoPhotos));
     }
 }

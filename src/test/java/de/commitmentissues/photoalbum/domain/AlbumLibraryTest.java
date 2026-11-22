@@ -104,4 +104,17 @@ class AlbumLibraryTest {
         assertEquals(Violation.ALBUM_NAME_TOO_LONG, exception.getViolation());
         assertEquals("Urlaub", urlaub.getName());
     }
+
+    @Test
+    @DisplayName("Ein Album, das nicht zur Bibliothek gehört, lässt sich nicht umbenennen")
+    void rejectsRenameOfForeignAlbum() {
+        Album urlaub = new Album("Urlaub");
+        AlbumLibrary library = new AlbumLibrary(List.of(urlaub));
+        Album foreign = new Album("Party");
+
+        assertThrows(IllegalArgumentException.class, () -> library.rename(foreign, "Feier"));
+
+        assertEquals("Party", foreign.getName());
+        assertEquals(List.of(urlaub), library.getAlbums());
+    }
 }
